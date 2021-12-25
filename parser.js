@@ -10,14 +10,15 @@ export function parse(bot, message) {
 		if (command.name == content ||
 			command.aliases.includes(content)) {
 			if (command.permissions.includes(Roles.everyone)) {
-				command.execute(message);
-			} else {
-				for (let role of message.member.roles) {
-					if (command.permissions.includes(role))
-						command.execute(bot, message);
+				command.execute(bot, message);
+				return;
+			}
+			for (let role of message.member.roles) {
+				if (command.permissions.includes(role)) {
+					command.execute(bot, message);
+					return;
 				}
 			}
-			break;
 		}
 	}
 }

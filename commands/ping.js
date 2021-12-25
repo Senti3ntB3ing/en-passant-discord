@@ -1,10 +1,11 @@
 
-import * as Discord from 'https://deno.land/x/discordeno@13.0.0-rc15/mod.ts';
+import { createCommand } from '../parser.js';
 
 createCommand({
 	name: 'ping',
+	aliases: [ 'pong' ],
 	description: 'Pong!',
-	botChannelPermissions: [ 'SEND_MESSAGES' ],
+	permissions: '@everyone',
 	execute: (message) => {
 		message.send(`Pong ${ Date.now() - message.timestamp }ms`);
 	},

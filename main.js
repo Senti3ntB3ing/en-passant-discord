@@ -1,9 +1,25 @@
 
-import * as Discord from 'https://deno.land/x/discordeno@13.0.0-rc15/mod.ts';
+import { createBot, startBot } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
 
-Discord.log.info('Loading Environment');
+import { parse } from './parser.js';
 
-import './bot.js';
-import './commands/ping.js';
+const baseBot = createBot({
+	botId: Deno.env.get('ID'),
+	token: Deno.env.get('TOKEN'),
+	intents: [ 'Guilds', 'GuildMessages' ],
+	events: {
+		ready() {
+			console.log('en-passant is ready!');
+		},
+		messageCreate(bot, message) {
+			parse(message)
+		},
+	}
+});
 
-Discord.log.info('Bot Loaded');
+const bot = enableCachePlugin(baseBot);
+
+enableCacheSweepers(bot);
+
+await startBot(bot);

@@ -1,5 +1,5 @@
 
-import { createCommand } from 'https://deno.land/x/discordeno@13.0.0-rc15/mod.ts';
+import * as Discord from 'https://deno.land/x/discordeno@13.0.0-rc15/mod.ts';
 
 createCommand({
 	name: 'ping',

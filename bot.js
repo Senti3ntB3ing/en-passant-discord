@@ -1,7 +1,7 @@
 
-import 'https://deno.land/x/discordeno@13.0.0-rc15/mod.ts';
+import * as Discord from 'https://deno.land/x/discordeno@13.0.0-rc15/mod.ts';
 
-export const bot = createBot({
+export const bot = Discord.createBot({
     botId: Deno.env['ID'],
     token: Deno.env['TOKEN'],
     /* prefix: "!",

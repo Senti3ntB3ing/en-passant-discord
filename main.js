@@ -4,6 +4,8 @@ import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/disc
 
 import { parse } from './parser.js';
 
+import './commands/ping.js';
+
 const baseBot = createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),

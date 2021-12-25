@@ -5,8 +5,8 @@ var commands = [];
 
 export function parse(message) {
 	if (!message.content.startsWith('!')) return;
+	const content = message.content.substring(1);
 	for (let command of commands) {
-		const content = message.content.substring(1);
 		if (command.name == content ||
 			command.aliases.includes(content)) {
 			if (command.permissions.includes(Roles.everyone)) {
@@ -17,6 +17,7 @@ export function parse(message) {
 						command.execute(message);
 				}
 			}
+			break;
 		}
 	}
 }

@@ -1,6 +1,7 @@
 
+import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 import { Roles } from '../config.js';
-import { createCommand, sendMessage } from '../parser.js';
+import { createCommand } from '../parser.js';
 
 createCommand({
 	name: 'ping',

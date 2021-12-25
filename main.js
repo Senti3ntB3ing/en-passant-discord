@@ -15,7 +15,7 @@ const baseBot = createBot({
 			console.log('en-passant is ready!');
 		},
 		messageCreate(bot, message) {
-			parse(message)
+			parse(bot, message)
 		},
 	}
 });

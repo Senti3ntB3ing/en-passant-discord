@@ -3,7 +3,7 @@ import { Roles } from './config.js';
 
 var commands = [];
 
-export function parse(message) {
+export function parse(bot, message) {
 	if (!message.content.startsWith('!')) return;
 	const content = message.content.substring(1);
 	for (let command of commands) {
@@ -14,7 +14,7 @@ export function parse(message) {
 			} else {
 				for (let role of message.member.roles) {
 					if (command.permissions.includes(role))
-						command.execute(message);
+						command.execute(bot, message);
 				}
 			}
 			break;

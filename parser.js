@@ -1,7 +1,7 @@
 
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
-import { Name, Roles, Colors } from './config.js';
+import { Name, Roles, Color } from './config.js';
 
 var commands = [];
 

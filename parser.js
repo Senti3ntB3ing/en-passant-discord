@@ -1,7 +1,7 @@
 
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
-import { Roles, Colors } from './config.js';
+import { Name, Roles, Colors } from './config.js';
 
 var commands = [];
 
@@ -13,7 +13,7 @@ function handle(command, bot, message) {
 
 export function parse(bot, message) {
 	if (!message.content.startsWith('!')) return;
-	const content = message.content.substring(1);
+	const content = message.content.split(/[ \t]+/g)[0].substring(1);
 	for (let command of commands) {
 		if (command.name == content ||
 			command.aliases.includes(content)) {
@@ -40,19 +40,36 @@ export function createCommand(command) {
 	} else if (typeof command.permissions != 'object') {
 		command.permissions = [ command.permissions ];
 	}
+	if (command.emoji != undefined) command.emoji += ' ';
 	commands.push(command);
 }
 
-export function text(message) {
-	return { content: message };
-}
+export function text(message) { return { content: message }; }
 
 export function card(title, message, color) {
 	return {
 		embed: {
-			title: title,
+			title: title || Name,
 			color: color || Colors.random(),
-			description: message
+			description: message || ''
+		}
+	};
+}
+
+export function createHelp(title, description, color) {
+	return {
+		embed: {
+			type: 'rich',
+			title: title || Name,
+			color: color || Colors.random(),
+			description: description || '',
+			fields: commands.map(command => {
+				return {
+					name: (command.emoji || '') + command.name,
+					value: command.description || '',
+					inline: false
+				};
+			})
 		}
 	};
 }

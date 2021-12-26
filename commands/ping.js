@@ -3,9 +3,9 @@ import { Roles } from '../config.js';
 import { createCommand, text } from '../parser.js';
 
 createCommand({
-	name: 'ping',
+	name: 'ping', emoji: '🏓',
 	aliases: [ 'pong' ],
 	description: 'Pong!',
 	permissions: Roles.everyone,
-	execute: (message) => text(`Pong ${ Date.now() - message.timestamp }ms`)
+	execute: message => text(`Pong ${ Date.now() - message.timestamp }ms`)
 });

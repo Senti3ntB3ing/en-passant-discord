@@ -1,4 +1,6 @@
 
+export const Name = 'en passant';
+
 export const Roles = {
 	everyone: 0,
 	moderator: 839596287787794502,

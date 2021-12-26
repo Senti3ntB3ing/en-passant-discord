@@ -50,7 +50,7 @@ export function card(title, message, color) {
 	return {
 		embeds: [{
 			title: title || Name,
-			color: color || Colors.random(),
+			color: color || Color.random(),
 			description: message || ''
 		}]
 	};
@@ -61,7 +61,7 @@ export function createHelp(title, description, color) {
 		embeds: [{
 			type: 'rich',
 			title: title || Name,
-			color: color || Colors.random(),
+			color: color || Color.random(),
 			description: description || '',
 			fields: commands.map(command => {
 				return {

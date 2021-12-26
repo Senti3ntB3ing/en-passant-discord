@@ -7,7 +7,7 @@ export const Roles = {
 	staff: 901205179414769674
 };
 
-export const Colors = {
+export const Color = {
 	red: 0xE70000,
 	purple: 0x6441A4,
 	green: 0x1ABC9D,

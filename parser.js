@@ -48,17 +48,17 @@ export function text(message) { return { content: message }; }
 
 export function card(title, message, color) {
 	return {
-		embed: {
+		embeds: [{
 			title: title || Name,
 			color: color || Colors.random(),
 			description: message || ''
-		}
+		}]
 	};
 }
 
 export function createHelp(title, description, color) {
 	return {
-		embed: {
+		embeds: [{
 			type: 'rich',
 			title: title || Name,
 			color: color || Colors.random(),
@@ -70,6 +70,6 @@ export function createHelp(title, description, color) {
 					inline: false
 				};
 			})
-		}
+		}]
 	};
 }

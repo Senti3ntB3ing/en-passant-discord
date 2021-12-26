@@ -55,16 +55,15 @@ export function card(title, message, color) {
 	};
 }
 
-export function createHelp(title, description, color) {
+export function createHelp(title, color) {
 	return {
 		embeds: [{
 			type: 'rich',
 			title: title || Name,
 			color: color || Color.random(),
-			description: description || '',
 			fields: commands.map(command => {
 				return {
-					name: `${command.emoji || ''} \`${Prefix}${command.name}\``,
+					name: `${command.emoji || ''} \`${Prefix}${command.name}\`:`,
 					value: command.description || '',
 					inline: false
 				};

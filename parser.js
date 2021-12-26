@@ -1,7 +1,7 @@
 
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
-import { Name, Roles, Color } from './config.js';
+import { Name, Prefix, Roles, Color } from './config.js';
 
 var commands = [];
 
@@ -12,7 +12,7 @@ function handle(command, bot, message) {
 }
 
 export function parse(bot, message) {
-	if (!message.content.startsWith('!')) return;
+	if (!message.content.startsWith(Prefix)) return;
 	const content = message.content.split(/[ \t]+/g)[0].substring(1);
 	for (let command of commands) {
 		if (command.name == content ||
@@ -40,7 +40,6 @@ export function createCommand(command) {
 	} else if (typeof command.permissions != 'object') {
 		command.permissions = [ command.permissions ];
 	}
-	if (command.emoji != undefined) command.emoji = ' ' + command.emoji;
 	commands.push(command);
 }
 
@@ -65,7 +64,7 @@ export function createHelp(title, description, color) {
 			description: description || '',
 			fields: commands.map(command => {
 				return {
-					name:  '`!' + command.name + '`' + (command.emoji || ''),
+					name: `${command.emoji || ''} \`${Prefix}${command.name}\``,
 					value: command.description || '',
 					inline: false
 				};

@@ -1,5 +1,6 @@
 
 export const Name = 'en passant';
+export const Prefix = '!';
 
 export const Roles = {
 	everyone: 0,
@@ -19,5 +20,8 @@ export const Color = {
 	pink: 0xF780B4,
 	gray: 0xC0C0C0,
 	magenta: 0xFF2F92,
+	white: 0xFFFFFF,
+	black: 0x000000,
+	brown: 0x806860,
 	random: () => Math.floor(Math.random() * (0xFFFFFF + 1))
 };

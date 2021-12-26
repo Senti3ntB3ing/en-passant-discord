@@ -4,8 +4,8 @@ import { createCommand, text } from '../parser.js';
 
 createCommand({
 	name: 'ping', emoji: '🏓',
-	aliases: [ 'pong' ],
+	aliases: [ 'pong', 'latency' ],
 	description: 'Check the latency of the bot.',
 	permissions: Roles.everyone,
-	execute: message => text(`Pong ${ Date.now() - message.timestamp }ms`)
+	execute: message => text(`Pong \`${ Date.now() - message.timestamp }ms\``)
 });

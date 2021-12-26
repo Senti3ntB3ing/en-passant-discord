@@ -40,7 +40,7 @@ export function createCommand(command) {
 	} else if (typeof command.permissions != 'object') {
 		command.permissions = [ command.permissions ];
 	}
-	if (command.emoji != undefined) command.emoji += ' ';
+	if (command.emoji != undefined) command.emoji = ' ' + command.emoji;
 	commands.push(command);
 }
 
@@ -65,7 +65,7 @@ export function createHelp(title, description, color) {
 			description: description || '',
 			fields: commands.map(command => {
 				return {
-					name: (command.emoji || '') + command.name,
+					name:  '`!' + command.name + '`' + (command.emoji || ''),
 					value: command.description || '',
 					inline: false
 				};

@@ -5,13 +5,14 @@ import { Name, Roles, Colors } from './config.js';
 
 var commands = [];
 
-function handle(command, bot, message) {
-	let result = command.execute(message);
-	if (result != undefined)
-		sendMessage(bot, message.channelId, result);
-}
-
 export function parse(bot, message) {
+
+	function handle(command, bot, message) {
+		let result = command.execute(message);
+		if (result != undefined)
+			sendMessage(bot, message.channelId, result);
+	}
+
 	if (!message.content.startsWith('!')) return;
 	const content = message.content.split(/[ \t]+/g)[0].substring(1);
 	for (let command of commands) {

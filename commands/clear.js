@@ -17,20 +17,20 @@ const internal = error(
 createCommand({
 	name: 'clear', emoji: '🗑',
 	aliases: [ 'clean', 'delete' ],
-	description: 'Clean messages in a text channel.',
+	description: 'Clear messages in a text channel.',
 	permissions: Roles.moderator,
-	execute: async message => {
+	execute: async (message, bot) => {
 		const content = message.content.split(/[ \t]+/g)[1];
 		if (content == undefined) return invalid;
 		const n = parseInt(content);
 		if (isNaN(n) || n < 2 || n > 100) return invalid;
 		try {
-			const messages = await getMessages(message.bot, message.channelId, n);
-			await deleteMessages(message.bot, message.channelId, messages);
-		} catch { return internal; }
+			const messages = await getMessages(bot, message.channelId, { limit: n });
+			await deleteMessages(bot, message.channelId, messages.map(m => m.id));
+		} catch(e) { return internal; }
 		return card(
-			'Clean Command',
-			`🗑 Successfully deleted \`${n}\` messages.`,
+			'Clear Command',
+			`🗑 Successfully cleared \`${n}\` messages.`,
 			ColorCode.success
 		);
 	}

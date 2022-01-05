@@ -7,12 +7,12 @@ var commands = [];
 
 function handle(command, bot, message) {
 	if (command.execute.constructor.name == 'AsyncFunction') {
-		command.execute(message).then(result => {
+		command.execute(message, bot).then(result => {
 			if (result != undefined) sendMessage(bot, message.channelId, result);
 		});
 		return;
 	}
-	const result = command.execute(message);
+	const result = command.execute(message, bot);
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 

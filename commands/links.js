@@ -1,6 +1,6 @@
 
 import { Color, Roles } from '../config.js';
-import { createCommand } from '../parser.js';
+import { createCommand, card } from '../parser.js';
 
 const links = {
 	'Instagram': { url: 'https://www.instagram.com/thechessnerd/', emoji: '📷' },

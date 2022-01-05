@@ -7,7 +7,7 @@ createCommand({
     aliases: [ 'link' ],
 	description: 'List of useful links.',
 	permissions: Roles.everyone,
-	execute: _ => {
+	execute: _ => ({
 		embeds: [{
 			type: 'rich',
 			title: 'Community Links',
@@ -20,5 +20,5 @@ createCommand({
 				};
 			})
 		}]
-	}
+	})
 });

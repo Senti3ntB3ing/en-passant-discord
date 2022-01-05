@@ -1,16 +1,16 @@
 
-import { Color, Roles } from '../config.js';
+import { ColorCodes, Roles } from '../config.js';
 import { createCommand, card } from '../parser.js';
 
 const links = {
-	'Instagram': { url: 'https://www.instagram.com/thechessnerd/', emoji: '📷' },
-	'Youtube': { url: 'https://www.youtube.com/c/thechessnerd', emoji: '📺' },
-	'Twitch': { url: 'https://www.twitch.tv/thechessnerdlive', emoji: '💎' },
-	'Twitter': { url: 'https://twitter.com/thechessnerd', emoji: '🐦' },
-	'Discord': { url: 'https://discord.com/invite/DKHBFF22TJ', emoji: '💬' },
-	'chess.com': { url: 'https://www.chess.com/club/thechessnerd-exclusive-club', emoji: '🎓' },
-	'reddit': { url: 'https://www.reddit.com/r/thechessnerd', emoji: '🤖' },
-	'Merch': { url: 'https://thechessnerd.com/', emoji: '🛍' },
+	'Instagram': { url: 'https://www.instagram.com/thechessnerd/', emoji: '📷', color: 0xFFFFFF },
+	'Youtube': { url: 'https://www.youtube.com/c/thechessnerd', emoji: '📺', color: 0xFF0000 },
+	'Twitch': { url: 'https://www.twitch.tv/thechessnerdlive', emoji: '💎', color: 0x9047FF },
+	'Twitter': { url: 'https://twitter.com/thechessnerd', emoji: '🐦', color: 0x1D9BF0 },
+	'Discord': { url: 'https://discord.com/invite/DKHBFF22TJ', emoji: '💬', color: 0x5765F3 },
+	'chess.com': { url: 'https://www.chess.com/club/thechessnerd-exclusive-club', emoji: '🎓', color: 0x7FA650 },
+	'reddit': { url: 'https://www.reddit.com/r/thechessnerd', emoji: '🤖', color: 0xFF4500 },
+	'Merch': { url: 'https://thechessnerd.com/', emoji: '🛍', color: 0x37777F },
 };
 
 createCommand({
@@ -22,7 +22,7 @@ createCommand({
 		embeds: [{
 			type: 'rich',
 			title: 'Community Links',
-			color: Color.aqua,
+			color: ColorCodes.success,
 			fields: Object.keys(links).map(name => {
 				return {
 					name: `${links[name].emoji} **${name}**:`,
@@ -42,7 +42,7 @@ createCommand({
 	execute: _ => card(
 		'Link to @thechessnerd Instagram page',
 		links['Instagram'].emoji + ' ' + links['Instagram'].url,
-		Color.acqua
+		links['Instagram'].color
 	)
 });
 
@@ -54,7 +54,7 @@ createCommand({
 	execute: _ => card(
 		'Link to thechessnerd Youtube channel',
 		links['Youtube'].emoji + ' ' + links['Youtube'].url,
-		Color.red
+		links['Youtube'].color
 	)
 });
 
@@ -65,7 +65,7 @@ createCommand({
 	execute: _ => card(
 		'Link to thechessnerd Twitch Live',
 		links['Twitch'].emoji + ' ' + links['Twitch'].url,
-		Color.purple
+		links['Twitch'].color
 	)
 });
 
@@ -76,7 +76,7 @@ createCommand({
 	execute: _ => card(
 		'Link to @thechessnerd Twitter page',
 		links['Twitter'].emoji + ' ' + links['Twitter'].url,
-		Color.blue
+		links['Twitter'].color
 	)
 });
 
@@ -88,7 +88,7 @@ createCommand({
 	execute: _ => card(
 		'Invite link to thechessnerd Discord',
 		links['Discord'].emoji + ' ' + links['Discord'].url,
-		Color.blue
+		links['Discord'].color
 	)
 });
 
@@ -99,7 +99,7 @@ createCommand({
 	execute: _ => card(
 		'Invite link to the chess.com club',
 		links['chess.com'].emoji + ' ' + links['chess.com'].url,
-		Color.green
+		links['chess.com'].color
 	)
 });
 
@@ -110,7 +110,7 @@ createCommand({
 	execute: _ => card(
 		'Link to /r/thechessnerd reddit',
 		links['reddit'].emoji + ' ' + links['reddit'].url,
-		Color.acqua
+		links['reddit'].color
 	)
 });
 
@@ -122,6 +122,6 @@ createCommand({
 	execute: _ => card(
 		'thechessnerd co. Brand',
 		links['Merch'].emoji + ' ' + links['Merch'].url,
-		Color.acqua
+		links['Merch'].color
 	)
 });

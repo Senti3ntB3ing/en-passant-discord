@@ -8,21 +8,9 @@ export const Roles = {
 	staff: 901205179414769674
 };
 
-export const Color = {
-	red: 0xE70000,
-	purple: 0x6441A4,
-	aqua: 0x1ABC9D,
-	green: 0x7FA650,
-	gold: 0xFFAC32,
-	teal: 0x009CD6,
-	orange: 0xF35F12,
-	yellow: 0xF1D408,
-	blue: 0x004FD3,
-	pink: 0xF780B4,
-	gray: 0xC0C0C0,
-	magenta: 0xFF2F92,
-	white: 0xFFFFFF,
-	black: 0x000000,
-	brown: 0x806860,
+export const ColorCode = {
+	error: 0xE70000,
+	success: 0x1ABC9D,
+	info: 0xFFFFFF,
 	random: () => Math.floor(Math.random() * (0xFFFFFF + 1))
 };

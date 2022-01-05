@@ -6,9 +6,14 @@ import { Name, Prefix, Roles, ColorCode } from './config.js';
 var commands = [];
 
 function handle(command, bot, message) {
-	let result = command.execute(message);
-	if (result != undefined)
-		sendMessage(bot, message.channelId, result);
+	if (command.execute.constructor.name == 'AsyncFunction') {
+		command.execute(message).then(result => {
+			if (result != undefined) sendMessage(bot, message.channelId, result);
+		});
+		return;
+	}
+	const result = command.execute(message);
+	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
 export function parse(bot, message) {
@@ -50,6 +55,16 @@ export function card(title, message, color) {
 		embeds: [{
 			title: title || Name,
 			color: color || ColorCode.random(),
+			description: message || ''
+		}]
+	};
+}
+
+export function error(title, message) {
+	return {
+		embeds: [{
+			title: title || Name,
+			color: ColorCode.error,
 			description: message || ''
 		}]
 	};

@@ -9,7 +9,7 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: message => card(
 		'Ping Command',
-		`🏓 Pong. Latency: \`${ Date.now() - message.timestamp }ms\`.`,
+		`🏓 **Pong**. Server latency: \`${ Date.now() - message.timestamp }ms\`.`,
 		ColorCode.success
 	)
 });

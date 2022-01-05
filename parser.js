@@ -34,7 +34,7 @@ export function parse(bot, message) {
 export function createCommand(command) {
 	if (typeof command.execute != 'function') return;
 	if (command.name == undefined) return;
-	if (command.aliases == undefined) command.aliases = [];
+	if (command.aliases == undefined) command.aliases = [ ];
 	if (command.permissions == undefined) {
 		command.permissions = [ Roles.everyone];
 	} else if (typeof command.permissions != 'object') {

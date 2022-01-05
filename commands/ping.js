@@ -1,5 +1,5 @@
 
-import { ColorCodes, Roles } from '../config.js';
+import { ColorCode, Roles } from '../config.js';
 import { createCommand, card } from '../parser.js';
 
 createCommand({
@@ -10,6 +10,6 @@ createCommand({
 	execute: message => card(
 		'Ping Command',
 		`🏓 Pong. Latency: \`${ Date.now() - message.timestamp }ms\`.`,
-		ColorCodes.success
+		ColorCode.success
 	)
 });

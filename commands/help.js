@@ -1,5 +1,5 @@
 
-import { ColorCodes, Roles } from '../config.js';
+import { ColorCode, Roles } from '../config.js';
 import { createCommand, createHelp } from '../parser.js';
 
 createCommand({
@@ -7,5 +7,5 @@ createCommand({
 	aliases: [ 'usage', 'commands' ],
 	description: 'Display the list of commands.',
 	permissions: Roles.everyone,
-	execute: _ => createHelp('List of Commands', ColorCodes.success)
+	execute: _ => createHelp('List of Commands', ColorCode.success)
 });

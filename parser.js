@@ -1,7 +1,7 @@
 
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
-import { Name, Prefix, Roles, ColorCodes } from './config.js';
+import { Name, Prefix, Roles, ColorCode } from './config.js';
 
 var commands = [];
 
@@ -49,7 +49,7 @@ export function card(title, message, color) {
 	return {
 		embeds: [{
 			title: title || Name,
-			color: color || ColorCodes.random(),
+			color: color || ColorCode.random(),
 			description: message || ''
 		}]
 	};
@@ -60,7 +60,7 @@ export function createHelp(title, color) {
 		embeds: [{
 			type: 'rich',
 			title: title || Name,
-			color: color || ColorCodes.random(),
+			color: color || ColorCode.random(),
 			fields: commands.map(command => {
 				return {
 					name: `${command.emoji || ''} \`${Prefix}${command.name}\`:`,

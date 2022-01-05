@@ -4,8 +4,8 @@ export const Prefix = '!';
 
 export const Roles = {
 	everyone: 0,
-	moderator: 839596287787794502,
-	staff: 901205179414769674
+	moderator: 839596287787794502n,
+	staff: 901205179414769674n
 };
 
 export const ColorCode = {

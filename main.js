@@ -9,6 +9,7 @@ import { parse } from './parser.js';
 import './commands/help.js';
 import './commands/ping.js';
 import './commands/links.js';
+import './commands/clear.js';
 
 // =========================================
 

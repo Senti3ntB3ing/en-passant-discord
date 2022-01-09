@@ -16,10 +16,10 @@ createCommand({
 		const game = Chess(fen);
 		let status = '';
 		if (game.game_over()) {
-			if (game.in_draw()) status = '½-½ ・ draw';
+			if (game.in_draw()) status = '½-½ ・ DRAW';
 			else if (game.in_checkmate())
-				status = game.turn() == 'w' ? '0-1 ・ black won' : '1-0 ・ white won';
-		} else status = game.turn() == 'w' ? 'white to move' : 'black to move';
+				status = game.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
+		} else status = game.turn() == 'w' ? 'WHITE TO MOVE' : 'BLACK TO MOVE';
 		return {
 			file: {
 				blob: new Blob([ await diagram(game.board(), game.turn()) ]),

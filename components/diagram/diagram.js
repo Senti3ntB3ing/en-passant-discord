@@ -29,11 +29,6 @@ export async function diagram(board, color) {
 				canvas.composite(piece, j * 100, i * 100);
 			}
 		}
-		/* draw coordinates:
-		for (let i = 0; i < 8; i++) {
-			canvas.renderText(`${8 - i}`, 750, i * 100);
-			canvas.renderText(`${String.fromCharCode(97 + i)}`, 0, i * 100);
-		}*/
 	} else {
 		for (let i = 7; i >= 0; i--) {
 			for (let j = 7; j >= 0; j--) {

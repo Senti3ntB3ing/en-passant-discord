@@ -60,6 +60,7 @@ createCommand({
 
 createCommand({
 	name: 'twitch', emoji: links['Twitch'].emoji,
+	aliases: [ 'stream' ],
 	description: 'Link to thechessnerd Twitch Live.',
 	permissions: Roles.everyone,
 	execute: _ => card(
@@ -116,7 +117,7 @@ createCommand({
 
 createCommand({
 	name: 'merch', emoji: links['Merch'].emoji,
-    aliases: [ 'shop', 'store', 'merchandise' ],
+    aliases: [ 'shop', 'store', 'merchandise', 'drop' ],
 	description: 'Link to thechessnerd co. merch',
 	permissions: Roles.everyone,
 	execute: _ => card(

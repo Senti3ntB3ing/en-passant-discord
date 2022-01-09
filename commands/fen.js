@@ -26,10 +26,9 @@ createCommand({
 			},
 			embeds: [{
 				type: 'image',
-				title: 'Chess diagram from FEN position',
+				title: 'Diagram: ' + status,
 				color: game.turn() == 'w' ? 0xFFFFFF : 0x000000,
 				image: { url: 'attachment://board.png' },
-				footer: { text: '*' + status + '*' },
 			}]
 		};
 	}

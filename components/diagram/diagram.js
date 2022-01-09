@@ -22,14 +22,30 @@ const Pieces = {
 
 export async function diagram(fen) {
 	if (!Chess().validate_fen(fen)) return null;
-	const board = Chess(fen).board();
+	const game = Chess(fen);
+	const board = game.board();
 	const canvas = Board.clone();
 	// drawing pieces:
-	for (let i = 0; i < 8; i++) {
-		for (let j = 0; j < 8; j++) {
-			if (board[i][j] == null) continue;
-			const piece = Pieces[board[i][j].color + board[i][j].type];
-			canvas.composite(piece, j * 100, i * 100);
+	if (game.turn() == 'w') {
+		for (let i = 0; i < 8; i++) {
+			for (let j = 0; j < 8; j++) {
+				if (board[i][j] == null) continue;
+				const piece = Pieces[board[i][j].color + board[i][j].type];
+				canvas.composite(piece, j * 100, i * 100);
+			}
+		}
+		/* draw coordinates:
+		for (let i = 0; i < 8; i++) {
+			canvas.renderText(`${8 - i}`, 750, i * 100);
+			canvas.renderText(`${String.fromCharCode(97 + i)}`, 0, i * 100);
+		}*/
+	} else {
+		for (let i = 7; i >= 0; i--) {
+			for (let j = 7; j >= 0; i--) {
+				if (board[i][j] == null) continue;
+				const piece = Pieces[board[i][j].color + board[i][j].type];
+				canvas.composite(piece, (7 - j) * 100, (7 - i) * 100);
+			}
 		}
 	}
 	return canvas.encode();

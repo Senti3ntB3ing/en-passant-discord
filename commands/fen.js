@@ -8,17 +8,17 @@ createCommand({
 	aliases: [ 'diagram' ],
 	description: 'Display a chess board diagram from **FEN**.',
 	permissions: Roles.everyone,
-	execute: async _ => ({
+	execute: async message => ({
 		file: {
-			blob: new Blob(
-				[ await diagram('rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2') ]
-			),
+			blob: new Blob([
+				await diagram(message.content.replace(/^(.*?)[ \t]+/g, ''))
+			]),
 			name: 'board.png',
 		},
 		embeds: [{
 			type: 'image',
 			title: 'Chess diagram from FEN position',
-			color: 0x000000,
+			color: message.content.includes('w') ? 0xFFFFFF : 0x000000,
 			image: { url: 'attachment://board.png' }
 		}]
 	})

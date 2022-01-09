@@ -8,10 +8,10 @@ createCommand({
 	aliases: [ 'diagram' ],
 	description: 'Display a chess board diagram from **FEN**.',
 	permissions: Roles.everyone,
-	execute: _ => ({
+	execute: async _ => ({
 		file: {
 			blob: new Blob(
-				[ diagram('rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2') ]
+				[ await diagram('rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2') ]
 			),
 			name: 'board.png',
 		},

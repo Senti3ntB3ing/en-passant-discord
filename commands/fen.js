@@ -9,18 +9,18 @@ createCommand({
 	description: 'Display a chess board diagram from **FEN**.',
 	permissions: Roles.everyone,
 	execute: _ => ({
+		files: [{
+			blob: new Blob(
+				//diagram('rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2')
+				[ Deno.readFileSync('./components/diagram/resources/board.png') ]
+			),
+			name: 'board.png',
+		}],
 		embeds: [{
 			type: 'rich',
 			title: 'Chess diagram from FEN position',
 			color: 0x000000,
-			file: {
-				blob: new Blob(
-					//diagram('rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2')
-					[ Deno.readFileSync('./components/diagram/resources/board.png') ]
-				),
-				name: 'board.png',
-			},
-			image: { url: 'attachment://board.png' }
+			image: 'attachment://board.png'
 		}]
 	})
 });

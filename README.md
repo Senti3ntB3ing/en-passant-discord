@@ -9,3 +9,5 @@ The environment uses `deno`, with the [Discord API](https://discordeno.mod.land/
 
 Hosting is provided by [replit.com](https://replit.com/).
 Constant up-ping is provided by [UpTimeRobot](https://uptimerobot.com).
+
+The rights of the Alpha Chess Set belong to **Eric Bentzen** and have been legally purchased under the name of Zachary Saine. Do not use the chess set if you do not own the rights.

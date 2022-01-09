@@ -1,7 +1,7 @@
 
 import { Chess } from './chess.js';
 
-import { createCanvas, loadImage } from "https://deno.land/x/canvas/mod.ts";
+import { createCanvas, loadImage } from "https://deno.land/x/canvas@v1.3.0/mod.ts";
 
 const Board = Deno.readFileSync('./resources/board.png');
 

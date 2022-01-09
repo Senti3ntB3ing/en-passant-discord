@@ -17,10 +17,10 @@ createCommand({
 			name: 'board.png',
 		},
 		embeds: [{
-			type: 'rich',
+			type: 'image',
 			title: 'Chess diagram from FEN position',
 			color: 0x000000,
-			image: 'attachment://board.png'
+			image: { url: 'attachment://board.png' }
 		}]
 	})
 });

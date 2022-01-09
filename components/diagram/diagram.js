@@ -1,6 +1,4 @@
 
-import { Chess } from './chess.js';
-
 import { decode } from 'https://deno.land/x/imagescript@1.2.9/mod.ts';
 
 const Board = await decode(Deno.readFileSync('./components/diagram/resources/board.png'));
@@ -20,13 +18,10 @@ const Pieces = {
 	'wr': await decode(Deno.readFileSync('./components/diagram/resources/alpha/wr.png')),
 };
 
-export async function diagram(fen) {
-	if (!Chess().validate_fen(fen)) return null;
-	const game = Chess(fen);
-	const board = game.board();
+export async function diagram(board, color) {
 	const canvas = Board.clone();
 	// drawing pieces:
-	if (game.turn() == 'w') {
+	if (color == 'w') {
 		for (let i = 0; i < 8; i++) {
 			for (let j = 0; j < 8; j++) {
 				if (board[i][j] == null) continue;
@@ -41,7 +36,7 @@ export async function diagram(fen) {
 		}*/
 	} else {
 		for (let i = 7; i >= 0; i--) {
-			for (let j = 7; j >= 0; i--) {
+			for (let j = 7; j >= 0; j--) {
 				if (board[i][j] == null) continue;
 				const piece = Pieces[board[i][j].color + board[i][j].type];
 				canvas.composite(piece, (7 - j) * 100, (7 - i) * 100);

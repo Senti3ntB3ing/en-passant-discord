@@ -1,6 +1,7 @@
 
 import { Roles } from '../config.js';
-import { createCommand } from '../parser.js';
+import { createCommand, error } from '../parser.js';
+import { Chess } from '../components/chess.js';
 import { diagram } from '../components/diagram/diagram.js';
 
 createCommand({
@@ -8,18 +9,29 @@ createCommand({
 	aliases: [ 'diagram' ],
 	description: 'Display a chess board diagram from **FEN**.',
 	permissions: Roles.everyone,
-	execute: async message => ({
-		file: {
-			blob: new Blob([
-				await diagram(message.content.replace(/^(.*?)[ \t]+/g, ''))
-			]),
-			name: 'board.png',
-		},
-		embeds: [{
-			type: 'image',
-			title: 'Chess diagram from FEN position',
-			color: message.content.includes('w') ? 0xFFFFFF : 0x000000,
-			image: { url: 'attachment://board.png' }
-		}]
-	})
+	execute: async message => {
+		const fen = message.content.replace(/^(.*?)[ \t]+/g, '');
+		if (!Chess().validate_fen(fen))
+			return error('Chess diagram', '❌ Error: invalid FEN string!');
+		const game = Chess(fen);
+		let status = '';
+		if (game.game_over()) {
+			if (game.in_draw()) status = '½-½';
+			else if (game.in_checkmate()) status = game.turn() == 'w' ? '0-1' : '1-0';
+		} else status = game.turn() == 'w' ? 'white to move' : 'black to move';
+		return {
+			file: {
+				blob: new Blob([ diagram(game.board(), game.turn()) ]),
+				name: 'board.png',
+			},
+			embeds: [{
+				type: 'image',
+				title: 'Chess diagram from FEN position',
+				description: fen,
+				color: game.turn() == 'w' ? 0xFFFFFF : 0x000000,
+				image: { url: 'attachment://board.png' },
+				footer: { text: '*' + status + '*' },
+			}]
+		};
+	}
 });

@@ -21,7 +21,7 @@ createCommand({
 		} else status = game.turn() == 'w' ? 'white to move' : 'black to move';
 		return {
 			file: {
-				blob: new Blob([ diagram(game.board(), game.turn()) ]),
+				blob: new Blob([ await diagram(game.board(), game.turn()) ]),
 				name: 'board.png',
 			},
 			embeds: [{

@@ -18,7 +18,7 @@ const Pieces = {
 	'wr': await decode(Deno.readFileSync('./components/diagram/resources/alpha/wr.png')),
 };
 
-export function diagram(board, color) {
+export async function diagram(board, color) {
 	const canvas = Board.clone();
 	// drawing pieces:
 	if (color == 'w') {
@@ -43,5 +43,5 @@ export function diagram(board, color) {
 			}
 		}
 	}
-	return canvas.encode();
+	return await canvas.encode();
 }

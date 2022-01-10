@@ -19,7 +19,7 @@ createCommand({
 			if (game.in_draw()) status = '½-½ ・ DRAW';
 			else if (game.in_checkmate())
 				status = game.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
-		} else status = game.turn() == 'w' ? 'WHITE TO MOVE' : 'BLACK TO MOVE';
+		} else status = game.turn() == 'w' ? '⬜️ WHITE TO MOVE' : '⬛️ BLACK TO MOVE';
 		return {
 			file: {
 				blob: new Blob([ await diagram(game.board(), game.turn()) ]),

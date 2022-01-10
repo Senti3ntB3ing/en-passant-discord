@@ -1,8 +1,9 @@
 
-import { createBot, startBot } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { createBot, startBot, transformActivity, Activity } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
 
 import { parse } from './parser.js';
+import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================
 
@@ -19,12 +20,26 @@ const baseBot = createBot({
 	token: Deno.env.get('TOKEN'),
 	intents: [ 'Guilds', 'GuildMessages' ],
 	events: {
-		ready() {
+		ready(bot) {
 			console.log('en-passant is ready!');
+			transformActivity(bot, {
+				activities: [{
+					name: Actions[0].status,
+					type: Activity[Actions[0].type],
+					createdAt: Date.now()
+				}],
+				since: Date.now(),
+				afk: false,
+				status: 'online'
+			});
 		},
 		messageCreate(bot, message) {
 			parse(bot, message)
 		},
+		guildMemberAdd(bot, member, _) {
+			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
+			sendMessage(bot, Channels['general'], `Welcome ${member}, ${message}`);
+		}
 	}
 });
 

@@ -1,7 +1,10 @@
 
 import { decode } from 'https://deno.land/x/imagescript@1.2.9/mod.ts';
 
-const Board = await decode(Deno.readFileSync('./components/diagram/resources/board.png'));
+const Board = {
+	'b': await decode(Deno.readFileSync('./components/diagram/resources/wboard.png')),
+	'w': await decode(Deno.readFileSync('./components/diagram/resources/bboard.png')),
+};
 
 const Pieces = {
 	'bp': await decode(Deno.readFileSync('./components/diagram/resources/alpha/bp.png')),
@@ -19,7 +22,7 @@ const Pieces = {
 };
 
 export async function diagram(board, color) {
-	const canvas = Board.clone();
+	const canvas = Board[color].clone();
 	// drawing pieces:
 	if (color == 'w') {
 		for (let i = 0; i < 8; i++) {

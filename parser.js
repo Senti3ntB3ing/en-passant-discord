@@ -40,6 +40,7 @@ export function createCommand(command) {
 	if (typeof command.execute != 'function') return;
 	if (command.name == undefined) return;
 	if (command.aliases == undefined) command.aliases = [ ];
+	if (command.hidden == undefined) command.hidden = false;
 	if (command.permissions == undefined) {
 		command.permissions = [ Roles.everyone];
 	} else if (typeof command.permissions != 'object') {
@@ -82,7 +83,7 @@ export function createHelp(title, color) {
 					value: command.description || '',
 					inline: false
 				};
-			})
+			}).filter(command => !command.hidden)
 		}]
 	};
 }

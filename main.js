@@ -1,5 +1,5 @@
 
-import { createBot, startBot, transformActivity, Activity } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { createBot, startBot, editBotStatus } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
 
 import { parse } from './parser.js';
@@ -22,10 +22,10 @@ const baseBot = createBot({
 	events: {
 		ready(bot) {
 			console.log('en-passant is ready!');
-			transformActivity(bot, {
+			editBotStatus(bot, {
 				activities: [{
 					name: Actions[0].status,
-					type: Activity[Actions[0].type],
+					type: Actions[0].type,
 					createdAt: Date.now()
 				}],
 				since: Date.now(),

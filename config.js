@@ -20,24 +20,29 @@ export const ColorCode = {
 	random: () => Math.floor(Math.random() * (0xFFFFFF + 1))
 };
 
-const Actions = [
-	{ type:  'Watching', status: 'Pawn Sacrifice' },
-	{ type:  'Watching', status: 'The Queen\'s Gambit' },
-	{ type:      'Game', status: 'Chess' },
-	{ type:      'Game', status: 'King of the Hill' },
-	{ type:      'Game', status: '3-Check' },
-	{ type:      'Game', status: 'Crazyhouse' },
-	{ type:      'Game', status: 'Chess960' },
-	{ type:      'Game', status: 'Antichess' },
-	{ type:      'Game', status: 'Racing Kings' },
-	{ type:      'Game', status: 'Horde' },
-	{ type:      'Game', status: 'Atomic' },
-	{ type: 'Listening', status: 'Chopin' },
-	{ type: 'Listening', status: 'Mozart' },
-	{ type: 'Listening', status: 'Beethoven' },
-	{ type: 'Listening', status: 'Bach' },
-	{ type: 'Competing', status: 'Tournament' },
-	{ type: 'Streaming', status: 'World Cup' },
+export const ActionTypes = {
+	game: 0, streaming: 1, listening: 2,
+	watching: 3, custom: 4, competing: 5
+};
+
+export const Actions = [
+	{ type:  ActionTypes.watching, status: 'Pawn Sacrifice' },
+	{ type:  ActionTypes.watching, status: 'The Queen\'s Gambit' },
+	{ type:      ActionTypes.game, status: 'Chess' },
+	{ type:      ActionTypes.game, status: 'King of the Hill' },
+	{ type:      ActionTypes.game, status: '3-Check' },
+	{ type:      ActionTypes.game, status: 'Crazyhouse' },
+	{ type:      ActionTypes.game, status: 'Chess960' },
+	{ type:      ActionTypes.game, status: 'Antichess' },
+	{ type:      ActionTypes.game, status: 'Racing Kings' },
+	{ type:      ActionTypes.game, status: 'Horde' },
+	{ type:      ActionTypes.game, status: 'Atomic' },
+	{ type: ActionTypes.listening, status: 'Chopin' },
+	{ type: ActionTypes.listening, status: 'Mozart' },
+	{ type: ActionTypes.listening, status: 'Beethoven' },
+	{ type: ActionTypes.listening, status: 'Bach' },
+	{ type: ActionTypes.competing, status: 'Tournament' },
+	{ type: ActionTypes.streaming, status: 'World Cup' },
 ];
 
 export const Welcome = [

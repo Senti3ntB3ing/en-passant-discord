@@ -15,6 +15,22 @@ import './commands/fen.js';
 
 // =========================================
 
+function setRandomAction() {
+	const action = Actions[
+		Math.floor(Math.random() * Actions.length)
+	];
+	editBotStatus(bot, {
+		activities: [{
+			name: action.status,
+			type: action.type,
+			createdAt: Date.now()
+		}],
+		since: Date.now(),
+		afk: false,
+		status: 'online'
+	});
+}
+
 const baseBot = createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),
@@ -22,19 +38,11 @@ const baseBot = createBot({
 	events: {
 		ready(bot) {
 			console.log('en-passant is ready!');
-			editBotStatus(bot, {
-				activities: [{
-					name: Actions[0].status,
-					type: Actions[0].type,
-					createdAt: Date.now()
-				}],
-				since: Date.now(),
-				afk: false,
-				status: 'online'
-			});
+			setRandomAction();
 		},
 		messageCreate(bot, message) {
-			parse(bot, message)
+			parse(bot, message);
+			if (Math.random() <= 0.2) setRandomAction();
 		},
 		guildMemberAdd(bot, member, _) {
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];

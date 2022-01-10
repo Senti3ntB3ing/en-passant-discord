@@ -77,13 +77,13 @@ export function createHelp(title, color) {
 			type: 'rich',
 			title: title || Name,
 			color: color || ColorCode.random(),
-			fields: commands.map(command => {
+			fields: commands.filter(command => !command.hidden).map(command => {
 				return {
 					name: `${command.emoji || ''} \`${Prefix}${command.name}\`:`,
 					value: command.description || '',
 					inline: false
 				};
-			}).filter(command => !command.hidden)
+			})
 		}]
 	};
 }

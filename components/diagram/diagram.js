@@ -2,8 +2,8 @@
 import { decode } from 'https://deno.land/x/imagescript@1.2.9/mod.ts';
 
 const Board = {
-	'b': await decode(Deno.readFileSync('./components/diagram/resources/wboard.png')),
-	'w': await decode(Deno.readFileSync('./components/diagram/resources/bboard.png')),
+	'b': await decode(Deno.readFileSync('./components/diagram/resources/bboard.png')),
+	'w': await decode(Deno.readFileSync('./components/diagram/resources/wboard.png')),
 };
 
 const Pieces = {

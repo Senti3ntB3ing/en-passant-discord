@@ -10,7 +10,6 @@ createCommand({
 	permissions: Roles.moderator,
 	execute: async (message, bot) => {
         const text = message.content.replace(/^(.*?)\s+/gm, '').trim();
-		console.log(text)
 		if (text == Prefix + 'poll') return info(
 			'Poll Command Help',
 			'ℹ️ You must provide text with some emojis for the poll.'
@@ -22,7 +21,7 @@ createCommand({
 			id = (await sendMessage(bot, message.channelId, success('Poll Command', text))).id;
 			for (const e of emojis) await addReaction(bot, message.channelId, id, e);
 			await deleteMessage(bot, message.channelId, message.id);
-		} catch (e) {
+		} catch {
 			if (id != null) deleteMessage(bot, message.channelId, id);
 			return error('Poll Command', '❌ Error: detected invalid emojis!');
 		}

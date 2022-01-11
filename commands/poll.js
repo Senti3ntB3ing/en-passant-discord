@@ -17,7 +17,7 @@ createCommand({
 		// extract emojis:
 		const emojis = text.match(/[\p{Emoji}\u200d]+/gu);
 		try {
-			const id = await sendMessage(bot, message.channelId, text).id;
+			const id = (await sendMessage(bot, message.channelId, text)).id;
 			for (const e of emojis) await addReaction(bot, message.channelId, id, e);
 		} catch (e) {
 			return error('Poll Command', '❌ Error: detected invalid emojis!');

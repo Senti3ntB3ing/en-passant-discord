@@ -71,6 +71,16 @@ export function error(title, message) {
 	};
 }
 
+export function info(title, message) {
+	return {
+		embeds: [{
+			title: title || Name,
+			color: ColorCode.info,
+			description: message || ''
+		}]
+	};
+}
+
 export function success(title, message) {
 	return {
 		embeds: [{

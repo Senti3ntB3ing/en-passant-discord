@@ -1,8 +1,8 @@
 
 import { getMessages, deleteMessages } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
-import { ColorCode, Roles } from '../config.js';
-import { createCommand, card, error } from '../parser.js';
+import { Roles } from '../config.js';
+import { createCommand, error, success } from '../parser.js';
 
 const invalid = error(
 	'Clean Command',
@@ -28,10 +28,9 @@ createCommand({
 			const messages = await getMessages(bot, message.channelId, { limit: n });
 			await deleteMessages(bot, message.channelId, messages.map(m => m.id));
 		} catch(e) { return internal; }
-		return card(
+		return success(
 			'Clear Command',
-			`🗑 Successfully cleared \`${n}\` messages.`,
-			ColorCode.success
+			`🗑 Successfully cleared \`${n}\` messages.`
 		);
 	}
 });

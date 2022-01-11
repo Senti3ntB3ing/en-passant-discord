@@ -9,6 +9,7 @@ import { Channels, Welcome, Actions } from './config.js';
 
 import './commands/help.js';
 import './commands/ping.js';
+import './commands/poll.js';
 import './commands/links.js';
 import './commands/clear.js';
 import './commands/fen.js';

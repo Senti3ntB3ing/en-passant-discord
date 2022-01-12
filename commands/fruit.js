@@ -366,9 +366,7 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: _ => {
 		const fruit = fruits[Math.floor(Math.random() * fruits.length)];
-		return card(
-			'Fruit Facts',
-			`${fruit.emoji} **${fruit.name}**: ${fruit.facts}`,
-		);
+		const fact = fruit.facts[Math.floor(Math.random() * fruit.facts.length)];
+		return card('Fruit Facts', `${fruit.emoji} **${fruit.name}**: ${fact}`, fruit.color);
 	}
 });

@@ -13,6 +13,7 @@ import './commands/poll.js';
 import './commands/links.js';
 import './commands/clear.js';
 import './commands/fen.js';
+import './commands/rating.js';
 
 // =========================================
 

@@ -91,6 +91,6 @@ createCommand({
 			'❌ Error: connection with __lichess.org__ failed!'
 		);
 		const rating = normalize(parseInt(lichess.perfs.rapid.rating));
-		//await addRole(bot, message.guild)
+		await addRole(bot, message.guildId, message.member.id, Roles.ratings[rating]);
 	}
 });

@@ -3,7 +3,7 @@ import { Prefix, Roles } from '../config.js';
 import { createCommand, info, card, warn, error } from '../parser.js';
 import { getLichessUser } from '../components/lichess.js';
 
-import { getUser, addRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { getUser, addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 function findPlatform(roles) {
 	for (const platform in Roles.platforms)
@@ -66,8 +66,7 @@ createCommand({
 			'If you want to use a different platform `!unlink` this one first.'
 		);
 		const text = message.content.replace(/^(.*?)\s+/gm, '').trim();
-		const user = await getUser(bot, message.authorId);
-		const username = user.username + '#' + user.discriminator;
+		const username = message.tag;
 		if (text == Prefix + 'lichess' || text == Prefix + 'lichess.org') return info(
 			'Rating Command',
 			'ℹ️ Go on your __lichess.org__ settings page and add your **Discord** username (`' +
@@ -91,6 +90,17 @@ createCommand({
 			'❌ Error: connection with __lichess.org__ failed!'
 		);
 		const rating = normalize(parseInt(lichess.perfs.rapid.rating));
+		for (const elo in Roles.ratings) {
+			if (message.member.roles.includes(Roles.ratings[elo])) {
+				await removeRole(bot, message.guildId, message.member.id, Roles.ratings[elo]);
+				break;
+			}
+		}
 		await addRole(bot, message.guildId, message.member.id, Roles.ratings[rating]);
+		return card(
+			'Rating Command',
+			'✅ Your rating has been linked with __lichess.org__!',
+			colors[platform]
+		);
 	}
 });

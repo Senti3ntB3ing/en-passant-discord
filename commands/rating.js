@@ -65,6 +65,8 @@ createCommand({
 			':warning: Your rating is already linked with __' + platform + '__.\n' +
 			'If you want to use a different platform `!unlink` this one first.'
 		);
+		if (platform == null)
+			await addRole(bot, message.guildId, message.member.id, Roles.platforms['lichess.org']);
 		const text = message.content.replace(/^(.*?)\s+/gm, '').trim();
 		const username = message.tag;
 		if (text == Prefix + 'lichess' || text == Prefix + 'lichess.org') return info(
@@ -100,7 +102,7 @@ createCommand({
 		return card(
 			'Rating Command',
 			'✅ Your rating has been linked with __lichess.org__!',
-			colors[platform]
+			colors['lichess.org']
 		);
 	}
 });

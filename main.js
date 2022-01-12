@@ -2,6 +2,8 @@
 import { createBot, startBot, editBotStatus } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
 
+import { listenAndServe } from 'https://deno.land/std@0.110.0/http/server.ts';
+
 import { parse } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';
 
@@ -38,7 +40,7 @@ const baseBot = createBot({
 	token: Deno.env.get('TOKEN'),
 	intents: [ 'Guilds', 'GuildMessages' ],
 	events: {
-		ready(bot) {
+		ready(_) {
 			console.log('en-passant is ready!');
 			setRandomAction();
 		},
@@ -56,5 +58,7 @@ const baseBot = createBot({
 const bot = enableCachePlugin(baseBot);
 
 enableCacheSweepers(bot);
+
+listenAndServe(':8080', _ => new Response('Web server is running!', { status: 200 }));
 
 await startBot(bot);

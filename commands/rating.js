@@ -3,7 +3,7 @@ import { Prefix, Roles } from '../config.js';
 import { createCommand, info, card, warn, error } from '../parser.js';
 import { getLichessUser } from '../components/lichess.js';
 
-import { getUser, addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 function findPlatform(roles) {
 	for (const platform in Roles.platforms)
@@ -22,7 +22,7 @@ function normalize(rating) {
 
 const colors = {
 	'FIDE': 0xF1C40F,
-	'lichess.org': 0xABABAC,
+	'lichess.org': 0xFFFFFF,
 	'chess.com': 0x7FA650,
 };
 

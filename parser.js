@@ -91,6 +91,16 @@ export function success(title, message) {
 	};
 }
 
+export function warn(title, message) {
+	return {
+		embeds: [{
+			title: title || Name,
+			color: ColorCode.warn,
+			description: message || ''
+		}]
+	};
+}
+
 export function createHelp(title, color) {
 	return {
 		embeds: [{

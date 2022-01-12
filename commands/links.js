@@ -36,7 +36,7 @@ createCommand({
 
 createCommand({
 	name: 'instagram', emoji: links['Instagram'].emoji,
-    aliases: [ 'insta' ],
+    aliases: [ 'insta' ], hidden: true,
 	description: 'Link to @thechessnerd Instagram page.',
 	permissions: Roles.everyone,
 	execute: _ => card(
@@ -48,7 +48,7 @@ createCommand({
 
 createCommand({
 	name: 'youtube', emoji: links['Youtube'].emoji,
-    aliases: [ 'yt' ],
+    aliases: [ 'yt' ], hidden: true,
 	description: 'Link to thechessnerd Youtube channel.',
 	permissions: Roles.everyone,
 	execute: _ => card(
@@ -60,7 +60,7 @@ createCommand({
 
 createCommand({
 	name: 'twitch', emoji: links['Twitch'].emoji,
-	aliases: [ 'stream' ],
+	aliases: [ 'stream' ], hidden: true,
 	description: 'Link to thechessnerd Twitch Live.',
 	permissions: Roles.everyone,
 	execute: _ => card(
@@ -71,7 +71,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'twitter', emoji: links['Twitter'].emoji,
+	name: 'twitter', emoji: links['Twitter'].emoji, hidden: true,
 	description: 'Link to @thechessnerd Twitter page.',
 	permissions: Roles.everyone,
 	execute: _ => card(
@@ -83,7 +83,7 @@ createCommand({
 
 createCommand({
 	name: 'discord', emoji: links['Discord'].emoji,
-    aliases: [ 'invite' ],
+    aliases: [ 'invite' ], hidden: true,
 	description: 'Invite link to thechessnerd Discord.',
 	permissions: Roles.everyone,
 	execute: _ => card(
@@ -94,7 +94,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'club', emoji: links['chess.com'].emoji,
+	name: 'club', emoji: links['chess.com'].emoji, hidden: true,
 	description: 'Invite link to the **chess.com** club.',
 	permissions: Roles.everyone,
 	execute: _ => card(
@@ -105,7 +105,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'reddit', emoji: links['reddit'].emoji,
+	name: 'reddit', emoji: links['reddit'].emoji, hidden: true,
 	description: 'Link to /r/thechessnerd reddit.',
 	permissions: Roles.everyone,
 	execute: _ => card(
@@ -116,7 +116,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'merch', emoji: links['Merch'].emoji,
+	name: 'merch', emoji: links['Merch'].emoji, hidden: true,
     aliases: [ 'shop', 'store', 'merchandise', 'drop' ],
 	description: 'Link to thechessnerd co. merch',
 	permissions: Roles.everyone,

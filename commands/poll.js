@@ -15,7 +15,7 @@ createCommand({
 			'ℹ️ You must provide text with some emojis for the poll.'
 		);
 		// extract emojis:
-		const emojis = text.replace(/[*`~!_\(\)\[\]\{\}]+/g, '').match(/[\p{Emoji}\u200d]+/gu);
+		const emojis = text.replace(/[*`~!_\(\)\[\]\{\}@,\.]+/g, '').match(/[\p{Emoji}\u200d]+/gu);
 		let id = null;
 		try {
 			// send poll message:

@@ -57,7 +57,7 @@ createCommand({
 	name: 'unlink', emoji: '⚡️', hidden: true,
 	description: 'Unlinks your online rapid Elo rating.',
 	permissions: Roles.everyone,
-	execute: async message => {
+	execute: async (message, bot) => {
 		let platform = findPlatform(message.member.roles);
 		if (platform == null) return info(
 			'Rating Command',

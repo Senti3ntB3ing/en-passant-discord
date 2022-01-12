@@ -8,7 +8,7 @@ The environment uses `deno`, with the [Discordeno API](https://discordeno.mod.la
 [Docs are available here](https://doc.deno.land/https://deno.land/x/discordeno@13.0.0-rc18/mod.ts).
 
 Hosting is provided by [replit.com](https://replit.com/).
-Constant up-ping is provided by [UpTimeRobot](https://uptimerobot.com).
+Constant up-ping is provided by [UptimeRobot](https://uptimerobot.com).
 
 The bot uses the public [Lichess API](https://lichess.org/api) to retrieve user data.
 

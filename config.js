@@ -70,7 +70,7 @@ export const ColorCode = {
 	error: 0xE70000,
 	success: 0x1ABC9D,
 	info: 0xFFFFFF,
-	warn: 0xF59234,
+	warn: 0xFFCC4D,
 	random: () => Math.floor(Math.random() * (0xFFFFFF + 1))
 };
 

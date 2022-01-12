@@ -59,7 +59,7 @@ createCommand({
 	description: 'Link your __lichess.org__ rapid rating.',
 	permissions: Roles.everyone,
 	execute: async (message, bot) => {
-		let platform = findPlatform(message.member.roles);
+		const platform = findPlatform(message.member.roles);
 		if (platform != null && platform != 'lichess.org') return warn(
 			'Rating Command',
 			':warning: Your rating is already linked with __' + platform + '__.\n' +

@@ -2,6 +2,8 @@
 import { createBot, startBot, editBotStatus } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
 
+import { serve } from "https://deno.land/std@0.98.0/http/server.ts";
+
 import { parse } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';
 
@@ -57,15 +59,12 @@ const bot = enableCachePlugin(baseBot);
 
 enableCacheSweepers(bot);
 
-const server = Deno.listen({ port: 8080 });
-for await (const connection of server) serveHttp(connection);
-async function serveHttp(conn) {
-	const httpConn = Deno.serveHttp(conn);
-	for await (const requestEvent of httpConn) {
-		requestEvent.respondWith(
-			new Response('The webserver is running!', { status: 200 })
-		);
-	}
-}
+// web server for ping:
+const server = serve({ port: 8080 });
+(async () => {
+	for await (const request of server) request.respond(
+		{ status: 200, body: 'Web server ready!' }
+	);
+})();
 
 await startBot(bot);

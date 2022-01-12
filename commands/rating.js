@@ -54,6 +54,27 @@ createCommand({
 });
 
 createCommand({
+	name: 'unlink', emoji: '⚡️', hidden: true,
+	description: 'Unlinks your online rapid Elo rating.',
+	permissions: Roles.everyone,
+	execute: message => {
+		let platform = findPlatform(message.member.roles);
+		if (platform == null) return info(
+			'Rating Command',
+			'ℹ️ You must link your account to use this command.'
+		);
+		for (const rating in Roles.ratings) {
+			if (message.member.roles.includes(Roles.ratings[rating])) {
+				await removeRole(bot, message.guildId, message.member.id, Roles.ratings[rating]);
+				break;
+			}
+		}
+		await removeRole(bot, message.guildId, message.member.id, Roles.platforms[platform]);
+		return info('Rating Command', 'ℹ️ You have successfully unlinked your profile.');
+	}
+});
+
+createCommand({
 	name: 'lichess', emoji: ':regional_indicator_l:',
 	aliases: [ 'lichess.org' ],
 	description: 'Link your __lichess.org__ rapid rating.',

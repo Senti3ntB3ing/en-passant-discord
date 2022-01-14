@@ -1,6 +1,8 @@
 
 import { Roles } from '../config.js';
-import { createCommand, card } from '../parser.js';
+import { createCommand, card, error } from '../parser.js';
+
+import { closest, levenshtein } from '../components/levenshtein.js';
 
 const fruits = [
 	{
@@ -360,12 +362,26 @@ const fruits = [
 ];
 
 createCommand({
-	name: 'fruit', emoji: '🍏', hidden: true,
+	name: 'fruit', emoji: '🍏',
 	aliases: [ 'fruits' ],
 	description: 'Check the latency of the bot.',
 	permissions: Roles.everyone,
-	execute: _ => {
-		const fruit = fruits[Math.floor(Math.random() * fruits.length)];
+	execute: message => {
+		const argument = message.content.replace(/^(.*?)\s+/g, '');
+		let fruit = fruits[Math.floor(Math.random() * fruits.length)];
+		if (argument != message.content) {
+			fruit = fruits.find(fruit => fruit.name.toLowerCase() == argument.toLowerCase());
+			if (!fruit) {
+				const closestFruit = closest(argument, fruits.map(fruit => fruit.name));
+				const distance = levenshtein(argument, closestFruit);
+				return error(
+					'Fruit Facts',
+					`Could not find any fruit facts for \`${argument}\`!` +
+					distance <= 2 ? `\nDid you mean \`${closestFruit}\` instead?` : ''
+				);
+			}
+
+		}
 		const fact = fruit.facts[Math.floor(Math.random() * fruit.facts.length)];
 		return card('Fruit Facts', `${fruit.emoji} **${fruit.name}**: ${fact}`, fruit.color);
 	}

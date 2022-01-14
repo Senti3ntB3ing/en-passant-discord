@@ -91,7 +91,7 @@ const fruits = [
 		]
 	},
 	{
-		name: 'Passion Fruit', emoji: '♥️', color: 0xD82023,
+		name: 'Passion Fruit', color: 0xD82023,
 		facts: [
 			'The Passion Fruit flower is the national flower of Paraguay.',
 			'Passion Fruits were first grown in Brazil.',
@@ -164,7 +164,7 @@ const fruits = [
 		]
 	},
 	{
-		name: 'Pomegranate', emoji: '🍅', color: 0xD62A00,
+		name: 'Pomegranate', color: 0xD62A00,
 		facts: [
 			'Pomegranate comes from the latin pomum granatum and means Apple with many seeds.',
 			'Pomegranates belong to the berry family.',
@@ -298,7 +298,7 @@ const fruits = [
 		]
 	},
 	{
-		name: 'Persimmon', emoji: '🍅', color: 0xEF6B22,
+		name: 'Persimmon', color: 0xEF6B22,
 		facts: [
 			'In Korean folklore the dried Persimmon has a reputation for scaring away tigers.',
 			'There are about 2,000 varieties of Persimmons in the world.',
@@ -310,7 +310,7 @@ const fruits = [
 		]
 	},
 	{
-		name: 'Prickly Pear', emoji: '🌵', color: 0x930E79,
+		name: 'Prickly Pear', color: 0x930E79,
 		facts: [
 			'Prickly Pear is also known as “cactus fruit”, “cactus Fig” and “Indian Fig”.',
 			'100 grams of Prickly Pears have only 14 calories.',
@@ -333,7 +333,7 @@ const fruits = [
 		]
 	},
 	{
-		name: 'Miracle Fruit', emoji: '🌶', color: 0xF9313D,
+		name: 'Miracle Fruit', color: 0xF9313D,
 		facts: [
 			'Miracle Fruit are also known as sweet berries, miracle berries, “taamis” and “agbayuns”.',
 			'The impact of the Miracle Fruit on one’s sense of taste lasts for around 30 minutes or longer.',

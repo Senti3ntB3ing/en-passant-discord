@@ -178,7 +178,7 @@ const fruits = [
 		]
 	},
 	{
-		name: 'Avocado', emoji: '🥑', color: 0xF7F791,
+		name: 'Avocado', emoji: '🥑', color: 0x3F721D,
 		facts: [
 			'Avocado is also known as “Alligator Pear” because of its pear like shape and rough skin.',
 			'Avocado is often consumed raw because cooking changes its taste.',
@@ -362,7 +362,7 @@ const fruits = [
 ];
 
 createCommand({
-	name: 'fruit', emoji: '🍏',
+	name: 'fruit', emoji: '🍏', hidden: true,
 	aliases: [ 'fruits' ],
 	description: 'Random fruit facts and characteristics.',
 	permissions: Roles.everyone,

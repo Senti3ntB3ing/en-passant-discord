@@ -119,7 +119,6 @@ export const Welcome = [
 	'danger levels!',
 	'Raaaawr!!',
 	'you, with the wrong answer!',
-	'retreat like a Frenchman!',
 	'always repeat!',
 	'how does the knight move?',
 	'1. e4 e5 2. Ke2! Ke7!!'

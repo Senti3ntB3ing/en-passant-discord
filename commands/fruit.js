@@ -364,7 +364,7 @@ const fruits = [
 createCommand({
 	name: 'fruit', emoji: '🍏',
 	aliases: [ 'fruits' ],
-	description: 'Check the latency of the bot.',
+	description: 'Fruit facts and characteristics.',
 	permissions: Roles.everyone,
 	execute: message => {
 		const argument = message.content.replace(/^(.*?)\s+/g, '');
@@ -377,7 +377,7 @@ createCommand({
 				return error(
 					'Fruit Facts',
 					`Could not find any fruit facts for \`${argument}\`!` +
-					distance <= 2 ? `\nDid you mean \`${closestFruit}\` instead?` : ''
+					(distance <= 2 ? `\nDid you mean \`${closestFruit}\` instead?` : '')
 				);
 			}
 

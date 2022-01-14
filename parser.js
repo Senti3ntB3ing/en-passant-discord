@@ -21,14 +21,14 @@ function handle(command, bot, message) {
 export function parse(bot, message) {
 	if (!message.content.startsWith(Prefix)) return;
 	const content = message.content.split(/[ \t]+/g)[0].substring(1).toLowerCase();
-	for (let command of commands) {
+	for (const command of commands) {
 		if (command.name == content ||
 			command.aliases.includes(content)) {
 			if (command.permissions.includes(Roles.everyone)) {
 				handle(command, bot, message);
 				return;
 			}
-			for (let role of message.member.roles) {
+			for (const role of message.member.roles) {
 				if (command.permissions.includes(role)) {
 					handle(command, bot, message);
 					return;
@@ -39,10 +39,10 @@ export function parse(bot, message) {
 	// command not found, check for typos:
 	const closestCommand = closest(content, primary);
 	const distance = levenshtein(closestCommand, content);
-	if (distance <= 2) info(
+	if (distance <= 2) sendMessage(bot, message.channelId, info(
 		'Command Information',
 		`ℹ️ There is no command named \`${content}\`.\nDid you mean \`${closestCommand}\` instead?`
-	);
+	));
 }
 
 export function createCommand(command) {

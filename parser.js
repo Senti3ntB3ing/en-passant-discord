@@ -41,7 +41,8 @@ export function parse(bot, message) {
 	const distance = levenshtein(closestCommand, content);
 	if (distance <= 2) sendMessage(bot, message.channelId, info(
 		'Command Information',
-		`ℹ️ There is no command named \`${content}\`.\nDid you mean \`${closestCommand}\` instead?`
+		`ℹ️ There is no command named \`${Prefix}${content}\`.\n` +
+		`Did you mean \`${Prefix}${closestCommand}\` instead?`
 	));
 }
 

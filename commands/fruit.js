@@ -364,7 +364,7 @@ const fruits = [
 createCommand({
 	name: 'fruit', emoji: '🍏',
 	aliases: [ 'fruits' ],
-	description: 'Fruit facts and characteristics.',
+	description: 'Random fruit facts and characteristics.',
 	permissions: Roles.everyone,
 	execute: message => {
 		const argument = message.content.replace(/^(.*?)\s+/g, '');
@@ -377,12 +377,12 @@ createCommand({
 				return error(
 					'Fruit Facts',
 					`Could not find any fruit facts for \`${argument}\`!` +
-					(distance <= 2 ? `\nDid you mean \`${closestFruit}\` instead?` : '')
+					(distance < 3 ? `\nDid you mean \`${closestFruit}\` instead?` : '')
 				);
 			}
 
 		}
 		const fact = fruit.facts[Math.floor(Math.random() * fruit.facts.length)];
-		return card('Fruit Facts', `${fruit.emoji} **${fruit.name}**: ${fact}`, fruit.color);
+		return card(`Fruit Facts - ${fruit.emoji} **${fruit.name}**`, fact, fruit.color);
 	}
 });

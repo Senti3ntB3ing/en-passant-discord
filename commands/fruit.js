@@ -383,6 +383,7 @@ createCommand({
 
 		}
 		const fact = fruit.facts[Math.floor(Math.random() * fruit.facts.length)];
-		return card(`Fruit Facts - ${fruit.emoji} **${fruit.name}**`, fact, fruit.color);
+		const emoji = fruit.emoji != undefined ? `${fruit.emoji} ` : '';
+		return card(`Fruit Facts: **${fruit.name}**`, emoji + fact, fruit.color);
 	}
 });

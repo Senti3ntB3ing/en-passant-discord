@@ -1,9 +1,11 @@
 
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
+import { closest, levenshtein } from './components/levenshtein.js';
+
 import { Name, Prefix, Roles, ColorCode } from './config.js';
 
-var commands = [];
+var commands = [ ], primary = [ ];
 
 function handle(command, bot, message) {
 	if (command.execute.constructor.name == 'AsyncFunction') {
@@ -18,7 +20,7 @@ function handle(command, bot, message) {
 
 export function parse(bot, message) {
 	if (!message.content.startsWith(Prefix)) return;
-	const content = message.content.split(/[ \t]+/g)[0].substring(1);
+	const content = message.content.split(/[ \t]+/g)[0].substring(1).toLowerCase();
 	for (let command of commands) {
 		if (command.name == content ||
 			command.aliases.includes(content)) {
@@ -34,6 +36,13 @@ export function parse(bot, message) {
 			}
 		}
 	}
+	// command not found, check for typos:
+	const closestCommand = closest(content, primary);
+	const distance = levenshtein(closestCommand, content);
+	if (distance <= 2) info(
+		'Command Information',
+		`ℹ️ There is no command named \`${content}\`.\nDid you mean \`${closestCommand}\` instead?`
+	);
 }
 
 export function createCommand(command) {
@@ -47,6 +56,7 @@ export function createCommand(command) {
 		command.permissions = [ command.permissions ];
 	}
 	commands.push(command);
+	primary.push(command.name.toLowerCase());
 }
 
 export function text(message) { return { content: message }; }

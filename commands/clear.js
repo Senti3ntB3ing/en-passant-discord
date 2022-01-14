@@ -15,7 +15,7 @@ const internal = error(
 );
 
 createCommand({
-	name: 'clear', emoji: '🗑',
+	name: 'clear', emoji: '🗑', hidden: true,
 	aliases: [ 'clean', 'delete', 'erase' ],
 	description: 'Clear messages in a text channel.',
 	permissions: Roles.moderator,

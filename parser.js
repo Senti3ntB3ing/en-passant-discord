@@ -4,7 +4,6 @@ import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 import { closest, levenshtein } from './components/levenshtein.js';
 
 import { Name, Prefix, Roles, ColorCodes } from './config.js';
-import { bot } from './main.js';
 
 var commands = [ ], primary = [ ], tasks = { };
 
@@ -67,7 +66,7 @@ export function startTask(task) {
 	if (typeof task.interval != 'number') return;
 	if (task.interval <= 0) return;
 	if (tasks[task.name] != undefined) return;
-	tasks[task.name] = setInterval(task.execute, task.interval, bot);
+	tasks[task.name] = setInterval(task.execute, task.interval);
 }
 
 export function stopTask(task) {

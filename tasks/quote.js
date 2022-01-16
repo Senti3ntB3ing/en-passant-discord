@@ -3,6 +3,7 @@ import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { Time, Channels, ColorCodes } from '../config.js';
 import { startTask } from '../parser.js';
+import { bot } from '../main.js';
 
 const quotes = [
 	{
@@ -1092,7 +1093,7 @@ const quotes = [
 startTask({
 	name: 'quote_of_the_day',
 	interval: Time.minute,
-	execute: bot => {
+	execute: () => {
 		const element = quotes[Math.floor(Math.random() * quotes.length)];
 		const text = element.quotes[Math.floor(Math.random() * element.quotes.length)];
 		const footer = element.title ? `${element.title}  ${element.author}` : element.author;

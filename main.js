@@ -18,10 +18,6 @@ import './commands/fen.js';
 import './commands/rating.js';
 import './commands/fruit.js';
 
-// ==== Tasks ==============================
-
-import './tasks/quote.js';
-
 // =========================================
 
 function setRandomAction() {
@@ -61,8 +57,13 @@ export const baseBot = createBot({
 });
 
 export const bot = enableCachePlugin(baseBot);
-
 enableCacheSweepers(bot);
+
+// ==== Tasks ==============================
+
+import './tasks/quote.js';
+
+// =========================================
 
 // web server for ping:
 const server = serve({ port: 8080 });

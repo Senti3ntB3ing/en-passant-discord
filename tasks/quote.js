@@ -1092,7 +1092,7 @@ const quotes = [
 
 startTask({
 	name: 'quote_of_the_day',
-	interval: Time.minute,
+	interval: Time.day,
 	execute: () => {
 		const element = quotes[Math.floor(Math.random() * quotes.length)];
 		const text = element.quotes[Math.floor(Math.random() * element.quotes.length)];
@@ -1101,9 +1101,9 @@ startTask({
 			embeds: [{
 				type: 'rich',
 				title: 'Chess quote of the day',
-				description: `> ***“${text}”***`,
-				color: element.title ? ColorCodes.titled : ColorCodes.success,
-				footer: { text: '—' + footer },
+				description: `> *“${text}”*`,
+				color: ColorCodes.success,
+				footer: { text: '— ' + footer },
 			}]
 		});
 	}

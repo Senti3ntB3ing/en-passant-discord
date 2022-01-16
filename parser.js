@@ -66,13 +66,17 @@ export function startTask(task) {
 	if (typeof task.interval != 'number') return;
 	if (task.interval <= 0) return;
 	if (tasks[task.name] != undefined) return;
-	tasks[task.name] = setInterval(task.execute, task.interval);
+	tasks[task.name] = setInterval(() => {
+		task.execute();
+		console.log(`task: ${task.name} executed`);
+	}, task.interval);
 }
 
 export function stopTask(task) {
 	if (tasks[task] != undefined) {
 		clearInterval(tasks[task]);
 		tasks.delete(task);
+		console.log(`task: ${task} stopped`);
 	}
 }
 

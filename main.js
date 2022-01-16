@@ -42,7 +42,7 @@ export const baseBot = createBot({
 	intents: [ 'Guilds', 'GuildMessages' ],
 	events: {
 		ready(_) {
-			console.log('en-passant is ready!');
+			console.log('status: en-passant ready');
 			setRandomAction();
 		},
 		messageCreate(bot, message) {
@@ -67,6 +67,7 @@ import './tasks/quote.js';
 
 // web server for ping:
 const server = serve({ port: 8080 });
+console.log('status: web server ready');
 (async () => {
 	for await (const request of server) request.respond(
 		{ status: 200, body: 'Web server ready!' }

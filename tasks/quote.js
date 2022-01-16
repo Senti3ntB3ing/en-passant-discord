@@ -1097,7 +1097,7 @@ startTask({
 		const element = quotes[Math.floor(Math.random() * quotes.length)];
 		const text = element.quotes[Math.floor(Math.random() * element.quotes.length)];
 		const footer = element.title ? `${element.title}  ${element.author}` : element.author;
-		sendMessage(bot, Channels.mad_chat, {
+		sendMessage(bot, Channels.general, {
 			embeds: [{
 				type: 'rich',
 				title: 'Chess quote of the day',

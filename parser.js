@@ -66,6 +66,7 @@ export function startTask(task) {
 	if (typeof task.interval != 'number') return;
 	if (task.interval <= 0) return;
 	if (tasks[task.name] != undefined) return;
+	if (task.disabled != undefined && task.disabled === true) return;
 	tasks[task.name] = setInterval(() => {
 		task.execute();
 		console.log(`task: ${task.name} executed`);

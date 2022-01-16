@@ -1,5 +1,5 @@
 
-import { ColorCode, Roles } from '../config.js';
+import { ColorCodes, Roles } from '../config.js';
 import { createCommand, card } from '../parser.js';
 
 const links = {
@@ -22,7 +22,7 @@ createCommand({
 		embeds: [{
 			type: 'rich',
 			title: 'Community Links',
-			color: ColorCode.success,
+			color: ColorCodes.success,
 			fields: Object.keys(links).map(name => {
 				return {
 					name: `${links[name].emoji} **${name}**:`,

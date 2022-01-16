@@ -36,7 +36,7 @@ function setRandomAction() {
 	});
 }
 
-const baseBot = createBot({
+export const baseBot = createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),
 	intents: [ 'Guilds', 'GuildMessages' ],
@@ -56,7 +56,7 @@ const baseBot = createBot({
 	}
 });
 
-const bot = enableCachePlugin(baseBot);
+export const bot = enableCachePlugin(baseBot);
 
 enableCacheSweepers(bot);
 

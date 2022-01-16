@@ -2,9 +2,60 @@
 export const Name = 'en passant';
 export const Prefix = '!';
 
+export const Time = {
+	second: 1000,
+	minute: 60 * 1000,
+	quarter: 15 * 60 * 1000,
+	hour: 60 * 60 * 1000,
+	day: 24 * 60 * 60 * 1000,
+	week: 7 * 24 * 60 * 60 * 1000,
+	month: 30 * 24 * 60 * 60 * 1000,
+	year: 365 * 24 * 60 * 60 * 1000,
+	seconds: t => t * 1000,
+	minutes: t => t * 60 * 1000,
+	quarters: t => t * 15 * 60 * 1000,
+	hours: t => t * 60 * 60 * 1000,
+	days: t => t * 24 * 60 * 60 * 1000,
+	weeks: t => t * 7 * 24 * 60 * 60 * 1000,
+	months: t => t * 30 * 24 * 60 * 60 * 1000,
+	years: t => t * 365 * 24 * 60 * 60 * 1000,
+}
+
 export const Channels = {
-	general: 839594884289921076n,
+	// == GENERAL =======================
+	      general: 839594884289921076n,
 	notifications: 839594884289921077n,
+	content_ideas: 915564965593759754n,
+	   chess_club: 911588588930629683n,
+	    challenge: 858358887416594463n,
+	     feedback: 882712808050003978n,
+	   chess_sets: 929056689909530695n,
+	    off_topic: 900781481704706159n,
+	        memes: 910623921093623868n,
+	         bots: 912689526244274207n,
+	       stream: 921464354791116800n,
+	// == CHESS =========================
+	     openings: 839594884289921079n,
+	  middlegames: 839594884289921080n,
+	     endgames: 839594884289921081n,
+	      puzzles: 844684087981244467n,
+	        games: 912840725375377478n,
+	// == VOTE CHESS ====================
+	   vote_chess: 845769660108636171n,
+	   discussion: 911278525129064458n,
+	   past_games: 865897303822172160n,
+	// == STUDY =========================
+	         text: 921783499315351612n,
+	      voice_1: 845012057655869523n,
+	      voice_2: 920065309770137650n,
+	      voice_3: 932303088973402172n,
+	// == MODERATORS ====================
+	     mod_chat: 839597908999274526n,
+	     mad_chat: 918169575848308766n,
+	   staff_chat: 903024322539556874n,
+	         bans: 920428101656248350n,
+	        voice: 839599928660852826n,
+	// ==================================
 };
 
 export const Roles = {
@@ -66,11 +117,12 @@ export const Roles = {
 	}
 };
 
-export const ColorCode = {
+export const ColorCodes = {
 	error: 0xE70000,
 	success: 0x1ABC9D,
 	info: 0xFFFFFF,
 	warn: 0xFFCC4D,
+	titled: 0xF1C40F,
 	random: () => Math.floor(Math.random() * (0xFFFFFF + 1))
 };
 

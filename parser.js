@@ -3,9 +3,10 @@ import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { closest, levenshtein } from './components/levenshtein.js';
 
-import { Name, Prefix, Roles, ColorCode } from './config.js';
+import { Name, Prefix, Roles, ColorCodes } from './config.js';
+import { bot } from './main.js';
 
-var commands = [ ], primary = [ ];
+var commands = [ ], primary = [ ], tasks = { };
 
 function handle(command, bot, message) {
 	if (command.execute.constructor.name == 'AsyncFunction') {
@@ -60,13 +61,29 @@ export function createCommand(command) {
 	primary.push(command.name.toLowerCase());
 }
 
+export function startTask(task) {
+	if (typeof task.execute != 'function') return;
+	if (task.name == undefined) return;
+	if (typeof task.interval != 'number') return;
+	if (task.interval <= 0) return;
+	if (tasks[task.name] != undefined) return;
+	tasks[task.name] = setInterval(task.execute, task.interval, bot);
+}
+
+export function stopTask(task) {
+	if (tasks[task] != undefined) {
+		clearInterval(tasks[task]);
+		tasks.delete(task);
+	}
+}
+
 export function text(message) { return { content: message }; }
 
 export function card(title, message, color) {
 	return {
 		embeds: [{
 			title: title || Name,
-			color: color || ColorCode.random(),
+			color: color || ColorCodes.random(),
 			description: message || ''
 		}]
 	};
@@ -76,7 +93,7 @@ export function error(title, message) {
 	return {
 		embeds: [{
 			title: title || Name,
-			color: ColorCode.error,
+			color: ColorCodes.error,
 			description: message || ''
 		}]
 	};
@@ -86,7 +103,7 @@ export function info(title, message) {
 	return {
 		embeds: [{
 			title: title || Name,
-			color: ColorCode.info,
+			color: ColorCodes.info,
 			description: message || ''
 		}]
 	};
@@ -96,7 +113,7 @@ export function success(title, message) {
 	return {
 		embeds: [{
 			title: title || Name,
-			color: ColorCode.success,
+			color: ColorCodes.success,
 			description: message || ''
 		}]
 	};
@@ -106,7 +123,7 @@ export function warn(title, message) {
 	return {
 		embeds: [{
 			title: title || Name,
-			color: ColorCode.warn,
+			color: ColorCodes.warn,
 			description: message || ''
 		}]
 	};
@@ -117,7 +134,7 @@ export function createHelp(title, color) {
 		embeds: [{
 			type: 'rich',
 			title: title || Name,
-			color: color || ColorCode.random(),
+			color: color || ColorCodes.random(),
 			fields: commands.filter(command => !command.hidden).map(command => {
 				return {
 					name: `${command.emoji || ''} \`${Prefix}${command.name}\`:`,

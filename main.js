@@ -18,6 +18,10 @@ import './commands/fen.js';
 import './commands/rating.js';
 import './commands/fruit.js';
 
+// ==== Tasks ==============================
+
+import './tasks/quote.js';
+
 // =========================================
 
 function setRandomAction() {

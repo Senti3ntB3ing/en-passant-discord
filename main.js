@@ -39,25 +39,23 @@ function setRandomAction() {
 export const baseBot = createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),
-	intents: [ 'Guilds', 'GuildMessages' ],
+	intents: [ 'Guilds', 'GuildMessages', 'GuildMembers' ],
 	events: {
-		ready(_) {
-			console.log('status: en-passant ready');
-			setRandomAction();
-		},
 		messageCreate(bot, message) {
 			parse(bot, message);
 			if (Math.random() <= 0.2) setRandomAction();
 		},
 		guildMemberAdd(bot, member, _) {
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
-			sendMessage(bot, Channels['general'], `Welcome ${member}, ${message}`);
+			sendMessage(bot, Channels.general, `Welcome ${member}, ${message}`);
 		}
 	}
 });
 
 export const bot = enableCachePlugin(baseBot);
 enableCacheSweepers(bot);
+console.log('status: en-passant ready');
+setRandomAction();
 
 // ==== Tasks ==============================
 

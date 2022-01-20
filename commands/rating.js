@@ -21,7 +21,7 @@ createCommand({
 		const title = 'Accounts Command';
 		const member = await Database.get(message.member.id);
 		if (member == null || member.accounts == undefined) return info(
-			title, 'ℹ️ You must link your account to use this command.'
+			title, 'ℹ️ You must link an account to use this command.'
 		);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
@@ -52,7 +52,7 @@ createCommand({
 		}
 		if (list.length > 0) return cards(list);
 		return info(
-			title, 'ℹ️ You must link your account to use this command.'
+			title, 'ℹ️ You must link an account to use this command.'
 		);
 	}
 });
@@ -114,7 +114,7 @@ createCommand({
 			);
 		}
 		if (member == null) member = { accounts: [ ] };
-		const verified = await verifyLichessUser(text);
+		const verified = await verifyLichessUser(text, username);
 		if (verified == undefined) return warn(
 			title, ':warning: No lichess user found with the username `' + text + '`!'
 		);

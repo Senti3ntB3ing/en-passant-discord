@@ -8,7 +8,7 @@ export class Database {
 		.then(e => e.text())
 		.then(value => {
 			if (!value) return null;
-			try { value = JSON.parse(strValue); }
+			try { value = JSON.parse(value); }
 			catch { return null; }
 			if (value === undefined) return null;
 			return value;

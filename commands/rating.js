@@ -78,13 +78,13 @@ createCommand({
 	description: 'Link your __lichess.org__ rapid rating.',
 	permissions: Roles.everyone,
 	execute: async (message, bot) => {
-		const title = 'Rating Command';
+		const title = 'Account Command';
 		const text = message.content.replace(/^(.*?)\s+/gm, '').trim();
 		const username = message.tag;
 		let member = await Database.get(message.member.id);
 		if (text == Prefix + 'lichess' || text == Prefix + 'lichess.org') {
 			const process = info(
-				'Rating Command',
+				title,
 				'ℹ️ Go on your __lichess.org__ settings page and add your **Discord** username (`' +
 				username + '`) to the `location` field.\n' +
 				'Type `!lichess your_lichess_username` to link your account.\n' +
@@ -112,7 +112,7 @@ createCommand({
 			title, ':warning: No lichess user found with the username `' + text + '`!'
 		);
 		if (!verified) return error(
-			'Rating Command',
+			title,
 			'❌ Error: verification with __lichess.org__ failed!'
 		);
 		member.accounts.push({ platform: 'lichess.org', username: text });

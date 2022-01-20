@@ -5,12 +5,16 @@ import { Roles, Time, Channels, ColorCodes, Quotes } from '../config.js';
 import { startTask, createCommand } from '../parser.js';
 import { bot } from '../main.js';
 
-Date.prototype.getDayOfYear =
-	() => Math.round((this - (new Date(this)).setMonth(0, 0)) / 86400000);
+const dayOfYear = date => {
+    date = date || new Date();
+    const y = date.getFullYear();
+    const j1 = new Date(y, 0, 1);
+    return ((date - j1) / (1000 * 60 * 60 * 24) + 1);
+};
 
 const quote_of_the_day = () => {
 	const now = new Date();
-	const a_seed = now.getDayOfYear() + now.getFullYear();
+	const a_seed = dayOfYear(now) + now.getFullYear();
 	const q_seed = now.getDay() + a_seed;
 	const element = Quotes[a_seed % Quotes.length];
 	return {

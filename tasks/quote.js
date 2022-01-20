@@ -1091,7 +1091,7 @@ const quotes = [
 ];
 
 Date.prototype.getDayOfYear =
-	() => Math.round((this - (new Date(this)).setMonth(0, 0)) / 8.64e7);
+	() => Math.round((this - (new Date(this)).setMonth(0, 0)) / 86400000);
 
 const quote_of_the_day = () => {
 	const now = new Date();

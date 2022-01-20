@@ -9,7 +9,7 @@ const dayOfYear = date => {
     date = date || new Date();
     const y = date.getFullYear();
     const j1 = new Date(y, 0, 1);
-    return ((date - j1) / (1000 * 60 * 60 * 24) + 1);
+    return Math.round((date - j1) / (1000 * 60 * 60 * 24) + 1);
 };
 
 const quote_of_the_day = () => {

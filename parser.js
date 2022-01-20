@@ -93,12 +93,22 @@ export function card(title, message, color) {
 	};
 }
 
+export function cards(elements) {
+	return {
+		embeds: elements.map(element => ({
+			title: element.title || Name,
+			color: element.color || ColorCodes.random(),
+			description: element.message || ''
+		}))
+	};
+}
+
 export function error(title, message) {
 	return {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.error,
-			description: message || ''
+			description: message || 'Error!'
 		}]
 	};
 }
@@ -108,7 +118,7 @@ export function info(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.info,
-			description: message || ''
+			description: message || 'Information.'
 		}]
 	};
 }
@@ -118,7 +128,7 @@ export function success(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.success,
-			description: message || ''
+			description: message || 'Success!'
 		}]
 	};
 }
@@ -128,7 +138,7 @@ export function warn(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.warn,
-			description: message || ''
+			description: message || 'Warning!'
 		}]
 	};
 }
@@ -142,7 +152,7 @@ export function createHelp(title, color) {
 			fields: commands.filter(command => !command.hidden).map(command => {
 				return {
 					name: `${command.emoji || ''} \`${Prefix}${command.name}\`:`,
-					value: command.description || '',
+					value: command.description || 'No description.',
 					inline: false
 				};
 			})

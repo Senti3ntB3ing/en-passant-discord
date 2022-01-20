@@ -1,7 +1,7 @@
 
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
-import { Time, Channels, ColorCodes } from '../config.js';
+import { Roles, Time, Channels, ColorCodes } from '../config.js';
 import { startTask, createCommand } from '../parser.js';
 import { bot } from '../main.js';
 

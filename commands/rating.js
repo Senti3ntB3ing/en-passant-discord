@@ -1,6 +1,6 @@
 
 import { Prefix, Roles } from '../config.js';
-import { createCommand, info, card, cards, warn, error } from '../parser.js';
+import { createCommand, success, info, card, cards, warn, error } from '../parser.js';
 import { getLichessRapidRating, verifyLichessUser } from '../components/lichess.js';
 
 import { Database } from '../database.js';
@@ -40,14 +40,8 @@ createCommand({
 						color: colors[platform]
 					});
 				break;
-				/*case 'chess.com':
-					list.push({
-						title,
-						message: `⭐️ Your __chess.com__ rapid rating is \`${rating}\`!`,
-						color: colors[platform]
-					});
-				break;
-				case 'FIDE': break;*/
+				// case 'chess.com': break;
+				// case 'FIDE': break;
 			}
 		}
 		if (list.length > 0) return cards(list);
@@ -94,8 +88,7 @@ createCommand({
 				'ℹ️ Go on your __lichess.org__ settings page and add your **Discord** username (`' +
 				username + '`) to the `location` field.\n' +
 				'Type `!lichess your_lichess_username` to link your account.\n' +
-				'If your **Discord** username contains spaces or symbols it might not work, ' +
-				'but you can always ask a moderator to manually fix it for you.'
+				'If your **Discord** username contains spaces or symbols it might not work.'
 			);
 			if (member == null || member.accounts == undefined) return process;
 			const lichess = member.accounts.find(a => a.platform == 'lichess.org');
@@ -125,10 +118,6 @@ createCommand({
 		member.accounts.push({ platform: 'lichess.org', username: text });
 		await Database.set(message.member.id, member);
 		await addRole(bot, message.guildId, message.member.id, Roles.platforms['lichess.org']);
-		return card(
-			title,
-			'✅ Successfully verified! Type `!lichess` to see your rating.',
-			colors['lichess.org']
-		);
+		return success(title, '✅ Successfully verified! Type `!lichess` to see your rating.');
 	}
 });

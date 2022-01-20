@@ -24,9 +24,9 @@ createCommand({
 	description: 'Shows your online rapid Elo rating.',
 	permissions: Roles.moderator,
 	execute: async message => {
-		const userData = await Database.get(message.author.id);
+		const userData = await Database.get(message.member.id);
 		if (userData == null) {
-			await Database.set(message.author.id, {
+			await Database.set(message.member.id, {
 				accounts: [
 					{
 						platform: 'lichess.org',
@@ -39,7 +39,7 @@ createCommand({
 				'ℹ️ You must link your account to use this command.'
 			);
 		} else {
-			const lichess = await getLichessUser(text);
+			const lichess = await getLichessUser(userData.accounts[0].username);
 			if (lichess == null) return warn(
 				'Rating Command',
 				':warning: No lichess user found with the username `' + text + '`!'

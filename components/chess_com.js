@@ -13,7 +13,7 @@ export async function getChess_comUserStats(user) {
 	user = encodeURIComponent(user);
 	const url = `https://api.chess.com/pub/player/${user}/stats`;
 	try {
-		const response = await fetch(url + user);
+		const response = await fetch(url);
 		if (response.status != 200) return null;
 		return await response.json();
 	} catch { return null; }

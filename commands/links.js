@@ -18,7 +18,7 @@ createCommand({
     aliases: [ 'link' ],
 	description: 'List of useful links.',
 	permissions: Roles.everyone,
-	execute: _ => ({
+	execute: () => ({
 		embeds: [{
 			type: 'rich',
 			title: 'Community Links',
@@ -39,7 +39,7 @@ createCommand({
     aliases: [ 'insta' ], hidden: true,
 	description: 'Link to @thechessnerd Instagram page.',
 	permissions: Roles.everyone,
-	execute: _ => card(
+	execute: () => card(
 		'Link to @thechessnerd Instagram page',
 		links['Instagram'].emoji + ' ' + links['Instagram'].url,
 		links['Instagram'].color
@@ -51,7 +51,7 @@ createCommand({
     aliases: [ 'yt' ], hidden: true,
 	description: 'Link to thechessnerd Youtube channel.',
 	permissions: Roles.everyone,
-	execute: _ => card(
+	execute: () => card(
 		'Link to thechessnerd Youtube channel',
 		links['Youtube'].emoji + ' ' + links['Youtube'].url,
 		links['Youtube'].color
@@ -63,7 +63,7 @@ createCommand({
 	aliases: [ 'stream' ], hidden: true,
 	description: 'Link to thechessnerd Twitch Live.',
 	permissions: Roles.everyone,
-	execute: _ => card(
+	execute: () => card(
 		'Link to thechessnerd Twitch Live',
 		links['Twitch'].emoji + ' ' + links['Twitch'].url,
 		links['Twitch'].color
@@ -74,7 +74,7 @@ createCommand({
 	name: 'twitter', emoji: links['Twitter'].emoji, hidden: true,
 	description: 'Link to @thechessnerd Twitter page.',
 	permissions: Roles.everyone,
-	execute: _ => card(
+	execute: () => card(
 		'Link to @thechessnerd Twitter page',
 		links['Twitter'].emoji + ' ' + links['Twitter'].url,
 		links['Twitter'].color
@@ -86,7 +86,7 @@ createCommand({
     aliases: [ 'invite' ], hidden: true,
 	description: 'Invite link to thechessnerd Discord.',
 	permissions: Roles.everyone,
-	execute: _ => card(
+	execute: () => card(
 		'Invite link to thechessnerd Discord',
 		links['Discord'].emoji + ' ' + links['Discord'].url,
 		links['Discord'].color
@@ -97,7 +97,7 @@ createCommand({
 	name: 'club', emoji: links['chess.com'].emoji, hidden: true,
 	description: 'Invite link to the **chess.com** club.',
 	permissions: Roles.everyone,
-	execute: _ => card(
+	execute: () => card(
 		'Invite link to the chess.com club',
 		links['chess.com'].emoji + ' ' + links['chess.com'].url,
 		links['chess.com'].color
@@ -108,7 +108,7 @@ createCommand({
 	name: 'reddit', emoji: links['reddit'].emoji, hidden: true,
 	description: 'Link to /r/thechessnerd reddit.',
 	permissions: Roles.everyone,
-	execute: _ => card(
+	execute: () => card(
 		'Link to /r/thechessnerd reddit',
 		links['reddit'].emoji + ' ' + links['reddit'].url,
 		links['reddit'].color
@@ -120,7 +120,7 @@ createCommand({
     aliases: [ 'shop', 'store', 'merchandise', 'drop' ],
 	description: 'Link to thechessnerd co. merch',
 	permissions: Roles.everyone,
-	execute: _ => card(
+	execute: () => card(
 		'thechessnerd co. Brand',
 		links['Merch'].emoji + ' ' + links['Merch'].url,
 		links['Merch'].color

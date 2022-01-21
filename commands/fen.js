@@ -10,9 +10,9 @@ createCommand({
 	description: 'Display a chess board diagram from **FEN**.',
 	permissions: Roles.everyone,
 	execute: async message => {
-		const fen = message.content.replace(/^(.*?)\s+/g, '').trim();
+		const fen = message.text;
 		if (!Chess().validate_fen(fen))
-			return error('Chess diagram', '❌ Error: invalid FEN string!');
+			return error('Chess diagram', 'Invalid FEN string / position!');
 		const game = Chess(fen);
 		let status = '';
 		if (game.game_over()) {

@@ -9,14 +9,20 @@ export async function getLichessUser(user) {
 	} catch { return null; }
 }
 
-export async function getLichessRapidRating(user) {
+export async function getLichessRatings(user) {
+	const categories = [ 'bullet', 'blitz', 'rapid' ];
+	let ratings = [];
 	const lichess = await getLichessUser(user);
-	if (lichess == null) return undefined;
-	if (lichess.perfs == undefined ||
-		lichess.perfs.rapid == undefined ||
-		lichess.perfs.rapid.rating == undefined) return null;
-	if (isNaN(parseInt(lichess.perfs.rapid.rating))) return 'unrated';
-	return lichess.perfs.rapid.rating;
+	if (lichess == null || lichess.perfs == undefined) return undefined;
+	for (const category of categories) {
+		if (lichess.perfs[category] == undefined ||
+			lichess.perfs[category].rating == undefined) continue;
+		let rating = { category, rating: 'unrated' };
+		if (!isNaN(parseInt(lichess.perfs[category].rating)))
+			rating.rating = lichess.perfs[category].rating;
+		ratings.push(rating);
+	}
+	return ratings;
 }
 
 export async function verifyLichessUser(name, discord) {

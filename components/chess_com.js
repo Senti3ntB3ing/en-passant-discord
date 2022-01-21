@@ -19,14 +19,22 @@ export async function getChess_comUserStats(user) {
 	} catch { return null; }
 }
 
-export async function getChess_comRapidRating(user) {
+export async function getChess_comRatings(user) {
+	const categories = [ 'bullet', 'blitz', 'rapid' ];
+	let ratings = [];
 	const chess_com = await getChess_comUserStats(user);
 	if (chess_com == null) return undefined;
-	if (chess_com.chess_rapid == undefined ||
-		chess_com.chess_rapid.last == undefined ||
-		chess_com.chess_rapid.last.rating == undefined) return null;
-	if (isNaN(parseInt(chess_com.chess_rapid.last.rating))) return 'unrated';
-	return chess_com.chess_rapid.last.rating;
+	for (const category of categories) {
+		const key = 'chess_' + category;
+		if (chess_com[key] == undefined ||
+			chess_com[key].last == undefined ||
+			chess_com[key].last.rating == undefined) continue;
+		let rating = { category, rating: 'unrated' };
+		if (!isNaN(parseInt(chess_com[key].last.rating)))
+			rating.rating = chess_com[key].last.rating;
+		ratings.push(rating);
+	}
+	return ratings;
 }
 
 export async function verifyChess_comUser(name, discord) {

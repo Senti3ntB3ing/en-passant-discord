@@ -4,33 +4,39 @@ import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 import { closest, levenshtein } from './components/levenshtein.js';
 
 import { Name, Prefix, Roles, ColorCodes } from './config.js';
+import { bot } from './main.js';
 
 var commands = [ ], primary = [ ], tasks = { };
 
-function handle(command, bot, message) {
+function handle(command, bot, message, args) {
+	message.arguments = args;
+	message.bot = bot;
+	message.command = command;
+	message.text = message.content.replace(/^(.*?)\s+/g, '').trim();
 	if (command.execute.constructor.name == 'AsyncFunction') {
-		command.execute(message, bot).then(result => {
+		command.execute(message).then(result => {
 			if (result != undefined) sendMessage(bot, message.channelId, result);
 		});
 		return;
 	}
-	const result = command.execute(message, bot);
+	const result = command.execute(message);
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
 export function parse(bot, message) {
 	if (!message.content.startsWith(Prefix)) return;
-	const content = message.content.split(/[ \t]+/g)[0].substring(1).toLowerCase();
+	const args = message.content.split(/\s+/g);
+	const content = args.splice(0, 1).substring(1).toLowerCase();
 	for (const command of commands) {
 		if (command.name == content ||
 			command.aliases.includes(content)) {
 			if (command.permissions.includes(Roles.everyone)) {
-				handle(command, bot, message);
+				handle(command, bot, message, args);
 				return;
 			}
 			for (const role of message.member.roles) {
 				if (command.permissions.includes(role)) {
-					handle(command, bot, message);
+					handle(command, bot, message, args);
 					return;
 				}
 			}
@@ -41,7 +47,7 @@ export function parse(bot, message) {
 	const distance = levenshtein(closestCommand, content);
 	if (distance <= 2) sendMessage(bot, message.channelId, info(
 		'Command Information',
-		`ℹ️ There is no command named \`${Prefix}${content}\`.\n` +
+		`There is no command named \`${Prefix}${content}\`.\n` +
 		`Did you mean \`${Prefix}${closestCommand}\` instead?`
 	));
 }
@@ -68,7 +74,7 @@ export function startTask(task) {
 	if (tasks[task.name] != undefined) return;
 	if (task.disabled != undefined && task.disabled === true) return;
 	tasks[task.name] = setInterval(() => {
-		task.execute();
+		task.execute(bot);
 		console.log(`task: ${task.name} executed`);
 	}, task.interval);
 }
@@ -108,7 +114,7 @@ export function error(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.error,
-			description: message || 'Error!'
+			description: '🚫 ' + (message || 'Error!')
 		}]
 	};
 }
@@ -118,17 +124,18 @@ export function info(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.info,
-			description: message || 'Information.'
+			description: 'ℹ️ ' + (message || 'Information.')
 		}]
 	};
 }
 
-export function success(title, message) {
+export function success(title, message, emoji) {
+	emoji = (emoji || '✅') + ' ';
 	return {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.success,
-			description: message || 'Success!'
+			description: emoji + (message || 'Success!')
 		}]
 	};
 }
@@ -138,7 +145,7 @@ export function warn(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.warn,
-			description: message || 'Warning!'
+			description: '⚠️ ' + (message || 'Warning!')
 		}]
 	};
 }

@@ -3,7 +3,6 @@ import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { Roles, Time, Channels, ColorCodes, Quotes } from '../config.js';
 import { startTask, createCommand } from '../parser.js';
-import { bot } from '../main.js';
 
 const dayOfYear = date => {
     date = date || new Date();
@@ -27,7 +26,7 @@ createCommand({
 	name: 'quote', emoji: '📃',
 	description: 'Shows the quote of the day.',
 	permissions: Roles.everyone,
-	execute: _ => {
+	execute: () => {
 		const quote = quote_of_the_day();
 		const footer = quote.title ? `${quote.title}  ${quote.author}` : quote.author;
 		return {
@@ -45,7 +44,7 @@ createCommand({
 startTask({
 	name: 'quote_of_the_day',
 	interval: Time.hours(12),
-	execute: () => {
+	execute: bot => {
 		const quote = quote_of_the_day();
 		const footer = quote.title ? `${quote.title}  ${quote.author}` : quote.author;
 		sendMessage(bot, Channels.general, {

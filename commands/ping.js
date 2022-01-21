@@ -9,6 +9,7 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: message => success(
 		'Ping Command',
-		`🏓 **Pong**. Server latency: \`${ Date.now() - message.timestamp }ms\`.`
+		`**Pong**. Server latency: \`${ Date.now() - message.timestamp }ms\`.`,
+		'🏓',
 	)
 });

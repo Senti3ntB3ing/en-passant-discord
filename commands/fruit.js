@@ -367,7 +367,7 @@ createCommand({
 	description: 'Random fruit facts and characteristics.',
 	permissions: Roles.everyone,
 	execute: message => {
-		const argument = message.content.replace(/^(.*?)\s+/g, '');
+		const argument = message.text;
 		let fruit = fruits[Math.floor(Math.random() * fruits.length)];
 		if (argument != message.content) {
 			fruit = fruits.find(fruit => fruit.name.toLowerCase() == argument.toLowerCase());

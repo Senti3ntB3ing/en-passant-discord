@@ -1,5 +1,6 @@
 
 export async function getLichessUser(user) {
+	user = encodeURIComponent(user);
 	const url = 'https://lichess.org/api/user/';
 	try {
 		const response = await fetch(url + user);

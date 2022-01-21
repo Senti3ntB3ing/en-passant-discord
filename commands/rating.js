@@ -27,9 +27,10 @@ createCommand({
 		);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
+			let rating = null;
 			switch (platform) {
 				case 'lichess.org':
-					const rating = await getLichessRapidRating(username);
+					rating = await getLichessRapidRating(username);
 					if (rating === undefined) return warn(
 						title, ':warning: No __lichess.org__ user found with the username `' + username + '`!'
 					);
@@ -43,7 +44,7 @@ createCommand({
 					});
 				break;
 				case 'chess.com':
-					const rating = await getChess_comRapidRating(username);
+					rating = await getChess_comRapidRating(username);
 					if (rating === undefined) return warn(
 						title, ':warning: No __chess.com__ user found with the username `' + username + '`!'
 					);

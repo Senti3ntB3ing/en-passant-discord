@@ -11,7 +11,7 @@ import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'chess.com': 0x7FA650 };
 const emojis = {
 	'FIDE': '💛', 'lichess.org': '🤍', 'chess.com': '💚',
-	'bullet': '🔫', 'rapid': '🕰', 'blitz': '⚡️'
+	'bullet': ':gun:', 'rapid': ':clock:', 'blitz': ':zap:'
 };
 
 const not_linked_info = title => info(

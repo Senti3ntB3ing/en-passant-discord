@@ -262,13 +262,13 @@ createCommand({
 			case 'lichess.org': case 'lichess':
 				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
 					return warn(title, `<@${tag}> already linked a __lichess.org__ account!`);
-				member.accounts.push({ platform: 'lichess.org', username: text });
+				member.accounts.push({ platform: 'lichess.org', username: name });
 				await addRole(message.bot, message.guildId, tag, Roles.platforms['lichess.org']);
 			break;
 			case 'chess.com':
 				if (member.accounts.find(a => a.platform == 'chess.com') != undefined)
 					return warn(title, `<@${tag}> already linked a __chess.com__ account!`);
-				member.accounts.push({ platform: 'chess.com', username: text });
+				member.accounts.push({ platform: 'chess.com', username: name });
 				await addRole(message.bot, message.guildId, tag, Roles.platforms['chess.com']);
 			break;
 			default: return process;

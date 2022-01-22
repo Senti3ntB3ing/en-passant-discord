@@ -14,7 +14,7 @@ const emojis = {
 	'bullet': '🔫', 'rapid': '🕰', 'blitz': '⚡️'
 };
 
-const not_linked_info = info(
+const not_linked_info = title => info(
 	title, 'You must link an account to use this command.'
 );
 
@@ -31,7 +31,7 @@ createCommand({
 	execute: async message => {
 		const title = 'Linked Accounts';
 		const member = await Database.get(message.member.id);
-		if (member == null || member.accounts == undefined) return not_linked_info;
+		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
 			const emoji = emojis[platform];
@@ -42,7 +42,7 @@ createCommand({
 			title,
 			`<@${message.member.id}> you linked the following accounts:\n${list.join('\n')}`
 		);
-		return not_linked_info;
+		return not_linked_info(title);
 	}
 });
 
@@ -54,7 +54,7 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: async message => {
 		const member = await Database.get(message.member.id);
-		if (member == null || member.accounts == undefined) return not_linked_info;
+		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
 			const emoji = emojis[platform];
@@ -78,7 +78,7 @@ createCommand({
 				color
 			});
 		}
-		if (list.length > 0) return not_linked_info;
+		if (list.length > 0) return not_linked_info(title);
 		return cards(list);
 	}
 });

@@ -254,7 +254,8 @@ createCommand({
 		);
 		if (message.mentionedUserIds.length == 0 ||
 			message.arguments.length < 3) return process;
-		const platform = data[0], name = data[1], tag = message.mentionedUserIds[0];
+		const platform = message.arguments[0], name = message.arguments[1];
+		const tag = message.mentionedUserIds[0];
 		let member = await Database.get(tag);
 		if (member == null) member = { accounts: [ ] };
 		switch (platform) {

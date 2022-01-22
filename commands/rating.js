@@ -83,25 +83,36 @@ createCommand({
 	}
 });
 
-/// unlink <platform>?
+/// unlink <platforms> *
 /// Unlinks all your linked online chess account usernames.
-/// @param platform: if provided only unlink the given platform.
+/// @param platforms: if provided only unlink the given platforms.
 createCommand({
 	name: 'unlink', emoji: '⚡️', hidden: true,
 	description: 'Unlinks all of your online chess accounts.',
 	permissions: Roles.everyone,
 	execute: async message => {
-		const title = 'Unlink Command';
+		const title = 'Unlink Accounts';
 		let member = await Database.get(message.member.id);
 		if (member == null) return info(title, 'You currently have `0` linked accounts.');
-		member.accounts = [];
+		if (message.arguments.length != 0) {
+			for (let platform of message.arguments) {
+				switch (platform) {
+					case 'FIDE': break;
+					case 'lichess.org': break;
+					case 'lichess': platform += '.org'; break;
+					case 'chess.com': break;
+					default: return error(title, `Unknown platform: \`${platform}\`!`);
+				}
+				member.accounts = member.accounts.filter(a => a.platform != platform);
+			}
+		} else member.accounts = [];
 		await Database.set(message.member.id, member);
 		for (const platform in Roles.platforms) {
 			const role = Roles.platforms[platform];
 			if (message.member.roles.includes(role))
 				await removeRole(message.bot, message.guildId, message.member.id, role);
 		}
-		return info(title, 'You have successfully unlinked your profile.');
+		return info(title, 'You have successfully unlinked your profile(s).');
 	}
 });
 
@@ -116,6 +127,7 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Account - lichess.org';
+		const color = colors['lichess.org'];
 		const text = message.text;
 		const username = message.tag;
 		let member = await Database.get(message.member.id);
@@ -140,10 +152,31 @@ createCommand({
 				ratings.map(
 					r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
 				).join(' ｜ '),
-				colors['lichess.org']
+				color
 			);
-		}
-		if (member == null) member = { accounts: [ ] };
+		} else if (message.mentionedUserIds.length != 0) {
+			let list = [];
+			for (const id of message.mentionedUserIds) {
+				member = await Database.get(id);
+				if (member == null || member.accounts == undefined) continue;
+				const lichess = member.accounts.find(a => a.platform == 'lichess.org');
+				if (lichess == undefined) return process;
+				const ratings = await getLichessRatings(lichess.username);
+				if (ratings === undefined) continue;
+				if (ratings.length == 0) list.push({
+					title, message: `<@${id}> is currently unrated on __lichess.org__.`, color
+				});
+				list.push({
+					title,
+					message: `:star: <@${id}> aka \`${lichess.username}\` __lichess.org__ ratings:\n` +
+					ratings.map(
+						r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
+					).join(' ｜ '),
+					color
+				});
+			}
+			return cards(list);
+		} else if (member == null) member = { accounts: [ ] };
 		const verified = await verifyLichessUser(text, username);
 		if (verified == undefined)
 			return warn(title, 'No lichess user found with the username `' + text + '`!');
@@ -165,6 +198,7 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Account - chess.com';
+		const color = colors['chess.com'];
 		const text = message.text;
 		const username = message.tag;
 		let member = await Database.get(message.member.id);
@@ -190,10 +224,31 @@ createCommand({
 				ratings.map(
 					r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
 				).join(' ｜ '),
-				colors['chess.com']
+				color
 			);
-		}
-		if (member == null) member = { accounts: [ ] };
+		} else if (message.mentionedUserIds.length != 0) {
+			let list = [];
+			for (const id of message.mentionedUserIds) {
+				member = await Database.get(id);
+				if (member == null || member.accounts == undefined) continue;
+				const chess_com = member.accounts.find(a => a.platform == 'chess.com');
+				if (chess_com == undefined) return process;
+				const ratings = await getLichessRatings(chess_com.username);
+				if (ratings === undefined) continue;
+				if (ratings.length == 0) list.push({
+					title, message: `<@${id}> is currently unrated on __chess.com__.`, color
+				});
+				list.push({
+					title,
+					message: `:star: <@${id}> aka \`${lichess.username}\` __chess.com__ ratings:\n` +
+					ratings.map(
+						r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
+					).join(' ｜ '),
+					color
+				});
+			}
+			return cards(list);
+		} else if (member == null) member = { accounts: [ ] };
 		const verified = await verifyChess_comUser(text, username);
 		if (verified == undefined) return warn(title, 'No __chess.com__ user found with the username `' + text + '`!');
 		if (!verified) return error(

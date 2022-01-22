@@ -85,6 +85,7 @@ export const Roles = {
 };
 
 export const ColorCodes = {
+	normal: 0x1ABC9C,
 	error: 0xDD2E44,
 	success: 0x77B255,
 	info: 0x3C88C3,

@@ -93,7 +93,7 @@ export function card(title, message, color) {
 	return {
 		embeds: [{
 			title: title || Name,
-			color: color || ColorCodes.random(),
+			color: color || ColorCodes.normal,
 			description: message || ''
 		}]
 	};
@@ -103,7 +103,7 @@ export function cards(elements) {
 	return {
 		embeds: elements.map(element => ({
 			title: element.title || Name,
-			color: element.color || ColorCodes.random(),
+			color: element.color || ColorCodes.normal,
 			description: element.message || ''
 		}))
 	};
@@ -129,13 +129,12 @@ export function info(title, message) {
 	};
 }
 
-export function success(title, message, emoji) {
-	emoji = (emoji || '✅') + ' ';
+export function success(title, message) {
 	return {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.success,
-			description: emoji + (message || 'Success!')
+			description: '✅ ' + (message || 'Success!')
 		}]
 	};
 }

@@ -2,7 +2,7 @@
 import { getMessages, deleteMessages } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { Roles } from '../config.js';
-import { createCommand, error, success } from '../parser.js';
+import { createCommand, error, card } from '../parser.js';
 
 const invalid = error(
 	'Clean Command',
@@ -28,6 +28,6 @@ createCommand({
 			const messages = await getMessages(message.bot, message.channelId, { limit: n });
 			await deleteMessages(message.bot, message.channelId, messages.map(m => m.id));
 		} catch(e) { return internal; }
-		return success('Clear Command', `Successfully cleared \`${n}\` messages.`, '🗑');
+		return card('Clear Command', `🗑 Successfully cleared \`${n}\` messages.`);
 	}
 });

@@ -30,7 +30,10 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Linked Accounts';
-		const member = await Database.get(message.member.id);
+		let member;
+		if (message.mentionedUserIds.length == 1)
+			member = await Database.get(message.mentionedUserIds[0]);
+		else member = await Database.get(message.member.id);
 		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
@@ -40,7 +43,7 @@ createCommand({
 		}
 		if (list.length > 0) return info(
 			title,
-			`<@${message.member.id}> you linked the following accounts:\n${list.join('\n')}`
+			`<@${message.member.id}> linked the following accounts:\n${list.join('\n')}`
 		);
 		return not_linked_info(title);
 	}
@@ -53,8 +56,11 @@ createCommand({
 	description: 'Shows your linked online chess accounts.',
 	permissions: Roles.everyone,
 	execute: async message => {
-		const member = await Database.get(message.member.id);
 		const title = 'Account Ratings';
+		let member;
+		if (message.mentionedUserIds.length == 1)
+			member = await Database.get(message.mentionedUserIds[0]);
+		else member = await Database.get(message.member.id);
 		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
@@ -155,29 +161,8 @@ createCommand({
 				).join(' ｜ '),
 				color
 			);
-		} else if (message.mentionedUserIds.length != 0) {
-			let list = [];
-			for (const id of message.mentionedUserIds) {
-				member = await Database.get(id);
-				if (member == null || member.accounts == undefined) continue;
-				const lichess = member.accounts.find(a => a.platform == 'lichess.org');
-				if (lichess == undefined) return process;
-				const ratings = await getLichessRatings(lichess.username);
-				if (ratings === undefined) continue;
-				if (ratings.length == 0) list.push({
-					title, message: `<@${id}> is currently unrated on __lichess.org__.`, color
-				});
-				list.push({
-					title,
-					message: `:star: <@${id}> aka \`${lichess.username}\` __lichess.org__ ratings:\n` +
-					ratings.map(
-						r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
-					).join(' ｜ '),
-					color
-				});
-			}
-			return cards(list);
-		} else if (member == null) member = { accounts: [ ] };
+		}
+		if (member == null) member = { accounts: [ ] };
 		const verified = await verifyLichessUser(text, username);
 		if (verified == undefined)
 			return warn(title, 'No lichess user found with the username `' + text + '`!');
@@ -227,29 +212,8 @@ createCommand({
 				).join(' ｜ '),
 				color
 			);
-		} else if (message.mentionedUserIds.length != 0) {
-			let list = [];
-			for (const id of message.mentionedUserIds) {
-				member = await Database.get(id);
-				if (member == null || member.accounts == undefined) continue;
-				const chess_com = member.accounts.find(a => a.platform == 'chess.com');
-				if (chess_com == undefined) return process;
-				const ratings = await getLichessRatings(chess_com.username);
-				if (ratings === undefined) continue;
-				if (ratings.length == 0) list.push({
-					title, message: `<@${id}> is currently unrated on __chess.com__.`, color
-				});
-				list.push({
-					title,
-					message: `:star: <@${id}> aka \`${lichess.username}\` __chess.com__ ratings:\n` +
-					ratings.map(
-						r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
-					).join(' ｜ '),
-					color
-				});
-			}
-			return cards(list);
-		} else if (member == null) member = { accounts: [ ] };
+		}
+		if (member == null) member = { accounts: [ ] };
 		const verified = await verifyChess_comUser(text, username);
 		if (verified == undefined) return warn(title, 'No __chess.com__ user found with the username `' + text + '`!');
 		if (!verified) return error(

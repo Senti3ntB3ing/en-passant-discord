@@ -79,8 +79,8 @@ createCommand({
 				color
 			});
 		}
-		if (list.length > 0) return not_linked_info(title);
-		return cards(list);
+		if (list.length != 0) return cards(list);
+		return not_linked_info(title);
 	}
 });
 

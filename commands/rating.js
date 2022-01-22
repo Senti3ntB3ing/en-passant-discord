@@ -10,7 +10,7 @@ import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/
 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'chess.com': 0x7FA650 };
 const emojis = {
-	'FIDE': '🏆', 'lichess.org': '⚪️', 'chess.com': '🟢',
+	'FIDE': '💛', 'lichess.org': '🤍', 'chess.com': '💚',
 	'bullet': '🔫', 'rapid': '🕰', 'blitz': '⚡️'
 };
 
@@ -43,7 +43,7 @@ createCommand({
 		}
 		if (list.length > 0) return info(
 			title,
-			`<@${message.member.id}> linked the following accounts:\n${list.join('\n')}`
+			`<@${message.member.id}> linked the following accounts:\n${list.join(' ｜ ')}`
 		);
 		return not_linked_info(title);
 	}

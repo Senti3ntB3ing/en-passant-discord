@@ -30,10 +30,14 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Linked Accounts';
-		let member;
-		if (message.mentionedUserIds.length == 1)
-			member = await Database.get(message.mentionedUserIds[0]);
-		else member = await Database.get(message.member.id);
+		let member, author;
+		if (message.mentionedUserIds.length == 1) {
+			author = message.mentionedUserIds[0];
+			member = await Database.get(author);
+		} else {
+			member = await Database.get(message.member.id);
+			author = message.member.id;
+		}
 		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
@@ -43,7 +47,7 @@ createCommand({
 		}
 		if (list.length > 0) return info(
 			title,
-			`<@${message.member.id}> linked the following accounts:\n${list.join(' ｜ ')}`
+			`<@${author}> linked the following accounts:\n${list.join(' ｜ ')}`
 		);
 		return not_linked_info(title);
 	}
@@ -57,10 +61,14 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Account Ratings';
-		let member;
-		if (message.mentionedUserIds.length == 1)
-			member = await Database.get(message.mentionedUserIds[0]);
-		else member = await Database.get(message.member.id);
+		let member, author;
+		if (message.mentionedUserIds.length == 1) {
+			author = message.mentionedUserIds[0];
+			member = await Database.get(author);
+		} else {
+			member = await Database.get(message.member.id);
+			author = message.member.id;
+		}
 		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
@@ -78,7 +86,7 @@ createCommand({
 			list.push({
 				title,
 				message:
-					`:star: <@${message.member.id}> aka \`${username}\` ${platform} ratings:\n` +
+					`:star: <@${author}> aka \`${username}\` ${platform} ratings:\n` +
 					ratings.map(
 						r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
 					).join(' ｜ '),
@@ -163,6 +171,8 @@ createCommand({
 			);
 		}
 		if (member == null) member = { accounts: [ ] };
+		if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
+			return warn(title, 'You already linked a __lichess.org__ account!');
 		const verified = await verifyLichessUser(text, username);
 		if (verified == undefined)
 			return warn(title, 'No lichess user found with the username `' + text + '`!');
@@ -214,6 +224,8 @@ createCommand({
 			);
 		}
 		if (member == null) member = { accounts: [ ] };
+		if (member.accounts.find(a => a.platform == 'chess.com') != undefined)
+			return warn(title, 'You already linked a __chess.com__ account!');
 		const verified = await verifyChess_comUser(text, username);
 		if (verified == undefined) return warn(title, 'No __chess.com__ user found with the username `' + text + '`!');
 		if (!verified) return error(
@@ -228,5 +240,39 @@ createCommand({
 	}
 });
 
-/// link <mention> <username>
+/// verify <mention> <platform:username>
 /// Verify the given account.
+createCommand({
+	name: 'verify', emoji: '✅', hidden: true,
+	description: 'Link your __chess.com__ account.',
+	permissions: Roles.moderator,
+	execute: async message => {
+		const title = 'Account Verification';
+		const process = info(
+			'Verification Instructions',
+			'Type `!verify platform username @mention` to verify the account.'
+		);
+		if (message.mentionedUserIds.length == 0 ||
+			message.arguments.length < 3) return process;
+		const platform = data[0], name = data[1], tag = message.mentionedUserIds[0];
+		let member = await Database.get(tag);
+		if (member == null) member = { accounts: [ ] };
+		switch (platform) {
+			case 'lichess.org': case 'lichess':
+				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
+					return warn(title, `<@${tag}> already linked a __lichess.org__ account!`);
+				member.accounts.push({ platform: 'lichess.org', username: text });
+				await addRole(message.bot, message.guildId, tag, Roles.platforms['lichess.org']);
+			break;
+			case 'chess.com':
+				if (member.accounts.find(a => a.platform == 'chess.com') != undefined)
+					return warn(title, `<@${tag}> already linked a __chess.com__ account!`);
+				member.accounts.push({ platform: 'chess.com', username: text });
+				await addRole(message.bot, message.guildId, tag, Roles.platforms['chess.com']);
+			break;
+			default: return process;
+		}
+		await Database.set(message.member.id, member);
+		return success(title, `<@${tag}> successfully verified!`);
+	}
+});

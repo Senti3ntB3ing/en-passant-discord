@@ -54,6 +54,7 @@ createCommand({
 	permissions: Roles.everyone,
 	execute: async message => {
 		const member = await Database.get(message.member.id);
+		const title = 'Account Ratings';
 		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {

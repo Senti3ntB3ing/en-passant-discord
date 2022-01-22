@@ -85,9 +85,9 @@ export const Roles = {
 };
 
 export const ColorCodes = {
-	error: 0xE70000,
-	success: 0x1ABC9D,
-	info: 0xFFFFFF,
+	error: 0xDD2E44,
+	success: 0x77B255,
+	info: 0x3C88C3,
 	warn: 0xFFCC4D,
 	titled: 0xF1C40F,
 	random: () => Math.floor(Math.random() * (0xFFFFFF + 1))

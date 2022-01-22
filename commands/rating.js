@@ -10,7 +10,7 @@ import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/
 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'chess.com': 0x7FA650 };
 const emojis = {
-	'FIDE': '💛', 'lichess.org': '🤍', 'chess.com': '💚',
+	'FIDE': '🏆', 'lichess.org': '⚪️', 'chess.com': '🟢',
 	'bullet': '🔫', 'rapid': '🕰', 'blitz': '⚡️'
 };
 
@@ -18,7 +18,7 @@ const not_linked_info = title => info(
 	title, 'You must link an account to use this command.'
 );
 
-const highlight = (p) => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
+const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
 
 // commands: accounts, stats, rating, lichess, chess.com, unlink, link
 
@@ -49,7 +49,7 @@ createCommand({
 /// /ratings?/
 /// Shows all your linked online chess account rating.
 createCommand({
-	name: 'rating', emoji: ':star:', aliases: [ 'ratings' ],
+	name: 'rating', emoji: ':star:', aliases: [ 'ratings', 'stats' ],
 	description: 'Shows your linked online chess accounts.',
 	permissions: Roles.everyone,
 	execute: async message => {

@@ -240,7 +240,7 @@ createCommand({
 	}
 });
 
-/// verify <mention> <platform:username>
+/// verify <mention> <platform> <username>
 /// Verify the given account.
 createCommand({
 	name: 'verify', emoji: '✅', hidden: true,
@@ -273,7 +273,7 @@ createCommand({
 			break;
 			default: return process;
 		}
-		await Database.set(message.member.id, member);
+		await Database.set(tag, member);
 		return success(title, `<@${tag}> successfully verified!`);
 	}
 });

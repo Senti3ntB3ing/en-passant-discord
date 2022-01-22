@@ -74,8 +74,8 @@ createCommand({
 				message:
 					`:star: <@${message.member.id}> aka \`${username}\` ${platform} ratings:\n` +
 					ratings.map(
-						r => `${emoji[r.category]} ${r.category} \`${r.rating}\``
-					).join('\n'),
+						r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
+					).join(' ｜ '),
 				color
 			});
 		}

@@ -86,12 +86,13 @@ export function stopTask(task) {
 
 async function executeTasks() {
 	const now = new Date();
-	for (let task of tasks) {
-		if (task.disabled) continue;
-		if (task.last_execution.getTime() + task.interval > now.getTime()) continue;
-		task.last_execution = now;
-		task.execute(bot);
-		console.log(`task: ${task.name} executed`);
+	for (const name of tasks) {
+		if (tasks[name].disabled) continue;
+		if (tasks[name].last_execution.getTime() +
+			tasks[name].interval > now.getTime()) continue;
+		tasks[name].last_execution = now;
+		tasks[name].execute(bot);
+		console.log(`task: ${name} executed`);
 	}
 }
 

@@ -1,6 +1,6 @@
 
 import { Roles } from '../config.js';
-import { createCommand, tasks, error, info } from '../parser.js';
+import { createCommand, tasks, card, error, info } from '../parser.js';
 
 createCommand({
 	name: 'task', emoji: '⏳',

@@ -86,7 +86,7 @@ export function stopTask(task) {
 
 async function executeTasks() {
 	const now = new Date();
-	for (const name of tasks) {
+	for (const name in tasks) {
 		if (tasks[name].disabled) continue;
 		if (tasks[name].last_execution.getTime() +
 			tasks[name].interval > now.getTime()) continue;

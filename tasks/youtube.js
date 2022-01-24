@@ -13,7 +13,7 @@ createCommand({
 	execute: () => {
 		const date = (new Date()).toISOString();
 		Database.set('youtube', date);
-		return card('Reset Date', `🖲 Date set to: \`${date}\`.`)
+		return card('Reset Date', `🖲 Date set to: \`${date}\`.`);
 	}
 });
 

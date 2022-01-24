@@ -25,7 +25,9 @@ createTask({
 		const date = Database.get('youtube');
 		if (date == null) return;
 		// get videos:
-		const videos = getVideosAfterDate(Deno.env.get('YTKEY'), YTChannel, new Date(date));
+		const videos = await getVideosAfterDate(
+			Deno.env.get('YTKEY'), YTChannel, new Date(date)
+		);
 		if (videos == null) return;
 		for (const video of videos) {
 			try {

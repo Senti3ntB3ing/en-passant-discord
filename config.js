@@ -123,29 +123,33 @@ export const Actions = [
 export const YTChannel = 'UCiEgruTJIBdmH7oRmC6EMoA';
 
 export const Welcome = [
-	'O-O-O comes with mate!',
+	'`O-O-O#!!` with checkmate!',
+	'`O-O#!!` with checkmate!',
 	'double check!',
 	'brilliant move!!',
 	'Botez Gambit!',
-	'rook b1, rook b1!',
-	'never play f3!',
-	'never play f6!',
-	'c4… explosive!',
+	'rook `b1`, rook `b1`!',
+	'never play `f3`!',
+	'never play `f6`!',
+	'always play `bf8`!',
+	'always play `bf8`!',
+	'`c4`… explosive!',
 	'oh no my queen!',
-	'Pawndemonium!',
-	'knife f5!',
+	'pawndemonium!',
+	'knife `f5`!',
 	'I won connect 4!',
-	'let\'s make a pawn cube!',
+	'let’s make a pawn cube!',
 	'the truth hurts',
-	'please don\'t hurt me!',
-	'there\'s a funny line…',
+	'please don’t hurt me!',
+	'there’s a funny line…',
 	'danger levels!',
 	'RAAAAWR!!',
-	'push \'em baby!',
+	'push ’em baby!',
 	'you, with the wrong answer!',
 	'always repeat!',
 	'how does the knight move?',
-	'1. e4 e5 2. Ke2! Ke7!!'
+	'triple, quadruple discovered check!',
+	'1. `e4` `e5` 2. `Ke2!` `Ke7!!`'
 ];
 
 export const Quotes = [

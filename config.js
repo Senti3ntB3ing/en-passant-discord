@@ -140,7 +140,7 @@ export const Welcome = [
 	'please don\'t hurt me!',
 	'there\'s a funny line…',
 	'danger levels!',
-	'Raaaawr!!',
+	'RAAAAWR!!',
 	'push \'em baby!',
 	'you, with the wrong answer!',
 	'always repeat!',

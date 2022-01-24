@@ -20,7 +20,7 @@ createCommand({
 createTask({
 	name: 'youtube',
 	interval: Time.minutes(30),
-	execute: bot => {
+	execute: async bot => {
 		// get date of last video:
 		const date = Database.get('youtube');
 		if (date == null) return;

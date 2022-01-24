@@ -7,7 +7,7 @@ import { createTask, createCommand } from '../parser.js';
 import { Database } from '../database.js';
 
 createCommand({
-	name: '!reset_date', emoji: '🖲', hidden: true,
+	name: 'reset_date', emoji: '🖲', hidden: true,
 	description: 'Reset YouTube date.',
 	permissions: Roles.moderator,
 	execute: () => {

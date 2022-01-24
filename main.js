@@ -18,6 +18,7 @@ import './commands/fen.js';
 import './commands/rating.js';
 import './commands/fruit.js';
 import './commands/task.js';
+import './commands/quit.js';
 
 // ==== Tasks ==============================
 

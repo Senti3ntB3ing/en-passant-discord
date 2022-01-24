@@ -3,7 +3,7 @@ import { Roles } from '../config.js';
 import { createCommand, tasks, card, error, info } from '../parser.js';
 
 createCommand({
-	name: 'task', emoji: '⏳',
+	name: 'task', emoji: '⏳', hidden: true,
 	description: 'Force the execution of a task.',
 	permissions: Roles.moderator,
 	execute: message => {

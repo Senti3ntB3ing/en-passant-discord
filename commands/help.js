@@ -7,5 +7,5 @@ createCommand({
 	aliases: [ 'usage', 'commands' ],
 	description: 'Display the list of commands.',
 	permissions: Roles.everyone,
-	execute: () => createHelp('List of Commands', ColorCodes.success)
+	execute: () => createHelp('List of Commands', ColorCodes.normal)
 });

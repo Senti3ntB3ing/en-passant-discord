@@ -22,7 +22,7 @@ createTask({
 	interval: Time.minutes(30),
 	execute: async bot => {
 		// get date of last video:
-		const date = Database.get('youtube');
+		const date = await Database.get('youtube');
 		if (date == null) return;
 		// get videos:
 		const videos = await getVideosAfterDate(

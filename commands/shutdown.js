@@ -5,13 +5,13 @@ import { Roles } from '../config.js';
 import { createCommand, error } from '../parser.js';
 
 createCommand({
-	name: 'quit', emoji: '🔌', hidden: true,
-	aliases: [ 'shutdown', 'selfdestruct', 'self-destruct' ],
+	name: 'shutdown', emoji: '🔌', hidden: true,
+	aliases: [ 'selfdestruct', 'self-destruct' ],
 	description: 'Shutdown the bot.',
 	permissions: Roles.moderator,
 	execute: async message => {
 		await sendMessage(message.bot, message.channelId, error(
-			'Self Destruction', 'Shutting the system down...'
+			'Self Destruction', 'Preparing the system for self-destruction shutdown...'
 		));
 		Deno.exit(1);
 	}

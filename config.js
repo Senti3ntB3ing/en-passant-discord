@@ -59,6 +59,7 @@ export const Channels = {
 };
 
 export const Roles = {
+	zach: 559086517415444480n,
 	everyone: 0,
 	nerd: 845769006752464946n,
 	supporter: 913072026942570507n,

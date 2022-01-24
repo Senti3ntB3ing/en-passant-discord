@@ -15,5 +15,7 @@ export async function getVideosAfterDate(key, channel, date) {
 	let videos = await getLatestVideos(key, channel);
 	if (videos == null || videos.items == undefined) return [];
 	if (typeof date == 'string') date = new Date(date);
-	return videos.items.filter(v => new Date(v.snippet.publishedAt) > date);
+	return videos.items.filter(
+		v => new Date(v.snippet.publishedAt).getTime() > date.getTime()
+	);
 }

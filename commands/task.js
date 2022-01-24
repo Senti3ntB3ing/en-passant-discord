@@ -11,9 +11,8 @@ createCommand({
 			return info('Task Command', 'Type `task <name>` to execute a task.');
 		else if (message.arguments.length != 1)
 			return error('Task Command', 'Expected a valid task name.');
-		const task = tasks.find(t => t.name == message.arguments[0]);
-		if (task == undefined)
-			return error('Task Command', `Task \`${task}\` not found.`);
-		if (task in tasks) tasks[task].execute(message.bot);
+		const name = message.arguments[0];
+		if (name in tasks) tasks[name].execute(message.bot);
+		else return error('Task Command', `Task \`${name}\` not found.`);
 	}
 });

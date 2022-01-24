@@ -22,6 +22,7 @@ import './commands/task.js';
 // ==== Tasks ==============================
 
 import './tasks/quote.js';
+import './tasks/youtube.js';
 
 // =========================================
 

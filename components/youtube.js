@@ -2,11 +2,10 @@
 export function composeURL(id) { return `https://www.youtube.com/watch?v=${id}`; }
 
 export async function getLatestVideos(key, channel) {
-	user = encodeURIComponent(user);
 	const url = `https://www.googleapis.com/youtube/v3/search?key=${key}` + 
 				`&channelId=${channel}&part=snippet,id&order=date&maxResults=5`;
 	try {
-		const response = await fetch(url + user);
+		const response = await fetch(url);
 		if (response.status != 200) return null;
 		return await response.json();
 	} catch { return null; }

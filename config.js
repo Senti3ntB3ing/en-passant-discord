@@ -141,6 +141,7 @@ export const Welcome = [
 	'there\'s a funny line…',
 	'danger levels!',
 	'Raaaawr!!',
+	'push \'em baby!',
 	'you, with the wrong answer!',
 	'always repeat!',
 	'how does the knight move?',

@@ -3,7 +3,7 @@ import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { getVideosAfterDate, composeURL } from '../components/youtube.js';
 import { Roles, Time, Channels, YTChannel } from '../config.js';
-import { createTask, createCommand, card } from '../parser.js';
+import { createTask, createCommand, card, text } from '../parser.js';
 import { Database } from '../database.js';
 
 createCommand({

@@ -6,6 +6,17 @@ import { Roles, Time, Channels, YTChannel } from '../config.js';
 import { createTask } from '../parser.js';
 import { Database } from '../database.js';
 
+createCommand({
+	name: '!reset_date', emoji: '🖲',
+	description: 'Reset YouTube date.',
+	permissions: Roles.moderator,
+	execute: () => {
+		const date = (new Date()).toISOString();
+		Database.set('youtube', date);
+		return card('Reset Date', `🖲 Date set to: \`${date}\`.`)
+	}
+});
+
 createTask({
 	name: 'youtube',
 	interval: Time.minutes(30),
@@ -15,7 +26,7 @@ createTask({
 		if (date == null) return;
 		// get videos:
 		const videos = getVideosAfterDate(Deno.env.get('YTKEY'), YTChannel, new Date(date));
-		if (videos == null || videos.length == 0) return;
+		if (videos == null) return;
 		for (const video of videos) {
 			try {
 				const url = composeURL(video.id.videoId);
@@ -24,6 +35,6 @@ createTask({
 				);
 			} catch { }
 		}
-		Database.set('youtube', videos[0].snippet.publishedAt);
+		Database.set('youtube', (new Date()).toISOString());
 	}
 });

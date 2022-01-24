@@ -59,7 +59,7 @@ export const Channels = {
 };
 
 export const Roles = {
-	zach: 559086517415444480n,
+	Zach: 559086517415444480n,
 	everyone: 0,
 	nerd: 845769006752464946n,
 	supporter: 913072026942570507n,
@@ -119,6 +119,8 @@ export const Actions = [
 	{ type: ActionTypes.competing, status: 'Tournament' },
 	{ type: ActionTypes.streaming, status: 'World Cup' },
 ];
+
+export const YTChannel = 'UCiEgruTJIBdmH7oRmC6EMoA';
 
 export const Welcome = [
 	'O-O-O comes with mate!',

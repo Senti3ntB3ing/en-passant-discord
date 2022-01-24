@@ -14,6 +14,6 @@ createCommand({
 		const task = tasks.find(t => t.name == message.arguments[0]);
 		if (task == undefined)
 			return error('Task Command', `Task \`${task}\` not found.`);
-		tasks.find(t => t.name == task).execute(message.bot);
+		if (task in tasks) tasks[task].execute(message.bot);
 	}
 });

@@ -6,7 +6,7 @@ import { closest, levenshtein } from './components/levenshtein.js';
 import { Name, Prefix, Roles, ColorCodes } from './config.js';
 import { bot } from './main.js';
 
-var commands = [ ], primary = [ ], tasks = { };
+export let commands = [ ], primary = [ ], tasks = { };
 
 function handle(command, bot, message, args) {
 	message.arguments = args;
@@ -66,24 +66,39 @@ export function createCommand(command) {
 	primary.push(command.name.toLowerCase());
 }
 
-export function startTask(task) {
+export function createTask(task) {
 	if (typeof task.execute != 'function') return;
 	if (task.name == undefined) return;
 	if (typeof task.interval != 'number') return;
 	if (task.interval <= 0) return;
 	if (tasks[task.name] != undefined) return;
-	if (task.disabled != undefined && task.disabled === true) return;
-	tasks[task.name] = setInterval(() => {
-		task.execute(bot);
-		console.log(`task: ${task.name} executed`);
-	}, task.interval);
+	if (task.disabled == undefined) task.disabled = false;
+	task.last_execution = new Date();
+	tasks[task.name] = task;
 }
 
 export function stopTask(task) {
 	if (tasks[task] != undefined) {
-		clearInterval(tasks[task]);
-		tasks.delete(task);
+		tasks[task].disabled = true;
 		console.log(`task: ${task} stopped`);
+	}
+}
+
+async function executeTasks() {
+	const now = new Date();
+	for (let task of tasks) {
+		if (task.disabled) continue;
+		if (task.last_execution.getTime() + task.interval > now.getTime()) continue;
+		task.last_execution = now;
+		task.execute(bot);
+		console.log(`task: ${task.name} executed`);
+	}
+}
+
+export async function createTaskServer(server, callback) {
+	for await (const request of server) {
+		callback(request);
+		executeTasks();
 	}
 }
 

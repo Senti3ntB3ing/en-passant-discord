@@ -1,8 +1,8 @@
 
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
-import { Roles, Time, Channels, ColorCodes, Quotes } from '../config.js';
-import { startTask, createCommand } from '../parser.js';
+import { Time, Channels, ColorCodes, Quotes } from '../config.js';
+import { createTask } from '../parser.js';
 
 const dayOfYear = date => {
     date = date || new Date();
@@ -22,27 +22,8 @@ const quote_of_the_day = () => {
 	};
 };
 
-createCommand({
-	name: 'quote', emoji: '📃',
-	description: 'Shows the quote of the day.',
-	permissions: Roles.everyone,
-	execute: () => {
-		const quote = quote_of_the_day();
-		const footer = quote.title ? `${quote.title}  ${quote.author}` : quote.author;
-		return {
-			embeds: [{
-				type: 'rich',
-				title: 'Chess quote of the day',
-				description: `> *“${quote.text}”*`,
-				color: ColorCodes.success,
-				footer: { text: '— ' + footer },
-			}]
-		};
-	}
-});
-
-startTask({
-	name: 'quote_of_the_day',
+createTask({
+	name: 'quote',
 	interval: Time.hours(12),
 	execute: bot => {
 		const quote = quote_of_the_day();
@@ -52,7 +33,7 @@ startTask({
 				type: 'rich',
 				title: 'Chess quote of the day',
 				description: `> *“${quote.text}”*`,
-				color: ColorCodes.success,
+				color: ColorCodes.normal,
 				footer: { text: '— ' + footer },
 			}]
 		});

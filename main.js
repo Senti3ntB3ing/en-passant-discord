@@ -4,7 +4,7 @@ import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/disc
 
 import { serve } from "https://deno.land/std@0.98.0/http/server.ts";
 
-import { parse } from './parser.js';
+import { parse, createTaskServer } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================
@@ -63,13 +63,11 @@ import './tasks/quote.js';
 
 // =========================================
 
-// web server for ping:
+// web server for task execution and ping:
 const server = serve({ port: 8080 });
 console.log('status: web server ready');
-(async () => {
-	for await (const request of server) request.respond(
-		{ status: 200, body: 'Web server ready!' }
-	);
-})();
+createTaskServer(server, async request => request.respond(
+	{ status: 200, body: 'Web server running!' }
+));
 
 await startBot(bot);

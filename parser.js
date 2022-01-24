@@ -165,6 +165,8 @@ export function warn(title, message) {
 	};
 }
 
+export function text(message) { return { content: message }; }
+
 export function createHelp(title, color) {
 	return {
 		embeds: [{

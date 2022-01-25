@@ -22,9 +22,10 @@ const Pieces = {
 };
 
 export async function diagram(board, color) {
+	color = color || 'w';
 	const canvas = Board[color].clone();
 	// drawing pieces:
-	if (color == 'w') {
+	if (color[0] == 'w') {
 		for (let i = 0; i < 8; i++) {
 			for (let j = 0; j < 8; j++) {
 				if (board[i][j] == null) continue;

@@ -6,7 +6,7 @@ import { diagram } from '../components/diagram/diagram.js';
 
 createCommand({
 	name: 'fen', emoji: '📄',
-	aliases: [ 'diagram' ],
+	aliases: [ 'diagram', 'black', 'white' ],
 	description: 'Display a chess board diagram from **FEN**.',
 	permissions: Roles.everyone,
 	execute: async message => {
@@ -20,9 +20,12 @@ createCommand({
 			else if (game.in_checkmate())
 				status = game.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
 		} else status = game.turn() == 'w' ? '⬜️ WHITE TO MOVE' : '⬛️ BLACK TO MOVE';
+		let turn = game.turn();
+		if (message.command[0] == 'w') turn = 'w';
+		else if (message.command[0] == 'b') turn = 'b';
 		return {
 			file: {
-				blob: new Blob([ await diagram(game.board(), game.turn()) ]),
+				blob: new Blob([ await diagram(game.board(), turn)]),
 				name: 'board.png',
 			},
 			embeds: [{

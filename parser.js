@@ -26,17 +26,17 @@ function handle(command, bot, message, args) {
 export function parse(bot, message) {
 	if (!message.content.startsWith(Prefix)) return;
 	const args = message.content.split(/\s+/g);
-	const content = args.splice(0, 1)[0].substring(1).toLowerCase();
+	const content = args.splice(0, 1)[0].substring(Prefix.length).toLowerCase();
 	for (const command of commands) {
 		if (command.name == content ||
 			command.aliases.includes(content)) {
 			if (command.permissions.includes(Roles.everyone)) {
-				handle(command, bot, message, args);
+				handle(content, bot, message, args);
 				return;
 			}
 			for (const role of message.member.roles) {
 				if (command.permissions.includes(role)) {
-					handle(command, bot, message, args);
+					handle(content, bot, message, args);
 					return;
 				}
 			}

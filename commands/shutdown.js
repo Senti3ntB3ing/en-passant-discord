@@ -12,12 +12,13 @@ createCommand({
 	execute: async command => {
 		const title = 'Self Destruction';
 		let message = await sendMessage(command.bot, command.channelId, error(
-			title, 'The system will self-destruct in `10` seconds.'
+			title, 'Preparing the system for the self-destruction sequence.'
 		));
 		await delay(1000);
-		for (let i = 9; i > 0; i--) {
+		for (let i = 10; i > 0; i--) {
+			const j = String(i).padStart(2, '0');
 			await editMessage(command.bot, message.channelId, message.id, error(
-				title, 'The system will self-destruct in `0' + i + '` seconds.'
+				title, 'The system will self-destruct in `' + j + '` seconds.'
 			));
 			await delay(1000);
 		}

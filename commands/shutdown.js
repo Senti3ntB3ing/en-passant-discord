@@ -14,12 +14,12 @@ createCommand({
 		let message = await sendMessage(command.bot, command.channelId, error(
 			title, 'The system will self-destruct in `10` seconds.'
 		));
-		await delay(10000);
-		for (let i = 10; i > 0; i--) {
+		await delay(1000);
+		for (let i = 9; i > 0; i--) {
 			await editMessage(command.bot, message.channelId, message.id, error(
 				title, 'The system will self-destruct in `0' + i + '` seconds.'
 			));
-			await delay(10000);
+			await delay(1000);
 		}
 		await editMessage(command.bot, message.channelId, message.id, error(
 			title, 'The system has completed the self-destruction sequence.'

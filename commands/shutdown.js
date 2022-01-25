@@ -1,7 +1,7 @@
 
-import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { sendMessage, editMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
-import { Roles } from '../config.js';
+import { Roles, delay } from '../config.js';
 import { createCommand, error } from '../parser.js';
 
 createCommand({
@@ -9,9 +9,20 @@ createCommand({
 	aliases: [ 'selfdestruct', 'self-destruct' ],
 	description: 'Shutdown the bot.',
 	permissions: Roles.moderator,
-	execute: async message => {
-		await sendMessage(message.bot, message.channelId, error(
-			'Self Destruction', 'Preparing the system for self-destruction shutdown...'
+	execute: async command => {
+		const title = 'Self Destruction';
+		let message = await sendMessage(command.bot, command.channelId, error(
+			title, 'The system will self-destruct in `10` seconds.'
+		));
+		await delay(10000);
+		for (let i = 10; i > 0; i--) {
+			await editMessage(command.bot, message.channelId, message.id, error(
+				title, 'The system will self-destruct in `0' + i + '` seconds.'
+			));
+			await delay(10000);
+		}
+		await editMessage(command.bot, message.channelId, message.id, error(
+			title, 'The system has completed the self-destruction sequence.'
 		));
 		Deno.exit(1);
 	}

@@ -8,10 +8,10 @@ import { bot } from './main.js';
 
 export let commands = [ ], primary = [ ], tasks = { };
 
-function handle(command, bot, message, args) {
+function handle(command, bot, message, content, args) {
 	message.arguments = args;
 	message.bot = bot;
-	message.command = command;
+	message.command = content;
 	message.text = message.content.replace(/^(.*?)\s+/g, '').trim();
 	if (command.execute.constructor.name == 'AsyncFunction') {
 		command.execute(message).then(result => {
@@ -31,12 +31,12 @@ export function parse(bot, message) {
 		if (command.name == content ||
 			command.aliases.includes(content)) {
 			if (command.permissions.includes(Roles.everyone)) {
-				handle(content, bot, message, args);
+				handle(command, bot, message, content, args);
 				return;
 			}
 			for (const role of message.member.roles) {
 				if (command.permissions.includes(role)) {
-					handle(content, bot, message, args);
+					handle(command, bot, message, content, args);
 					return;
 				}
 			}

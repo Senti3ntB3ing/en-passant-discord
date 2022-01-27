@@ -7,5 +7,5 @@ createCommand({
 	aliases: [ 'log', 'record' ],
 	description: 'Check the bot status.',
 	permissions: Roles.moderator,
-	execute: () => card('Status log', '```\n' + record.join('\n') + '\n```')
+	execute: () => card('Status log', '```elm\n' + record.join('\n') + '\n```')
 });

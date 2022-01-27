@@ -104,7 +104,7 @@ async function executeTasks() {
 		}
 		tasks[name].last_execution = now;
 		tasks[name].execute(bot);
-		console.log(`task: ${name} executed`);
+		log('task', `${name} executed`);
 	}
 }
 
@@ -192,4 +192,9 @@ export function createHelp(title, color) {
 			})
 		}]
 	};
+}
+
+export function log(component, text) {
+	const options = { timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric' };
+	console.log(`${component}: ${text} [${now.toLocaleTimeString('en-GB', options)}]`);
 }

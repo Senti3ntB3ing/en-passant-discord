@@ -4,7 +4,7 @@ import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/disc
 
 import { serve } from "https://deno.land/std@0.98.0/http/server.ts";
 
-import { parse, text, createTaskServer } from './parser.js';
+import { parse, text, log, createTaskServer } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================
@@ -61,14 +61,14 @@ export const baseBot = createBot({
 
 export const bot = enableCachePlugin(baseBot);
 enableCacheSweepers(bot);
-console.log('status: en-passant ready');
+log('status', 'en-passant ready');
 setRandomAction();
 
 // =========================================
 
 // web server for task execution and ping:
 const server = serve({ port: 8080 });
-console.log('status: web server ready');
+log('status', 'web server ready');
 createTaskServer(server, async request => request.respond(
 	{ status: 200, body: 'Web server running!' }
 ));

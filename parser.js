@@ -196,5 +196,5 @@ export function createHelp(title, color) {
 
 export function log(component, text) {
 	const options = { timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric' };
-	console.log(`${component}: ${text} [${(new Date()).toLocaleTimeString('en-GB', options)}]`);
+	console.log(`${component}: ${text} [${(new Date()).toLocaleTimeString('en-GB', options)}UTC]`);
 }

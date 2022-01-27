@@ -69,11 +69,10 @@ export function createCommand(command) {
 export function createTask(task) {
 	if (typeof task.execute != 'function') return;
 	if (task.name == undefined) return;
-	if (typeof task.interval != 'number') return;
-	if (task.interval <= 0) return;
+	if ((task.interval == undefined) != (task.time == undefined)) return;
 	if (tasks[task.name] != undefined) return;
 	if (task.disabled == undefined) task.disabled = false;
-	task.last_execution = new Date();
+	task.last_execution = new Date(Date.now() - 86400000); // yesterday
 	tasks[task.name] = task;
 }
 
@@ -86,10 +85,23 @@ export function stopTask(task) {
 
 async function executeTasks() {
 	const now = new Date();
+	const isToday = date =>
+		date.getDate() == now.getDate() &&
+		date.getMonth() == now.getMonth() &&
+		date.getFullYear() == now.getFullYear();
 	for (const name in tasks) {
 		if (tasks[name].disabled) continue;
-		if (tasks[name].last_execution.getTime() +
-			tasks[name].interval > now.getTime()) continue;
+		if (tasks[name].interval != undefined) {
+			if (tasks[name].last_execution.getTime() +
+				tasks[name].interval > now.getTime()) continue;
+		}
+		if (isToday(tasks[name].last_execution)) continue;
+		if (tasks[name].time != undefined) {
+			const t = tasks[name].time.split(':');
+			const h = parseInt(t[0]), m = parseInt(t[1]);
+			const ch = now.getHours(), cm = now.getMinutes();
+			if (ch < h || (ch == h && cm < m)) continue;
+		}
 		tasks[name].last_execution = now;
 		tasks[name].execute(bot);
 		console.log(`task: ${name} executed`);

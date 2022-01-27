@@ -57,7 +57,7 @@ createCommand({
 /// Shows all your linked online chess account rating.
 createCommand({
 	name: 'rating', emoji: ':star:', aliases: [ 'ratings', 'stats' ],
-	description: 'Shows your linked online chess accounts.',
+	description: 'Shows your linked online chess Elo ratings.',
 	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Account Ratings';

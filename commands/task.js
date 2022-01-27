@@ -1,6 +1,6 @@
 
 import { Roles } from '../config.js';
-import { createCommand, tasks, card, error, info } from '../parser.js';
+import { createCommand, tasks, stopTask, card, error, info } from '../parser.js';
 
 createCommand({
 	name: 'task', emoji: '⏳', hidden: true,
@@ -18,3 +18,21 @@ createCommand({
 		} else return error('Task Command', `Task \`${name}\` not found.`);
 	}
 });
+
+createCommand({
+	name: 'stop', emoji: '⌛️', hidden: true,
+	description: 'Stops the execution of a task.',
+	permissions: Roles.moderator,
+	execute: message => {
+		if (message.arguments.length == 0) {
+			for (const name in tasks) stopTask(name);
+			return card('Task Command', `🦾 All tasks have been stopped successfully.`);
+		}
+		for (const name of message.arguments) {
+			if (name in tasks) stopTask(name);
+			else return error('Task Command', `Task \`${name}\` not found.`);
+		}
+		return card('Task Command', `🦾 All tasks have been stopped successfully.`);
+	}
+});
+

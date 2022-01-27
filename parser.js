@@ -6,7 +6,7 @@ import { closest, levenshtein } from './components/levenshtein.js';
 import { Name, Prefix, Roles, ColorCodes } from './config.js';
 import { bot } from './main.js';
 
-export let commands = [ ], primary = [ ], tasks = { };
+export let commands = [], primary = [], tasks = { }, record = [];
 
 function handle(command, bot, message, content, args) {
 	message.arguments = args;
@@ -198,6 +198,7 @@ export function createHelp(title, color) {
 }
 
 export function log(component, text) {
-	const options = { timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric' };
-	console.log(`${component}: ${text} [${(new Date()).toLocaleTimeString('en-GB', options)} UTC]`);
+	const o = { timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric' };
+	record.push(`${component}: ${text} [${(new Date()).toLocaleTimeString('en-GB', o)} UTC]`);
+	console.log(record[record.length - 1]);
 }

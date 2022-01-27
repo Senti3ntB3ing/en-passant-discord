@@ -200,6 +200,6 @@ export function createHelp(title, color) {
 export function log(component, text) {
 	const o = { timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric' };
 	if (record.length == 20) record.shift();
-	record.push(`${component}: ${text} [${(new Date()).toLocaleTimeString('en-GB', o)} UTC]`);
+	record.push(`[${(new Date()).toLocaleTimeString('en-GB', o)} UTC] ${component}: ${text}`);
 	console.log(record[record.length - 1]);
 }

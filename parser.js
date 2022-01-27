@@ -6,7 +6,7 @@ import { closest, levenshtein } from './components/levenshtein.js';
 import { Name, Prefix, Roles, ColorCodes } from './config.js';
 import { bot } from './main.js';
 
-export let commands = [], primary = [], tasks = { }, record = [];
+export let commands = [], primary = [], tasks = {}, record = [];
 
 function handle(command, bot, message, content, args) {
 	message.arguments = args;

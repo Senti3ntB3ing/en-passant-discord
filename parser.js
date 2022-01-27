@@ -69,7 +69,7 @@ export function createCommand(command) {
 export function createTask(task) {
 	if (typeof task.execute != 'function') return;
 	if (task.name == undefined) return;
-	if ((task.interval == undefined) != (task.time == undefined)) return;
+	if (task.interval == undefined && task.time == undefined) return;
 	if (tasks[task.name] != undefined) return;
 	if (task.disabled == undefined) task.disabled = false;
 	task.last_execution = new Date(Date.now() - 86400000); // yesterday

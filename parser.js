@@ -111,7 +111,7 @@ async function executeTasks() {
 export async function createTaskServer(server, callback) {
 	for await (const request of server) {
 		callback(request);
-		executeTasks();
+		if (request.url == '/task') executeTasks();
 	}
 }
 

@@ -2,6 +2,7 @@
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { Channels, ColorCodes, Quotes } from '../config.js';
+import { Database } from '../database.js';
 import { createTask } from '../parser.js';
 
 const dayOfYear = date => {
@@ -25,7 +26,16 @@ const quote_of_the_day = () => {
 createTask({
 	name: 'quote',
 	time: '10:00',
-	execute: bot => {
+	execute: async bot => {
+		const now = new Date();
+		const isToday = date =>
+			date.getDate() == now.getDate() &&
+			date.getMonth() == now.getMonth() &&
+			date.getFullYear() == now.getFullYear();
+		const lastQuote = await Database.get('quote');
+		await Database.set('quote', now.toISOString());
+		if (lastQuote == null || lastQuote == undefined ||
+			isToday(new Date(lastQuote))) return;
 		const quote = quote_of_the_day();
 		const footer = quote.title ? `${quote.title}  ${quote.author}` : quote.author;
 		sendMessage(bot, Channels.general, {

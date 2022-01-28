@@ -5,8 +5,8 @@ import { Roles } from '../config.js';
 import { createCommand, card, record } from '../parser.js';
 
 createCommand({
-	name: 'status', emoji: '⏳', hidden: true,
-	aliases: [ 'log', 'record' ],
+	name: 'record', emoji: '⏳', hidden: true,
+	aliases: [ 'log' ],
 	description: 'Check the bot status.',
 	permissions: Roles.moderator,
 	execute: () => card('Status Log', '```elm\n' + record.join('\n') + '\n```')

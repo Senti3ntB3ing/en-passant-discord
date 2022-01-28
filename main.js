@@ -19,7 +19,7 @@ import './commands/rating.js';
 import './commands/fruit.js';
 import './commands/task.js';
 import './commands/shutdown.js';
-import './commands/status.js';
+import './commands/record.js';
 
 // ==== Tasks ==============================
 

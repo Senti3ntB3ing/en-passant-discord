@@ -14,6 +14,7 @@ createCommand({
 
 createCommand({
 	name: 'count', emoji: '#️⃣', hidden: true,
+	aliases: [ 'members' ],
 	description: 'Count the number of members.',
 	permissions: Roles.moderator,
 	execute: async message => {

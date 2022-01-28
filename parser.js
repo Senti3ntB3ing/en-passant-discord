@@ -205,7 +205,7 @@ export function log(component, text) {
 
 export function fetchLog() {
 	return record.join('\n') +
-		`[${lastPing.toLocaleTimeString('en-GB', {
+		`\n[${lastPing.toLocaleTimeString('en-GB', {
 			timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric'
 		})} UTC] task: last ping received`;
 }

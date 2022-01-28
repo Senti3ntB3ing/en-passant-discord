@@ -20,6 +20,9 @@ createCommand({
 		const guild = await getGuild(
 			message.bot, message.guildId, { counts: true }
 		);
-		return card('User Count', `The server has \`${guild.approximateMemberCount}\` members.`);
+		return card(
+			'User Count',
+			`#️⃣ The server has \`${guild.approximateMemberCount}\` total members.`
+		);
 	}
 });

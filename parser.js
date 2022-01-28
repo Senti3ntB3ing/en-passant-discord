@@ -6,7 +6,7 @@ import { closest, levenshtein } from './components/levenshtein.js';
 import { Name, Prefix, Roles, ColorCodes } from './config.js';
 import { bot } from './main.js';
 
-export let commands = [], primary = [], tasks = {}, record = [];
+export let commands = [], primary = [], tasks = {}, record = [], lastPing = new Date();
 
 function handle(command, bot, message, content, args) {
 	message.arguments = args;
@@ -85,6 +85,7 @@ export function stopTask(task) {
 
 async function executeTasks() {
 	const now = new Date();
+	lastPing = now;
 	const isToday = date =>
 		date.getDate() == now.getDate() &&
 		date.getMonth() == now.getMonth() &&
@@ -199,4 +200,9 @@ export function log(component, text) {
 	if (record.length == 20) record.shift();
 	record.push(`[${(new Date()).toLocaleTimeString('en-GB', o)} UTC] ${component}: ${text}`);
 	console.log(record[record.length - 1]);
+}
+
+export function fetchLog() {
+	return record.join('\n') +
+		`[${lastPing.toLocaleTimeString('en-GB', o)} UTC] task: last ping received`;
 }

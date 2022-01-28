@@ -4,7 +4,7 @@ import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/disc
 
 import { serve } from "https://deno.land/std@0.98.0/http/server.ts";
 
-import { parse, text, log, record, createTaskServer } from './parser.js';
+import { parse, text, log, fetchLog, createTaskServer } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================
@@ -71,7 +71,7 @@ setRandomAction();
 const server = serve({ port: 8080 });
 log('status', 'web server ready');
 createTaskServer(server, async request => request.respond(
-	{ status: 200, body: record.join('\n') }
+	{ status: 200, body: fetchLog() }
 ));
 
 await startBot(bot);

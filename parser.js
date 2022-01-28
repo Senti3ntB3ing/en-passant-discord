@@ -111,10 +111,7 @@ async function executeTasks() {
 export async function createTaskServer(server, callback) {
 	for await (const request of server) {
 		callback(request);
-		if (request.url == '/task') {
-			log('task', 'received task ping');
-			executeTasks();
-		}
+		if (request.url == '/task') executeTasks();
 	}
 }
 

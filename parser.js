@@ -95,8 +95,7 @@ async function executeTasks() {
 		if (tasks[name].interval != undefined) {
 			if (tasks[name].last_execution.getTime() +
 				tasks[name].interval > now.getTime()) continue;
-		}
-		if (isToday(tasks[name].last_execution)) continue;
+		} else if (isToday(tasks[name].last_execution)) continue;
 		if (tasks[name].time != undefined) {
 			const t = tasks[name].time.split(':');
 			const h = parseInt(t[0]), m = parseInt(t[1]);

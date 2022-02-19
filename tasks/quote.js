@@ -133,7 +133,7 @@ const Quotes = [
 	{
 		author: 'Andrew Soltis', title: 'GM',
 		quotes: [
-			'Failing to open the center at the right moment, a common error by White in the Exchange Lopez, can allow Black an excellent game.',
+			'Failing to open the center at the right moment, a common error by white in the *Exchange Lopez*, can allow black an excellent game.',
 			'Chess is really ninety nine percent calculation.',
 			'You know you’re going to lose. Even when I was ahead I knew I was going to lose (on playing against Fischer).',
 		]

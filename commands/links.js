@@ -1,5 +1,7 @@
 
-import { ColorCodes, Roles } from '../config.js';
+import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+
+import { ColorCodes, Roles, Channels } from '../config.js';
 import { createCommand, card } from '../parser.js';
 
 const links = {
@@ -14,8 +16,20 @@ const links = {
 };
 
 createCommand({
-	name: 'links', emoji: '🔗',
-    aliases: [ 'link' ],
+	name: 'streaming', emoji: '▶️', hidden: true,
+	aliases: [ 'stream' ],
+	description: 'Streaming notification.',
+	permissions: Roles.moderator,
+	execute: message => {
+		const url = links['Twitch'].url;
+		sendMessage(message.bot, Channels.notifications,
+			text(`Hey @ everyone, <@${Roles.Zach}> is streaming on __twitch__!\n${url}`)
+		);
+	}
+});
+
+createCommand({
+	name: 'links', emoji: '🔗', aliases: [ 'link' ],
 	description: 'List of useful links.',
 	permissions: Roles.everyone,
 	execute: () => ({
@@ -59,8 +73,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'twitch', emoji: links['Twitch'].emoji,
-	aliases: [ 'stream' ], hidden: true,
+	name: 'twitch', emoji: links['Twitch'].emoji, hidden: true,
 	description: 'Link to thechessnerd Twitch Live.',
 	permissions: Roles.everyone,
 	execute: () => card(

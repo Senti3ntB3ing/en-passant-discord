@@ -2,7 +2,7 @@
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { ColorCodes, Roles, Channels } from '../config.js';
-import { createCommand, card } from '../parser.js';
+import { createCommand, card, text } from '../parser.js';
 
 const links = {
 	'Instagram': { url: 'https://www.instagram.com/thechessnerd/', emoji: '📷', color: 0xFFFFFF },
@@ -23,7 +23,7 @@ createCommand({
 	execute: message => {
 		const url = links['Twitch'].url;
 		sendMessage(message.bot, Channels.notifications,
-			text(`Hey @ everyone, <@${Roles.Zach}> is streaming on __twitch__!\n${url}`)
+			text(`Hey @everyone, <@${Roles.Zach}> is streaming on __twitch__!\n${url}`)
 		);
 	}
 });

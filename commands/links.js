@@ -2,16 +2,16 @@
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { ColorCodes, Roles, Channels } from '../config.js';
-import { createCommand, card, text } from '../parser.js';
+import { createCommand, card } from '../parser.js';
 
 const links = {
 	'Instagram': { url: 'https://www.instagram.com/thechessnerd/', emoji: '📷', color: 0xFFFFFF },
 	'Youtube': { url: 'https://www.youtube.com/c/thechessnerd', emoji: '📺', color: 0xFF0000 },
-	'Twitch': { url: 'https://www.twitch.tv/thechessnerdlive', emoji: '💎', color: 0x9047FF },
+	'Twitch': { url: 'https://www.twitch.tv/thechessnerdlive/', emoji: '💎', color: 0x9047FF },
 	'Twitter': { url: 'https://twitter.com/thechessnerd', emoji: '🐦', color: 0x1D9BF0 },
-	'Discord': { url: 'https://discord.com/invite/DKHBFF22TJ', emoji: '💬', color: 0x5765F3 },
+	'Discord': { url: 'https://discord.com/invite/DKHBFF22TJ/', emoji: '💬', color: 0x5765F3 },
 	'chess.com': { url: 'https://www.chess.com/club/thechessnerd-exclusive-club', emoji: '🎓', color: 0x7FA650 },
-	'reddit': { url: 'https://www.reddit.com/r/thechessnerd', emoji: '🤖', color: 0xFF4500 },
+	'reddit': { url: 'https://www.reddit.com/r/thechessnerd/', emoji: '🤖', color: 0xFF4500 },
 	'Merch': { url: 'https://thechessnerd.com/', emoji: '🛍', color: 0x37777F },
 };
 
@@ -20,12 +20,11 @@ createCommand({
 	aliases: [ 'stream' ],
 	description: 'Streaming notification.',
 	permissions: Roles.moderator,
-	execute: message => {
-		const url = links['Twitch'].url;
-		sendMessage(message.bot, Channels.notifications,
-			text(`Hey @everyone, <@${Roles.Zach}> is streaming on __twitch__!\n${url}`)
-		);
-	}
+	execute: message => { sendMessage(message.bot, Channels.notifications, card(
+		'Zach is now live on Twitch!',
+		`${links['Twitch'].emoji} Hey @everyone, <@${Roles.Zach}> is streaming on __twitch__!\n${links['Twitch'].url}`,
+		links['Twitch'].color
+	)); }
 });
 
 createCommand({

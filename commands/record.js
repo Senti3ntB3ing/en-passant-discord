@@ -5,7 +5,7 @@ import { Roles } from '../config.js';
 import { createCommand, card, fetchLog } from '../parser.js';
 
 createCommand({
-	name: 'record', emoji: '⏳', hidden: true,
+	name: 'record', emoji: '📑', hidden: true,
 	aliases: [ 'log' ],
 	description: 'Check the bot status.',
 	permissions: Roles.moderator,

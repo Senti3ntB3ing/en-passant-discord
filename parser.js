@@ -177,15 +177,17 @@ export function warn(title, message) {
 	};
 }
 
-export function createHelp(title, color) {
+export function createHelp(title, mod = false) {
 	return {
 		embeds: [{
 			type: 'rich',
 			title: title || Name,
-			color: color || ColorCodes.random(),
-			fields: commands.filter(command => !command.hidden).map(command => {
+			color: ColorCodes.normal,
+			fields: commands.filter(command => mod || !command.hidden).map(command => {
+				let aliases = '';
+				if (mod) aliases = ' | `' + command.aliases.join('` | `') + '`';
 				return {
-					name: `${command.emoji || ''} \`${Prefix}${command.name}\`:`,
+					name: `${command.emoji || ''} \`${Prefix}${command.name}\`${aliases}:`,
 					value: command.description || 'No description.',
 					inline: false
 				};

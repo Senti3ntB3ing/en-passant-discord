@@ -27,6 +27,8 @@ export const Channels = {
 	// == GENERAL =======================
 	      general: 839594884289921076n,
 	notifications: 839594884289921077n,
+	  recruitment: 950121447249039403n,
+	    brilliant: 950350208649273385n,
 	content_ideas: 915564965593759754n,
 	   chess_club: 911588588930629683n,
 	    challenge: 858358887416594463n,
@@ -35,7 +37,6 @@ export const Channels = {
 	    off_topic: 900781481704706159n,
 	        memes: 910623921093623868n,
 	         bots: 912689526244274207n,
-	       stream: 921464354791116800n,
 	// == CHESS =========================
 	     openings: 839594884289921079n,
 	  middlegames: 839594884289921080n,

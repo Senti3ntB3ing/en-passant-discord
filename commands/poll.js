@@ -5,17 +5,17 @@ import { createCommand, error, card, info } from '../parser.js';
 import { sendMessage, addReaction, deleteMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 createCommand({
-	name: 'poll', emoji: '📊', hidden: true,
-	description: 'Make a poll with the given text and emojis.',
+	name: 'poll', emoji: ':bar_chart:', hidden: true,
+	description: 'Make a poll with the given discord emojis.',
 	permissions: Roles.moderator,
 	execute: async message => {
         const text = message.text;
 		if (message.arguments.length == 0) return info(
 			'Community Poll Help',
-			'You must provide text with some emojis for the poll.'
+			'You must provide text with discord emojis for the poll.'
 		);
 		// extract emojis:
-		const emojis = text.replace(/[*`~!_\(\)\[\]\{\}@,\.]+/g, '').match(/[\p{Emoji}\u200d]+/gu);
+		const emojis = text.match(/:[A-Za-z_]\w*:/gu);
 		let id = null;
 		try {
 			// send poll message:

@@ -3,7 +3,7 @@ import { Roles } from '../config.js';
 import { createCommand, tasks, stopTask, card, error, info } from '../parser.js';
 
 createCommand({
-	name: 'task', emoji: '⏳', hidden: true,
+	name: 'task', emoji: ':hourglass_flowing_sand:', hidden: true,
 	description: 'Force the execution of a task.',
 	permissions: Roles.moderator,
 	execute: message => {
@@ -20,7 +20,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'stop', emoji: '⌛️', hidden: true,
+	name: 'stop', emoji: ':hourglass:', hidden: true,
 	description: 'Stops the execution of a task.',
 	permissions: Roles.moderator,
 	execute: message => {

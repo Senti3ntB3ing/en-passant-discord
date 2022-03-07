@@ -186,7 +186,7 @@ export function createHelp(title, mod = false) {
 			fields: commands.filter(command => mod || !command.hidden).map(command => {
 				let aliases = '';
 				if (mod && command.aliases.length > 0)
-					aliases = ' | `' + command.aliases.join('` | `') + '`';
+					aliases = ' | `' + Prefix + command.aliases.join('` | `' + Prefix) + '`';
 				return {
 					name: `${command.emoji || ''} \`${Prefix}${command.name}\`${aliases}:`,
 					value: command.description || 'No description.',

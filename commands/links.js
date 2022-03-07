@@ -53,7 +53,7 @@ createCommand({
 	description: 'Link to @thechessnerd Instagram page.',
 	permissions: Roles.everyone,
 	execute: () => card(
-		'Link to @thechessnerd Instagram page',
+		'Link to **@thechessnerd** Instagram page',
 		links['Instagram'].emoji + ' ' + links['Instagram'].url,
 		links['Instagram'].color
 	)
@@ -62,7 +62,7 @@ createCommand({
 createCommand({
 	name: 'youtube', emoji: links['Youtube'].emoji,
     aliases: [ 'yt' ], hidden: true,
-	description: 'Link to thechessnerd Youtube channel.',
+	description: 'Link to __thechessnerd__ Youtube channel.',
 	permissions: Roles.everyone,
 	execute: () => card(
 		'Link to thechessnerd Youtube channel',
@@ -73,7 +73,7 @@ createCommand({
 
 createCommand({
 	name: 'twitch', emoji: links['Twitch'].emoji, hidden: true,
-	description: 'Link to thechessnerd Twitch Live.',
+	description: 'Link to __thechessnerd__ Twitch Live.',
 	permissions: Roles.everyone,
 	execute: () => card(
 		'Link to thechessnerd Twitch Live',
@@ -84,7 +84,7 @@ createCommand({
 
 createCommand({
 	name: 'twitter', emoji: links['Twitter'].emoji, hidden: true,
-	description: 'Link to @thechessnerd Twitter page.',
+	description: 'Link to **@thechessnerd** Twitter page.',
 	permissions: Roles.everyone,
 	execute: () => card(
 		'Link to @thechessnerd Twitter page',
@@ -118,7 +118,7 @@ createCommand({
 
 createCommand({
 	name: 'reddit', emoji: links['reddit'].emoji, hidden: true,
-	description: 'Link to /r/thechessnerd reddit.',
+	description: 'Link to __/r/thechessnerd__ reddit.',
 	permissions: Roles.everyone,
 	execute: () => card(
 		'Link to /r/thechessnerd reddit',

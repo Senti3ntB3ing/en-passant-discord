@@ -70,7 +70,6 @@ createCommand({
 		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
-			const emoji = emojis[platform];
 			let ratings = null;
 			switch (platform) {
 				case '**FIDE**': break;
@@ -83,12 +82,8 @@ createCommand({
 			if (ratings == null || ratings.length == 0) continue;
 			list.push({
 				title,
-				fields: [{
-					name: `:star: <@${author}> aka \`${username}\` ${platform} ratings:`,
-					value: ratings.map(
-						r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
-					).join(' ｜ ')
-				}],
+				message: `:star: <@${author}> aka \`${username}\` ${platform} ratings:\n` +
+					ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
 				color
 			});
 		}
@@ -158,9 +153,9 @@ createCommand({
 			if (ratings === undefined)
 				return warn(title, 'No __lichess.org__ user found with the username `' + lichess.username + '`!');
 			if (ratings.length == 0) return info(title, 'You are currently unrated on __lichess.org__.');
-			return field(
+			return card(
 				title,
-				`:star: <@${message.member.id}> aka \`${lichess.username}\` __lichess.org__ ratings:`,
+				`:star: <@${message.member.id}> aka \`${lichess.username}\` __lichess.org__ ratings:\n` +
 				ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
 				color
 			);
@@ -208,9 +203,9 @@ createCommand({
 			if (ratings === undefined)
 				return warn(title, 'No __chess.com__ user found with the username `' + chess_com.username + '`!');
 			if (ratings.length == 0) return info(title, 'You are currently unrated on __chess.com__.');
-			return field(
+			return card(
 				title,
-				`:star: <@${message.member.id}> aka \`${chess_com.username}\` __chess.com__ ratings:`,
+				`:star: <@${message.member.id}> aka \`${chess_com.username}\` __chess.com__ ratings:\n` +
 				ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
 				color
 			);

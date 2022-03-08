@@ -5,18 +5,18 @@ import { ColorCodes, Roles, Channels } from '../config.js';
 import { createCommand, card } from '../parser.js';
 
 const links = {
-	'Instagram': { url: 'https://www.instagram.com/thechessnerd/', emoji: '📷', color: 0xFFFFFF },
-	'Youtube': { url: 'https://www.youtube.com/c/thechessnerd', emoji: '📺', color: 0xFF0000 },
-	'Twitch': { url: 'https://www.twitch.tv/thechessnerdlive/', emoji: '💎', color: 0x9047FF },
-	'Twitter': { url: 'https://twitter.com/thechessnerd', emoji: '🐦', color: 0x1D9BF0 },
-	'Discord': { url: 'https://discord.com/invite/DKHBFF22TJ/', emoji: '💬', color: 0x5765F3 },
-	'chess.com': { url: 'https://www.chess.com/club/thechessnerd-exclusive-club', emoji: '🎓', color: 0x7FA650 },
-	'reddit': { url: 'https://www.reddit.com/r/thechessnerd/', emoji: '🤖', color: 0xFF4500 },
-	'Merch': { url: 'https://thechessnerd.com/', emoji: '🛍', color: 0x37777F },
+	'Instagram': { url: 'https://www.instagram.com/thechessnerd/', emoji: ':camera:', color: 0xFFFFFF },
+	'Youtube': { url: 'https://www.youtube.com/c/thechessnerd', emoji: ':tv:', color: 0xFF0000 },
+	'Twitch': { url: 'https://www.twitch.tv/thechessnerdlive/', emoji: ':gem:', color: 0x9047FF },
+	'Twitter': { url: 'https://twitter.com/thechessnerd', emoji: ':bird:', color: 0x1D9BF0 },
+	'Discord': { url: 'https://discord.com/invite/DKHBFF22TJ/', emoji: ':speech_balloon:', color: 0x5765F3 },
+	'chess.com': { url: 'https://www.chess.com/club/thechessnerd-exclusive-club', emoji: ':mortar_board:', color: 0x7FA650 },
+	'reddit': { url: 'https://www.reddit.com/r/thechessnerd/', emoji: ':robot:', color: 0xFF4500 },
+	'Merch': { url: 'https://thechessnerd.com/', emoji: ':shopping_bags:', color: 0x37777F },
 };
 
 createCommand({
-	name: 'streaming', emoji: '▶️', hidden: true,
+	name: 'streaming', emoji: ':arrow_forward:', hidden: true,
 	aliases: [ 'stream' ],
 	description: 'Streaming notification.',
 	permissions: Roles.moderator,
@@ -28,7 +28,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'links', emoji: '🔗', aliases: [ 'link' ],
+	name: 'links', emoji: ':link:', aliases: [ 'link' ],
 	description: 'List of useful links.',
 	permissions: Roles.everyone,
 	execute: () => ({

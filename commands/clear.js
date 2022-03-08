@@ -15,7 +15,7 @@ const internal = error(
 );
 
 createCommand({
-	name: 'clear', emoji: '🗑', hidden: true,
+	name: 'clear', emoji: ':wastebasket:', hidden: true,
 	aliases: [ 'clean', 'delete', 'erase' ],
 	description: 'Clear messages in a text channel.',
 	permissions: Roles.moderator,
@@ -28,6 +28,6 @@ createCommand({
 			const messages = await getMessages(message.bot, message.channelId, { limit: n });
 			await deleteMessages(message.bot, message.channelId, messages.map(m => m.id));
 		} catch(e) { return internal; }
-		return card('Clear Command', `🗑 Successfully cleared \`${n}\` messages.`);
+		return card('Clear Command', `:wastebasket: Successfully cleared \`${n}\` messages.`);
 	}
 });

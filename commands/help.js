@@ -3,7 +3,7 @@ import { Channels, Roles } from '../config.js';
 import { createCommand, createHelp } from '../parser.js';
 
 createCommand({
-	name: 'help', emoji: '❓',
+	name: 'help', emoji: ':grey_question:',
 	aliases: [ 'usage', 'commands' ],
 	description: 'Display the list of commands.',
 	execute: message => createHelp(

@@ -1,14 +1,12 @@
 
-import { Roles } from '../config.js';
 import { createCommand, card } from '../parser.js';
 
 createCommand({
-	name: 'ping', emoji: '🏓',
+	name: 'ping', emoji: ':ping_pong:',
 	aliases: [ 'pong', 'latency' ],
 	description: 'Check the latency of the bot.',
-	permissions: Roles.everyone,
 	execute: message => card(
 		'Ping Command',
-		`🏓 **Pong**. Server latency: \`${ Date.now() - message.timestamp }ms\`.`
+		`:ping_pong: **Pong**. Server latency: \`${ Date.now() - message.timestamp }ms\`.`
 	)
 });

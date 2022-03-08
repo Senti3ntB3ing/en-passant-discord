@@ -130,10 +130,23 @@ export function card(title, message, color) {
 export function cards(elements) {
 	return {
 		embeds: elements.map(element => ({
+			type: 'rich',
 			title: element.title || Name,
 			color: element.color || ColorCodes.normal,
+			fields: element.fields || [],
 			description: element.message || ''
 		}))
+	};
+}
+
+export function field(title, subtitle, message, color) {
+	return {
+		embeds: [{
+			type: 'rich',
+			title: title || Name,
+			color: color || ColorCodes.normal,
+			fields: [{ name: subtitle, value: message, inline: false }]
+		}]
 	};
 }
 

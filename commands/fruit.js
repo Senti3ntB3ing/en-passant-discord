@@ -1,7 +1,6 @@
 
 import { Roles } from '../config.js';
 import { createCommand, card, error } from '../parser.js';
-
 import { closest, levenshtein } from '../components/levenshtein.js';
 
 const fruits = [
@@ -362,10 +361,10 @@ const fruits = [
 ];
 
 createCommand({
-	name: 'fruit', emoji: '🍏', hidden: true,
+	name: 'fruit', emoji: ':apple:', hidden: true,
 	aliases: [ 'fruits' ],
 	description: 'Random fruit facts and characteristics.',
-	permissions: Roles.everyone,
+	permissions: Roles.moderator,
 	execute: message => {
 		const argument = message.text;
 		let fruit = fruits[Math.floor(Math.random() * fruits.length)];

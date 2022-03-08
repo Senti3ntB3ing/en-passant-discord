@@ -5,7 +5,7 @@ import { Roles } from '../config.js';
 import { createCommand, card, fetchLog } from '../parser.js';
 
 createCommand({
-	name: 'record', emoji: '📑', hidden: true,
+	name: 'record', emoji: ':bookmark_tabs:', hidden: true,
 	aliases: [ 'log' ],
 	description: 'Check the bot status.',
 	permissions: Roles.moderator,
@@ -13,7 +13,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'count', emoji: '#️⃣', hidden: true,
+	name: 'count', emoji: ':hash:', hidden: true,
 	aliases: [ 'members' ],
 	description: 'Count the number of members.',
 	permissions: Roles.moderator,
@@ -23,7 +23,7 @@ createCommand({
 		);
 		return card(
 			'User Count',
-			`#️⃣ The server has \`${guild.approximateMemberCount}\` total members.`
+			`:hash: The server has \`${guild.approximateMemberCount}\` total members.`
 		);
 	}
 });

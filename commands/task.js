@@ -14,7 +14,7 @@ createCommand({
 		const name = message.arguments[0];
 		if (name in tasks) {
 			tasks[name].execute(message.bot);
-			return card('Task Command', `🦾 Task \`${name}\` executed successfully.`);
+			return card('Task Command', `:mechanical_arm: Task \`${name}\` executed successfully.`);
 		} else return error('Task Command', `Task \`${name}\` not found.`);
 	}
 });
@@ -26,13 +26,13 @@ createCommand({
 	execute: message => {
 		if (message.arguments.length == 0) {
 			for (const name in tasks) stopTask(name);
-			return card('Task Command', `🦾 All tasks have been stopped successfully.`);
+			return card('Task Command', `:mechanical_arm: All tasks have been stopped successfully.`);
 		}
 		for (const name of message.arguments) {
 			if (name in tasks) stopTask(name);
 			else return error('Task Command', `Task \`${name}\` not found.`);
 		}
-		return card('Task Command', `🦾 All tasks have been stopped successfully.`);
+		return card('Task Command', `:mechanical_arm: All tasks have been stopped successfully.`);
 	}
 });
 

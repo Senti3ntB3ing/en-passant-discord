@@ -5,7 +5,7 @@ import { Roles, delay } from '../config.js';
 import { createCommand, error } from '../parser.js';
 
 createCommand({
-	name: 'shutdown', emoji: '🔌', hidden: true,
+	name: 'shutdown', emoji: ':firecracker:', hidden: true,
 	aliases: [ 'selfdestruct', 'self-destruct' ],
 	description: 'Shutdown the bot.',
 	permissions: Roles.moderator,

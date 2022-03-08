@@ -1,6 +1,6 @@
 
 import { Roles } from '../config.js';
-import { createCommand, success, info, card, cards, warn, error } from '../parser.js';
+import { createCommand, success, info, card, cards, warn, error, field } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
 
@@ -10,7 +10,7 @@ import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/
 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'chess.com': 0x7FA650 };
 const emojis = {
-	'FIDE': '💛', 'lichess.org': '🤍', 'chess.com': '💚',
+	'FIDE': ':yellow_heart:', 'lichess.org': ':white_heart:', 'chess.com': ':green_heart:',
 	'bullet': ':gun:', 'rapid': ':clock:', 'blitz': ':zap:'
 };
 
@@ -25,9 +25,8 @@ const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
 /// /accounts?/
 /// Shows all your linked online chess account usernames.
 createCommand({
-	name: 'accounts', emoji: '👥', aliases: [ 'account' ],
+	name: 'accounts', emoji: ':busts_in_silhouette:', aliases: [ 'account' ],
 	description: 'Shows your linked online chess accounts.',
-	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Linked Accounts';
 		let member, author;
@@ -58,7 +57,6 @@ createCommand({
 createCommand({
 	name: 'rating', emoji: ':star:', aliases: [ 'ratings', 'stats' ],
 	description: 'Shows your linked online chess Elo ratings.',
-	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Account Ratings';
 		let member, author;
@@ -85,11 +83,12 @@ createCommand({
 			if (ratings == null || ratings.length == 0) continue;
 			list.push({
 				title,
-				message:
-					`:star: <@${author}> aka \`${username}\` ${platform} ratings:\n` +
-					ratings.map(
+				fields: [{
+					name: `:star: <@${author}> aka \`${username}\` ${platform} ratings:`,
+					value: ratings.map(
 						r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
-					).join(' ｜ '),
+					).join(' ｜ ')
+				}],
 				color
 			});
 		}
@@ -102,9 +101,8 @@ createCommand({
 /// Unlinks all your linked online chess account usernames.
 /// @param platforms: if provided only unlink the given platforms.
 createCommand({
-	name: 'unlink', emoji: '⚡️', hidden: true,
+	name: 'unlink', emoji: ':wrench:', hidden: true,
 	description: 'Unlinks all of your online chess accounts.',
-	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Unlink Accounts';
 		let member = await Database.get(message.member.id);
@@ -139,7 +137,6 @@ createCommand({
 	name: 'lichess', emoji: ':regional_indicator_l:',
 	aliases: [ 'lichess.org' ],
 	description: 'Link your __lichess.org__ account.',
-	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Account - lichess.org';
 		const color = colors['lichess.org'];
@@ -161,12 +158,10 @@ createCommand({
 			if (ratings === undefined)
 				return warn(title, 'No __lichess.org__ user found with the username `' + lichess.username + '`!');
 			if (ratings.length == 0) return info(title, 'You are currently unrated on __lichess.org__.');
-			return card(
+			return field(
 				title,
-				`:star: <@${message.member.id}> aka \`${lichess.username}\` __lichess.org__ ratings:\n` +
-				ratings.map(
-					r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
-				).join(' ｜ '),
+				`:star: <@${message.member.id}> aka \`${lichess.username}\` __lichess.org__ ratings:`,
+				ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
 				color
 			);
 		}
@@ -191,7 +186,6 @@ createCommand({
 createCommand({
 	name: 'chess.com', emoji: ':regional_indicator_c:',
 	description: 'Link your __chess.com__ account.',
-	permissions: Roles.everyone,
 	execute: async message => {
 		const title = 'Account - chess.com';
 		const color = colors['chess.com'];
@@ -214,12 +208,10 @@ createCommand({
 			if (ratings === undefined)
 				return warn(title, 'No __chess.com__ user found with the username `' + chess_com.username + '`!');
 			if (ratings.length == 0) return info(title, 'You are currently unrated on __chess.com__.');
-			return card(
+			return field(
 				title,
-				`:star: <@${message.member.id}> aka \`${chess_com.username}\` __chess.com__ ratings:\n` +
-				ratings.map(
-					r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
-				).join(' ｜ '),
+				`:star: <@${message.member.id}> aka \`${chess_com.username}\` __chess.com__ ratings:`,
+				ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
 				color
 			);
 		}
@@ -240,17 +232,17 @@ createCommand({
 	}
 });
 
-/// verify <mention> <platform> <username>
+/// verify <platform> <username> <mention> 
 /// Verify the given account.
 createCommand({
-	name: 'verify', emoji: '✅', hidden: true,
-	description: 'Link your __chess.com__ account.',
+	name: 'verify', emoji: ':white_check_mark:', hidden: true,
+	description: 'Manually `!verify <platform> <username> @mention`.',
 	permissions: Roles.moderator,
 	execute: async message => {
 		const title = 'Account Verification';
 		const process = info(
 			'Verification Instructions',
-			'Type `!verify platform username @mention` to verify the account.'
+			'Type `!verify <platform> <username> @mention`.'
 		);
 		if (message.mentionedUserIds.length == 0 ||
 			message.arguments.length < 3) return process;

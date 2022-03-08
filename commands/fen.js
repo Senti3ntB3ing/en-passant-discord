@@ -25,7 +25,7 @@ createCommand({
 		else if (message.command[0] == 'b') turn = 'b';
 		return {
 			file: {
-				blob: new Blob([ await diagram(game.board(), turn)]),
+				blob: new Blob([ await diagram(game.board(), turn) ]),
 				name: 'board.png',
 			},
 			embeds: [{

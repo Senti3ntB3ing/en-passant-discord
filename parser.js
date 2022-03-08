@@ -155,7 +155,7 @@ export function error(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.error,
-			description: '🚫 ' + (message || 'Error!')
+			description: ':no_entry_sign: ' + (message || 'Error!')
 		}]
 	};
 }
@@ -165,7 +165,7 @@ export function info(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.info,
-			description: 'ℹ️ ' + (message || 'Information.')
+			description: ':information_source: ' + (message || 'Information.')
 		}]
 	};
 }
@@ -175,7 +175,7 @@ export function success(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.success,
-			description: '✅ ' + (message || 'Success!')
+			description: ':white_check_mark: ' + (message || 'Success!')
 		}]
 	};
 }
@@ -185,7 +185,7 @@ export function warn(title, message) {
 		embeds: [{
 			title: title || Name,
 			color: ColorCodes.warn,
-			description: '⚠️ ' + (message || 'Warning!')
+			description: ':warning: ' + (message || 'Warning!')
 		}]
 	};
 }

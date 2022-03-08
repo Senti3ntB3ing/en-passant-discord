@@ -9,18 +9,17 @@ createCommand({
 	description: 'Make a poll with the given discord emojis.',
 	permissions: Roles.moderator,
 	execute: async message => {
-        const text = message.text;
 		if (message.arguments.length == 0) return info(
 			'Community Poll Help',
 			'You must provide text with discord emojis for the poll.'
 		);
 		// extract emojis:
-		const emojis = text.match(/:[A-Za-z_]\w*:/gu);
+		const emojis = message.text.match(/\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gu);
 		let id = null;
 		try {
 			// send poll message:
 			id = (await sendMessage(message.bot, message.channelId, card(
-				'Community Poll', text, ColorCodes.success
+				'Community Poll', message.text, ColorCodes.success
 			))).id;
 			// add emoji reactions:
 			for (const e of emojis) await addReaction(message.bot, message.channelId, id, e);

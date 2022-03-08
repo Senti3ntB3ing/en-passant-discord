@@ -1,6 +1,6 @@
 
 import { Roles } from '../config.js';
-import { createCommand, success, info, card, cards, warn, error, field } from '../parser.js';
+import { createCommand, success, info, card, cards, warn, error } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
 

@@ -13,7 +13,7 @@ createCommand({
 	execute: async message => {
 		if (message.arguments.length == 0) return info(
 			'Community Poll Help',
-			'You must provide text with emojis sorrounded by `\``.'
+			'You must provide text with unicode emojis.'
 		);
 		// extract emojis:
 		const emojis = message.text.match(Emoji);

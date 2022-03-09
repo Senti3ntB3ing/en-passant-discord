@@ -14,7 +14,7 @@ createCommand({
 			'You must provide text with discord emojis for the poll.'
 		);
 		// extract emojis:
-		const emojis = message.text.match(/\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gu);
+		const emojis = message.text.match(/`\s*:[A-Za-z0-9_]\w*:\s*`/gu).map(t => t.replace(/`|\s/g, ''));
 		let id = null;
 		try {
 			// send poll message:

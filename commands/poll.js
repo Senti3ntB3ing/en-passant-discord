@@ -14,12 +14,13 @@ createCommand({
 			'You must provide text with discord emojis for the poll.'
 		);
 		// extract emojis:
-		const emojis = message.text.match(/`\s*:[A-Za-z0-9_]\w*:\s*`/gu).map(t => t.replace(/`|\s/g, ''));
+		const text = message.text.replace(/`/g, '').replace(/\s+/g, ' ');
+		const emojis = text.match(/:\s*[A-Za-z0-9_]\w*\s*:/gu).map(e => e.replace(/\s+/g, ' '));
 		let id = null;
 		try {
 			// send poll message:
 			id = (await sendMessage(message.bot, message.channelId, card(
-				'Community Poll', message.text, ColorCodes.success
+				'Community Poll', text, ColorCodes.success
 			))).id;
 			// add emoji reactions:
 			for (const e of emojis) await addReaction(message.bot, message.channelId, id, e);

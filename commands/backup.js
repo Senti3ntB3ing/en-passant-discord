@@ -9,7 +9,7 @@ createCommand({
 	permissions: Roles.moderator,
 	execute: async () => ({
 		file: {
-			blob: new Blob([ JSON.parse(await Database.dictionary()) ]),
+			blob: new Blob([ JSON.stringify(await Database.dictionary()) ]),
 			name: 'en-passant.json',
 		}
 	})

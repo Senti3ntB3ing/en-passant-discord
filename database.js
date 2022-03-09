@@ -31,7 +31,7 @@ export class Database {
 	static async keys() {
 		return await fetch(this.#url + '?encode=true&prefix=')
 		.then(r => r.text())
-		.then(t => t.length === 0 ? [ ] : t.split('\n').map(decodeURIComponent));
+		.then(t => t.length === 0 ? [ ] : t.split(/[\n\r]+/).map(decodeURIComponent));
 	}
 
 	static async dictionary() {

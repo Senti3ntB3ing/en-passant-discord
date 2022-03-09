@@ -36,7 +36,7 @@ export class Database {
 
 	static async dictionary() {
 		let output = { };
-		for (const key of await this.list())
+		for (const key of await this.keys())
 			output[key] = await this.get(key);
 		return output;
 	}

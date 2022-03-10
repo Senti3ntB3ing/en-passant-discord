@@ -5,14 +5,38 @@ import { ColorCodes, Roles, Channels } from '../config.js';
 import { createCommand, card } from '../parser.js';
 
 const links = {
-	'Instagram': { url: 'https://www.instagram.com/thechessnerd/', emoji: ':camera:', color: 0xFFFFFF },
-	'Youtube': { url: 'https://www.youtube.com/c/thechessnerd', emoji: ':tv:', color: 0xFF0000 },
-	'Twitch': { url: 'https://www.twitch.tv/thechessnerdlive/', emoji: ':gem:', color: 0x9047FF },
-	'Twitter': { url: 'https://twitter.com/thechessnerd', emoji: ':bird:', color: 0x1D9BF0 },
-	'Discord': { url: 'https://discord.com/invite/DKHBFF22TJ/', emoji: ':speech_balloon:', color: 0x5765F3 },
-	'chess.com': { url: 'https://www.chess.com/club/thechessnerd-exclusive-club', emoji: ':mortar_board:', color: 0x7FA650 },
-	'reddit': { url: 'https://www.reddit.com/r/thechessnerd/', emoji: ':robot:', color: 0xFF4500 },
-	'Merch': { url: 'https://thechessnerd.com/', emoji: ':shopping_bags:', color: 0x37777F },
+	'Instagram': {
+		url: 'https://www.instagram.com/thechessnerd/',
+		color: 0xFFFFFF, emoji: ':camera:'
+	},
+	'Youtube': {
+		url: 'https://www.youtube.com/c/thechessnerd', 
+		color: 0xFF0000, emoji: ':tv:'
+	},
+	'Twitch': {
+		url: 'https://www.twitch.tv/thechessnerdlive/',
+		color: 0x9047FF, emoji: ':gem:'
+	},
+	'Twitter': {
+		url: 'https://twitter.com/thechessnerd',
+		color: 0x1D9BF0, emoji: ':bird:'
+	},
+	'Discord': {
+		url: 'https://discord.com/invite/DKHBFF22TJ/',
+		color: 0x5765F3, emoji: ':speech_balloon:'
+	},
+	'chess.com': {
+		url: 'https://www.chess.com/club/thechessnerd-exclusive-club',
+		color: 0x7FA650, emoji: ':mortar_board:'
+	},
+	'reddit': {
+		url: 'https://www.reddit.com/r/thechessnerd/',
+		color: 0xFF4500, emoji: ':robot:'
+	},
+	'Merch': {
+		url: 'https://thechessnerd.com/',
+		color: 0x37777F, emoji: ':shopping_bags:'
+	},
 };
 
 createCommand({
@@ -96,7 +120,7 @@ createCommand({
 createCommand({
 	name: 'discord', emoji: links['Discord'].emoji,
     aliases: [ 'invite' ], hidden: true,
-	description: 'Invite link to thechessnerd Discord.',
+	description: 'Invite link to *thechessnerd* Discord.',
 	permissions: Roles.everyone,
 	execute: () => card(
 		'Invite link to thechessnerd Discord',
@@ -130,7 +154,7 @@ createCommand({
 createCommand({
 	name: 'merch', emoji: links['Merch'].emoji, hidden: true,
     aliases: [ 'shop', 'store', 'merchandise', 'drop' ],
-	description: 'Link to thechessnerd co. merch',
+	description: 'Link to __thechessnerd co.__ merch',
 	permissions: Roles.everyone,
 	execute: () => card(
 		'thechessnerd co. Brand',

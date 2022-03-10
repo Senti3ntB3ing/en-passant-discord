@@ -30,7 +30,7 @@ const fruits = [
 		name: 'Pear', emoji: '🍐', color: 0xA8AA3E,
 		facts: [
 			'Most of the vitamin C in Pears is found in the skin of the fruit.',
-			'Pear trees are able to withstand temperatures as low as -40 ° C.',
+			'Pear trees are able to withstand temperatures as low as -40° C.',
 			'Pears were important part of diet in ancient Greece and remedy for nausea.',
 			'Pear starts to produce fruit 4 years after planting.',
 			'They were given the nickname “Butter Fruit” in the 1700s because of their buttery texture.',
@@ -138,7 +138,7 @@ const fruits = [
 		]
 	},
 	{
-		name: 'Blackberry', emoji: '🫐', color: 0x040A2A,
+		name: 'Blackberry', color: 0x253356,
 		facts: [
 			'Blackberries contain copper which is essential for bone metabolism.',
 			'Blackberries only last for a few days once picked.',
@@ -149,7 +149,7 @@ const fruits = [
 		]
 	},
 	{
-		name: 'Cherry', emoji: '🍒', color: 0xE8003C,
+		name: 'Cherry', emoji: '🍒', color: 0xBD1931,
 		facts: [
 			'“Hanami” is an ancient Japanese tradition of viewing Cherry trees while they are in bloom 🌸.',
 			'Around 2,000,000 tons of cherries are produced each year.',

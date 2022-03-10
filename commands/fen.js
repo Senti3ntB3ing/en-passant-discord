@@ -8,8 +8,8 @@ createCommand({
 	aliases: [ 'diagram', 'black', 'white' ],
 	description: 'Display a chess board diagram from **FEN**.',
 	execute: async message => {
-		const white_to_move = ':white_medium_small_square: WHITE TO MOVE';
-		const black_to_move = ':black_medium_small_square: BLACK TO MOVE';
+		const white_to_move = '◽️ WHITE TO MOVE';
+		const black_to_move = '◾️ BLACK TO MOVE';
 		const fen = message.text;
 		if (!Chess().validate_fen(fen))
 			return error('Chess diagram', 'Invalid FEN string / position!');

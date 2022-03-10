@@ -21,7 +21,7 @@ createCommand({
 		try {
 			// send poll message:
 			id = (await sendMessage(message.bot, message.channelId, card(
-				'Community Poll', message.text, ColorCodes.success
+				'Community Poll', message.text, ColorCodes.normal
 			))).id;
 			// add emoji reactions:
 			for (const e of emojis) await addReaction(message.bot, message.channelId, id, e);

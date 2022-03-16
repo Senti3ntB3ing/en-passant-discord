@@ -25,7 +25,7 @@ function handle(command, bot, message, content, args) {
 			addRole(bot, message.guildId, message.member.id, Roles.spammer);
 			sendMessage(bot, message.channelId, warn(
 				'Command usage limit exceeded!',
-				`<@${message.member.id}> has been given the <@${Roles.spammer}> role!\n` +
+				`<@${message.member.id}> has been given the \`@spammer\` role!\n` +
 				'Ask a moderator to remove it.'
 			));
 			return;

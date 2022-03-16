@@ -19,8 +19,8 @@ function handle(command, bot, message, content, args) {
 	message.command = content;
 	message.text = message.content.replace(/^(.*?)\s+/g, '').trim();
 	if (!message.member.roles.includes(Roles.moderator)) {
-		if (message.member.id in attempts) attempts[message.member.id] = 0;
-		else attempts[message.member.id]++;
+		if (message.member.id in attempts) attempts[message.member.id]++;
+		else attempts[message.member.id] = 0;
 		if (attempts[message.member.id] >= 10) {
 			addRole(bot, message.guildId, message.member.id, Roles.spammer);
 			sendMessage(bot, message.channelId, warn(

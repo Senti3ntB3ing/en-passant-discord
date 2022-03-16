@@ -4,7 +4,7 @@ import { createCommand, createHelp } from '../parser.js';
 
 createCommand({
 	name: 'help', emoji: ':grey_question:',
-	aliases: [ 'usage', 'commands' ],
+	aliases: [ 'usage', 'commands' ], rate: 3,
 	description: 'Display the list of commands.',
 	execute: message => createHelp(
 		'List of Commands', (

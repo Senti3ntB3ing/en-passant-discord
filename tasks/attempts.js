@@ -4,6 +4,6 @@ import { createTask, resetAttempts } from '../parser.js';
 
 createTask({
 	name: 'attempts',
-	interval: Time.minutes(10),
+	interval: Time.minutes(5),
 	execute: () => resetAttempts()
 });

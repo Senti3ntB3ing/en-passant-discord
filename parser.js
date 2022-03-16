@@ -19,8 +19,8 @@ function handle(command, bot, message, content, args) {
 	message.command = content;
 	message.text = message.content.replace(/^(.*?)\s+/g, '').trim();
 	if (!message.member.roles.includes(Roles.moderator)) {
-		if (message.member.id in attempts) attempts[message.member.id]++;
-		else attempts[message.member.id] = 0;
+		if (!(message.member.id in attempts)) attempts[message.member.id] = 0;
+		else attempts[message.member.id] += command.rate;
 		if (attempts[message.member.id] >= 10) {
 			addRole(bot, message.guildId, message.member.id, Roles.spammer);
 			sendMessage(bot, message.channelId, warn(
@@ -75,6 +75,7 @@ export function createCommand(command) {
 	if (command.name == undefined) return;
 	if (command.aliases == undefined) command.aliases = [ ];
 	if (command.hidden == undefined) command.hidden = false;
+	if (command.rate == undefined) command.rate = 1;
 	if (command.permissions == undefined) {
 		command.permissions = [ Roles.everyone];
 	} else if (typeof command.permissions != 'object') {

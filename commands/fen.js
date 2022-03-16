@@ -5,7 +5,7 @@ import { diagram } from '../components/diagram/diagram.js';
 
 createCommand({
 	name: 'fen', emoji: ':page_with_curl:',
-	aliases: [ 'diagram', 'black', 'white' ],
+	aliases: [ 'diagram', 'black', 'white' ], rate: 3,
 	description: 'Display a chess board diagram from **FEN**.',
 	execute: async message => {
 		const white_to_move = '◽️ WHITE TO MOVE';

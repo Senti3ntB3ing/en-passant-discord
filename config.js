@@ -63,16 +63,22 @@ export const Channels = {
 };
 
 export const Roles = {
-	Zach: 559086517415444480n,
-	everyone: 0,
-	nerd: 845769006752464946n,
-	supporter: 913072026942570507n,
-	moderator: 839596287787794502n,
-	staff: 901205179414769674n,
-	student: 845240403246841897n,
+	         Zach: 559086517415444480n,
+	     everyone: 0,
+	administrator: 947621985276530698n,
+	         nerd: 845769006752464946n,
+	    supporter: 913072026942570507n,
+	   subscriber: 948341522233954336n,
+	    moderator: 839596287787794502n,
+	        staff: 901205179414769674n,
+	      student: 845240403246841897n,
+	      spammer: 953606574939701308n,
+	  discord_mod: 952330006263103488n,
+	   twitch_mod: 952330177071964210n,
+	   reddit_mod: 952330229504942120n,
 	platforms: {
-		'FIDE': 922543456285503508n,
-		'chess.com': 912688297338359848n,
+		       'FIDE': 922543456285503508n,
+		  'chess.com': 912688297338359848n,
 		'lichess.org': 912688177498697758n,
 	},
 	titles: {

@@ -1,5 +1,5 @@
 
-import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { sendMessage, addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { closest, levenshtein } from './components/levenshtein.js';
 
@@ -8,11 +8,29 @@ import { bot } from './main.js';
 
 export let commands = [], primary = [], tasks = {}, record = [], lastPing = new Date();
 
+let attempts = {};
+
+export const resetAttempts = () => attempts = {};
+
 function handle(command, bot, message, content, args) {
+	if (message.member.roles.includes(Roles.spammer)) return;
 	message.arguments = args;
 	message.bot = bot;
 	message.command = content;
 	message.text = message.content.replace(/^(.*?)\s+/g, '').trim();
+	if (!message.member.roles.includes(Roles.moderator)) {
+		if (message.member.id in attempts) attempts[message.member.id] = 0;
+		else attempts[message.member.id]++;
+		if (attempts[message.member.id] >= 10) {
+			addRole(bot, message.guildId, message.member.id, Roles.spammer);
+			sendMessage(bot, message.channelId, warn(
+				'Command usage limit exceeded!',
+				`<@${message.member.id}> has been given the <@${Roles.spammer}> role!\n` +
+				'Ask a moderator to remove it.'
+			));
+			return;
+		}
+	}
 	if (command.execute.constructor.name == 'AsyncFunction') {
 		command.execute(message).then(result => {
 			if (result != undefined) sendMessage(bot, message.channelId, result);

@@ -268,9 +268,8 @@ createCommand({
 /// challenge
 /// create a challenge url for the linked account.
 createCommand({
-	name: 'challenge', emoji: ':crossed_swords:', hidden: true,
+	name: 'challenge', emoji: ':crossed_swords:', hidden: false,
 	description: 'Create a challenge link.',
-	permissions: Roles.moderator,
 	execute: async message => {
 		const title = 'Challenge';
 		const member = await Database.get(message.member.id);
@@ -288,7 +287,7 @@ createCommand({
 						case 'lichess.org': url = `https://lichess.org/?user=${account.username}#friend`; break;
 						case 'chess.com': url = `https://www.chess.com/live?#time=5m0s0i&game=chess&rated=rated&minrating=any&maxrating=any&color=random&member=${account.username}`; break;
 					}
-					return { name: `${emojis[account.platform]} __${account.platform}__:`, value: url, inline: false };
+					return { name: `__${account.platform}__:`, value: url, inline: false };
 				})
 			}]
 		};

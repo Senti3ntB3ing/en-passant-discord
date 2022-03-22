@@ -1,5 +1,5 @@
 
-import { Roles } from '../config.js';
+import { Roles, ColorCodes } from '../config.js';
 import { createCommand, success, info, card, cards, warn, error } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
@@ -262,5 +262,36 @@ createCommand({
 		}
 		await Database.set(tag, member);
 		return success(title, `<@${tag}> successfully verified!`);
+	}
+});
+
+/// challenge
+/// create a challenge url for the linked account.
+createCommand({
+	name: 'challenge', emoji: ':crossed_swords:', hidden: true,
+	description: 'Create a challenge link.',
+	permissions: Roles.moderator,
+	execute: async message => {
+		const title = 'Challenge';
+		const member = await Database.get(message.member.id);
+		if (member == null || member.accounts == undefined) return not_linked_info(title);
+		if (Object.keys(member.accounts).length == 0) return not_linked_info(title);
+		return card(title, `Click on a link to challenge <@${message.member.id}>:` + list.join('\n'));
+		return {
+			embeds: [{
+				type: 'rich',
+				title: title,
+				color: ColorCodes.normal,
+				fields: Object.keys(member.accounts).map(account => {
+					let url = '';
+					switch (account) {
+						case '**FIDE**': break;
+						case 'lichess.org': url = `https://lichess.org/?user=${member.accounts[account]}#friend`; break;
+						case 'chess.com': url = `https://www.chess.com/live?#time=5m0s0i&game=chess&rated=rated&minrating=any&maxrating=any&color=random&member=${member.accounts[account]}`; break;
+					}
+					return { name: `__${account}__:`, value: url, inline: false };
+				})
+			}]
+		};
 	}
 });

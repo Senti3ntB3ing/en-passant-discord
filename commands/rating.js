@@ -279,17 +279,16 @@ createCommand({
 		//return card(title, `Click on a link to challenge <@${message.member.id}>:` + list.join('\n'));
 		return {
 			embeds: [{
-				type: 'rich',
-				title: title,
+				type: 'rich', title,
 				color: ColorCodes.normal,
-				fields: Object.keys(member.accounts).map(account => {
+				fields: member.accounts.map(account => {
 					let url = '';
-					switch (account) {
+					switch (account.platform) {
 						case 'FIDE': break;
-						case 'lichess.org': url = `https://lichess.org/?user=${member.accounts[account]}#friend`; break;
-						case 'chess.com': url = `https://www.chess.com/live?#time=5m0s0i&game=chess&rated=rated&minrating=any&maxrating=any&color=random&member=${member.accounts[account]}`; break;
+						case 'lichess.org': url = `https://lichess.org/?user=${account.username}#friend`; break;
+						case 'chess.com': url = `https://www.chess.com/live?#time=5m0s0i&game=chess&rated=rated&minrating=any&maxrating=any&color=random&member=${account.username}`; break;
 					}
-					return { name: `__${account}__:`, value: url, inline: false };
+					return { name: `${emojis[account.platform]} __${account.platform}__:`, value: url, inline: false };
 				})
 			}]
 		};

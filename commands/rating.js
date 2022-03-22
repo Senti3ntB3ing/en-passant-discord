@@ -276,7 +276,7 @@ createCommand({
 		const member = await Database.get(message.member.id);
 		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		if (Object.keys(member.accounts).length == 0) return not_linked_info(title);
-		return card(title, `Click on a link to challenge <@${message.member.id}>:` + list.join('\n'));
+		//return card(title, `Click on a link to challenge <@${message.member.id}>:` + list.join('\n'));
 		return {
 			embeds: [{
 				type: 'rich',
@@ -285,7 +285,7 @@ createCommand({
 				fields: Object.keys(member.accounts).map(account => {
 					let url = '';
 					switch (account) {
-						case '**FIDE**': break;
+						case 'FIDE': break;
 						case 'lichess.org': url = `https://lichess.org/?user=${member.accounts[account]}#friend`; break;
 						case 'chess.com': url = `https://www.chess.com/live?#time=5m0s0i&game=chess&rated=rated&minrating=any&maxrating=any&color=random&member=${member.accounts[account]}`; break;
 					}

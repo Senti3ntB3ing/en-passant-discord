@@ -25,7 +25,7 @@ const quote_of_the_day = () => {
 
 createTask({
 	name: 'quote',
-	time: '10:00',
+	time: '9:55',
 	execute: async bot => {
 		const now = new Date();
 		const isToday = date =>

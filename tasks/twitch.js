@@ -2,7 +2,7 @@
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { live } from '../components/twitch.js';
-import { Roles, Time, Twitch_Streamer } from '../config.js';
+import { Channels, Roles, Time, Twitch_Streamer } from '../config.js';
 import { createTask, card } from '../parser.js';
 import { Database } from '../database.js';
 

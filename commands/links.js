@@ -40,18 +40,6 @@ const links = {
 };
 
 createCommand({
-	name: 'streaming', emoji: ':arrow_forward:', hidden: true,
-	aliases: [ 'stream' ],
-	description: 'Streaming notification.',
-	permissions: Roles.moderator,
-	execute: message => { sendMessage(message.bot, Channels.notifications, card(
-		'Zach is now live on Twitch!',
-		`${links['Twitch'].emoji} Hey @everyone, <@${Roles.Zach}> is streaming on __twitch__!\n${links['Twitch'].url}`,
-		links['Twitch'].color
-	)); }
-});
-
-createCommand({
 	name: 'links', emoji: ':link:', aliases: [ 'link' ],
 	description: 'List of useful links.',
 	permissions: Roles.everyone,

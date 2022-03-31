@@ -4,6 +4,8 @@ export const delay = async ms => new Promise(resolve => setTimeout(resolve, ms))
 export const Name = 'en passant';
 export const Prefix = '!';
 
+export const Twitch_Streamer = 'thechessnerdlive';
+
 export const Time = {
 	second: 1000,
 	minute: 60 * 1000,
@@ -129,8 +131,6 @@ export const Actions = [
 	{ type: ActionTypes.competing, status: 'Tournament' },
 	{ type: ActionTypes.streaming, status: 'World Cup' },
 ];
-
-export const YTChannel = 'UCiEgruTJIBdmH7oRmC6EMoA';
 
 export const Welcome = [
 	'`O-O-O#!!` with checkmate!',

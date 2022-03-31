@@ -2,7 +2,7 @@
 import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 
 import { getVideosAfterDate, composeURL } from '../components/youtube.js';
-import { Roles, Time, Channels, YTChannel } from '../config.js';
+import { Roles, Time, Channels } from '../config.js';
 import { createTask, createCommand, card, text } from '../parser.js';
 import { Database } from '../database.js';
 
@@ -26,7 +26,7 @@ createTask({
 		if (date == null) return;
 		// get videos:
 		const videos = await getVideosAfterDate(
-			Deno.env.get('YTKEY'), YTChannel, new Date(date)
+			Deno.env.get('YOUTUBE_KEY'), Deno.env.get('YOUTUBE_CHANNEL'), new Date(date)
 		);
 		if (videos == null) return;
 		for (const video of videos) {

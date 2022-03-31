@@ -96,7 +96,7 @@ createCommand({
 /// Unlinks all your linked online chess account usernames.
 /// @param platforms: if provided only unlink the given platforms.
 createCommand({
-	name: 'unlink', emoji: ':wrench:', hidden: true,
+	name: 'unlink', emoji: ':wrench:',
 	description: 'Unlinks all of your online chess accounts.',
 	execute: async message => {
 		const title = 'Unlink Accounts';

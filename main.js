@@ -26,6 +26,7 @@ import './commands/backup.js';
 
 import './tasks/quote.js';
 import './tasks/youtube.js';
+import './tasks/twitch.js';
 import './tasks/attempts.js';
 
 // =========================================

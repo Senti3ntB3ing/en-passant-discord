@@ -64,8 +64,8 @@ export function parse(bot, message) {
 	const mod = message.member.roles.includes(Roles.moderator);
 	const closestCommand = closest(content,
 		commands.filter(command => mod || !command.hidden).map(
-			command => [ command.name, command.aliases ]
-		).flat()
+			command => [ command.name, command.aliases ].flat()
+		)
 	);
 	const distance = levenshtein(closestCommand, content);
 	if (distance <= 2) sendMessage(bot, message.channelId, info(

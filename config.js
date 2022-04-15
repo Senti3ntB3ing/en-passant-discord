@@ -29,16 +29,20 @@ export const Channels = {
 	// == GENERAL =======================
 	      general: 839594884289921076n,
 	notifications: 839594884289921077n,
-	  recruitment: 950121447249039403n,
 	    brilliant: 950350208649273385n,
-	content_ideas: 915564965593759754n,
+	   positivity: 957373368749928448n,
+		challenge: 858358887416594463n,
+		 feedback: 882712808050003978n,
 	   chess_club: 911588588930629683n,
-	    challenge: 858358887416594463n,
-	     feedback: 882712808050003978n,
-	   chess_sets: 929056689909530695n,
-	    off_topic: 900781481704706159n,
-	        memes: 910623921093623868n,
-	         bots: 912689526244274207n,
+			memes: 910623921093623868n,
+	  recruitment: 950121447249039403n,
+			 bots: 912689526244274207n,
+		off_topic: 900781481704706159n,
+			 text: 921783499315351612n,
+	general_voice: 845012057655869523n,
+	// == SUB BAY =======================
+	   pro_league: 959118899398467684n,
+	    sub_voice: 959119103950463046n,
 	// == CHESS =========================
 	     openings: 839594884289921079n,
 	  middlegames: 839594884289921080n,
@@ -49,18 +53,13 @@ export const Channels = {
 	   vote_chess: 845769660108636171n,
 	   discussion: 911278525129064458n,
 	   past_games: 865897303822172160n,
-	// == STUDY =========================
-	         text: 921783499315351612n,
-	      voice_1: 845012057655869523n,
-	      voice_2: 920065309770137650n,
-	      voice_3: 932303088973402172n,
 	// == MODERATORS ====================
 	     mod_chat: 955959278315917333n,
 	     mad_chat: 955959299438440578n,
 		 dev_chat: 955959324411310130n,
-		 feedback: 950442416261976095n,
 		audit_log: 920428101656248350n,
-	        voice: 839599928660852826n,
+		 schedule: 951276135004667944n,
+	    mod_voice: 936021898612047892n,
 	// ==================================
 };
 
@@ -70,11 +69,12 @@ export const Roles = {
 	administrator: 947621985276530698n,
 	         nerd: 845769006752464946n,
 	    supporter: 913072026942570507n,
-	   subscriber: 948341522233954336n,
-	    moderator: 839596287787794502n,
-	        staff: 901205179414769674n,
-	      student: 845240403246841897n,
-	      spammer: 953606574939701308n,
+	   subscriber: 959113789800845332n,
+	t1_subscriber: 959113789800845333n,
+	t2_subscriber: 959113789800845334n,
+	t3_subscriber: 959113789800845335n,
+		  student: 845240403246841897n,
+		moderator: 839596287787794502n,
 	  discord_mod: 952330006263103488n,
 	   twitch_mod: 952330177071964210n,
 	   reddit_mod: 952330229504942120n,
@@ -94,7 +94,8 @@ export const Roles = {
 		WNM: 852274736486023219n,
 		 CM: 844910027865325598n,
 		WCM: 844910399509233704n,
-	}
+	},
+	spammer: 953606574939701308n,
 };
 
 export const ColorCodes = {
@@ -124,12 +125,19 @@ export const Actions = [
 	{ type:      ActionTypes.game, status: 'Racing Kings' },
 	{ type:      ActionTypes.game, status: 'Horde' },
 	{ type:      ActionTypes.game, status: 'Atomic' },
-	{ type: ActionTypes.listening, status: 'Chopin' },
-	{ type: ActionTypes.listening, status: 'Mozart' },
-	{ type: ActionTypes.listening, status: 'Beethoven' },
-	{ type: ActionTypes.listening, status: 'Bach' },
+	{ type: ActionTypes.listening, status: 'Aman Hambleton' },
+	{ type: ActionTypes.listening, status: 'Eric Hansen' },
+	{ type: ActionTypes.listening, status: 'Eric Rosen' },
+	{ type: ActionTypes.listening, status: 'Ben Finegold' },
+	{ type: ActionTypes.listening, status: 'Daniel Naroditsky' },
+	{ type: ActionTypes.listening, status: 'Yasser Seirawan' },
+	{ type: ActionTypes.listening, status: 'Magnus Carlsen' },
+	{ type: ActionTypes.listening, status: 'Levy Rozman' },
+	{ type: ActionTypes.listening, status: 'Alexandra Botez' },
+	{ type: ActionTypes.listening, status: 'Anna Rudolf' },
+	{ type: ActionTypes.listening, status: 'Anna Cramling' },
+	{ type: ActionTypes.listening, status: 'Andrew Tang' },
 	{ type: ActionTypes.competing, status: 'Tournament' },
-	{ type: ActionTypes.streaming, status: 'World Cup' },
 ];
 
 export const Welcome = [

@@ -1,7 +1,5 @@
 
-import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
-
-import { ColorCodes, Roles, Channels } from '../config.js';
+import { ColorCodes, Roles } from '../config.js';
 import { createCommand, card } from '../parser.js';
 
 const links = {
@@ -47,7 +45,7 @@ createCommand({
 		embeds: [{
 			type: 'rich',
 			title: 'Community Links',
-			color: ColorCodes.success,
+			color: ColorCodes.normal,
 			fields: Object.keys(links).map(name => {
 				return {
 					name: `${links[name].emoji} **${name}**:`,

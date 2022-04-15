@@ -1,19 +1,18 @@
 
-import { sendMessage, addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { sendMessage, editMember } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest, levenshtein } from './components/levenshtein.js';
 
-import { Name, Prefix, Roles, ColorCodes } from './config.js';
+import { Name, Prefix, Roles, Time, ColorCodes } from './config.js';
 import { bot } from './main.js';
 
-export let commands = [], primary = [], tasks = {}, record = [], lastPing = new Date();
+export let commands = [], tasks = {}, record = [], lastPing = new Date();
 
 let attempts = {};
 
 export const resetAttempts = () => attempts = {};
 
 function handle(command, bot, message, content, args) {
-	if (message.member.roles.includes(Roles.spammer)) return;
 	message.arguments = args;
 	message.bot = bot;
 	message.command = content;
@@ -22,11 +21,12 @@ function handle(command, bot, message, content, args) {
 		if (!(message.member.id in attempts)) attempts[message.member.id] = 0;
 		else attempts[message.member.id] += command.rate;
 		if (attempts[message.member.id] >= 10) {
-			addRole(bot, message.guildId, message.member.id, Roles.spammer);
+			editMember(bot, message.guildId, message.member.id, {
+				communicationDisabledUntil: Time.minutes(10)
+			});
 			sendMessage(bot, message.channelId, warn(
 				'Command usage limit exceeded!',
-				`<@${message.member.id}> has been given the \`@spammer\` role!\n` +
-				'Ask a moderator to remove it.'
+				`<@${message.member.id}> has been given a \`10m\` **TIMEOUT** for spamming!`
 			));
 			return;
 		}
@@ -61,7 +61,12 @@ export function parse(bot, message) {
 		}
 	}
 	// command not found, check for typos:
-	const closestCommand = closest(content, primary);
+	const mod = message.member.roles.includes(Roles.moderator);
+	const closestCommand = closest(content,
+		commands.filter(command => mod || !command.hidden)
+				.map(command => command.name)
+				.toLowerCase()
+	);
 	const distance = levenshtein(closestCommand, content);
 	if (distance <= 2) sendMessage(bot, message.channelId, info(
 		'Command Information',
@@ -82,7 +87,6 @@ export function createCommand(command) {
 		command.permissions = [ command.permissions ];
 	}
 	commands.push(command);
-	primary.push(command.name.toLowerCase());
 }
 
 export function createTask(task) {
@@ -134,80 +138,66 @@ export async function createTaskServer(server, callback) {
 	}
 }
 
-export function text(message) { return { content: message }; }
+export const text = message => ({ content: message });
 
-export function card(title, message, color) {
-	return {
-		embeds: [{
-			title: title || Name,
-			color: color || ColorCodes.normal,
-			description: message || ''
-		}]
-	};
-}
+export const card = (title, message, color) => ({
+	embeds: [{
+		title: title || Name,
+		color: color || ColorCodes.normal,
+		description: message || ''
+	}]
+});
 
-export function cards(elements) {
-	return {
-		embeds: elements.map(element => ({
-			type: 'rich',
-			title: element.title || Name,
-			color: element.color || ColorCodes.normal,
-			fields: element.fields || [],
-			description: element.message || ''
-		}))
-	};
-}
+export const cards = elements => ({
+	embeds: elements.map(element => ({
+		type: 'rich',
+		title: element.title || Name,
+		color: element.color || ColorCodes.normal,
+		fields: element.fields || [],
+		description: element.message || ''
+	}))
+});
 
-export function field(title, subtitle, message, color) {
-	return {
-		embeds: [{
-			type: 'rich',
-			title: title || Name,
-			color: color || ColorCodes.normal,
-			fields: [{ name: subtitle, value: message, inline: false }]
-		}]
-	};
-}
+export const field = (title, subtitle, message, color) => ({
+	embeds: [{
+		type: 'rich',
+		title: title || Name,
+		color: color || ColorCodes.normal,
+		fields: [{ name: subtitle, value: message, inline: false }]
+	}]
+});
 
-export function error(title, message) {
-	return {
-		embeds: [{
-			title: title || Name,
-			color: ColorCodes.error,
-			description: ':no_entry_sign: ' + (message || 'Error!')
-		}]
-	};
-}
+export const error = (title, message) => ({
+	embeds: [{
+		title: title || Name,
+		color: ColorCodes.error,
+		description: ':no_entry_sign: ' + (message || 'Error!')
+	}]
+});
 
-export function info(title, message) {
-	return {
-		embeds: [{
-			title: title || Name,
-			color: ColorCodes.info,
-			description: ':information_source: ' + (message || 'Information.')
-		}]
-	};
-}
+export const info = (title, message) => ({
+	embeds: [{
+		title: title || Name,
+		color: ColorCodes.info,
+		description: ':information_source: ' + (message || 'Information.')
+	}]
+});
 
-export function success(title, message) {
-	return {
-		embeds: [{
-			title: title || Name,
-			color: ColorCodes.success,
-			description: ':white_check_mark: ' + (message || 'Success!')
-		}]
-	};
-}
+export const success = (title, message) => ({
+	embeds: [{
+		title: title || Name,
+		color: ColorCodes.success,
+		description: ':white_check_mark: ' + (message || 'Success!')
+	}]
+});
 
-export function warn(title, message) {
-	return {
-		embeds: [{
-			title: title || Name,
-			color: ColorCodes.warn,
-			description: ':warning: ' + (message || 'Warning!')
-		}]
-	};
-}
+export const warn = (title, message) => ({
+	embeds: [{
+		title: title || Name,
+		color: ColorCodes.warn,
+		description: ':warning: ' + (message || 'Warning!')
+	}]
+});
 
 export function createHelp(title, mod = false) {
 	return {

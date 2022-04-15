@@ -6,7 +6,7 @@ import { getChess_comRatings, verifyChess_comUser } from '../components/chess_co
 
 import { Database } from '../database.js';
 
-import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'chess.com': 0x7FA650 };
 const emojis = {

@@ -1,5 +1,5 @@
 
-import { getGuild } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { getGuild } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { Roles } from '../config.js';
 import { createCommand, card, fetchLog } from '../parser.js';
@@ -18,9 +18,7 @@ createCommand({
 	description: 'Count the number of members.',
 	permissions: Roles.moderator,
 	execute: async message => {
-		const guild = await getGuild(
-			message.bot, message.guildId, { counts: true }
-		);
+		const guild = await getGuild(message.bot, message.guildId, { counts: true });
 		return card(
 			'User Count',
 			`:hash: The server has \`${guild.approximateMemberCount}\` total members.`

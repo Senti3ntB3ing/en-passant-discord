@@ -4,7 +4,7 @@ import { createCommand, error, card, info } from '../parser.js';
 
 import { Emoji } from '../components/emoji.js';
 
-import { sendMessage, addReaction, deleteMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { sendMessage, addReaction, deleteMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 createCommand({
 	name: 'poll', emoji: ':bar_chart:', hidden: true,

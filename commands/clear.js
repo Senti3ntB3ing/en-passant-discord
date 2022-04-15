@@ -1,5 +1,5 @@
 
-import { getMessages, deleteMessages } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { getMessages, deleteMessages } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { Roles } from '../config.js';
 import { createCommand, error, card } from '../parser.js';

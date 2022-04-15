@@ -1,5 +1,5 @@
 
-import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
+import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { live } from '../components/twitch.js';
 import { Channels, Roles, Time, Twitch_Streamer } from '../config.js';

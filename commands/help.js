@@ -11,8 +11,7 @@ createCommand({
 			message.member.roles.includes(Roles.moderator) && (
 				message.channelId == Channels.mod_chat ||
 				message.channelId == Channels.mad_chat ||
-				message.channelId == Channels.dev_chat ||
-				message.channelId == Channels.audit
+				message.channelId == Channels.dev_chat
 			)
 		)
 	)

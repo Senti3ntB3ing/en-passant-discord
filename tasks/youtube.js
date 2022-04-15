@@ -7,13 +7,13 @@ import { createTask, createCommand, card, text } from '../parser.js';
 import { Database } from '../database.js';
 
 createCommand({
-	name: 'reset_date', emoji: '🖲', hidden: true,
+	name: 'reset_date', emoji: ':trackball:', hidden: true,
 	description: 'Reset YouTube date.',
 	permissions: Roles.moderator,
 	execute: () => {
 		const date = (new Date()).toISOString();
 		Database.set('youtube', date);
-		return card('Reset Date', `🖲 Date set to: \`${date}\`.`);
+		return card('Reset Date', `:trackball: Date set to: \`${date}\`.`);
 	}
 });
 

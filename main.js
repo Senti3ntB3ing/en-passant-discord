@@ -58,7 +58,7 @@ export const baseBot = createBot({
 		},
 		guildMemberAdd(bot, member, _) {
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
-			sendMessage(bot, Channels.general, text(`***Welcome*** <@${member.id}>, *${message}*`));
+			sendMessage(bot, Channels.general, text(`**Welcome** <@${member.id}>, ${message}`));
 		}
 	}
 });

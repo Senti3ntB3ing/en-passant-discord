@@ -22,7 +22,7 @@ function handle(command, bot, message, content, args) {
 		else attempts[message.member.id] += command.rate;
 		if (attempts[message.member.id] >= 10) {
 			editMember(bot, message.guildId, message.member.id, {
-				communicationDisabledUntil: Time.minutes(10)
+				communicationDisabledUntil: Time.minutes(10) + Date.now()
 			});
 			sendMessage(bot, message.channelId, warn(
 				'Command usage limit exceeded!',

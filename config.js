@@ -95,7 +95,6 @@ export const Roles = {
 		 CM: 844910027865325598n,
 		WCM: 844910399509233704n,
 	},
-	spammer: 953606574939701308n,
 };
 
 export const ColorCodes = {

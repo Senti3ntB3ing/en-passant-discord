@@ -6,7 +6,7 @@ import { createCommand, error, card } from '../parser.js';
 
 const invalid = error(
 	'Clean Command',
-	'Please specify a valid number of messages to delete (`2 ... 100`).',
+	'Please specify a valid number of messages to delete (max `100`).',
 );
 
 const internal = error(
@@ -22,12 +22,12 @@ createCommand({
 	execute: async message => {
 		const content = message.content.split(/[ \t]+/g)[1];
 		if (content == undefined) return invalid;
-		const n = parseInt(content);
+		const n = parseInt(content) + 1;
 		if (isNaN(n) || n < 2 || n > 100) return invalid;
 		try {
 			const messages = await getMessages(message.bot, message.channelId, { limit: n });
 			await deleteMessages(message.bot, message.channelId, messages.map(m => m.id));
-		} catch(e) { return internal; }
+		} catch { return internal; }
 		return card('Clear Command', `:wastebasket: Successfully cleared \`${n}\` messages.`);
 	}
 });

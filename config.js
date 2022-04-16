@@ -168,5 +168,13 @@ export const Welcome = [
 	'trying is the first step to failure!',
 	'how does the knight move?',
 	'triple, quadruple discovered check!',
-	'1. `e4` `e5` 2. `Ke2!` `Ke7!!`'
+	'1. `e4` `e5` 2. `Ke2!` `Ke7!!`',
+	'always play en-passant!',
+	'activate your pieces!',
+	'don’t forget to castle!',
+	'develop your minor pieces!',
+	'play for the center!',
+	'think on your opponent’s clock!',
+	'the pin is mightier than the sword!',
+	'fight till the end!',
 ];

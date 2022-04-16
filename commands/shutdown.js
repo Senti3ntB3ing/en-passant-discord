@@ -6,7 +6,7 @@ import { createCommand, error } from '../parser.js';
 
 createCommand({
 	name: 'shutdown', emoji: ':firecracker:', hidden: true,
-	aliases: [ 'selfdestruct', 'self-destruct' ],
+	aliases: [ 'die' ],
 	description: 'Shutdown the bot.',
 	permissions: Roles.moderator,
 	execute: async command => {

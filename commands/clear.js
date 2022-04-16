@@ -28,6 +28,6 @@ createCommand({
 			const messages = await getMessages(message.bot, message.channelId, { limit: n });
 			await deleteMessages(message.bot, message.channelId, messages.map(m => m.id));
 		} catch { return internal; }
-		return card('Clear Command', `:wastebasket: Successfully cleared \`${n}\` messages.`);
+		return card('Clear Command', `:wastebasket: Successfully cleared \`${n - 1}\` messages.`);
 	}
 });

@@ -93,6 +93,17 @@ createCommand({
 });
 
 createCommand({
+	name: 'schedule', emoji: links['Twitch'].emoji, hidden: true,
+	description: 'Link to __thechessnerd__ Twitch schedule.',
+	permissions: Roles.everyone,
+	execute: () => card(
+		'Link to thechessnerd Twitch schedule',
+		':calendar_spiral: ' + links['Twitch'].url + 'schedule',
+		links['Twitch'].color
+	)
+});
+
+createCommand({
 	name: 'twitter', emoji: links['Twitter'].emoji, hidden: true,
 	description: 'Link to **@thechessnerd** Twitter page.',
 	permissions: Roles.everyone,

@@ -73,7 +73,10 @@ setRandomAction();
 // web server for task execution and ping:
 serve(request => {
 	if (request.url.contains('tasks')) executeTasks();
-	return new Response(fetchLog());
+	return new Response(fetchLog(), {
+		headers: { "content-type": "text/plain" },
+		status: 200
+	});
 });
 log('status', 'web server ready');
 

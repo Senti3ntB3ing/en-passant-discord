@@ -20,10 +20,11 @@ const HEADERS = {
 export const buildUrl = uri => API_BASE_URL + uri;
 
 export async function channel(streamer) {
-	if (streamer === "") return undefined;
+	if (streamer === '') return undefined;
 	try {
 		const queryUrl = buildUrl(QUERIES.search.channel);
 		const req = await soxa.get(queryUrl + streamer + "&first=100", HEADERS);
+		if (req.status != 200) return null;
 		const data = req.data.data;
 		for (const channel of data)
 			if (channel.display_name.toLowerCase() === streamer.toLowerCase())
@@ -40,6 +41,7 @@ export async function streams(user_ids) {
 			if (i === user_ids.length - 1) queryUrl += user_ids[i];
 			else queryUrl += `${user_ids[i]}&user_id=`;
 		const req = await soxa.get(queryUrl, HEADERS);
+		if (req.status != 200) return null;
 		const data = req.data.data;
 	} catch { return undefined; }
 	return data;
@@ -47,6 +49,6 @@ export async function streams(user_ids) {
 
 export async function live(streamer) {
 	const c = await channel(streamer);
-	if (c === undefined) return undefined;
+	if (c == undefined || c == null) return c;
 	return c.is_live;
 }

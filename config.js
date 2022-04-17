@@ -75,7 +75,9 @@ export const Roles = {
 	t3_subscriber: 959113789800845335n,
 		  student: 845240403246841897n,
 		moderator: 839596287787794502n,
+	 discord_head: 965237029451477014n,
 	  discord_mod: 952330006263103488n,
+	  twitch_head: 965235946205372426n,
 	   twitch_mod: 952330177071964210n,
 	   reddit_mod: 952330229504942120n,
 	platforms: {

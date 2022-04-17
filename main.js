@@ -2,7 +2,7 @@
 import { createBot, startBot, editBotStatus, sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
 
-import { serve } from "https://deno.land/std@0.98.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 
 import { parse, text, log, fetchLog, executeTasks } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';

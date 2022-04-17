@@ -72,8 +72,7 @@ setRandomAction();
 
 // web server for task execution and ping:
 serve(async request => {
-	console.log(request.url);
-	if (request.url.contains('tasks')) executeTasks();
+	if (request.url.indexOf('tasks') != -1) executeTasks();
 	return new Response(fetchLog(), {
 		headers: { 'content-type': 'text/plain' },
 		status: 200

@@ -11,7 +11,7 @@ export class Database {
 				if (!value) return null;
 				try { value = JSON.parse(value); }
 				catch { return null; }
-				if (value === undefined || value.error !== undefined) return null;
+				if (value == undefined || value == null || value.error != undefined) return null;
 				return value;
 			});
 	}
@@ -38,7 +38,7 @@ export class Database {
 				if (!value) return null;
 				try { value = JSON.parse(value); }
 				catch { return null; }
-				if (value === undefined || value.error !== undefined) return null;
+				if (value == undefined || value == null || value.error != undefined) return null;
 				return value;
 			});
 	}

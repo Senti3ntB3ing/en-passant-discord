@@ -106,7 +106,7 @@ export function stopTask(task) {
 	}
 }
 
-async function executeTasks() {
+export async function executeTasks() {
 	const now = new Date();
 	lastPing = now;
 	const isToday = date =>
@@ -128,13 +128,6 @@ async function executeTasks() {
 		tasks[name].last_execution = now;
 		tasks[name].execute(bot);
 		log('task', `${name} executed`);
-	}
-}
-
-export async function createTaskServer(server, callback) {
-	for await (const request of server) {
-		callback(request);
-		if (request.url == '/task') executeTasks();
 	}
 }
 

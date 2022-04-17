@@ -80,6 +80,4 @@ serve(async _ => {
 });
 log('status', 'web server ready');
 
-console.log(await fetch('https://en-passant-339215-default-rtdb.firebaseio.com/817133013334622250/.json'))
-
 await startBot(bot);

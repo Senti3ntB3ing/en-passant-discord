@@ -72,12 +72,14 @@ setRandomAction();
 
 // web server for task execution and ping:
 serve(async _ => {
-	executeTasks();
+	//executeTasks();
 	return new Response(fetchLog(), {
 		headers: { 'content-type': 'text/plain' },
 		status: 200
 	});
 });
 log('status', 'web server ready');
+
+console.log(await fetch('https://en-passant-339215-default-rtdb.firebaseio.com/817133013334622250/.json'))
 
 await startBot(bot);

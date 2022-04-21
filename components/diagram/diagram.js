@@ -1,5 +1,5 @@
 
-import { loadImage } from 'https://deno.land/x/canvas@v1.4.1/mod.ts';
+import { loadImage, createCanvas } from 'https://deno.land/x/canvas@v1.4.1/mod.ts';
 
 const Board = {
 	'b': await loadImage(await Deno.readFile('./components/diagram/resources/bboard.png')),
@@ -22,15 +22,17 @@ const Pieces = {
 };
 
 export async function diagram(board, color) {
-	/*color = color || 'w';
-	const canvas = Board[color].clone();
+	color = color || 'w';
+	const canvas = createCanvas(800, 800);
+	const ctx = canvas.getContext('2d');
+	ctx.drawImage(Board[color], 0, 0);
 	// drawing pieces:
 	if (color[0] == 'w') {
 		for (let i = 0; i < 8; i++) {
 			for (let j = 0; j < 8; j++) {
 				if (board[i][j] == null) continue;
 				const piece = Pieces[board[i][j].color + board[i][j].type];
-				canvas.composite(piece, j * 100, i * 100);
+				ctx.drawImage(piece, j * 100, i * 100);
 			}
 		}
 	} else {
@@ -38,10 +40,9 @@ export async function diagram(board, color) {
 			for (let j = 7; j >= 0; j--) {
 				if (board[i][j] == null) continue;
 				const piece = Pieces[board[i][j].color + board[i][j].type];
-				canvas.composite(piece, (7 - j) * 100, (7 - i) * 100);
+				ctx.drawImage(piece, (7 - j) * 100, (7 - i) * 100);
 			}
 		}
 	}
-	return await canvas.encode();*/
-	return undefined;
+	return canvas.toBuffer('image/png');
 }

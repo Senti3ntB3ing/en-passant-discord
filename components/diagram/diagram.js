@@ -1,5 +1,6 @@
 
 import { decode } from 'https://deno.land/x/imagescript@v1.2.12/mod.ts';
+import { log } from '../../parser.js';
 
 const Board = {
 	'b': await decode(Deno.readFileSync('./components/diagram/resources/bboard.png')),
@@ -43,6 +44,6 @@ export async function diagram(board, color) {
 		}
 	}*/
 	const x = await canvas.encode();
-	console.log(x);
+	log(x.toString());
 	return x;
 }

@@ -2,9 +2,10 @@
 import { createCommand, error } from '../parser.js';
 import { Chess } from '../components/chess.js';
 import { diagram } from '../components/diagram/diagram.js';
+import { Roles } from '../config.js';
 
 createCommand({
-	name: 'fen', emoji: ':page_with_curl:',
+	name: 'fen', emoji: ':page_with_curl:', permissions: Roles.moderator,
 	aliases: [ 'diagram', 'black', 'white' ], rate: 3,
 	description: 'Display a chess board diagram from **FEN**.',
 	execute: async message => {

@@ -3,19 +3,8 @@ import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { getVideosAfterDate, composeURL } from '../components/youtube.js';
 import { Roles, Time, Channels } from '../config.js';
-import { createTask, createCommand, card, text } from '../parser.js';
+import { createTask, text } from '../parser.js';
 import { Database } from '../database.js';
-
-createCommand({
-	name: 'reset_date', emoji: ':trackball:', hidden: true,
-	description: 'Reset YouTube date.',
-	permissions: Roles.moderator,
-	execute: () => {
-		const date = (new Date()).toISOString();
-		Database.set('youtube', date);
-		return card('Reset Date', `:trackball: Date set to: \`${date}\`.`);
-	}
-});
 
 createTask({
 	name: 'youtube',
@@ -26,7 +15,9 @@ createTask({
 		if (date == null) return;
 		// get videos:
 		const videos = await getVideosAfterDate(
-			Deno.env.get('YOUTUBE_KEY'), Deno.env.get('YOUTUBE_CHANNEL'), new Date(date)
+			Deno.env.get('YOUTUBE_KEY'),
+			Deno.env.get('YOUTUBE_CHANNEL'),
+			new Date(date)
 		);
 		if (videos == null) return;
 		for (const video of videos) {

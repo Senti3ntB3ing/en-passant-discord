@@ -1,5 +1,5 @@
 
-//import { decode } from 'https://deno.land/x/imagescript@1.2.9/mod.ts';
+import { decode } from 'https://deno.land/x/imagescript@v1.2.12/mod.ts';
 
 const Board = {
 	'b': await decode(Deno.readFileSync('./components/diagram/resources/bboard.png')),

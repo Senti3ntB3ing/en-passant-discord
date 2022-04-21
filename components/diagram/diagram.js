@@ -1,27 +1,25 @@
 
-//import { decode } from 'https://deno.land/x/imagescript@v1.2.12/mod.ts';
+import { loadImage } from 'https://deno.land/x/canvas@v1.4.1/mod.ts';
 
-/*const Board = {
-	'b': await decode(await Deno.readFile('./components/diagram/resources/bboard.png')),
-	'w': await decode(await Deno.readFile('./components/diagram/resources/wboard.png')),
+const Board = {
+	'b': await loadImage(await Deno.readFile('./components/diagram/resources/bboard.png')),
+	'w': await loadImage(await Deno.readFile('./components/diagram/resources/wboard.png')),
 };
 
 const Pieces = {
-	'bp': await decode(await Deno.readFile('./components/diagram/resources/alpha/bp.png')),
-	'bn': await decode(await Deno.readFile('./components/diagram/resources/alpha/bn.png')),
-	'bb': await decode(await Deno.readFile('./components/diagram/resources/alpha/bb.png')),
-	'bq': await decode(await Deno.readFile('./components/diagram/resources/alpha/bq.png')),
-	'bk': await decode(await Deno.readFile('./components/diagram/resources/alpha/bk.png')),
-	'br': await decode(await Deno.readFile('./components/diagram/resources/alpha/br.png')),
-	'wp': await decode(await Deno.readFile('./components/diagram/resources/alpha/wp.png')),
-	'wn': await decode(await Deno.readFile('./components/diagram/resources/alpha/wn.png')),
-	'wb': await decode(await Deno.readFile('./components/diagram/resources/alpha/wb.png')),
-	'wq': await decode(await Deno.readFile('./components/diagram/resources/alpha/wq.png')),
-	'wk': await decode(await Deno.readFile('./components/diagram/resources/alpha/wk.png')),
-	'wr': await decode(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
-};*/
-
-console.log(await Deno.readFile('./components/diagram/resources/alpha/bp.png'));
+	'bp': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bp.png')),
+	'bn': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bn.png')),
+	'bb': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bb.png')),
+	'bq': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bq.png')),
+	'bk': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bk.png')),
+	'br': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/br.png')),
+	'wp': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wp.png')),
+	'wn': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wn.png')),
+	'wb': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wb.png')),
+	'wq': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wq.png')),
+	'wk': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wk.png')),
+	'wr': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
+};
 
 export async function diagram(board, color) {
 	/*color = color || 'w';

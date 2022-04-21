@@ -24,7 +24,7 @@ const Pieces = {
 export async function diagram(board, color) {
 	color = color || 'w';
 	const canvas = Board[color].clone();
-	// drawing pieces:
+	/* drawing pieces:
 	if (color[0] == 'w') {
 		for (let i = 0; i < 8; i++) {
 			for (let j = 0; j < 8; j++) {
@@ -41,6 +41,6 @@ export async function diagram(board, color) {
 				canvas.composite(piece, (7 - j) * 100, (7 - i) * 100);
 			}
 		}
-	}
+	}*/
 	return await canvas.encode();
 }

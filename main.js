@@ -14,7 +14,7 @@ import './commands/ping.js';
 import './commands/poll.js';
 import './commands/links.js';
 import './commands/clear.js';
-import './commands/fen.js';
+//import './commands/fen.js';
 import './commands/rating.js';
 import './commands/fruit.js';
 import './commands/task.js';

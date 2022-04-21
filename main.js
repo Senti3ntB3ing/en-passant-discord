@@ -2,7 +2,7 @@
 import { createBot, startBot, editBotStatus, sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
 
-//import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 
 import { parse, text, log, executeTasks } from './parser.js';
 import { Time, Channels, Welcome, Actions } from './config.js';
@@ -70,14 +70,14 @@ setRandomAction();
 
 // =========================================
 
-/* web server for constant uptime:
+// web server for constant uptime:
 serve(async _ => {
 	return new Response('web server ready', {
 		headers: { 'content-type': 'text/plain' },
 		status: 200
 	});
 });
-log('status', 'web server ready');*/
+log('status', 'web server ready');
 
 // start 5 minute interval for task execution
 setInterval(executeTasks, Time.minutes(5));

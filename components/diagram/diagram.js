@@ -1,31 +1,30 @@
 
 import { decode } from 'https://deno.land/x/imagescript@v1.2.12/mod.ts';
-import { log } from '../../parser.js';
 
 const Board = {
-	'b': await decode(Deno.readFileSync('./components/diagram/resources/bboard.png')),
-	'w': await decode(Deno.readFileSync('./components/diagram/resources/wboard.png')),
+	'b': await decode(await Deno.readFile('./components/diagram/resources/bboard.png')),
+	'w': await decode(await Deno.readFile('./components/diagram/resources/wboard.png')),
 };
 
 const Pieces = {
-	'bp': await decode(Deno.readFileSync('./components/diagram/resources/alpha/bp.png')),
-	'bn': await decode(Deno.readFileSync('./components/diagram/resources/alpha/bn.png')),
-	'bb': await decode(Deno.readFileSync('./components/diagram/resources/alpha/bb.png')),
-	'bq': await decode(Deno.readFileSync('./components/diagram/resources/alpha/bq.png')),
-	'bk': await decode(Deno.readFileSync('./components/diagram/resources/alpha/bk.png')),
-	'br': await decode(Deno.readFileSync('./components/diagram/resources/alpha/br.png')),
-	'wp': await decode(Deno.readFileSync('./components/diagram/resources/alpha/wp.png')),
-	'wn': await decode(Deno.readFileSync('./components/diagram/resources/alpha/wn.png')),
-	'wb': await decode(Deno.readFileSync('./components/diagram/resources/alpha/wb.png')),
-	'wq': await decode(Deno.readFileSync('./components/diagram/resources/alpha/wq.png')),
-	'wk': await decode(Deno.readFileSync('./components/diagram/resources/alpha/wk.png')),
-	'wr': await decode(Deno.readFileSync('./components/diagram/resources/alpha/wr.png')),
+	'bp': await decode(await Deno.readFile('./components/diagram/resources/alpha/bp.png')),
+	'bn': await decode(await Deno.readFile('./components/diagram/resources/alpha/bn.png')),
+	'bb': await decode(await Deno.readFile('./components/diagram/resources/alpha/bb.png')),
+	'bq': await decode(await Deno.readFile('./components/diagram/resources/alpha/bq.png')),
+	'bk': await decode(await Deno.readFile('./components/diagram/resources/alpha/bk.png')),
+	'br': await decode(await Deno.readFile('./components/diagram/resources/alpha/br.png')),
+	'wp': await decode(await Deno.readFile('./components/diagram/resources/alpha/wp.png')),
+	'wn': await decode(await Deno.readFile('./components/diagram/resources/alpha/wn.png')),
+	'wb': await decode(await Deno.readFile('./components/diagram/resources/alpha/wb.png')),
+	'wq': await decode(await Deno.readFile('./components/diagram/resources/alpha/wq.png')),
+	'wk': await decode(await Deno.readFile('./components/diagram/resources/alpha/wk.png')),
+	'wr': await decode(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
 };
 
 export async function diagram(board, color) {
 	color = color || 'w';
 	const canvas = Board[color].clone();
-	/* drawing pieces:
+	// drawing pieces:
 	if (color[0] == 'w') {
 		for (let i = 0; i < 8; i++) {
 			for (let j = 0; j < 8; j++) {
@@ -42,8 +41,6 @@ export async function diagram(board, color) {
 				canvas.composite(piece, (7 - j) * 100, (7 - i) * 100);
 			}
 		}
-	}*/
-	const x = await canvas.encode();
-	log(x.toString());
-	return x;
+	}
+	return await canvas.encode();
 }

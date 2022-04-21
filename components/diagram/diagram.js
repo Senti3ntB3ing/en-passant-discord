@@ -1,7 +1,7 @@
 
-import { decode } from 'https://deno.land/x/imagescript@v1.2.12/mod.ts';
+//import { decode } from 'https://deno.land/x/imagescript@v1.2.12/mod.ts';
 
-const Board = {
+/*const Board = {
 	'b': await decode(await Deno.readFile('./components/diagram/resources/bboard.png')),
 	'w': await decode(await Deno.readFile('./components/diagram/resources/wboard.png')),
 };
@@ -19,10 +19,12 @@ const Pieces = {
 	'wq': await decode(await Deno.readFile('./components/diagram/resources/alpha/wq.png')),
 	'wk': await decode(await Deno.readFile('./components/diagram/resources/alpha/wk.png')),
 	'wr': await decode(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
-};
+};*/
+
+console.log(await Deno.readFile('./components/diagram/resources/alpha/bp.png'));
 
 export async function diagram(board, color) {
-	color = color || 'w';
+	/*color = color || 'w';
 	const canvas = Board[color].clone();
 	// drawing pieces:
 	if (color[0] == 'w') {
@@ -42,5 +44,6 @@ export async function diagram(board, color) {
 			}
 		}
 	}
-	return await canvas.encode();
+	return await canvas.encode();*/
+	return undefined;
 }

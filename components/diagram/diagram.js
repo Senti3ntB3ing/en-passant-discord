@@ -42,5 +42,7 @@ export async function diagram(board, color) {
 			}
 		}
 	}*/
-	return await canvas.encode();
+	const x = await canvas.encode();
+	console.log(x);
+	return x;
 }

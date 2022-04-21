@@ -4,8 +4,8 @@ import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/disc
 
 import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 
-import { parse, text, log, executeTasks } from './parser.js';
-import { Time, Channels, Welcome, Actions } from './config.js';
+import { parse, text, fetchLog, log, executeTasks } from './parser.js';
+import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================
 
@@ -72,14 +72,12 @@ setRandomAction();
 
 // web server for constant uptime:
 serve(async _ => {
-	return new Response('web server ready', {
+	executeTasks();
+	return new Response(fetchLog(), {
 		headers: { 'content-type': 'text/plain' },
 		status: 200
 	});
 });
 log('status', 'web server ready');
-
-// start 5 minute interval for task execution
-setInterval(executeTasks, Time.minutes(5));
 
 await startBot(bot);

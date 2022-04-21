@@ -1,5 +1,5 @@
 
-import { loadImage, createCanvas } from 'https://deno.land/x/canvas@v1.4.1/mod.ts';
+/*import { loadImage, createCanvas } from 'https://deno.land/x/canvas@v1.4.1/mod.ts';
 
 const Board = {
 	'b': await loadImage(await Deno.readFile('./components/diagram/resources/bboard.png')),
@@ -46,3 +46,4 @@ export async function diagram(board, color) {
 	}
 	return canvas.toBuffer('image/png');
 }
+*/

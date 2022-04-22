@@ -25,7 +25,7 @@ const Board = {
 export async function diagram(board, color) {
 	log(Board.w.height);
 	return encode(Board['w'].image, Board['w'].width, Board['w'].height, {
-		depth: Board.w.bitDepth,
+		depth: Board.w.bitDepth, color: Board.w.colorType
 	});
 	/*color = color || 'w';
 	const canvas = createCanvas(800, 800);

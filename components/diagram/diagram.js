@@ -55,7 +55,7 @@ function overlay(b, f, x = 0, y = 0) {
 		for (let j = 0; j < f.height; j++) {
 			const bp = getPixel(b, i + x, j + y);
 			const fp = getPixel(f, i, j);
-			setPixel(b, i + x, j + y, bend(bp, fp));
+			setPixel(b, i + x, j + y, bend(fp, bp));
 		}
 	}
 	return b;

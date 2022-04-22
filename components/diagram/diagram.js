@@ -55,7 +55,7 @@ function overlay(b, f, x = 0, y = 0) {
 		for (let j = 0; j < f.height; j++) {
 			const bp = getPixel(b, i + x, j + y);
 			const fp = getPixel(f, i, j);
-			setPixel(b, i + x, j + y, bend(fp, bp));
+			b = setPixel(b, i + x, j + y, bend(bp, fp));
 		}
 	}
 	return b;
@@ -75,14 +75,15 @@ function setPixel(image, x, y, color) {
 	d[p] = color.r; d[p + 1] = color.g; d[p + 2] = color.b;
 	if (!a) return;
 	d[p + 3] = 'a' in color ? color.a : 255;
+	return image;
 }
 
 function bend(c1, c2) {
 	if (c1.a == undefined) c1.a = 255;
 	if (c2.a == undefined) c2.a = 255;
-    let a = 255 - ((255 - c1.a) * (255 - c2.a) / 255);
-    let r = (c1.r * (255 - c2.a) + c2.r * c2.a) / 255;
-    let g = (c1.g * (255 - c2.a) + c2.g * c2.a) / 255;
-    let b = (c1.b * (255 - c2.a) + c2.b * c2.a) / 255;
-    return { r, g, b, a };
+	let a = 255 - ((255 - c1.a) * (255 - c2.a) / 255);
+	let r = (c1.r * (255 - c2.a) + c2.r * c2.a) / 255;
+	let g = (c1.g * (255 - c2.a) + c2.g * c2.a) / 255;
+	let b = (c1.b * (255 - c2.a) + c2.b * c2.a) / 255;
+	return { r, g, b, a };
 }

@@ -1,12 +1,13 @@
 
 import { encode, decode } from "https://deno.land/x/pngs@0.1.1/mod.ts";
+import { log } from '../../parser.js';
 
 const Board = {
 	'b': decode(await Deno.readFile('./components/diagram/resources/bboard.png')),
 	'w': decode(await Deno.readFile('./components/diagram/resources/wboard.png')),
 };
 
-const Pieces = {
+/*const Pieces = {
 	'bp': decode(await Deno.readFile('./components/diagram/resources/alpha/bp.png')),
 	'bn': decode(await Deno.readFile('./components/diagram/resources/alpha/bn.png')),
 	'bb': decode(await Deno.readFile('./components/diagram/resources/alpha/bb.png')),
@@ -19,9 +20,10 @@ const Pieces = {
 	'wq': decode(await Deno.readFile('./components/diagram/resources/alpha/wq.png')),
 	'wk': decode(await Deno.readFile('./components/diagram/resources/alpha/wk.png')),
 	'wr': decode(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
-};
+};*/
 
 export async function diagram(board, color) {
+	log(Board.w.image.length);
 	return encode(Board['w'].image, Board['w'].width, Board['w'].height);
 	/*color = color || 'w';
 	const canvas = createCanvas(800, 800);

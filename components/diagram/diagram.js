@@ -1,28 +1,29 @@
 
-/*import { loadImage, createCanvas } from 'https://deno.land/x/canvas@v1.4.1/mod.ts';
+import { encode, decode } from "https://deno.land/x/pngs@0.1.1/mod.ts";
 
 const Board = {
-	'b': await loadImage(await Deno.readFile('./components/diagram/resources/bboard.png')),
-	'w': await loadImage(await Deno.readFile('./components/diagram/resources/wboard.png')),
+	'b': decode(await Deno.readFile('./components/diagram/resources/bboard.png')),
+	'w': decode(await Deno.readFile('./components/diagram/resources/wboard.png')),
 };
 
 const Pieces = {
-	'bp': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bp.png')),
-	'bn': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bn.png')),
-	'bb': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bb.png')),
-	'bq': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bq.png')),
-	'bk': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/bk.png')),
-	'br': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/br.png')),
-	'wp': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wp.png')),
-	'wn': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wn.png')),
-	'wb': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wb.png')),
-	'wq': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wq.png')),
-	'wk': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wk.png')),
-	'wr': await loadImage(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
+	'bp': decode(await Deno.readFile('./components/diagram/resources/alpha/bp.png')),
+	'bn': decode(await Deno.readFile('./components/diagram/resources/alpha/bn.png')),
+	'bb': decode(await Deno.readFile('./components/diagram/resources/alpha/bb.png')),
+	'bq': decode(await Deno.readFile('./components/diagram/resources/alpha/bq.png')),
+	'bk': decode(await Deno.readFile('./components/diagram/resources/alpha/bk.png')),
+	'br': decode(await Deno.readFile('./components/diagram/resources/alpha/br.png')),
+	'wp': decode(await Deno.readFile('./components/diagram/resources/alpha/wp.png')),
+	'wn': decode(await Deno.readFile('./components/diagram/resources/alpha/wn.png')),
+	'wb': decode(await Deno.readFile('./components/diagram/resources/alpha/wb.png')),
+	'wq': decode(await Deno.readFile('./components/diagram/resources/alpha/wq.png')),
+	'wk': decode(await Deno.readFile('./components/diagram/resources/alpha/wk.png')),
+	'wr': decode(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
 };
 
 export async function diagram(board, color) {
-	color = color || 'w';
+	return encode(Board['w'].image, Board['w'].width, Board['w'].height);
+	/*color = color || 'w';
 	const canvas = createCanvas(800, 800);
 	const ctx = canvas.getContext('2d');
 	ctx.drawImage(Board[color], 0, 0);
@@ -44,6 +45,5 @@ export async function diagram(board, color) {
 			}
 		}
 	}
-	return canvas.toBuffer('image/png');
+	return canvas.toBuffer('image/png');*/
 }
-*/

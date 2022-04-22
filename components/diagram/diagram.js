@@ -23,7 +23,7 @@ const Pieces = {
 
 export async function diagram(board, color) {
 	color = color || 'w';
-	let img = Board[color].image;
+	let img = Board[color];
 	// drawing pieces:
 	if (color[0] == 'w') {
 		for (let i = 0; i < 8; i++) {
@@ -42,7 +42,7 @@ export async function diagram(board, color) {
 			}
 		}
 	}
-	return encode(img, img.width, img.height, {
+	return encode(img.image, img.width, img.height, {
 		depth: img.bitDepth, color: img.colorType
 	});
 }
@@ -65,7 +65,7 @@ function getPixel(image, x, y) {
 	const a = image.colorType == ColorType.RGBA;
 	const d = image.image;
 	const p = (x + y * image.width) * (a ? 4 : 3);
-	return { r: d[p], g: d[p + 1], b: d[p + 2], a: a ? d[p + 3] : 255 };
+	return { r: d[p], g: d[p + 1], b: d[p + 2], a: (a ? d[p + 3] : 255) };
 }
 
 function setPixel(image, x, y, color) {
@@ -73,7 +73,7 @@ function setPixel(image, x, y, color) {
 	let d = image.image;
 	const p = (x + y * image.width) * (a ? 4 : 3);
 	d[p] = color.r; d[p + 1] = color.g; d[p + 2] = color.b;
-	if (!a) return;
+	if (!a) return image;
 	d[p + 3] = 'a' in color ? color.a : 255;
 	return image;
 }

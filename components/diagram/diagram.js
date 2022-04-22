@@ -23,7 +23,7 @@ const Board = {
 };*/
 
 export async function diagram(board, color) {
-	log(Board.w.image.length);
+	log(Board.w.height);
 	return encode(Board['w'].image, Board['w'].width, Board['w'].height);
 	/*color = color || 'w';
 	const canvas = createCanvas(800, 800);

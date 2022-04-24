@@ -48,8 +48,8 @@ createCommand({
 		/// make a status message:
 		const perspective = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
 		const status = await stateMessage('VoteChess Position', board, perspective);
-		const id = await sendMessage(message.bot, Channels.vote_chess, status);
-		setGame(message.arguments[0], id); // set game in database
+		const sm = await sendMessage(message.bot, Channels.vote_chess, status);
+		setGame(message.arguments[0], sm.id); // set game in database
 	}
 });
 

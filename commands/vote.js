@@ -42,11 +42,11 @@ createCommand({
 		for (const move of g.moveList) board.move(move);
 		/// make a status message:
 		let status = '';
-		if (game.game_over()) {
-			if (game.in_draw()) status = '½-½ ・ DRAW';
-			else if (game.in_checkmate())
-				status = game.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
-		} else status = game.turn() == 'w' ? white_to_move : black_to_move;
+		if (board.game_over()) {
+			if (board.in_draw()) status = '½-½ ・ DRAW';
+			else if (board.in_checkmate())
+				status = board.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
+		} else status = board.turn() == 'w' ? white_to_move : black_to_move;
 		let update = {
 			file: {
 				blob: new Blob([ await diagram(board.board(), board.turn()) ]),
@@ -55,7 +55,7 @@ createCommand({
 			embeds: [{
 				type: 'image',
 				title: 'VoteChess position',
-				color: game.turn() == 'w' ? 0xFFFFFF : 0x000000,
+				color: board.turn() == 'w' ? 0xFFFFFF : 0x000000,
 				image: { url: 'attachment://board.png' },
 				footer: { text: status },
 			}]

@@ -465,7 +465,7 @@ const Quotes = [
 		]
 	},
 	{
-		author: 'Harry Golombek', title: 'OGM',
+		author: 'Harry Golombek', title: 'HGM',
 		quotes: [
 			'Barcza is the most versatile player in the opening. He sometimes plays P-KN3 on the first, sometimes on the second, sometimes on the third, and sometimes only on the fourth move.',
 			'Books on the openings abound; nor are works on the end game wanting; but those on the middle game can be counted on the fingers of one hand.',
@@ -655,7 +655,7 @@ const Quotes = [
 		]
 	},
 	{
-		author: 'Lodewijk Prins', title: 'OGM',
+		author: 'Lodewijk Prins', title: 'HGM',
 		quotes: [
 			'The only thing chess players have in common is chess.',
 		]

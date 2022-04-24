@@ -20,7 +20,7 @@ import './commands/fruit.js';
 import './commands/task.js';
 import './commands/shutdown.js';
 import './commands/record.js';
-import './commands/backup.js';
+import './commands/vote.js';
 
 // ==== Tasks ==============================
 

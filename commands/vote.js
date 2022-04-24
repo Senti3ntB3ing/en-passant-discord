@@ -34,10 +34,9 @@ createCommand({
 	execute: async message => {
 		const title = 'VoteChess error';
 		if (await playing()) return error(title, 'Game already in progress!');
-		let g = game(message.arguments[0]);
+		let g = (await game(message.arguments[0])).game;
 		if (g == undefined) return error(title, 'Game id not found on __chess.com__!');
 		g.moveList = moves(g.moveList);
-		console.log(g);
 		const board = Chess(g.pgnHeaders.FEN);
 		Object.keys(g.pgnHeaders).forEach(k => board.header(k, g.pgnHeaders[k]));
 		for (const move of g.moveList) board.move(move);

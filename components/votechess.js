@@ -40,7 +40,7 @@ const PIECES = 'brnq';
 /// decodes a move into algebraic notation or pawn promotion.
 /// - move: string of two characters.
 function decode(move) {
-	const index = SQUARES.indexOf(move[0]);
+	let index = SQUARES.indexOf(move[0]);
 	const f1 = FILES[index % 8], r1 = Math.floor(index / 8) + 1;
 	index = SQUARES.indexOf(move[1]);
 	let p, f2, r2;

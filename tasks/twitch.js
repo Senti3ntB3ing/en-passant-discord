@@ -1,5 +1,5 @@
 
-import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
+import { sendMessage, publishMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { live } from '../components/twitch.js';
 import { Channels, Roles, Time, Twitch_Streamer } from '../config.js';
@@ -34,12 +34,15 @@ createTask({
 			Database.set('twitch_live', streaming);
 		} else if (streaming) {
 			Database.set('twitch_live', true);
-			sendMessage(bot, Channels.notifications, card(
-				'Zach is now live on Twitch!',
-				`${Twitch.emoji} Hey @everyone, <@${Roles.Zach}> is streaming on __twitch__!` +
-				`\n${Twitch.url}`,
-				Twitch.color
-			));
+			try {
+				const m = sendMessage(bot, Channels.notifications, card(
+					'Zach is now live on Twitch!',
+					`${Twitch.emoji} Hey @everyone, <@${Roles.Zach}> is streaming on __twitch__!` +
+					`\n${Twitch.url}`,
+					Twitch.color
+				));
+				publishMessage(bot, Channels.notifications, m.id);
+			} catch { }
 		}
 	}
 });

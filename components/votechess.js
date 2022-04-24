@@ -22,11 +22,13 @@ export async function playing() {
 /// id returns undefined in case of error.
 export async function game(id) {
 	const API_BASE_URL = 'https://www.chess.com/callback/daily/game/';
+	let g = undefined;
 	try {
-		return await fetch(API_BASE_URL + id).then(
+		g = await fetch(API_BASE_URL + id).then(
 			r => r.status == 200 ? r.json() : undefined
 		);
 	} catch { return undefined; }
+	if (g != undefined) return g.game;
 }
 
 // https://github.com/andyruwruw/chess-web-api/issues/10#issuecomment-779735204

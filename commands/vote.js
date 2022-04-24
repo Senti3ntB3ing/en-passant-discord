@@ -31,7 +31,7 @@ createCommand({
 	name: 'game', emoji: ':clipboard:', hidden: true,
 	description: `New <#${Channels.vote_chess}> \`!game <id>\``,
 	permissions: Roles.administrator,
-	execute: message => {
+	execute: async message => {
 		const title = 'VoteChess error';
 		if (await playing()) return error(title, 'Game already in progress!');
 		let g = game(message.arguments[0]);

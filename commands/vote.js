@@ -5,6 +5,8 @@ import { game, playing, moves, setGame } from '../components/votechess.js';
 import { Chess } from '../components/chess.js';
 import { stateMessage } from '../components/diagram/diagram.js';
 
+import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
+
 // ==== Vote chess use case: ===================================================
 // #vote-chess is always read only and only contains the current game state.
 // A mod creates a new game with the specified url `!game https://chess.com...`.

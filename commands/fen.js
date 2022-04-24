@@ -13,6 +13,6 @@ createCommand({
 		if (!Chess().validate_fen(fen))
 			return error('Chess diagram', 'Invalid FEN string / position!');
 		const game = Chess(fen), t = message.command[0];
-		return stateMessage(title, game, t != 'f' ? t : game.turn());
+		return await stateMessage(title, game, t != 'f' ? t : game.turn());
 	}
 });

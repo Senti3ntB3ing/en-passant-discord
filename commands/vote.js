@@ -41,7 +41,7 @@ createCommand({
 		Object.keys(g.pgnHeaders).forEach(k => board.header(k, g.pgnHeaders[k]));
 		for (const move of g.moveList) board.move(move);
 		/// make a status message:
-		const status = stateMessage('VoteChess Position', board);
+		const status = await stateMessage('VoteChess Position', board);
 		const id = await sendMessage(message.bot, Channels.vote_chess, status);
 		setGame(message.arguments[0], id); // set game in database
 	}

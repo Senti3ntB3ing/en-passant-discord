@@ -21,7 +21,7 @@ const Pieces = {
 	'wr': decode(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
 };
 
-export function stateMessage(title, game, perspective) {
+export async function stateMessage(title, game, perspective) {
 	const white_to_move = '◽️ WHITE TO MOVE';
 	const black_to_move = '◾️ BLACK TO MOVE';
 	let status = '';

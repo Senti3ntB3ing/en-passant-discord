@@ -1466,7 +1466,18 @@
 					}
 				}
 			}
-			if (!move_obj) return null; // failed to find move.
+			if (!move_obj) {
+				if (typeof move !== 'object') return null;
+				// failed to find move (might be castling king onto rook)
+				if (move.from != 'e1' && move.from != 'e8') return null;
+				if (move.to != 'h1' && move.to != 'a1' &&
+					move.to != 'h8' && move.to != 'a8') return null;
+				const king = get(move.from), rook = get(move.to);
+				if (king == null || rook == null) return null;
+				if (king.type != 'k' || rook.type != 'r') return null;
+				if (king.color != rook.color) return null;
+				return this.move(move.to[0] == 'h' ? 'O-O' : 'O-O-O');
+			}
 			// we need to make a copy of move because we
 			// can't generate SAN after the move is made.
 			const pretty_move = make_pretty(move_obj);

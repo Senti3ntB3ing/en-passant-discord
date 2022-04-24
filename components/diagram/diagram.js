@@ -66,6 +66,9 @@ export async function diagram(board, color) {
 			}
 		}
 	}
+	Board[color] = decode(await Deno.readFile(
+		`./components/diagram/resources/${color}board.png`
+	));
 	return encode(img.image, img.width, img.height, {
 		depth: img.bitDepth, color: img.colorType
 	});

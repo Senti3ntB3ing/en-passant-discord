@@ -2,8 +2,8 @@
 import { Database } from '../database.js';
 
 export function setGame(gameid, statusid) {
-	Database.set('game', gameid);
-	Database.set('status', statusid);
+	Database.set('game', gameid.toString());
+	Database.set('status', statusid.toString());
 }
 
 /// checks if there is a game in progress.

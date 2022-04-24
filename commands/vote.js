@@ -41,10 +41,8 @@ createCommand({
 		g.moveList = moves(g.moveList);
 		const board = Chess(g.pgnHeaders.FEN);
 		Object.keys(g.pgnHeaders).forEach(k => board.header(k, g.pgnHeaders[k]));
-		for (const move of g.moveList) {
-			board.move(move);
-			await sendMessage(message.bot, Channels.vote_chess, JSON.stringify(move));
-		}
+		for (const move of g.moveList) board.move(move);
+		await sendMessage(message.bot, Channels.vote_chess, g.moveList.reduce((s, m) => s + JSON.stringify(m) + '\n', ''));
 		/// make a status message:
 		const perspective = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
 		const status = await stateMessage('VoteChess Position', board, perspective);

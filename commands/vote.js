@@ -3,7 +3,7 @@ import { Roles, Channels } from '../config.js';
 import { createCommand, card, error } from '../parser.js';
 import { game, playing, moves, setGame } from '../components/votechess.js';
 import { Chess } from '../components/chess.js';
-import { diagram } from '../components/diagram/diagram.js';
+import { stateMessage } from '../components/diagram/diagram.js';
 
 // ==== Vote chess use case: ===================================================
 // #vote-chess is always read only and only contains the current game state.
@@ -41,26 +41,8 @@ createCommand({
 		Object.keys(g.pgnHeaders).forEach(k => board.header(k, g.pgnHeaders[k]));
 		for (const move of g.moveList) board.move(move);
 		/// make a status message:
-		let status = '';
-		if (board.game_over()) {
-			if (board.in_draw()) status = '½-½ ・ DRAW';
-			else if (board.in_checkmate())
-				status = board.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
-		} else status = board.turn() == 'w' ? white_to_move : black_to_move;
-		let update = {
-			file: {
-				blob: new Blob([ await diagram(board.board(), board.turn()) ]),
-				name: 'board.png',
-			},
-			embeds: [{
-				type: 'image',
-				title: 'VoteChess position',
-				color: board.turn() == 'w' ? 0xFFFFFF : 0x000000,
-				image: { url: 'attachment://board.png' },
-				footer: { text: status },
-			}]
-		};
-		const id = await sendMessage(message.bot, Channels.vote_chess, update);
+		const status = stateMessage('VoteChess Position', board);
+		const id = await sendMessage(message.bot, Channels.vote_chess, status);
 		setGame(message.arguments[0], id); // set game in database
 	}
 });

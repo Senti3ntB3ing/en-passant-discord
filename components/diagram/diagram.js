@@ -21,6 +21,30 @@ const Pieces = {
 	'wr': decode(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
 };
 
+export function stateMessage(title, game, perspective) {
+	const white_to_move = '◽️ WHITE TO MOVE';
+	const black_to_move = '◾️ BLACK TO MOVE';
+	let status = '';
+	if (game.game_over()) {
+		if (game.in_draw()) status = '½-½ ・ DRAW';
+		else if (game.in_checkmate())
+			status = game.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
+	} else status = game.turn() == 'w' ? white_to_move : black_to_move;
+	if (perspective == undefined) perspective = game.turn();
+	return {
+		file: {
+			blob: new Blob([ await diagram(game.board(), perspective) ]),
+			name: 'board.png',
+		},
+		embeds: [{
+			type: 'image', title,
+			color: game.turn() == 'w' ? 0xFFFFFF : 0x000000,
+			image: { url: 'attachment://board.png' },
+			footer: { text: status },
+		}]
+	};
+}
+
 export async function diagram(board, color) {
 	color = color || 'w';
 	let img = Board[color];

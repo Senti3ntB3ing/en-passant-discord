@@ -35,7 +35,7 @@ createTask({
 		} else if (streaming) {
 			Database.set('twitch_live', true);
 			try {
-				const m = sendMessage(bot, Channels.notifications, card(
+				const m = await sendMessage(bot, Channels.notifications, card(
 					'Zach is now live on Twitch!',
 					`${Twitch.emoji} Hey @everyone, <@${Roles.Zach}> is streaming on __twitch__!` +
 					`\n${Twitch.url}`,

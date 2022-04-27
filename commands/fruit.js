@@ -1,7 +1,7 @@
 
 import { Roles } from '../config.js';
 import { createCommand, card, error } from '../parser.js';
-import { closest, levenshtein } from '../components/levenshtein.js';
+import { closest } from '../components/levenshtein.js';
 
 const fruits = [
 	{
@@ -371,12 +371,11 @@ createCommand({
 		if (argument != message.content) {
 			fruit = fruits.find(fruit => fruit.name.toLowerCase() == argument.toLowerCase());
 			if (!fruit) {
-				const closestFruit = closest(argument, fruits.map(fruit => fruit.name));
-				const distance = levenshtein(argument, closestFruit);
+				const [ i, d ] = closest(argument, fruits.map(fruit => fruit.name));
 				return error(
 					'Fruit Facts',
 					`Could not find any fruit facts for \`${argument}\`!` +
-					(distance < 3 ? `\nDid you mean \`${closestFruit}\` instead?` : '')
+					(d < 3 ? `\nDid you mean \`${fruits[i].name}\` instead?` : '')
 				);
 			}
 

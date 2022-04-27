@@ -1,7 +1,7 @@
 
 import { sendMessage, editMember } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
-import { closest, levenshtein } from './components/levenshtein.js';
+import { closest } from './components/levenshtein.js';
 
 import { Name, Prefix, Roles, Time, ColorCodes } from './config.js';
 import { bot } from './main.js';
@@ -61,17 +61,13 @@ export function parse(bot, message) {
 		}
 	}
 	// command not found, check for typos:
-	const mod = message.member.roles.includes(Roles.moderator);
-	const closestCommand = closest(content,
-		commands.filter(command => mod || !command.hidden).map(
-			command => [ command.name, command.aliases ].flat()
-		).flat()
-	);
-	const distance = levenshtein(closestCommand, content);
-	if (distance <= 2) sendMessage(bot, message.channelId, info(
+	const filtered = commands.filter(command => !command.hidden)
+		.map(command => [ command.name, command.aliases ].flat()).flat();
+	const [ i, d ] = closest(content, filtered);
+	if (d <= 2) sendMessage(bot, message.channelId, info(
 		'Command Information',
 		`There is no command named \`${Prefix}${content}\`.\n` +
-		`Did you mean \`${Prefix}${closestCommand}\` instead?`
+		`Did you mean \`${Prefix}${filtered[i]}\` instead?`
 	));
 }
 

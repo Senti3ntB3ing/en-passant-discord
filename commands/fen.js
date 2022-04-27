@@ -2,7 +2,6 @@
 import { createCommand, error } from '../parser.js';
 import { Chess } from '../components/chess.js';
 import { stateMessage } from '../components/diagram/diagram.js';
-import { Roles } from '../config.js';
 
 createCommand({
 	name: 'fen', emoji: ':page_with_curl:',

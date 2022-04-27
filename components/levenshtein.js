@@ -1,4 +1,7 @@
 
+/// given a string s and an array of strings a,
+/// returns the index of the closest string in
+/// a and the corresponding levenshtein distance.
 export const closest = (s, a) => {
 	let b = null;
 	let d = Infinity;
@@ -6,7 +9,7 @@ export const closest = (s, a) => {
 		const l = levenshtein(s, a[i]);
 		if (l < d) { b = i; d = l; }
 	}
-	return a[b];
+	return [ b, d ];
 };
 
 export const levenshtein = (a, b) => {

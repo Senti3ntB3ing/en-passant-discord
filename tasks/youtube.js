@@ -23,9 +23,10 @@ createTask({
 		for (const video of videos) {
 			try {
 				const url = composeURL(video.id.videoId);
-				sendMessage(bot, Channels.notifications,
+				const m = await sendMessage(bot, Channels.notifications,
 					text(`Hey @everyone, check out <@${Roles.Zach}>'s new video!\n${url}`)
 				);
+				publishMessage(bot, Channels.notifications, m.id);
 			} catch { }
 		}
 		Database.set('youtube', (new Date()).toISOString());

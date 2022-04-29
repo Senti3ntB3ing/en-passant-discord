@@ -17,7 +17,7 @@ createCommand({
 });
 
 createCommand({
-	name: 'pgn', emoji: ':page_with_curl:', rate: 4,
+	name: 'gif', emoji: ':page_with_curl:', aliases: [ 'pgn' ], rate: 4,
 	description: 'Display a chess gif from a list of moves.',
 	execute: async message => {
 		let moves = message.text.replace(/`/g, '').split(/\s+/g).filter(

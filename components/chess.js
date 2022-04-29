@@ -1508,7 +1508,7 @@
 			return null;
 		},
 
-		half_move_count_since_start: function() { return history.length; },
+		half_move_total: function() { return history.length; },
 
 		history: function(options) {
 			let reversed_history = [ ];

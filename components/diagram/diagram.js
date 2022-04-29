@@ -1,9 +1,23 @@
 
 import { encode, decode, ColorType } from "https://deno.land/x/pngs@0.1.1/mod.ts";
+import { Chess } from "../chess.js";
+import { GIFEncoder, quantize, applyPalette } from "https://unpkg.com/gifenc@1.0.3/dist/gifenc.esm.js";
+
+const duplicate = image => ({
+	width: image.width,
+	height: image.height,
+	colorType: image.colorType,
+	bitDepth: image.bitDepth,
+	lineSize: image.lineSize,
+	image: image.image.slice(0)
+});
 
 const Board = {
 	'b': decode(await Deno.readFile('./components/diagram/resources/bboard.png')),
 	'w': decode(await Deno.readFile('./components/diagram/resources/wboard.png')),
+}, GBoard = {
+	'b': decode(await Deno.readFile('./components/diagram/resources/bgboard.png')),
+	'w': decode(await Deno.readFile('./components/diagram/resources/wgboard.png')),
 };
 
 const Pieces = {
@@ -19,6 +33,19 @@ const Pieces = {
 	'wq': decode(await Deno.readFile('./components/diagram/resources/alpha/wq.png')),
 	'wk': decode(await Deno.readFile('./components/diagram/resources/alpha/wk.png')),
 	'wr': decode(await Deno.readFile('./components/diagram/resources/alpha/wr.png')),
+}, GPieces = {
+	'bp': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/bp.png')),
+	'bn': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/bn.png')),
+	'bb': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/bb.png')),
+	'bq': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/bq.png')),
+	'bk': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/bk.png')),
+	'br': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/br.png')),
+	'wp': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/wp.png')),
+	'wn': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/wn.png')),
+	'wb': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/wb.png')),
+	'wq': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/wq.png')),
+	'wk': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/wk.png')),
+	'wr': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/wr.png')),
 };
 
 export async function stateMessage(title, game, perspective) {
@@ -39,15 +66,97 @@ export async function stateMessage(title, game, perspective) {
 		embeds: [{
 			type: 'image', title,
 			color: game.turn() == 'w' ? 0xFFFFFF : 0x000000,
-			image: { url: 'attachment://board.png' },
+			image: { url: 'attachment://board.png', height: 800, width: 800 },
 			footer: { text: status },
 		}]
 	};
 }
 
+export async function votechessMessage(game, moves, perspective) {
+	const white_to_move = '◽️ WHITE TO MOVE';
+	const black_to_move = '◾️ BLACK TO MOVE';
+	let status = '';
+	if (game.game_over()) {
+		if (game.in_draw()) status = '½-½ ・ DRAW';
+		else if (game.in_checkmate())
+			status = game.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
+	} else status = game.turn() == 'w' ? white_to_move : black_to_move;
+	if (perspective == undefined) perspective = game.turn();
+	return {
+		file: {
+			blob: new Blob([ await diagram(game.board(), perspective) ]),
+			name: 'board.png',
+		},
+		embeds: [{
+			type: 'rich', title: 'Current Position',
+			fields: moves.length > 0 ? [ { name: 'Votes:', inline: false } ]
+				.concat(moves.map(m => ({ name: '', value: m, inline: true })))
+				.concat([ { name: 'Diagram:', inline: false } ]) : [],
+			color: game.turn() == 'w' ? 0xFFFFFF : 0x000000,
+			image: { url: 'attachment://board.png', height: 800, width: 800 },
+			footer: { text: status },
+		}]
+	};
+}
+
+function board_to_data(board) {
+	if (board.colorType == ColorType.RGBA) return board.image.slice(0);
+	let data = new Uint8Array(Math.floor(board.image.length / 3) * 4);
+	for (let i = 0; i < board.image.length; i += 3) {
+		data.set([
+			board.image[i + 0],
+			board.image[i + 1],
+			board.image[i + 2],
+			255
+		], Math.floor(i / 3) * 4);
+	}
+	return data;
+}
+
+export async function gif(moves, perspective = 'w') {
+	const game = Chess();
+	let data = board_to_data(await frame(game.board(), perspective));
+	const palette = quantize(data, 16, { format: 'rgb444' });
+	let index = applyPalette(data, palette, 'rgb444');
+	const gif = GIFEncoder();
+	gif.writeFrame(index, 400, 400, { palette, repeat: -1 });
+	for (const move of moves) {
+		if (game.move(move) == null) return undefined;
+		data = board_to_data(await frame(game.board(), perspective));
+		index = applyPalette(data, palette, 'rgb444');
+		gif.writeFrame(index, 400, 400, { delay: 800, repeat: -1 });
+	}
+	gif.finish();
+	return gif.bytes();
+}
+
+async function frame(board, color) {
+	color = color || 'w';
+	let img = duplicate(GBoard[color]);
+	// drawing pieces:
+	if (color[0] == 'w') {
+		for (let i = 0; i < 8; i++) {
+			for (let j = 0; j < 8; j++) {
+				if (board[i][j] == null) continue;
+				const piece = GPieces[board[i][j].color + board[i][j].type];
+				img = overlay(img, piece, j * 50, i * 50);
+			}
+		}
+	} else {
+		for (let i = 7; i >= 0; i--) {
+			for (let j = 7; j >= 0; j--) {
+				if (board[i][j] == null) continue;
+				const piece = GPieces[board[i][j].color + board[i][j].type];
+				img = overlay(img, piece, (7 - j) * 50, (7 - i) * 50);
+			}
+		}
+	}
+	return img;
+}
+
 export async function diagram(board, color) {
 	color = color || 'w';
-	let img = Board[color];
+	let img = duplicate(Board[color]);
 	// drawing pieces:
 	if (color[0] == 'w') {
 		for (let i = 0; i < 8; i++) {
@@ -66,9 +175,6 @@ export async function diagram(board, color) {
 			}
 		}
 	}
-	Board[color] = decode(await Deno.readFile(
-		`./components/diagram/resources/${color}board.png`
-	));
 	return encode(img.image, img.width, img.height, {
 		depth: img.bitDepth, color: img.colorType
 	});
@@ -82,7 +188,7 @@ function overlay(b, f, x = 0, y = 0) {
 		for (let j = 0; j < f.height; j++) {
 			const bp = getPixel(b, i + x, j + y);
 			const fp = getPixel(f, i, j);
-			b = setPixel(b, i + x, j + y, bend(bp, fp));
+			b = setPixel(b, i + x, j + y, blend(bp, fp));
 		}
 	}
 	return b;
@@ -105,7 +211,7 @@ function setPixel(image, x, y, color) {
 	return image;
 }
 
-function bend(c1, c2) {
+function blend(c1, c2) {
 	if (c1.a == undefined) c1.a = 255;
 	if (c2.a == undefined) c2.a = 255;
 	let a = 255 - ((255 - c1.a) * (255 - c2.a) / 255);

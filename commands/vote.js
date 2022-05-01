@@ -95,6 +95,7 @@ createCommand({
 		const c = await count();
 		let votes = [];
 		for (const move in c) votes.push({ move, count: c[move] });
+		if (votes.length == 0) return info('Vote Chess Count', 'There are no votes currently.')
 		votes = votes.sort((a, b) => a.count - b.count).map(
 			v => '`' + v.move + '`: ' + v.count
 		);

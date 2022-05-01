@@ -77,7 +77,7 @@ const FILES = 'abcdefgh';
 
 // https://github.com/andyruwruw/chess-web-api/issues/11#issuecomment-783687021
 const PROMOTIONS = '#@$_[]^()~{}';
-const PIECES = 'brnq';
+const PIECES = 'BRNQ';
 
 /// decodes a move into algebraic notation or pawn promotion.
 /// - move: string of two characters.
@@ -87,10 +87,11 @@ function decode(move) {
 	index = SQUARES.indexOf(move[1]);
 	let p, f2, r2;
 	if (index == -1) {
-		p = PIECES[Math.floor(PROMOTIONS.indexOf(move[1]) / 3)];
+		index = PROMOTIONS.indexOf(move[1]);
+		p = PIECES[Math.floor(index / 3)];
 		f2 = FILES.indexOf(f1);
 		const l = index % 3 == 1, r = index % 3 == 2;
-		if (r) f2--; else if (l) f2++; // capture left or right
+		if (l) f2--; else if (r) f2++; // capture left or right
 		f2 = FILES[f2];
 		if (r1 == 2) r2 = 1; else r2 = 8;
 	} else { f2 = FILES[index % 8]; r2 = Math.floor(index / 8) + 1; }

@@ -1,7 +1,7 @@
 
-import { sendMessage, editMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
+import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
-import { Roles, Time, delay } from '../config.js';
+import { Roles } from '../config.js';
 import { createCommand, error } from '../parser.js';
 
 createCommand({

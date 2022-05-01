@@ -34,7 +34,7 @@ createTask({
 		}
 		clearVotes();
 		const move = b.undo();
-		if (p == t[0]) message += `${Roles.Zach} played \`${move.san}\`.`;
+		if (p == t[0]) message += `<@${Roles.Zach}> played \`${move.san}\`.`;
 		else message += `**we** played \`${move.san}\`.`;
 		b.move(move);
 		st = (await sendMessage(bot, Channels.vote_chess,

@@ -65,7 +65,7 @@ createCommand({
 		for (const move of g.moveList) if (board.move(move) == null)
 			return error(title, `Something went wrong parsing: ${move}`);
 		let move = message.arguments[0].toLowerCase();
-		if (lm != 'draw' && lm != 'resign') {
+		if (move != 'draw' && move != 'resign') {
 			// exf3 e.p.
 			move = message.arguments[0]
 				.replace(/\s*e\s*\.?\s*p\s*\.?\s*$/gi, '')
@@ -75,7 +75,7 @@ createCommand({
 				'`' + message.arguments[0] + '` is not a valid move!'
 			);
 			move = move.san; // standard algebraic notations
-		} else move = lm;
+		}
 		if (await hasVoted(message.author.id))
 			return error(title, 'You can only vote once!');
 		vote(message.author.id, move);

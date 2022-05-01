@@ -77,7 +77,7 @@ const FILES = 'abcdefgh';
 
 // https://github.com/andyruwruw/chess-web-api/issues/11#issuecomment-783687021
 const PROMOTIONS = '#@$_[]^()~{}';
-const PIECES = 'BRNQ';
+const PIECES = 'brnq';
 
 /// decodes a move into algebraic notation or pawn promotion.
 /// - move: string of two characters.

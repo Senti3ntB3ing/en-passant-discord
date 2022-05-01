@@ -3,6 +3,7 @@ import { sendMessage, deleteMessage } from 'https://deno.land/x/discordeno@13.0.
 
 import { createTask } from '../parser.js';
 import { Roles, Channels, Time } from '../config.js';
+import { Chess } from '../components/chess.js';
 import { playing, game, getGame, setGame, endGame, clearVotes, moves } from '../components/votechess.js';
 import { stateMessage } from '../components/diagram/diagram.js';
 

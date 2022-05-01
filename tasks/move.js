@@ -10,7 +10,7 @@ createTask({
 	interval: Time.hour,
 	execute: async bot => {
 		if (!(await playing())) return;
-		let [ id, st, m ] = getGame();
+		let [ id, st, m ] = await getGame();
 		let g = await game(id);
 		if (g == undefined) return;
 		g.moveList = moves(g.moveList);

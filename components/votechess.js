@@ -38,7 +38,7 @@ export function setGame(gameid, statusid, moves) {
 	Database.set('moves', moves.toString());
 }
 
-export function getGame() {
+export async function getGame() {
 	return [
 		await Database.get('game'),
 		await Database.get('status'),

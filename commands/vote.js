@@ -49,7 +49,7 @@ createCommand({
 		const title = 'Vote Chess Error';
 		const pe = info(title, `There is no <#${Channels.vote_chess}> game in progress right now!`);
 		if (!(await playing())) return pe;
-		const [ id, st, _ ] = getGame();
+		const [ id, st, _ ] = await getGame();
 		let g = await game(id);
 		if (g == undefined) return error(title, 'Game id not found on __chess.com__!');
 		if (g.isFinished) {

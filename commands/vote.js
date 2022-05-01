@@ -56,7 +56,7 @@ createCommand({
 			// TODO: clean state. this will never happen anyways, it's just a safeguard
 			return pe;
 		}
-		const turn = g.pgnHeaders.turnColor.toLowerCase();
+		const turn = g.turnColor.toLowerCase();
 		const zach = g.pgnHeaders.White == 'thechessnerd' ? 'white' : 'black';
 		if (turn == zach) return info(title, 'Can\'t vote when it\'s not your turn!');
 		g.moveList = moves(g.moveList);

@@ -18,7 +18,7 @@ createTask({
 		g.moveList = moves(g.moveList);
 		if (g.moveList.length == m) return;
 		// someone moved, delete old status, make new one.
-		await deleteMessage(bot, Channels.vote_chess, st);
+		try { await deleteMessage(bot, Channels.vote_chess, st); } catch { }
 		const b = Chess(g.pgnHeaders.FEN);
 		const p = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
 		const t = b.turn() == 'w' ? 'white' : 'black';

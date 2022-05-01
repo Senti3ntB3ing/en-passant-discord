@@ -20,8 +20,10 @@ createTask({
 		// someone moved, delete old status, make new one.
 		try { await deleteMessage(bot, Channels.vote_chess, st); } catch { }
 		const b = Chess(g.pgnHeaders.FEN);
-		for (const move of g.moveList) if (b.move(move) == null)
-			return error('Invalid Move', JSON.stringify(move));
+		for (const move of g.moveList) if (b.move(move) == null) {
+			sendMessage(bot, Channels.vote_chess, error('Invalid Move', JSON.stringify(move)));
+			return;
+		}
 		const p = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
 		const t = b.turn() == 'w' ? 'white' : 'black';
 		let message = `Hey <@${Roles.voter}>s, `;

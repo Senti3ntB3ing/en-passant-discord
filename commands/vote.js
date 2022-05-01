@@ -1,7 +1,7 @@
 
 import { Roles, Channels } from '../config.js';
 import { createCommand, card, error, info, success } from '../parser.js';
-import { game, playing, moves, getGame, setGame, count } from '../components/votechess.js';
+import { game, playing, moves, getGame, setGame, count, hasVoted, vote } from '../components/votechess.js';
 import { Chess } from '../components/chess.js';
 import { stateMessage } from '../components/diagram/diagram.js';
 

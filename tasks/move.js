@@ -1,7 +1,7 @@
 
 import { sendMessage, deleteMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
-import { createTask } from '../parser.js';
+import { createTask, error } from '../parser.js';
 import { Roles, Channels, Time } from '../config.js';
 import { Chess } from '../components/chess.js';
 import { playing, game, getGame, setGame, endGame, clearVotes, moves } from '../components/votechess.js';
@@ -20,7 +20,8 @@ createTask({
 		// someone moved, delete old status, make new one.
 		try { await deleteMessage(bot, Channels.vote_chess, st); } catch { }
 		const b = Chess(g.pgnHeaders.FEN);
-		for (const move of g.moveList) b.move(move);
+		for (const move of g.moveList) if (b.move(move) == null)
+			return error('Invalid Move', JSON.stringify(move));
 		const p = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
 		const t = b.turn() == 'w' ? 'white' : 'black';
 		let message = `Hey <@${Roles.voter}>s, `;

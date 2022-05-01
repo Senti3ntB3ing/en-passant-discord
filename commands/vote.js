@@ -45,7 +45,7 @@ createCommand({
 createCommand({
 	name: 'vote', emoji: ':ballot_box:', aliases: [ 'play' ], rate: 1,
 	description: `Vote a move for <#${Channels.vote_chess}>`,
-	execute: message => {
+	execute: async message => {
 		const title = 'Vote Chess Error';
 		const pe = info(title, `There is no <#${Channels.vote_chess}> game in progress right now!`);
 		if (!(await playing())) return pe;

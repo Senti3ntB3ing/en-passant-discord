@@ -89,8 +89,8 @@ function decode(move) {
 	if (index == -1) {
 		p = PIECES[Math.floor(PROMOTIONS.indexOf(move[1]) / 3)];
 		f2 = FILES.indexOf(f1);
-		const l = index % 3 === 1, r = index % 3 === 2;
-		if (l) f2--; else if (r) f2++; // capture left or right
+		const l = index % 3 == 1, r = index % 3 == 2;
+		if (r) f2--; else if (l) f2++; // capture left or right
 		f2 = FILES[f2];
 		if (r1 == 2) r2 = 1; else r2 = 8;
 	} else { f2 = FILES[index % 8]; r2 = Math.floor(index / 8) + 1; }

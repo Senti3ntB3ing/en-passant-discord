@@ -81,7 +81,7 @@ createCommand({
 		vote(message.member.id, move);
 		// get the @voter badge to get notified.
 		addRole(message.bot, message.guildId, message.member.id, Roles.voter);
-		return success(title, 'Vote registered successfully!');
+		return success('Vote Chess', 'Vote registered successfully!');
 	}
 });
 
@@ -94,7 +94,7 @@ createCommand({
 		);
 		const c = await count();
 		let votes = [];
-		for (const [ move, count ] of c) votes.push(`\`${move}: ${count}\``);
+		for (const move of Object.entries(c)) votes.push(`\`${move}: ${c[move]}\``);
 		return card('Vote Chess Count', votes.join(' | '));
 	}
 });

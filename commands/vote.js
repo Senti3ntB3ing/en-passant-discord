@@ -76,9 +76,9 @@ createCommand({
 			);
 			move = move.san; // standard algebraic notations
 		}
-		if (await hasVoted(message.author.id))
+		if (await hasVoted(message.member.id))
 			return error(title, 'You can only vote once!');
-		vote(message.author.id, move);
+		vote(message.member.id, move);
 		// get the @voter badge to get notified.
 		addRole(bot, message.guildId, message.member.id, Roles.voter);
 		return success(title, 'Vote registered successfully!');

@@ -94,7 +94,7 @@ createCommand({
 		);
 		const c = await count();
 		let votes = [];
-		for (const move of Object.entries(c)) votes.push(`\`${move}: ${c[move]}\``);
+		for (const move in c) votes.push(`\`${move}: ${c[move]}\``);
 		return card('Vote Chess Count', votes.join(' | '));
 	}
 });

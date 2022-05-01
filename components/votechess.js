@@ -1,9 +1,49 @@
 
 import { Database } from '../database.js';
 
-export function setGame(gameid, statusid) {
+export async function hasVoted(id) {
+	return (await Database.get(`votes/${id}`)) != null;
+}
+
+export function vote(id, move) {
+	Database.set(`votes/${id}`, move);
+}
+
+export function clearVotes() {
+	Database.set('votes', {});
+}
+
+export async function count() {
+	const votes = await Database.get(`votes`);
+	if (votes == null) return undefined;
+	const counts = {};
+	for (const id in votes) {
+		const move = votes[id];
+		if (move in counts) counts[move]++;
+		else counts[move] = 1;
+	}
+	return counts;
+}
+
+export function endGame() {
+	Database.delete('game');
+	Database.delete('status');
+	Database.delete('moves');
+	Database.set('votes', {});
+}
+
+export function setGame(gameid, statusid, moves) {
 	Database.set('game', gameid.toString());
 	Database.set('status', statusid.toString());
+	Database.set('moves', moves.toString());
+}
+
+export function getGame() {
+	return [
+		await Database.get('game'),
+		await Database.get('status'),
+		await Database.get('moves')
+	];
 }
 
 /// checks if there is a game in progress.

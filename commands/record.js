@@ -13,14 +13,14 @@ createCommand({
 });
 
 createCommand({
-	name: 'count', emoji: ':hash:', hidden: true,
-	aliases: [ 'members' ],
+	name: 'members', emoji: ':hash:', hidden: true,
+	aliases: [ 'users' ],
 	description: 'Count the number of members.',
 	permissions: Roles.moderator,
 	execute: async message => {
 		const guild = await getGuild(message.bot, message.guildId, { counts: true });
 		return card(
-			'User Count',
+			'Member Count',
 			`:hash: The server has \`${guild.approximateMemberCount}\` total members.`
 		);
 	}

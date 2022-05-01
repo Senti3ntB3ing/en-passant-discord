@@ -48,7 +48,7 @@ const Pieces = {
 	'wr': decode(await Deno.readFile('./components/diagram/resources/alpha_50p/wr.png')),
 };
 
-export async function stateMessage(title, game, perspective) {
+export async function stateMessage(title, game, perspective, text) {
 	const white_to_move = '◽️ WHITE TO MOVE';
 	const black_to_move = '◾️ BLACK TO MOVE';
 	let status = '';
@@ -58,40 +58,14 @@ export async function stateMessage(title, game, perspective) {
 			status = game.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
 	} else status = game.turn() == 'w' ? white_to_move : black_to_move;
 	if (perspective == undefined) perspective = game.turn();
+	let description = text;
 	return {
 		file: {
 			blob: new Blob([ await diagram(game.board(), perspective) ]),
 			name: 'board.png',
 		},
 		embeds: [{
-			type: 'image', title,
-			color: game.turn() == 'w' ? 0xFFFFFF : 0x000000,
-			image: { url: 'attachment://board.png', height: 800, width: 800 },
-			footer: { text: status },
-		}]
-	};
-}
-
-export async function votechessMessage(game, moves, perspective) {
-	const white_to_move = '◽️ WHITE TO MOVE';
-	const black_to_move = '◾️ BLACK TO MOVE';
-	let status = '';
-	if (game.game_over()) {
-		if (game.in_draw()) status = '½-½ ・ DRAW';
-		else if (game.in_checkmate())
-			status = game.turn() == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
-	} else status = game.turn() == 'w' ? white_to_move : black_to_move;
-	if (perspective == undefined) perspective = game.turn();
-	return {
-		file: {
-			blob: new Blob([ await diagram(game.board(), perspective) ]),
-			name: 'board.png',
-		},
-		embeds: [{
-			type: 'rich', title: 'Current Position',
-			fields: moves.length > 0 ? [ { name: 'Votes:', inline: false } ]
-				.concat(moves.map(m => ({ name: '', value: m, inline: true })))
-				.concat([ { name: 'Diagram:', inline: false } ]) : [],
+			type: 'image', title, description,
 			color: game.turn() == 'w' ? 0xFFFFFF : 0x000000,
 			image: { url: 'attachment://board.png', height: 800, width: 800 },
 			footer: { text: status },

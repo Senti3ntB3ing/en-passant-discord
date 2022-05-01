@@ -80,6 +80,7 @@ export const Roles = {
 	  twitch_head: 965235946205372426n,
 	   twitch_mod: 952330177071964210n,
 	   reddit_mod: 952330229504942120n,
+			voter: 964868785767059487n,
 	platforms: {
 		       'FIDE': 922543456285503508n,
 		  'chess.com': 912688297338359848n,

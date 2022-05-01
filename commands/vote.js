@@ -58,7 +58,7 @@ createCommand({
 		}
 		const turn = g.turnColor.toLowerCase();
 		const zach = g.pgnHeaders.White == 'thechessnerd' ? 'white' : 'black';
-		if (turn == zach) return info(title, 'Can\'t vote when it\'s not your turn!');
+		if (turn == zach) return info(title, 'You can\'t vote when it\'s not your turn!');
 		g.moveList = moves(g.moveList);
 		const board = Chess(g.pgnHeaders.FEN);
 		// Object.keys(g.pgnHeaders).forEach(k => board.header(k, g.pgnHeaders[k]));
@@ -94,7 +94,10 @@ createCommand({
 		);
 		const c = await count();
 		let votes = [];
-		for (const move in c) votes.push(`\`${move}: ${c[move]}\``);
-		return card('Vote Chess Count', votes.join(' | '));
+		for (const move in c) votes.push({ move, count: c[move] });
+		votes = votes.sort((a, b) => a.count - b.count).map(
+			v => '`' + v.move + '`: ' + v.count
+		);
+		return card('Vote Chess Count', '#️⃣ ' + votes.join(' | '));
 	}
 });

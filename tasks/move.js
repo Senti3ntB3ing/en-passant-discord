@@ -9,6 +9,7 @@ import { stateMessage } from '../components/diagram/diagram.js';
 
 createTask({
 	name: 'move', emoji: ':clock:', interval: Time.hour,
+	description: `Forces a <#${Channels.vote_chess}> board update.`,
 	execute: async bot => {
 		if (!(await playing())) return;
 		let [ id, st, m ] = await getGame();

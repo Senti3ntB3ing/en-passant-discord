@@ -8,6 +8,7 @@ import { Database } from '../database.js';
 
 createTask({
 	name: 'youtube', emoji: ':tv:', interval: Time.minutes(30),
+	description: 'Notifies members when a new YT video is out.',
 	execute: async bot => {
 		const date = await Database.get('youtube'); // get date of last video
 		if (date == null) return;

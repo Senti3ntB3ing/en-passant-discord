@@ -217,7 +217,7 @@ export function createHelp(mod = false) {
 			name: (tasks[task].emoji || ':mechanical_arm:') +
 				' `' + task + '` [' + tasks[task].time ||
 				Time.value(tasks[task].interval) + ']:',
-			value: tasks[task].description,
+			value: tasks[task].description || 'No description.',
 			inline: false
 		}))
 	});

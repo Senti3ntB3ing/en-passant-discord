@@ -208,12 +208,11 @@ export function createHelp(mod = false) {
 			fields: fields.slice(i, i + 25)
 		});
 	}
-	console.log(tasks);
 	embeds.push({
 		type: 'rich',
 		title: 'List of Tasks',
 		color: ColorCodes.normal,
-		fields: Object.entries(tasks).map(task => ({
+		fields: Object.keys(tasks).map(task => ({
 			name: (tasks[task].emoji || ':mechanical_arm:') +
 				' `' + task + '` [' + tasks[task].time ||
 				Time.value(tasks[task].interval) + ']:',

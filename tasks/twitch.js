@@ -13,7 +13,7 @@ const Twitch = {
 
 createTask({
 	name: 'twitch', emoji: ':gem:', interval: Time.minutes(5),
-	description: `Notifies members when <@${Roles.Zach} is streaming.`,
+	description: `Notifies members when <@${Roles.Zach}> is streaming.`,
 	execute: async bot => {
 		// if streaming already: update state and don't do anything.
 		// else if live: update state and send notification.

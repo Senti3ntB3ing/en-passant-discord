@@ -200,12 +200,13 @@ export function createHelp(mod = false) {
 		};
 	});
 	let embeds = [];
-	for (let i = 0; i < fields.length; i++) {
+	for (let i = 0; i < fields.length; i += 25) {
+		const end = (i + 25) > fields.length ? fields.length : (i + 25);
 		embeds.push({
 			type: 'rich',
 			title: 'List of Commands',
 			color: ColorCodes.normal,
-			fields: fields.slice(i, i + 25)
+			fields: fields.slice(i, end)
 		});
 	}
 	embeds.push({

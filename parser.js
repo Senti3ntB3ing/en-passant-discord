@@ -208,6 +208,7 @@ export function createHelp(mod = false) {
 			fields: fields.slice(i, i + 25)
 		});
 	}
+	console.log(Object.entries(tasks));
 	embeds.push({
 		type: 'rich',
 		title: 'List of Tasks',

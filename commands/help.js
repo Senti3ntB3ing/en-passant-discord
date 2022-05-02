@@ -7,12 +7,10 @@ createCommand({
 	aliases: [ 'usage', 'commands' ], rate: 3,
 	description: 'Display the list of commands.',
 	execute: message => createHelp(
-		'List of Commands', (
-			message.member.roles.includes(Roles.moderator) && (
-				message.channelId == Channels.mod_chat ||
-				message.channelId == Channels.mad_chat ||
-				message.channelId == Channels.dev_chat
-			)
+		message.member.roles.includes(Roles.moderator) && (
+			message.channelId == Channels.mod_chat ||
+			message.channelId == Channels.mad_chat ||
+			message.channelId == Channels.dev_chat
 		)
 	)
 });

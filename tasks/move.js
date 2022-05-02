@@ -8,8 +8,7 @@ import { playing, game, getGame, setGame, endGame, clearVotes, moves } from '../
 import { stateMessage } from '../components/diagram/diagram.js';
 
 createTask({
-	name: 'move',
-	interval: Time.hour,
+	name: 'move', emoji: ':clock:', interval: Time.hour,
 	execute: async bot => {
 		if (!(await playing())) return;
 		let [ id, st, m ] = await getGame();

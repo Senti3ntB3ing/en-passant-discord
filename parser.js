@@ -188,24 +188,39 @@ export const warn = (title, message) => ({
 	}]
 });
 
-export function createHelp(title, mod = false) {
-	return {
-		embeds: [{
+export function createHelp(mod = false) {
+	let fields = commands.filter(command => mod || !command.hidden).map(command => {
+		let aliases = '';
+		if (mod && command.aliases.length > 0)
+			aliases = ' | `' + Prefix + command.aliases.join('` | `' + Prefix) + '`';
+		return {
+			name: `${command.emoji || ''} \`${Prefix}${command.name}\`${aliases}:`,
+			value: command.description || 'No description.',
+			inline: false
+		};
+	});
+	let embeds = [];
+	for (let i = 0; i < fields.length; i++) {
+		embeds.push({
 			type: 'rich',
-			title: title || Name,
+			title: 'List of Commands',
 			color: ColorCodes.normal,
-			fields: commands.filter(command => mod || !command.hidden).map(command => {
-				let aliases = '';
-				if (mod && command.aliases.length > 0)
-					aliases = ' | `' + Prefix + command.aliases.join('` | `' + Prefix) + '`';
-				return {
-					name: `${command.emoji || ''} \`${Prefix}${command.name}\`${aliases}:`,
-					value: command.description || 'No description.',
-					inline: false
-				};
-			})
-		}]
-	};
+			fields: fields.slice(i, i + 25)
+		});
+	}
+	embeds.push({
+		type: 'rich',
+		title: 'List of Tasks',
+		color: ColorCodes.normal,
+		fields: Object.entries(tasks).map(task => ({
+			name: (tasks[task].emoji || ':mechanical_arm:') +
+				' `' + task + '` [' + tasks[task].time ||
+				Time.value(tasks[task].interval) + ']:',
+			value: tasks[task].description,
+			inline: false
+		}))
+	});
+	return { embeds };
 }
 
 export function log(component, text) {

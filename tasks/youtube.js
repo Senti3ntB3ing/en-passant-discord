@@ -7,13 +7,10 @@ import { createTask, text } from '../parser.js';
 import { Database } from '../database.js';
 
 createTask({
-	name: 'youtube',
-	interval: Time.minutes(30),
+	name: 'youtube', emoji: ':tv:', interval: Time.minutes(30),
 	execute: async bot => {
-		// get date of last video:
-		const date = await Database.get('youtube');
+		const date = await Database.get('youtube'); // get date of last video
 		if (date == null) return;
-		// get videos:
 		const videos = await getVideosAfterDate(
 			Deno.env.get('YOUTUBE_KEY'),
 			Deno.env.get('YOUTUBE_CHANNEL'),

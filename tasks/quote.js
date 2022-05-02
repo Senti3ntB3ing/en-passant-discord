@@ -24,8 +24,7 @@ const quote_of_the_day = () => {
 };
 
 createTask({
-	name: 'quote',
-	time: '9:55',
+	name: 'quote', emoji: ':scroll:', time: '9:55',
 	execute: async bot => {
 		const now = new Date();
 		const isToday = date =>

@@ -12,8 +12,7 @@ const Twitch = {
 };
 
 createTask({
-	name: 'twitch',
-	interval: Time.minutes(5),
+	name: 'twitch', emoji: ':gem:', interval: Time.minutes(5),
 	execute: async bot => {
 		// if streaming already: update state and don't do anything.
 		// else if live: update state and send notification.

@@ -1,5 +1,5 @@
 
-import { Roles, ColorCodes } from '../config.js';
+import { Prefix, Roles, ColorCodes } from '../config.js';
 import { createCommand, success, info, card, cards, warn, error } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
@@ -231,7 +231,7 @@ createCommand({
 /// Verify the given account.
 createCommand({
 	name: 'verify', emoji: ':white_check_mark:', hidden: true,
-	description: 'Manually `!verify <platform> <username> @mention`.',
+	description: '`' + Prefix + 'verify <platform> <username> @mention`.',
 	permissions: Roles.moderator,
 	execute: async message => {
 		const title = 'Account Verification';

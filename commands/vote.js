@@ -1,5 +1,5 @@
 
-import { Roles, Channels } from '../config.js';
+import { Prefix, Roles, Channels } from '../config.js';
 import { createCommand, card, error, info, success } from '../parser.js';
 import { game, playing, moves, getGame, setGame, count, hasVoted, vote } from '../components/votechess.js';
 import { Chess } from '../components/chess.js';
@@ -22,7 +22,7 @@ import { sendMessage, addRole } from 'https://deno.land/x/discordeno@13.0.0-rc34
 
 createCommand({
 	name: 'game', emoji: ':clipboard:', hidden: true,
-	description: `New <#${Channels.vote_chess}> \`!game <id>\``,
+	description: `New <#${Channels.vote_chess}> \`${Prefix}game <id>\`.`,
 	permissions: Roles.administrator,
 	execute: async message => {
 		const title = 'Vote Chess Error';

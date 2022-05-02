@@ -150,7 +150,7 @@ createCommand({
 
 createCommand({
 	name: 'merch', emoji: links['Merch'].emoji, hidden: true,
-    aliases: [ 'shop', 'store', 'merchandise', 'drop' ],
+    aliases: [ 'shop', 'store', 'drop' ],
 	description: 'Link to __thechessnerd co.__ merch',
 	permissions: Roles.everyone,
 	execute: () => card(

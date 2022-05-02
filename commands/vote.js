@@ -1,9 +1,10 @@
 
 import { Prefix, Roles, Channels } from '../config.js';
-import { createCommand, card, error, info, success } from '../parser.js';
+import { createCommand, card, error, info, success, warn } from '../parser.js';
 import { game, playing, moves, getGame, setGame, count, hasVoted, vote } from '../components/votechess.js';
 import { Chess } from '../components/chess.js';
 import { stateMessage } from '../components/diagram/diagram.js';
+import { Database } from '../database.js';
 
 import { sendMessage, addRole } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
@@ -78,6 +79,9 @@ createCommand({
 		}
 		if (await hasVoted(message.member.id))
 			return error(title, 'You can only vote once!');
+		if ((await Database.get(message.member.id)) == null)
+			return warn(title, 'You must be verified on __chess.com__ or __lichess.org__ before voting!\n' +
+						'Type `' + Prefix + 'chess.com` or `' + Prefix + 'lichess` to get verified.');
 		vote(message.member.id, move);
 		// get the @voter badge to get notified.
 		addRole(message.bot, message.guildId, message.member.id, Roles.voter);

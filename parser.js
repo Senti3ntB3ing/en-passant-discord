@@ -209,7 +209,7 @@ export function createHelp(mod = false) {
 			fields: fields.slice(i, end)
 		});
 	}
-	embeds.push({
+	if (mod) embeds.push({
 		type: 'rich',
 		title: 'List of Tasks',
 		color: ColorCodes.normal,

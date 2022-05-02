@@ -53,7 +53,7 @@ export const Channels = {
 	  recruitment: 950121447249039403n,
 			 bots: 912689526244274207n,
 		off_topic: 900781481704706159n,
-			 text: 921783499315351612n,
+			 help: 970803118663139378n,
 	general_voice: 845012057655869523n,
 	// == SUB BAY =======================
 	   pro_league: 959118899398467684n,

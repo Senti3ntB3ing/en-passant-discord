@@ -1,8 +1,6 @@
 
-import { sendMessage, deleteMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
-
-import { createTask, error } from '../parser.js';
-import { Roles, Channels, Time } from '../config.js';
+import { createTask, send, error, remove } from '../parser.js';
+import { Zach, Roles, Channels, Time } from '../config.js';
 import { Chess } from '../components/chess.js';
 import { playing, game, getGame, setGame, endGame, clearVotes, moves } from '../components/votechess.js';
 import { stateMessage } from '../components/diagram/diagram.js';
@@ -10,7 +8,7 @@ import { stateMessage } from '../components/diagram/diagram.js';
 createTask({
 	name: 'move', emoji: ':clock:', interval: Time.hour,
 	description: `Forces a <#${Channels.vote_chess}> board update.`,
-	execute: async bot => {
+	execute: async () => {
 		if (!(await playing())) return;
 		let [ id, st, m ] = await getGame();
 		let g = await game(id);
@@ -18,10 +16,10 @@ createTask({
 		g.moveList = moves(g.moveList);
 		if (g.moveList.length == m) return;
 		// someone moved, delete old status, make new one.
-		try { await deleteMessage(bot, Channels.vote_chess, st); } catch { }
+		try { await remove(st, Channels.vote_chess); } catch { }
 		const b = Chess(g.pgnHeaders.FEN);
 		for (const move of g.moveList) if (b.move(move) == null) {
-			sendMessage(bot, Channels.vote_chess, error('Invalid Move', JSON.stringify(move)));
+			send(Channels.vote_chess, error('Invalid Move', JSON.stringify(move)));
 			return;
 		}
 		const p = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
@@ -30,17 +28,17 @@ createTask({
 		if (g.isFinished) {
 			endGame();
 			message += `the game is over!`;
-			sendMessage(bot, Channels.vote_chess,
+			send(Channels.vote_chess,
 				await stateMessage('Vote Chess', b, p, message)
 			);
 			return;
 		}
 		clearVotes();
 		const move = b.undo();
-		if (p == t[0]) message += `<@${Roles.Zach}> played \`${move.san}\`.`;
+		if (p == t[0]) message += `<@${Zach}> played \`${move.san}\`.`;
 		else message += `**we** played \`${move.san}\`.`;
 		b.move(move);
-		st = (await sendMessage(bot, Channels.vote_chess,
+		st = (await send(Channels.vote_chess,
 			await stateMessage('Vote Chess', b, p, message)
 		)).id;
 		setGame(id, st, g.moveList.length);

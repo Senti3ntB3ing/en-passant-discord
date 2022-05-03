@@ -1,5 +1,8 @@
 
-import { sendMessage, editMember } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
+import {
+	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
+	getMessages
+} from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 
@@ -11,6 +14,8 @@ export let commands = [], tasks = {}, record = [], lastPing = new Date();
 let attempts = {};
 
 export const resetAttempts = () => attempts = {};
+
+// ==== Commands ===============================================================
 
 function handle(command, bot, message, content, args) {
 	message.arguments = args;
@@ -85,6 +90,8 @@ export function createCommand(command) {
 	commands.push(command);
 }
 
+// ==== Tasks ==================================================================
+
 export function createTask(task) {
 	if (typeof task.execute != 'function') return;
 	if (task.name == undefined) return;
@@ -93,13 +100,6 @@ export function createTask(task) {
 	if (task.disabled == undefined) task.disabled = false;
 	task.last_execution = new Date(Date.now() - 86400000); // yesterday
 	tasks[task.name] = task;
-}
-
-export function stopTask(task) {
-	if (tasks[task] != undefined) {
-		tasks[task].disabled = true;
-		log('task', `${task} stopped`);
-	}
 }
 
 export async function executeTasks() {
@@ -122,10 +122,12 @@ export async function executeTasks() {
 			if (ch < h || (ch == h && cm < m)) continue;
 		}
 		tasks[name].last_execution = now;
-		tasks[name].execute(bot);
+		tasks[name].execute();
 		log('task', `${name} executed`);
 	}
 }
+
+// ==== Cards ==================================================================
 
 export const text = message => ({ content: message });
 
@@ -188,6 +190,8 @@ export const warn = (title, message) => ({
 	}]
 });
 
+// ==== Help ===================================================================
+
 export function createHelp(mod = false) {
 	let fields = commands.filter(command => mod || !command.hidden).map(command => {
 		let aliases = '';
@@ -224,6 +228,8 @@ export function createHelp(mod = false) {
 	return { embeds };
 }
 
+// ==== Log ====================================================================
+
 export function log(component, text) {
 	if (record.length == 20) record.shift();
 	record.push(`[${(new Date()).toLocaleTimeString('en-GB', {
@@ -233,8 +239,16 @@ export function log(component, text) {
 }
 
 export function fetchLog() {
-	return record.join('\n') +
-		`\n[${lastPing.toLocaleTimeString('en-GB', {
-			timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric'
-		})} UTC] task: last ping received`;
+	return record.join('\n') + `\n[${lastPing.toLocaleTimeString('en-GB', {
+		timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric'
+	})} UTC] task: last ping received`;
 }
+
+// ==== Redirects ==============================================================
+
+export const send = (channel, content) => sendMessage(bot, channel, content);
+export const publish = (channel, id) => publishMessage(bot, channel, id);
+export const remove = (data, channel, bulk = false) => {
+	if (bulk) return deleteMessages(bot, channel, data);
+	else return deleteMessage(bot, channel, data);
+};

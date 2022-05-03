@@ -78,8 +78,8 @@ export const Channels = {
 	// ==================================
 };
 
+export const Zach = 559086517415444480n;
 export const Roles = {
-	         Zach: 559086517415444480n,
 	     everyone: 0,
 	administrator: 947621985276530698n,
 	         nerd: 845769006752464946n,

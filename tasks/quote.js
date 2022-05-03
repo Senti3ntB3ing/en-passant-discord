@@ -1,9 +1,7 @@
 
-import { sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
-
 import { Channels, ColorCodes } from '../config.js';
 import { Database } from '../database.js';
-import { createTask } from '../parser.js';
+import { createTask, send } from '../parser.js';
 
 const dayOfYear = date => {
     date = date || new Date();
@@ -26,7 +24,7 @@ const quote_of_the_day = () => {
 createTask({
 	name: 'quote', emoji: ':scroll:', time: '9:55',
 	description: 'Sends out the quote of the day.',
-	execute: async bot => {
+	execute: async () => {
 		const now = new Date();
 		const isToday = date =>
 			date.getDate() == now.getDate() &&
@@ -38,7 +36,7 @@ createTask({
 			isToday(new Date(lastQuote))) return;
 		const quote = quote_of_the_day();
 		const footer = quote.title ? `${quote.title}  ${quote.author}` : quote.author;
-		sendMessage(bot, Channels.general, {
+		send(Channels.general, {
 			embeds: [{
 				type: 'rich',
 				title: 'Chess quote of the day',

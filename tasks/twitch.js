@@ -1,9 +1,7 @@
 
-import { sendMessage, publishMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
-
 import { live } from '../components/twitch.js';
-import { Channels, Roles, Time, Twitch_Streamer } from '../config.js';
-import { createTask, card } from '../parser.js';
+import { Zach, Channels, Roles, Time, Twitch_Streamer } from '../config.js';
+import { createTask, send, publish, card } from '../parser.js';
 import { Database } from '../database.js';
 
 const Twitch = {
@@ -13,19 +11,19 @@ const Twitch = {
 
 createTask({
 	name: 'twitch', emoji: ':gem:', interval: Time.minutes(5),
-	description: `Notifies members when <@${Roles.Zach}> is streaming.`,
-	execute: async bot => {
+	description: `Notifies members when <@${Zach}> is streaming.`,
+	execute: async () => {
 		// if streaming already: update state and don't do anything.
 		// else if live: update state and send notification.
 		const streaming = await live(Twitch_Streamer);
 		if (streaming == undefined) {
-			sendMessage(bot, Channels.dev_chat, card(
+			send(Channels.dev_chat, card(
 				'Twitch live detection task',
 				`${Twitch.emoji} <@${Roles.moderator}>s, __twitch__ live detection task is not working!`,
 				Twitch.color
 			));
 		} else if (streaming == null) {
-			sendMessage(bot, Channels.dev_chat, card(
+			send(Channels.dev_chat, card(
 				'Twitch live detection task',
 				`${Twitch.emoji} <@${Roles.moderator}>s, time to update tokens for __twitch__!`,
 				Twitch.color
@@ -35,13 +33,13 @@ createTask({
 		} else if (streaming) {
 			Database.set('twitch_live', true);
 			try {
-				const m = await sendMessage(bot, Channels.notifications, card(
+				const m = await send(Channels.notifications, card(
 					'Zach is now live on Twitch!',
-					`${Twitch.emoji} Hey @everyone, <@${Roles.Zach}> is streaming on __twitch__!` +
+					`${Twitch.emoji} Hey @everyone, <@${Zach}> is streaming on __twitch__!` +
 					`\n${Twitch.url}`,
 					Twitch.color
 				));
-				publishMessage(bot, Channels.notifications, m.id);
+				publish(Channels.notifications, m.id);
 			} catch { }
 		}
 	}

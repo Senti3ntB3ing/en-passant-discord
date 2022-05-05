@@ -19,13 +19,13 @@ createTask({
 		if (streaming == undefined) {
 			send(Channels.dev_chat, card(
 				'Twitch live detection task',
-				`${Twitch.emoji} <@${Roles.moderator}>s, __twitch__ live detection task is not working!`,
+				`${Twitch.emoji} <@&${Roles.moderator}>s, __twitch__ live detection task is not working!`,
 				Twitch.color
 			));
 		} else if (streaming == null) {
 			send(Channels.dev_chat, card(
 				'Twitch live detection task',
-				`${Twitch.emoji} <@${Roles.moderator}>s, time to update tokens for __twitch__!`,
+				`${Twitch.emoji} <@&${Roles.moderator}>s, time to update tokens for __twitch__!`,
 				Twitch.color
 			));
 		} else if (await Database.get('twitch_live')) {

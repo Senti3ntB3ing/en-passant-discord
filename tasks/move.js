@@ -24,7 +24,7 @@ createTask({
 		}
 		const p = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
 		const t = b.turn() == 'w' ? 'white' : 'black';
-		let message = `Hey <@${Roles.voter}>s, `;
+		let message = `Hey <@&${Roles.voter}>s, `;
 		if (g.isFinished) {
 			endGame();
 			message += `the game is over!`;

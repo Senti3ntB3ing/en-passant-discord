@@ -3,6 +3,7 @@ import { Prefix, Roles, ColorCodes } from '../config.js';
 import { createCommand, success, info, card, cards, warn, error } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
+import { getFIDERatings, getFIDEName } from '../components/fide.js';
 
 import { Database } from '../database.js';
 
@@ -11,7 +12,7 @@ import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc34/
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'chess.com': 0x7FA650 };
 const emojis = {
 	'FIDE': ':yellow_heart:', 'lichess.org': ':white_heart:', 'chess.com': ':green_heart:',
-	'bullet': ':gun:', 'rapid': ':clock:', 'blitz': ':zap:'
+	'bullet': ':gun:', 'rapid': ':clock:', 'blitz': ':zap:', 'standard': ':hourglass:',
 };
 
 const not_linked_info = title => info(
@@ -40,6 +41,7 @@ createCommand({
 		if (member == null || member.accounts == undefined) return not_linked_info(title);
 		let list = [];
 		for (let { platform, username } of member.accounts) {
+			if (platform == 'FIDE') continue;
 			const emoji = emojis[platform];
 			platform = highlight(platform);
 			list.push(`${emoji} ${platform}: \`${username}\``);
@@ -55,7 +57,7 @@ createCommand({
 /// /ratings?/
 /// Shows all your linked online chess account rating.
 createCommand({
-	name: 'rating', emoji: ':star:', aliases: [ 'ratings', 'stats' ],
+	name: 'ratings', emoji: ':star:', aliases: [ 'rating', 'stats' ],
 	description: 'Shows your linked online chess Elo ratings.',
 	execute: async message => {
 		const title = 'Account Ratings';
@@ -72,7 +74,10 @@ createCommand({
 		for (let { platform, username } of member.accounts) {
 			let ratings = null;
 			switch (platform) {
-				case '**FIDE**': break;
+				case '**FIDE**':
+					ratings = await getFIDERatings(username);
+					username = await getFIDEName(username);
+				break;
 				case 'lichess.org': ratings = await getLichessRatings(username); break;
 				case 'chess.com': ratings = await getChess_comRatings(username); break;
 			}
@@ -246,6 +251,12 @@ createCommand({
 		let member = await Database.get(tag);
 		if (member == null) member = { accounts: [ ] };
 		switch (platform) {
+			case 'FIDE':
+				if (member.accounts.find(a => a.platform == 'FIDE') != undefined)
+					return warn(title, `<@${tag}> already linked a __FIDE__ account!`);
+				member.accounts.push({ platform: 'FIDE', username: name });
+				await addRole(message.bot, message.guildId, tag, Roles.platforms['FIDE']);
+			break;
 			case 'lichess.org': case 'lichess':
 				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
 					return warn(title, `<@${tag}> already linked a __lichess.org__ account!`);
@@ -262,6 +273,40 @@ createCommand({
 		}
 		await Database.set(tag, member);
 		return success(title, `<@${tag}> successfully verified!`);
+	}
+});
+
+/// set fide page
+createCommand({
+	name: 'fide', emoji: ':globe_with_meridians:',
+	description: 'Show __FIDE__ ratings.',
+	execute: async message => {
+		const title = 'Account - FIDE';
+		const color = colors['FIDE'];
+		const text = message.text;
+		const username = message.tag;
+		let member = await Database.get(message.member.id);
+		if (message.arguments.length == 0) {
+			const process = info(
+				'FIDE Instructions',
+				`Ask a <@&${Roles.moderator}> to verify your __FIDE__ account.`
+			);
+			if (member == null || member.accounts == undefined) return process;
+			const fide = member.accounts.find(a => a.platform == 'FIDE');
+			if (fide == undefined) return process;
+			const ratings = await getFIDERatings(fide.username);
+			if (ratings === undefined || ratings == null)
+				return warn(title, 'No __FIDE__ user found with the id `' + fide.username + '`!');
+			if (ratings.length == 0) return info(title, 'You are currently unrated on __FIDE__.');
+			const name = await getFIDEName(fide.username);
+			return card(
+				title,
+				`:star: <@${message.member.id}> \`${name}\` __FIDE__ ratings:\n` +
+				ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
+				color
+			);
+		}
+		return warn(title, 'You don\'t have a linked __FIDE__ account!');
 	}
 });
 

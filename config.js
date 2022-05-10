@@ -27,8 +27,8 @@ export const Time = {
 		let cd = 24 * 60 * 60 * 1000,
 		ch = 60 * 60 * 1000,
 		d = Math.floor(t / cd),
-		h = Math.floor( (t - d * cd) / ch),
-		m = Math.round( (t - d * cd - h * ch) / 60000),
+		h = Math.floor((t - d * cd) / ch),
+		m = Math.round((t - d * cd - h * ch) / 60000),
 		pad = n => n < 10 ? '0' + n : n;
 		if (m === 60) { h++; m = 0; }
 		if (h === 24) { d++; h = 0; }
@@ -96,6 +96,9 @@ export const Roles = {
 	   twitch_mod: 952330177071964210n,
 	   reddit_mod: 952330229504942120n,
 			voter: 964868785767059487n,
+		 streamer: 967840952737751120n,
+	youtube_notification: 973343815148642425n,
+	 twitch_notification: 973344119239880734n,
 	platforms: {
 		       'FIDE': 922543456285503508n,
 		  'chess.com': 912688297338359848n,

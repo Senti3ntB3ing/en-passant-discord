@@ -74,7 +74,7 @@ createCommand({
 		for (let { platform, username } of member.accounts) {
 			let ratings = null;
 			switch (platform) {
-				case '**FIDE**':
+				case 'FIDE':
 					ratings = await getFIDERatings(username);
 					username = await getFIDEName(username);
 				break;
@@ -276,15 +276,13 @@ createCommand({
 	}
 });
 
-/// set fide page
+/// fide
 createCommand({
 	name: 'fide', emoji: ':globe_with_meridians:',
 	description: 'Show __FIDE__ ratings.',
 	execute: async message => {
 		const title = 'Account - FIDE';
 		const color = colors['FIDE'];
-		const text = message.text;
-		const username = message.tag;
 		let member = await Database.get(message.member.id);
 		if (message.arguments.length == 0) {
 			const process = info(
@@ -297,16 +295,16 @@ createCommand({
 			const ratings = await getFIDERatings(fide.username);
 			if (ratings === undefined || ratings == null)
 				return warn(title, 'No __FIDE__ user found with the id `' + fide.username + '`!');
-			if (ratings.length == 0) return info(title, 'You are currently unrated on __FIDE__.');
+			if (ratings.length == 0) return info(title, 'You are currently unrated on **FIDE**.');
 			const name = await getFIDEName(fide.username);
 			return card(
 				title,
-				`:star: <@${message.member.id}> \`${name}\` __FIDE__ ratings:\n` +
+				`:star: <@${message.member.id}> \`${name}\` **FIDE** ratings:\n` +
 				ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
 				color
 			);
 		}
-		return warn(title, 'You don\'t have a linked __FIDE__ account!');
+		return warn(title, 'You don\'t have a linked **FIDE** account!');
 	}
 });
 

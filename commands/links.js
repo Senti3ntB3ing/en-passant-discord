@@ -15,6 +15,10 @@ const links = {
 		url: 'https://www.twitch.tv/thechessnerdlive/',
 		color: 0x9047FF, emoji: ':gem:'
 	},
+	'tiktok': {
+		url: 'https://vm.tiktok.com/ZML7UdM8j/',
+		color: 0xFE2C57, emoji: ':musical_note:'
+	},
 	'Twitter': {
 		url: 'https://twitter.com/thechessnerd',
 		color: 0x1D9BF0, emoji: ':bird:'
@@ -157,5 +161,16 @@ createCommand({
 		'thechessnerd co. Brand',
 		links['Merch'].emoji + ' ' + links['Merch'].url,
 		links['Merch'].color
+	)
+});
+
+createCommand({
+	name: 'tiktok', emoji: links['tiktok'].emoji, hidden: true,
+	description: 'Link to __thechessnerd__ tiktok.',
+	permissions: Roles.everyone,
+	execute: () => card(
+		'Link to thechessnerd tiktok',
+		links['tiktok'].emoji + ' ' + links['tiktok'].url,
+		links['tiktok'].color
 	)
 });

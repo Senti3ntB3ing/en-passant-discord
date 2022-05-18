@@ -38,7 +38,20 @@ export const Time = {
 		if (m > 0) v += m + 'm ';
 		return v.trim();
 	}
-}
+};
+
+export const Size = {
+	byte: 1,
+	kilobyte: 1024,
+	megabyte: 1024 ** 2,
+	gigabyte: 1024 ** 3,
+	terabyte: 1024 ** 4,
+	bytes: t => t,
+	kilobytes: t => t * 1024,
+	megabytes: t => t * 1024 ** 2,
+	gigabytes: t => t * 1024 ** 3,
+	terabytes: t => t * 1024 ** 4,
+};
 
 export const Channels = {
 	// == GENERAL =======================

@@ -20,18 +20,17 @@ createCommand({
 	name: 'gif', emoji: ':page_with_curl:', aliases: [ 'pgn' ], rate: 4,
 	description: 'Display a chess gif from a list of moves.',
 	execute: async message => {
-		let moves = message.text.replace(/`/g, '').split(/\s+/g).filter(
-			move => !(/^\d+[.)]/.test(move))
-		);
-		if (moves.length == 0) return error('Chess gif', 'No valid moves provided!');
-		let perspective = 'w';
-		if (moves[0] == 'white' || moves[0] == 'black') {
-			perspective = moves[0][0];
-			moves.shift();
-		}
+		const e = error('Chess gif error', 'Provided invalid PGN!');
+		let perspective = 'w', pgn;
+		if (message.arguments.length == 0) return e;
+		const a = message.arguments[0].toLowerCase();
+		if (a == 'white' || a == 'black') {
+			perspective = a[0];
+			pgn = message.text.replace(/^\s*(white|black)\s*/g, '');
+		} else pgn = message.text;
 		const title = 'Chess gif from moves';
-		const data = await gif(moves, perspective);
-		if (data == undefined) return error('Chess gif', 'Provided invalid moves!');
+		const data = await gif(pgn, perspective);
+		if (data == undefined) return e;
 		return {
 			file: { blob: new Blob([ data ]), name: 'board.gif', },
 			embeds: [{

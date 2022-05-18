@@ -22,6 +22,10 @@ import './commands/shutdown.js';
 import './commands/record.js';
 import './commands/vote.js';
 
+// ==== Attachments ========================
+
+import './attachments/pgn.js';
+
 // ==== Tasks ==============================
 
 import './tasks/quote.js';
@@ -53,8 +57,9 @@ const baseBot = createBot({
 	token: Deno.env.get('TOKEN'),
 	intents: [ 'Guilds', 'GuildMessages', 'GuildMembers' ],
 	events: {
-		messageCreate(bot, message) {
-			parse(bot, message);
+		// _ is bot, but it is not necessary
+		messageCreate(_, message) {
+			parse(message);
 			if (Math.random() <= 0.2) setRandomAction();
 		},
 		guildMemberAdd(bot, member, _) {

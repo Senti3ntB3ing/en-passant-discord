@@ -16,7 +16,7 @@ export const resetAttempts = () => attempts = {};
 
 // ==== Commands ===============================================================
 
-function handle(command, bot, message, content, args) {
+function handleText(command, message, content, args) {
 	message.arguments = args;
 	message.bot = bot;
 	message.command = content;
@@ -45,13 +45,24 @@ function handle(command, bot, message, content, args) {
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
-export function parse(bot, message) {
+async function handleFile(event, message, attachment) {
+	if (event.execute.constructor.name == 'AsyncFunction') {
+		event.execute(message, attachment).then(result => {
+			if (result != undefined) sendMessage(bot, message.channelId, result);
+		});
+		return;
+	}
+	const result = event.execute(message, attachment);
+	if (result != undefined) sendMessage(bot, message.channelId, result);
+}
+
+export function parse(message) {
 	for (const attachment of message.attachments) {
-		const filename = attachment.name.toLowerCase();
-		for (const task of attachments) {
-			if (filename.endsWith('.' + task.type)) {
-				task.execute(message, attachment);
-				break;
+		const filename = attachment.filename.toLowerCase();
+		for (const event of attachments) {
+			if (filename.endsWith('.' + event.type)) {
+				handleFile(event, message, attachment);
+				return;
 			}
 		}
 	}
@@ -62,12 +73,12 @@ export function parse(bot, message) {
 		if (command.name == content ||
 			command.aliases.includes(content)) {
 			if (command.permissions.includes(Roles.everyone)) {
-				handle(command, bot, message, content, args);
+				handleText(command, message, content, args);
 				return;
 			}
 			for (const role of message.member.roles) {
 				if (command.permissions.includes(role)) {
-					handle(command, bot, message, content, args);
+					handleText(command, message, content, args);
 					return;
 				}
 			}

@@ -1171,7 +1171,8 @@ export class Chess {
 	 * available, otherwise return the current pgn.
 	 * @param {string} pgn - the pgn to load
 	 * @param {object} options - the options to load
-	 * @returns {string} the current pgn if no arguments are given
+	 * @returns {string | boolean} the current pgn if no arguments are given
+	 * @returns {boolean} `true` if the pgn was loaded, `false` otherwise
 	 */
 	pgn() {
 		if (arguments.length === 0) return this.#pgn();

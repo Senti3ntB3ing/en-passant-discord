@@ -31,7 +31,7 @@ createCommand({
 		let g = await game(message.arguments[0]);
 		if (g == undefined) return error(title, 'Game id not found on __chess.com__!');
 		g.moveList = moves(g.moveList);
-		const board = Chess(g.pgnHeaders.FEN);
+		const board = new Chess(g.pgnHeaders.FEN);
 		// Object.keys(g.pgnHeaders).forEach(k => board.header(k, g.pgnHeaders[k]));
 		for (const move of g.moveList) if (board.move(move) == null)
 			return error(title, `Something went wrong parsing: ${move}`);
@@ -61,7 +61,7 @@ createCommand({
 		const zach = g.pgnHeaders.White == 'thechessnerd' ? 'white' : 'black';
 		if (turn == zach) return info(title, 'You can\'t vote when it\'s not your turn!');
 		g.moveList = moves(g.moveList);
-		const board = Chess(g.pgnHeaders.FEN);
+		const board = new Chess(g.pgnHeaders.FEN);
 		// Object.keys(g.pgnHeaders).forEach(k => board.header(k, g.pgnHeaders[k]));
 		for (const move of g.moveList) if (board.move(move) == null)
 			return error(title, `Something went wrong parsing: ${move}`);

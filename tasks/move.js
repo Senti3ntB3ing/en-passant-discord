@@ -17,13 +17,13 @@ createTask({
 		if (g.moveList.length == m) return;
 		// someone moved, delete old status, make new one.
 		try { await remove(st, Channels.vote_chess); } catch { }
-		const b = Chess(g.pgnHeaders.FEN);
+		const b = new Chess(g.pgnHeaders.FEN);
 		for (const move of g.moveList) if (b.move(move) == null) {
 			send(Channels.vote_chess, error('Invalid Move', JSON.stringify(move)));
 			return;
 		}
 		const p = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
-		const t = b.turn() == 'w' ? 'white' : 'black';
+		const t = b.turn == 'w' ? 'white' : 'black';
 		let message = `Hey <@&${Roles.voter}>s, `;
 		if (g.isFinished) {
 			endGame();
@@ -34,7 +34,7 @@ createTask({
 			return;
 		}
 		clearVotes();
-		const move = b.undo();
+		const move = b.takeback();
 		if (p == t[0]) message += `<@${Zach}> played \`${move.san}\`.`;
 		else message += `**we** played \`${move.san}\`.`;
 		b.move(move);

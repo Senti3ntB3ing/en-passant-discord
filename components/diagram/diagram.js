@@ -88,15 +88,15 @@ function board_to_data(board) {
 }
 
 export async function gif(moves, perspective = 'w') {
-	const game = Chess();
-	let data = board_to_data(await frame(game.board(), perspective));
+	const game = new Chess();
+	let data = board_to_data(await frame(game.board, perspective));
 	const palette = quantize(data, 16, { format: 'rgb444' });
 	let index = applyPalette(data, palette, 'rgb444');
 	const gif = GIFEncoder();
 	gif.writeFrame(index, 400, 400, { palette, repeat: -1 });
 	for (const move of moves) {
 		if (game.move(move) == null) return undefined;
-		data = board_to_data(await frame(game.board(), perspective));
+		data = board_to_data(await frame(game.board, perspective));
 		index = applyPalette(data, palette, 'rgb444');
 		gif.writeFrame(index, 400, 400, { delay: 800, repeat: -1 });
 	}

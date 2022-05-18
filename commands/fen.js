@@ -9,9 +9,9 @@ createCommand({
 	description: 'Display a chess board diagram from **FEN**.',
 	execute: async message => {
 		const fen = message.text, title = 'Chess diagram from FEN position';
-		if (!Chess().validate_fen(fen))
+		if (!Chess.validate(fen))
 			return error('Chess diagram', 'Invalid FEN string / position!');
-		const game = Chess(fen), t = message.command[0];
+		const game = new Chess(fen), t = message.command[0];
 		return await stateMessage(title, game, t != 'f' ? t : game.turn());
 	}
 });

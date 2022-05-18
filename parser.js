@@ -9,9 +9,8 @@ import { closest } from './components/levenshtein.js';
 import { Name, Prefix, Roles, Time, ColorCodes } from './config.js';
 import { bot } from './main.js';
 
-export let commands = [], tasks = {}, record = [], lastPing = new Date();
-
-let attempts = {};
+export let commands = [], tasks = {}, attachments = [], record = [];
+let attempts = {}, lastPing = new Date();
 
 export const resetAttempts = () => attempts = {};
 
@@ -47,6 +46,15 @@ function handle(command, bot, message, content, args) {
 }
 
 export function parse(bot, message) {
+	for (const attachment of message.attachments) {
+		const filename = attachment.name.toLowerCase();
+		for (const task of attachments) {
+			if (filename.endsWith('.' + task.type)) {
+				task.execute(message, attachment);
+				break;
+			}
+		}
+	}
 	if (!message.content.startsWith(Prefix)) return;
 	const args = message.content.split(/\s+/g);
 	const content = args.splice(0, 1)[0].substring(Prefix.length).toLowerCase();
@@ -87,7 +95,18 @@ export function createCommand(command) {
 	} else if (typeof command.permissions != 'object') {
 		command.permissions = [ command.permissions ];
 	}
+	if (command.permissions.includes(Roles.moderator))
+		command.permissions.push(Roles.nerd);
 	commands.push(command);
+}
+
+// ==== Attachments ============================================================
+
+export function createAttachment(attachment) {
+	if (typeof attachment.execute != 'function') return;
+	if (attachment.type == undefined) return;
+	attachment.type = attachment.type.toLowerCase();
+	attachments.push(attachment);
 }
 
 // ==== Tasks ==================================================================
@@ -213,18 +232,31 @@ export function createHelp(mod = false) {
 			fields: fields.slice(i, end)
 		});
 	}
-	if (mod) embeds.push({
-		type: 'rich',
-		title: 'List of Tasks',
-		color: ColorCodes.normal,
-		fields: Object.keys(tasks).map(task => ({
-			name: (tasks[task].emoji || ':mechanical_arm:') +
-				' `' + task + '` [' + (tasks[task].time ||
-				Time.value(tasks[task].interval)) + ']:',
-			value: tasks[task].description || 'No description.',
-			inline: false
-		}))
-	});
+	if (mod) {
+		embeds.push({
+			type: 'rich',
+			title: 'List of Tasks',
+			color: ColorCodes.normal,
+			fields: Object.keys(tasks).map(task => ({
+				name: (tasks[task].emoji || ':mechanical_arm:') +
+					' `' + task + '` [' + (tasks[task].time ||
+					Time.value(tasks[task].interval)) + ']:',
+				value: tasks[task].description || 'No description.',
+				inline: false
+			}))
+		});
+		embeds.push({
+			type: 'rich',
+			title: 'List of Attachment Events',
+			color: ColorCodes.normal,
+			fields: attachments.map(attachment => ({
+				name: (attachment.emoji || ':paperclip:') +
+					' `.' + attachment.type + ' files:',
+				value: attachment.description || 'No description.',
+				inline: false
+			}))
+		});
+	}
 	return { embeds };
 }
 

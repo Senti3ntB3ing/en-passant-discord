@@ -1367,7 +1367,7 @@ export class Chess {
 		const tokens = fen.split(/\s+/);
 		const position = tokens[0];
 		let square = 0;
-		if (!this.validate(fen)) return false;
+		if (!Chess.validate(fen)) return false;
 		this.clear(keepHeaders);
 		for (let i = 0; i < position.length; i++) {
 			const piece = position.charAt(i);

@@ -2,7 +2,8 @@
 import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
-	deleteApplicationCommand, sendInteractionResponse
+	deleteApplicationCommand, sendInteractionResponse,
+	InteractionResponseTypes
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -309,7 +310,10 @@ export async function dispatch(interaction) {
 		response = await handler(interaction)
 	} else response = handler(interaction);
 	if (response != undefined) sendInteractionResponse(
-		bot, interaction.id, interaction.token, response
+		bot, interaction.id, interaction.token, {
+			type: InteractionResponseTypes.ChannelMessageWithSource,
+			data: response
+		}
 	);
 }
 

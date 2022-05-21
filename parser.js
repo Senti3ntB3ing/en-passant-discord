@@ -345,7 +345,7 @@ createCommand({
 				if (!command.moderation) continue;
 				await editApplicationCommandPermissions(bot, id, cid, [{
 					type: ApplicationCommandPermissionTypes.Role,
-					id: Roles.moderator.toString(), permissions: true
+					id: 'everyone', permissions: false
 				}]);
 			}
 		} catch { return error('Application Commands', 'Registration error!'); }

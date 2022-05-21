@@ -34,6 +34,10 @@ import './tasks/twitch.js';
 import './tasks/attempts.js';
 import './tasks/move.js';
 
+// ==== Slash ==============================
+
+import './register.js';
+
 // =========================================
 
 function setRandomAction() {

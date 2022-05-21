@@ -15,7 +15,7 @@ command({
 		const game = new Chess(fen);
 		if (game == null || game.fen() != fen)
 			return error('Chess diagram', 'Invalid FEN string / position!');
-		return await stateMessage('Chess diagram from FEN position', game.board(), game.turn);
+		return await stateMessage('Chess diagram from FEN position', game.board, game.turn);
 	}
 });
 

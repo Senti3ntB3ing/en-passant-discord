@@ -1,7 +1,8 @@
 
 import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
-	getMessages, createApplicationCommand, getApplicationCommands, deleteApplicationCommand
+	getMessages, createApplicationCommand, getApplicationCommands,
+	deleteApplicationCommand, sendInteractionResponse
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -301,8 +302,15 @@ export const remove = (data, channel, bulk = false) => {
 
 const appCommands = [], handlers = {};
 
-export function dispatch(interaction) {
-	console.log(interaction);
+export async function dispatch(interaction) {
+	const handler = handlers[interaction.data.name];
+	let response = undefined;
+	if (handler.constructor.name == 'AsyncFunction') {
+		response = await handler(interaction)
+	} else response = handler(interaction);
+	if (response != undefined) sendInteractionResponse(
+		bot, interaction.id, interaction.token, response
+	);
 }
 
 export function command(data) {

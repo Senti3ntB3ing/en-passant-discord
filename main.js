@@ -1,6 +1,9 @@
 
-import { createBot, startBot, editBotStatus, sendMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
-import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
+import {
+	createBot, startBot, editBotStatus, sendMessage
+} from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
+import { enableCachePlugin, enableCacheSweepers }
+from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
 
 import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 
@@ -66,7 +69,7 @@ const baseBot = createBot({
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
 			sendMessage(bot, Channels.general, text(`**Welcome** <@${member.id}>, ${message}`));
 		},
-		interactionCreate(_, interaction) { return dispatch(interaction); }
+		interactionCreate(_, interaction) { dispatch(interaction); }
 	}
 });
 

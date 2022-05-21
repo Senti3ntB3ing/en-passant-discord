@@ -1,5 +1,5 @@
 
-import command from './parser.js';
+import { command } from './parser.js';
 
 command({
 	name: 'ping',

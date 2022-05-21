@@ -305,29 +305,42 @@ export function dispatch(interaction) {
 	console.log(interaction);
 }
 
-export function command(command) {
-	appCommands.push(command.command);
-	handlers[command.command.name] = command.handler;
+export function command(data) {
+	const command = {
+		name: data.name,
+		description: data.description,
+		options: data.options,
+	};
+	appCommands.push(command);
+	handlers[data.name] = data.execute;
 }
 
 createCommand({
 	name: 'register', emoji: ':pencil:', hidden: true,
 	description: 'Registers application commands.',
-	permissions: [ Roles.moderator ],
+	permissions: [ Roles.administrator ],
 	execute: async message => {
-		console.log(message.guildId);
 		try {
-			// fetch old guild commands:
-			const old = await getApplicationCommands(bot, message.guildId);
-			// delete old commands:
-			old.forEach((_, id) => {
-				deleteApplicationCommand(bot, id, message.guildId);
-			});
 			// register new commands:
 			for (const command of appCommands)
-				createApplicationCommand(bot, command, message.guildId);
+				await createApplicationCommand(bot, command, message.guildId);
 		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:
 		return success('Application Commands', 'Registration completed!');
+	}
+});
+
+createCommand({
+	name: 'forget', emoji: ':pencil:', hidden: true,
+	description: 'Deletes application commands.',
+	permissions: [ Roles.administrator ],
+	execute: async message => {
+		// fetch old guild commands:
+		const old = await getApplicationCommands(bot, message.guildId);
+		// delete old commands:
+		old.forEach(async (_, id) => {
+			await deleteApplicationCommand(bot, id, message.guildId);
+		});
+		return success('Application Commands', 'Commands deleted!');
 	}
 });

@@ -1,7 +1,7 @@
 
-import { createCommand, card } from '../parser.js';
+import { command, card } from '../parser.js';
 
-createCommand({
+/*createCommand({
 	name: 'ping', emoji: ':ping_pong:',
 	aliases: [ 'pong', 'latency' ], rate: 2,
 	description: 'Check the latency of the bot.',
@@ -9,4 +9,14 @@ createCommand({
 		'Ping Command',
 		`:ping_pong: **Pong**. Server latency: \`${ Date.now() - message.timestamp }ms\`.`
 	)
+});*/
+
+command({
+	name: 'ping', emoji: ':ping_pong:', options: [],
+	description: '🏓 Checks the latency of the bot.',
+	execute: interaction => card(
+		'Ping Command',
+		JSON.stringify(interaction, null, 4)
+		//`:ping_pong: **Pong**. Server latency: \`${ Date.now() - interaction.timestamp }ms\`.`
+	),
 });

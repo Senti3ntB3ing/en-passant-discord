@@ -34,10 +34,6 @@ import './tasks/twitch.js';
 import './tasks/attempts.js';
 import './tasks/move.js';
 
-// ==== Slash ==============================
-
-import './register.js';
-
 // =========================================
 
 function setRandomAction() {
@@ -70,9 +66,7 @@ const baseBot = createBot({
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
 			sendMessage(bot, Channels.general, text(`**Welcome** <@${member.id}>, ${message}`));
 		},
-		interactionCreate(bot, interaction) {
-			dispatch(interaction);
-		}
+		interactionCreate(_, interaction) { return dispatch(interaction); }
 	}
 });
 

@@ -9,9 +9,9 @@ command({
 
 command({
 	name: 'members', emoji: ':hash:', options: [],
-	description: '#️⃣ Count the number of members.',
+	description: '📈 Count the number of members.',
 	execute: async interaction => {
-		const g = await guild(interaction.guidlId);
+		const g = await guild(interaction.guildId);
 		return card(
 			'Member Count',
 			`:hash: The server has \`${g.approximateMemberCount}\` total members.`

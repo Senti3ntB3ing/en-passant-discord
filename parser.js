@@ -3,7 +3,7 @@ import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse,
-	InteractionResponseTypes
+	InteractionResponseTypes, snowflakeToBigint
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -291,6 +291,7 @@ export function fetchLog() {
 
 // ==== Redirects ==============================================================
 
+export const snow = id => Number(id / 4194304n + 1420070400000n);
 export const send = (channel, content) => sendMessage(bot, channel, content);
 export const publish = (channel, id) => publishMessage(bot, channel, id);
 export const remove = (data, channel, bulk = false) => {
@@ -332,10 +333,11 @@ createCommand({
 	description: 'Registers application commands.',
 	permissions: [ Roles.administrator ],
 	execute: async message => {
+		const id = message.text.includes('global') ? undefined : message.guildId;
 		try {
 			// register new commands:
 			for (const command of appCommands)
-				await createApplicationCommand(bot, command, message.guildId);
+				await createApplicationCommand(bot, command, id);
 		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:
 		return success('Application Commands', 'Registration completed!');

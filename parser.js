@@ -336,10 +336,14 @@ createCommand({
 	permissions: [ Roles.administrator ],
 	execute: async message => {
 		// fetch old guild commands:
-		const old = await getApplicationCommands(bot, message.guildId);
+		let old = await getApplicationCommands(bot, message.guildId);
 		// delete old commands:
 		old.forEach(async (_, id) => {
 			await deleteApplicationCommand(bot, id, message.guildId);
+		});
+		old = await getApplicationCommands(bot);
+		old.forEach(async (_, id) => {
+			await deleteApplicationCommand(bot, id);
 		});
 		return success('Application Commands', 'Commands deleted!');
 	}

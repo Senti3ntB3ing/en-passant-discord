@@ -12,9 +12,8 @@ command({
 	description: '📈 Count the number of members.',
 	execute: async interaction => {
 		const g = await guild(interaction.guildId);
-		return card(
-			'Member Count',
-			`:hash: The server has \`${g.approximateMemberCount}\` total members.`
-		);
+		return card('Member Count', `:hash: The server has \`${
+			g.approximateMemberCount
+		}\` total members.`);
 	}
 });

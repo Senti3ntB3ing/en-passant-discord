@@ -15,7 +15,7 @@ command({
 		const limit = parseInt(interaction.data.options[0].value);
 		try {
 			const texts = await messages(interaction.channelId, { limit });
-			await remove(interaction.channelId, texts.map(m => m.id));
+			await remove(interaction.channelId, texts.map(m => m.id), true);
 		} catch {
 			return error(
 				'Clean Command', 'Internal error. Please try again later.',

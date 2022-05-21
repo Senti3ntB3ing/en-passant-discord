@@ -5,7 +5,7 @@ import { diagram, gif } from '../components/diagram/diagram.js';
 
 command({
 	name: 'fen', emoji: ':page_with_curl:',
-	description: '📋 Display a chess board diagram from **FEN**.',
+	description: '📋 Display a chess board diagram from FEN.',
 	options: [{
 		description: 'Forsyth–Edwards Notation.', name: 'fen',
 		type: CommandTypes.String, required: true,
@@ -25,10 +25,10 @@ command({
 		const data = await diagram(game.board, game.turn);
 		console.log(data);
 		return {
-			file: {
+			file: [{
 				blob: new Blob([ await diagram(game.board, game.turn) ]),
 				name: 'board.png',
-			},
+			}],
 			embeds: [{
 				type: 'image', title, color: game.turn == 'w' ? 0xFFFFFF : 0x000000,
 				image: { url: 'attachment://board.png', height: 800, width: 800 },

@@ -16,6 +16,6 @@ command({
 	description: '🏓 Checks the latency of the bot.',
 	execute: interaction => card(
 		'Ping Command',
-		`:ping_pong: **Pong**. Server latency: \`${ Date.now() - interaction.timestamp }ms\`.`
+		`:ping_pong: **Pong**. Server latency: \`${ Date.now() - interaction.message.timestamp }ms\`.`
 	),
 });

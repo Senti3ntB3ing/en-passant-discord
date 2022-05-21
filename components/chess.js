@@ -881,6 +881,8 @@ export class Chess {
 		ms = ms.replace(/\.\.\./g, '');
 		// delete numeric annotation glyphs
 		ms = ms.replace(/\$\d+/g, '');
+		// delete other glyphs
+		ms = ms.replace(/(\s+)[=∓±□+-]+/gu, '$1');
 		// trim and get array of moves
 		let moves = ms.trim().split(new RegExp(/\s+/));
 		// delete empty entries

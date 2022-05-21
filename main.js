@@ -4,7 +4,7 @@ import { enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/disc
 
 import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 
-import { parse, text, fetchLog, log, executeTasks } from './parser.js';
+import { parse, text, fetchLog, log, executeTasks, dispatch } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================
@@ -65,6 +65,9 @@ const baseBot = createBot({
 		guildMemberAdd(bot, member, _) {
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
 			sendMessage(bot, Channels.general, text(`**Welcome** <@${member.id}>, ${message}`));
+		},
+		interactionCreate(bot, interaction) {
+			dispatch(interaction);
 		}
 	}
 });

@@ -1,7 +1,7 @@
 
 import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
-	getMessages
+	getMessages, createApplicationCommand, getApplicationCommands, deleteApplicationCommand
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -295,3 +295,36 @@ export const remove = (data, channel, bulk = false) => {
 	if (bulk) return deleteMessages(bot, channel, data);
 	else return deleteMessage(bot, channel, data);
 };
+
+
+// ==== Application Commands ===================================================
+
+const appCommands = [], handlers = {};
+
+export function dispatch(interaction) {
+	console.log(interaction);
+}
+
+export function command(command) {
+	appCommands.push(command.command);
+	handlers[command.command.name] = command.handler;
+}
+
+createCommand({
+	name: 'register', emoji: ':pencil:', hidden: true,
+	description: 'Registers application commands.',
+	permissions: [ Roles.moderator ],
+	execute: async message => {
+		// fetch old guild commands:
+		const old = await getApplicationCommands(bot, message.guild_id);
+		// delete old commands:
+		old.forEach(
+			(_, id) => deleteApplicationCommand(bot, id, message.guild_id)
+		);
+		// register new commands:
+		for (const command of appCommands)
+			createApplicationCommand(bot, command, message.guild_id);
+		// send success message:
+		return success('Application Commands', 'Registration completed!');
+	}
+});

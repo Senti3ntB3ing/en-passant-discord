@@ -3,19 +3,6 @@ import { CommandTypes, createCommand, command, error } from '../parser.js';
 import { Chess } from '../components/chess.js';
 import { stateMessage, gif } from '../components/diagram/diagram.js';
 
-/*createCommand({
-	name: 'fen', emoji: ':page_with_curl:',
-	aliases: [ 'diagram', 'black', 'white' ], rate: 3,
-	description: 'Display a chess board diagram from **FEN**.',
-	execute: async message => {
-		const fen = message.text, title = 'Chess diagram from FEN position';
-		if (!Chess.validate(fen))
-			return error('Chess diagram', 'Invalid FEN string / position!');
-		const game = new Chess(fen), t = message.command[0];
-		return await stateMessage(title, game, t != 'f' ? t : game.turn);
-	}
-});*/
-
 command({
 	name: 'fen', emoji: ':page_with_curl:',
 	description: '📋 Display a chess board diagram from **FEN**.',
@@ -24,6 +11,7 @@ command({
 		type: CommandTypes.String, required: true,
 	}],
 	execute: async interaction => {
+		console.log(interaction.data.options);
 		const fen = interaction.data.options[0].value;
 		const game = new Chess(fen);
 		if (game == null)

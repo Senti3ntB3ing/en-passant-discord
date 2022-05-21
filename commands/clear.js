@@ -12,6 +12,7 @@ command({
 		required: true, maxValue: 100, minValue: 1,
 	}],
 	execute: async interaction => {
+		console.log(interaction.data.options);
 		const limit = interaction.data.options[0].value;
 		try {
 			const texts = await messages(interaction.channelId, { limit });

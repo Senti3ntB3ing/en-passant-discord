@@ -11,8 +11,8 @@ command({
 		type: CommandTypes.String, required: true,
 	}],
 	execute: async interaction => {
-		console.log(interaction.data.options);
 		const fen = interaction.data.options[0].value;
+		console.log(fen);
 		const game = new Chess(fen);
 		if (game == null)
 			return error('Chess diagram', 'Invalid FEN string / position!');

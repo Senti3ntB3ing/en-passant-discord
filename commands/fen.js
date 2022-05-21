@@ -22,6 +22,8 @@ command({
 			else if (game.checkmate())
 				status = game.turn == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
 		} else status = game.turn == 'w' ? '◽️ WHITE TO MOVE' : '◾️ BLACK TO MOVE';
+		const data = await diagram(game.board, game.turn);
+		console.log(data);
 		return {
 			file: {
 				blob: new Blob([ await diagram(game.board, game.turn) ]),

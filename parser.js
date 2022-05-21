@@ -315,17 +315,17 @@ createCommand({
 	description: 'Registers application commands.',
 	permissions: [ Roles.moderator ],
 	execute: async message => {
-		console.log(message.guild_id);
+		console.log(message.guildId);
 		try {
 			// fetch old guild commands:
-			const old = await getApplicationCommands(bot, message.guild_id);
+			const old = await getApplicationCommands(bot, message.guildId);
 			// delete old commands:
 			old.forEach((_, id) => {
-				deleteApplicationCommand(bot, id, message.guild_id);
+				deleteApplicationCommand(bot, id, message.guildId);
 			});
 			// register new commands:
 			for (const command of appCommands)
-				createApplicationCommand(bot, command, message.guild_id);
+				createApplicationCommand(bot, command, message.guildId);
 		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:
 		return success('Application Commands', 'Registration completed!');

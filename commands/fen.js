@@ -1,7 +1,7 @@
 
 import { CommandTypes, createCommand, command, error } from '../parser.js';
 import { Chess } from '../components/chess.js';
-import { stateMessage, gif } from '../components/diagram/diagram.js';
+import { diagram, gif } from '../components/diagram/diagram.js';
 
 command({
 	name: 'fen', emoji: ':page_with_curl:',
@@ -15,7 +15,24 @@ command({
 		const game = new Chess(fen);
 		if (game == null || game.fen() != fen)
 			return error('Chess diagram', 'Invalid FEN string / position!');
-		return await stateMessage('Chess diagram from FEN position', game.board, game.turn);
+		const title = 'Chess diagram from FEN position';
+		let status = '';
+		if (game.ended()) {
+			if (game.draw()) status = '½-½ ・ DRAW';
+			else if (game.checkmate())
+				status = game.turn == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
+		} else status = game.turn == 'w' ? '◽️ WHITE TO MOVE' : '◾️ BLACK TO MOVE';
+		return {
+			file: {
+				blob: new Blob([ await diagram(game.board, game.turn) ]),
+				name: 'board.png',
+			},
+			embeds: [{
+				type: 'image', title, color: game.turn == 'w' ? 0xFFFFFF : 0x000000,
+				image: { url: 'attachment://board.png', height: 800, width: 800 },
+				footer: { text: status },
+			}]
+		};
 	}
 });
 

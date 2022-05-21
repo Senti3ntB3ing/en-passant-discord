@@ -343,13 +343,10 @@ createCommand({
 			for (const command of appCommands) {
 				const cid = (await createApplicationCommand(bot, command, id)).id;
 				if (!command.moderation) continue;
-				await editApplicationCommandPermissions(bot, id, cid, [
-					{ type: ApplicationCommandPermissionTypes.Role,
-						id: 'everyone', permissions: false
-					},{ type: ApplicationCommandPermissionTypes.Role,
-						id: 'moderator', permissions: false
-					}
-				]);
+				await editApplicationCommandPermissions(bot, id, cid, [{
+					type: ApplicationCommandPermissionTypes.Role,
+					id: Roles.moderator.toString(), permissions: true
+				}]);
 			}
 		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:

@@ -1,7 +1,8 @@
 
-import { CommandTypes, createCommand, command, error } from '../parser.js';
+import { CommandTypes, createCommand, command, error, send } from '../parser.js';
 import { Chess } from '../components/chess.js';
 import { diagram, gif } from '../components/diagram/diagram.js';
+import { Channels } from '../config.js';
 
 command({
 	name: 'fen', emoji: ':page_with_curl:',
@@ -24,7 +25,7 @@ command({
 		} else status = game.turn == 'w' ? '◽️ WHITE TO MOVE' : '◾️ BLACK TO MOVE';
 		const data = await diagram(game.board, game.turn);
 		console.log(data);
-		return {
+		send(Channels.dev_chat, {
 			file: [{
 				blob: new Blob([ await diagram(game.board, game.turn) ]),
 				name: 'board.png',
@@ -34,7 +35,7 @@ command({
 				image: { url: 'attachment://board.png', height: 800, width: 800 },
 				footer: { text: status },
 			}]
-		};
+		});
 	}
 });
 

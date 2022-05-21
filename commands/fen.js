@@ -1,9 +1,9 @@
 
-import { createCommand, error } from '../parser.js';
+import { CommandTypes, createCommand, command, error } from '../parser.js';
 import { Chess } from '../components/chess.js';
 import { stateMessage, gif } from '../components/diagram/diagram.js';
 
-createCommand({
+/*createCommand({
 	name: 'fen', emoji: ':page_with_curl:',
 	aliases: [ 'diagram', 'black', 'white' ], rate: 3,
 	description: 'Display a chess board diagram from **FEN**.',
@@ -13,6 +13,22 @@ createCommand({
 			return error('Chess diagram', 'Invalid FEN string / position!');
 		const game = new Chess(fen), t = message.command[0];
 		return await stateMessage(title, game, t != 'f' ? t : game.turn);
+	}
+});*/
+
+command({
+	name: 'fen', emoji: ':page_with_curl:',
+	description: '📋 Display a chess board diagram from **FEN**.',
+	options: [{
+		description: 'Forsyth–Edwards Notation.', name: 'fen',
+		type: CommandTypes.String, required: true,
+	}],
+	execute: async interaction => {
+		const fen = interaction.data.options[0].value;
+		const game = new Chess(fen);
+		if (game == null)
+			return error('Chess diagram', 'Invalid FEN string / position!');
+		return await stateMessage('Chess diagram from FEN position', game, game.turn);
 	}
 });
 

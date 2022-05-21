@@ -265,7 +265,7 @@ export function createHelp(mod = false) {
 			color: ColorCodes.normal,
 			fields: attachments.map(attachment => ({
 				name: (attachment.emoji || ':paperclip:') +
-					' `.' + attachment.type + ' files:',
+					' `.' + attachment.type + '` files:',
 				value: attachment.description || 'No description.',
 				inline: false
 			}))
@@ -340,17 +340,8 @@ createCommand({
 		const id = message.text.includes('global') ? undefined : message.guildId;
 		try {
 			// register new commands:
-			for (const command of appCommands) {
-				const cid = (await createApplicationCommand(bot, command, id)).id;
-				if (!command.moderation) continue;
-				await editApplicationCommandPermissions(bot, id, cid, [{
-					type: ApplicationCommandPermissionTypes.Role,
-					id: Roles.everyone.toString(), permission: false
-				}, {
-					type: ApplicationCommandPermissionTypes.Role,
-					id: Roles.moderator.toString(), permission: true
-				}]);
-			}
+			for (const command of appCommands)
+				await createApplicationCommand(bot, command, id);
 		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:
 		return success('Application Commands', 'Registration completed!');

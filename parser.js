@@ -2,9 +2,9 @@
 import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
-	deleteApplicationCommand, sendInteractionResponse,
+	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, snowflakeToBigint, ApplicationCommandOptionTypes,
-	editApplicationCommandPermissions, ApplicationCommandPermissionTypes
+	editApplicationCommandPermissions, ApplicationCommandPermissionTypes,
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -293,6 +293,7 @@ export function fetchLog() {
 // ==== Redirects ==============================================================
 
 export const CommandTypes = ApplicationCommandOptionTypes;
+export const guild = async g => await getGuild(bot, g, { counts: true });
 export const snow = id => Number(id / 4194304n + 1420070400000n);
 export const send = (channel, content) => sendMessage(bot, channel, content);
 export const publish = (channel, id) => publishMessage(bot, channel, id);

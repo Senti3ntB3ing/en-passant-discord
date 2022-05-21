@@ -1,20 +1,34 @@
 
-import { getMessages, deleteMessages } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
+import {
+	CommandTypes, command, error, card, messages, remove
+} from '../parser.js';
 
-import { Roles } from '../config.js';
-import { createCommand, error, card } from '../parser.js';
+command({
+	name: 'clear', emoji: ':wastebasket:', moderation: true,
+	description: '🗑 Clear messages in a text channel.',
+	options: [{
+		description: 'Number of messages to delete.',
+		name: 'count', type: CommandTypes.Number,
+		required: true, maxValue: 100, minValue: 1,
+	}],
+	execute: async interaction => {
+		const limit = interaction.data.options.value;
+		try {
+			const texts = await messages(interaction.channelId, { limit });
+			await remove(interaction.channelId, texts.map(m => m.id));
+		} catch {
+			return error(
+				'Clean Command', 'Internal error. Please try again later.',
+			);
+		}
+		return card(
+			'Clear Command',
+			`:wastebasket: Successfully cleared \`${limit}\` messages.`
+		);
+	}
+});
 
-const invalid = error(
-	'Clean Command',
-	'Please specify a valid number of messages to delete (max `100`).',
-);
-
-const internal = error(
-	'Clean Command',
-	'Internal error. Please try again later.',
-);
-
-createCommand({
+/*createCommand({
 	name: 'clear', emoji: ':wastebasket:', hidden: true,
 	aliases: [ 'clean', 'delete', 'erase' ],
 	description: 'Clear messages in a text channel.',
@@ -30,4 +44,4 @@ createCommand({
 		} catch { return internal; }
 		return card('Clear Command', `:wastebasket: Successfully cleared \`${n - 1}\` messages.`);
 	}
-});
+});*/

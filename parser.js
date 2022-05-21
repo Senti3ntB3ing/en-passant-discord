@@ -3,7 +3,8 @@ import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse,
-	InteractionResponseTypes, snowflakeToBigint
+	InteractionResponseTypes, snowflakeToBigint, ApplicationCommandOptionTypes,
+	editApplicationCommandPermissions, ApplicationCommandPermissionTypes
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -291,10 +292,12 @@ export function fetchLog() {
 
 // ==== Redirects ==============================================================
 
+export const CommandTypes = ApplicationCommandOptionTypes;
 export const snow = id => Number(id / 4194304n + 1420070400000n);
 export const send = (channel, content) => sendMessage(bot, channel, content);
 export const publish = (channel, id) => publishMessage(bot, channel, id);
-export const remove = (data, channel, bulk = false) => {
+export const messages = async (channel, limit) => getMessages(bot, channel, { limit });
+export const remove = async (data, channel, bulk = false) => {
 	if (bulk) return deleteMessages(bot, channel, data);
 	else return deleteMessage(bot, channel, data);
 };
@@ -323,6 +326,7 @@ export function command(data) {
 		name: data.name,
 		description: data.description,
 		options: data.options,
+		moderation: 'moderation' in data ? data.moderation : false,
 	};
 	appCommands.push(command);
 	handlers[data.name] = data.execute;
@@ -336,8 +340,17 @@ createCommand({
 		const id = message.text.includes('global') ? undefined : message.guildId;
 		try {
 			// register new commands:
-			for (const command of appCommands)
-				await createApplicationCommand(bot, command, id);
+			for (const command of appCommands) {
+				const cid = (await createApplicationCommand(bot, command, id)).id;
+				if (!command.moderation) continue;
+				await editApplicationCommandPermissions(bot, id, cid, [
+					{ type: ApplicationCommandPermissionTypes.Role,
+						id: 'everyone', permissions: false
+					},{ type: ApplicationCommandPermissionTypes.Role,
+						id: 'moderator', permissions: false
+					}
+				]);
+			}
 		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:
 		return success('Application Commands', 'Registration completed!');

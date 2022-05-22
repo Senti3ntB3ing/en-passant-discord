@@ -71,7 +71,7 @@ command({
 		} else return {
 			embeds: [{
 				type: 'rich',
-				title: 'Community Links',
+				title: '@thechessnerd Community Links',
 				color: 0xFFFFFF,
 				fields: Object.keys(links).map(name => ({
 					name: `${links[name].emoji} **${name}**:`,

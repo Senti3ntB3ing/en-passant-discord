@@ -4,47 +4,47 @@ import { CommandTypes, command, card } from '../parser.js';
 const links = {
 	'Instagram': {
 		url: 'https://www.instagram.com/thechessnerd/',
-		color: 0xFFFFFF, emoji: ':milky_way:',
+		color: 0xFFFFFF, emoji: '🌌',
 		description: 'Link to @thechessnerd Instagram page.',
 	},
 	'Youtube': {
 		url: 'https://www.youtube.com/c/thechessnerd', 
-		color: 0xFF0000, emoji: ':tickets:',
+		color: 0xFF0000, emoji: '🔻',
 		description: 'Link to __thechessnerd__ Youtube channel.',
 	},
 	'Twitch': {
 		url: 'https://www.twitch.tv/thechessnerdlive/',
-		color: 0x9047FF, emoji: ':gem:',
+		color: 0x9047FF, emoji: '💎',
 		description: 'Link to __thechessnerd__ Twitch Live.',
 	},
 	'tiktok': {
 		url: 'https://vm.tiktok.com/ZML7UdM8j/',
-		color: 0xFE2C57, emoji: ':musical_note:',
+		color: 0xFE2C57, emoji: '🎵',
 		description: 'Link to __thechessnerd__ tiktok.',
 	},
 	'Twitter': {
 		url: 'https://twitter.com/thechessnerd',
-		color: 0x1D9BF0, emoji: ':bird:',
+		color: 0x1D9BF0, emoji: '🐦',
 		description: 'Link to @thechessnerd Twitter page',
 	},
 	'Discord': {
 		url: 'https://discord.com/invite/DKHBFF22TJ/',
-		color: 0x5765F3, emoji: ':crown:',
+		color: 0x5765F3, emoji: '👑',
 		description: 'Invite link to *thechessnerd* Discord.',
 	},
 	'Chess.com': {
 		url: 'https://www.chess.com/club/thechessnerd-exclusive-club',
-		color: 0x7FA650, emoji: ':mortar_board:',
+		color: 0x7FA650, emoji: '🧩',
 		description: 'Invite link to the **chess.com** club.',
 	},
 	'reddit': {
 		url: 'https://www.reddit.com/r/thechessnerd/',
-		color: 0xFF4500, emoji: ':robot:',
+		color: 0xFF4500, emoji: '🤖',
 		description: 'Link to __/r/thechessnerd__ reddit',
 	},
 	'Merch': {
 		url: 'https://thechessnerd.com/',
-		color: 0x37777F, emoji: ':shopping_bags:',
+		color: 0x37777F, emoji: '🛍',
 		description: 'Link to __thechessnerd co.__ merch',
 	},
 };
@@ -56,7 +56,7 @@ command({
 		description: 'Specific platform link to display.',
 		name: 'platform', type: CommandTypes.String,
 		required: false, choices: Object.keys(links).map(
-			name => ({ name, value: `${links[name].emoji} ${name}` })
+			name => ({ name: `${links[name].emoji} ${name}`, value: name })
 		),
 	}],
 	execute: interaction => {

@@ -3,7 +3,7 @@ import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
-	InteractionResponseTypes, snowflakeToBigint, ApplicationCommandOptionTypes,
+	InteractionResponseTypes, ApplicationCommandOptionTypes,
 	editApplicationCommandPermissions, ApplicationCommandPermissionTypes,
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
@@ -303,7 +303,12 @@ export const remove = async (data, channel) => {
 	else return await deleteMessage(bot, channel, data);
 };
 export const clear = async (channel, limit) => {
-	const m = await getMessages(bot, channel, { limit });
+	let m = [];
+	if (limit == 1) {
+		m = await getMessages(bot, channel, { limit: 2 });
+		await deleteMessage(bot, channel, m[0].id);
+		return;
+	} else m = await getMessages(bot, channel, { limit });
 	if (m.length > 0)
 		return await deleteMessages(bot, channel, m.map(e => e.id));
 };

@@ -1,61 +1,96 @@
 
-import { Roles } from '../config.js';
-import { command, createCommand, card } from '../parser.js';
+import { CommandTypes, command, card } from '../parser.js';
 
 const links = {
 	'Instagram': {
 		url: 'https://www.instagram.com/thechessnerd/',
-		color: 0xFFFFFF, emoji: ':camera:'
+		color: 0xFFFFFF, emoji: ':milky_way:',
+		description: 'Link to @thechessnerd Instagram page.',
 	},
 	'Youtube': {
 		url: 'https://www.youtube.com/c/thechessnerd', 
-		color: 0xFF0000, emoji: ':tv:'
+		color: 0xFF0000, emoji: ':tickets:',
+		description: 'Link to __thechessnerd__ Youtube channel.',
 	},
 	'Twitch': {
 		url: 'https://www.twitch.tv/thechessnerdlive/',
-		color: 0x9047FF, emoji: ':gem:'
+		color: 0x9047FF, emoji: ':gem:',
+		description: 'Link to __thechessnerd__ Twitch Live.',
 	},
 	'tiktok': {
 		url: 'https://vm.tiktok.com/ZML7UdM8j/',
-		color: 0xFE2C57, emoji: ':musical_note:'
+		color: 0xFE2C57, emoji: ':musical_note:',
+		description: 'Link to __thechessnerd__ tiktok.',
 	},
 	'Twitter': {
 		url: 'https://twitter.com/thechessnerd',
-		color: 0x1D9BF0, emoji: ':bird:'
+		color: 0x1D9BF0, emoji: ':bird:',
+		description: 'Link to @thechessnerd Twitter page',
 	},
 	'Discord': {
 		url: 'https://discord.com/invite/DKHBFF22TJ/',
-		color: 0x5765F3, emoji: ':speech_balloon:'
+		color: 0x5765F3, emoji: ':crown:',
+		description: 'Invite link to *thechessnerd* Discord.',
 	},
-	'chess.com': {
+	'Chess.com': {
 		url: 'https://www.chess.com/club/thechessnerd-exclusive-club',
-		color: 0x7FA650, emoji: ':mortar_board:'
+		color: 0x7FA650, emoji: ':mortar_board:',
+		description: 'Invite link to the **chess.com** club.',
 	},
 	'reddit': {
 		url: 'https://www.reddit.com/r/thechessnerd/',
-		color: 0xFF4500, emoji: ':robot:'
+		color: 0xFF4500, emoji: ':robot:',
+		description: 'Link to __/r/thechessnerd__ reddit',
 	},
 	'Merch': {
 		url: 'https://thechessnerd.com/',
-		color: 0x37777F, emoji: ':shopping_bags:'
+		color: 0x37777F, emoji: ':shopping_bags:',
+		description: 'Link to __thechessnerd co.__ merch',
 	},
 };
 
 command({
-	name: 'links', emoji: ':link:', options: [],
+	name: 'links', emoji: ':link:',
 	description: '🔗 List of useful links.',
-	execute: () => ({
-		embeds: [{
-			type: 'rich',
-			title: 'Community Links',
-			color: 0xFFFFFF,
-			fields: Object.keys(links).map(name => ({
-				name: `${links[name].emoji} **${name}**:`,
-				value: links[name].url,
-				inline: false
-			}))
-		}]
-	})
+	options: [{
+		description: 'Number of messages to delete.',
+		name: 'count', type: CommandTypes.String,
+		required: false, choices: Object.keys(links).map(
+			key => ({ name: key, value: key })
+		),
+	}],
+	execute: interaction => {
+		if (interaction.data.options != undefined &&
+			interaction.data.options.length > 0) {
+			const name = interaction.data.options[0].value;
+			return card(
+				links[name].description,
+				`${links[name].emoji} ${links[name].url}`,
+				links[name].color
+			);
+		} else return {
+			embeds: [{
+				type: 'rich',
+				title: 'Community Links',
+				color: 0xFFFFFF,
+				fields: Object.keys(links).map(name => ({
+					name: `${links[name].emoji} **${name}**:`,
+					value: links[name].url,
+					inline: false
+				}))
+			}]
+		};
+	}
+});
+
+command({
+	name: 'schedule', emoji: ':calendar_spiral:', options: [],
+	description: 'Link to __thechessnerd__ Twitch schedule.',
+	execute: () => card(
+		'Link to thechessnerd Twitch schedule',
+		':calendar_spiral: ' + links['Twitch'].url + 'schedule',
+		links['Twitch'].color
+	)
 });
 
 /*createCommand({
@@ -76,7 +111,7 @@ command({
 			})
 		}]
 	})
-});*/
+});
 
 createCommand({
 	name: 'instagram', emoji: links['Instagram'].emoji,
@@ -148,13 +183,13 @@ createCommand({
 });
 
 createCommand({
-	name: 'club', emoji: links['chess.com'].emoji, hidden: true,
+	name: 'club', emoji: links['Chess.com'].emoji, hidden: true,
 	description: 'Invite link to the **chess.com** club.',
 	permissions: Roles.everyone,
 	execute: () => card(
 		'Invite link to the chess.com club',
-		links['chess.com'].emoji + ' ' + links['chess.com'].url,
-		links['chess.com'].color
+		links['Chess.com'].emoji + ' ' + links['Chess.com'].url,
+		links['Chess.com'].color
 	)
 });
 
@@ -191,3 +226,4 @@ createCommand({
 		links['tiktok'].color
 	)
 });
+*/

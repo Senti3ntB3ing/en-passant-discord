@@ -302,6 +302,11 @@ export const remove = async (data, channel) => {
 	if (Array.isArray(data)) return await deleteMessages(bot, channel, data);
 	else return await deleteMessage(bot, channel, data);
 };
+export const clear = async (channel, limit) => {
+	const m = await getMessages(bot, channel, { limit });
+	if (m.length > 0)
+		return await deleteMessages(bot, channel, m.map(e => e.id));
+};
 
 
 // ==== Application Commands ===================================================

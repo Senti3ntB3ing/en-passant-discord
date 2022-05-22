@@ -1,7 +1,5 @@
 
-import {
-	CommandTypes, command, error, card, messages, remove
-} from '../parser.js';
+import { CommandTypes, command, error, card, clear } from '../parser.js';
 
 command({
 	name: 'clear', emoji: ':wastebasket:',
@@ -13,11 +11,8 @@ command({
 	}],
 	execute: async interaction => {
 		const limit = parseInt(interaction.data.options[0].value);
-		try {
-			console.log(interaction.channelId);
-			const texts = await messages(interaction.channelId, { limit });
-			await remove(interaction.channelId, texts.map(m => m.id), true);
-		} catch {
+		try { await clear(interaction.channelId, limit); }
+		catch {
 			return error(
 				'Clean Command', 'Internal error. Please try again later.',
 			);

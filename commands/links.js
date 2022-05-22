@@ -56,7 +56,7 @@ command({
 		description: 'Specific platform link to display.',
 		name: 'platform', type: CommandTypes.String,
 		required: false, choices: Object.keys(links).map(
-			key => ({ name: key, value: key })
+			name => ({ name, value: `${links[name].emoji} ${name}` })
 		),
 	}],
 	execute: interaction => {

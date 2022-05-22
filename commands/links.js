@@ -5,22 +5,22 @@ const links = {
 	'Instagram': {
 		url: 'https://www.instagram.com/thechessnerd/',
 		color: 0xFFFFFF, emoji: '🌌',
-		description: 'Link to @thechessnerd Instagram page.',
+		description: 'Link to @thechessnerd Instagram page',
 	},
 	'Youtube': {
 		url: 'https://www.youtube.com/c/thechessnerd', 
 		color: 0xFF0000, emoji: '🔻',
-		description: 'Link to __thechessnerd__ Youtube channel.',
+		description: 'Link to __thechessnerd__ Youtube channel',
 	},
 	'Twitch': {
 		url: 'https://www.twitch.tv/thechessnerdlive/',
 		color: 0x9047FF, emoji: '💎',
-		description: 'Link to __thechessnerd__ Twitch Live.',
+		description: 'Link to __thechessnerd__ Twitch Live',
 	},
 	'tiktok': {
 		url: 'https://vm.tiktok.com/ZML7UdM8j/',
 		color: 0xFE2C57, emoji: '🎵',
-		description: 'Link to __thechessnerd__ tiktok.',
+		description: 'Link to __thechessnerd__ tiktok',
 	},
 	'Twitter': {
 		url: 'https://twitter.com/thechessnerd',
@@ -30,22 +30,22 @@ const links = {
 	'Discord': {
 		url: 'https://discord.com/invite/DKHBFF22TJ/',
 		color: 0x5765F3, emoji: '👑',
-		description: 'Invite link to *thechessnerd* Discord.',
+		description: 'Invite link to *thechessnerd* Discord',
 	},
 	'Chess.com': {
 		url: 'https://www.chess.com/club/thechessnerd-exclusive-club',
 		color: 0x7FA650, emoji: '🧩',
-		description: 'Invite link to the **chess.com** club.',
+		description: 'Invite link to the **chess.com** club',
 	},
 	'reddit': {
 		url: 'https://www.reddit.com/r/thechessnerd/',
 		color: 0xFF4500, emoji: '🤖',
 		description: 'Link to __/r/thechessnerd__ reddit',
 	},
-	'Merch': {
+	'Drop': {
 		url: 'https://thechessnerd.com/',
 		color: 0x37777F, emoji: '🛍',
-		description: 'Link to __thechessnerd co.__ merch',
+		description: 'Link to __thechessnerd co.__ merch drops',
 	},
 };
 
@@ -85,7 +85,7 @@ command({
 
 command({
 	name: 'schedule', emoji: ':calendar_spiral:', options: [],
-	description: 'Link to __thechessnerd__ Twitch schedule.',
+	description: '🗓 Link to __thechessnerd__ Twitch schedule.',
 	execute: () => card(
 		'Link to thechessnerd Twitch schedule',
 		':calendar_spiral: ' + links['Twitch'].url + 'schedule',
@@ -93,137 +93,12 @@ command({
 	)
 });
 
-/*createCommand({
-	name: 'links', emoji: ':link:', aliases: [ 'link' ],
-	description: 'List of useful links.',
-	permissions: Roles.everyone,
-	execute: () => ({
-		embeds: [{
-			type: 'rich',
-			title: 'Community Links',
-			color: ColorCodes.normal,
-			fields: Object.keys(links).map(name => {
-				return {
-					name: `${links[name].emoji} **${name}**:`,
-					value: links[name].url,
-					inline: false
-				};
-			})
-		}]
-	})
-});
-
-createCommand({
-	name: 'instagram', emoji: links['Instagram'].emoji,
-    aliases: [ 'insta' ], hidden: true,
-	description: 'Link to @thechessnerd Instagram page.',
-	permissions: Roles.everyone,
+command({
+	name: 'invite', emoji: ':tickets:', options: [],
+	description: '🎟 Invite link to __thechessnerd__ Discord.',
 	execute: () => card(
-		'Link to **@thechessnerd** Instagram page',
-		links['Instagram'].emoji + ' ' + links['Instagram'].url,
-		links['Instagram'].color
-	)
-});
-
-createCommand({
-	name: 'youtube', emoji: links['Youtube'].emoji,
-    aliases: [ 'yt' ], hidden: true,
-	description: 'Link to __thechessnerd__ Youtube channel.',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'Link to thechessnerd Youtube channel',
-		links['Youtube'].emoji + ' ' + links['Youtube'].url,
-		links['Youtube'].color
-	)
-});
-
-createCommand({
-	name: 'twitch', emoji: links['Twitch'].emoji, hidden: true,
-	description: 'Link to __thechessnerd__ Twitch Live.',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'Link to thechessnerd Twitch Live',
-		links['Twitch'].emoji + ' ' + links['Twitch'].url,
-		links['Twitch'].color
-	)
-});
-
-createCommand({
-	name: 'schedule', emoji: links['Twitch'].emoji, hidden: true,
-	description: 'Link to __thechessnerd__ Twitch schedule.',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'Link to thechessnerd Twitch schedule',
-		':calendar_spiral: ' + links['Twitch'].url + 'schedule',
-		links['Twitch'].color
-	)
-});
-
-createCommand({
-	name: 'twitter', emoji: links['Twitter'].emoji, hidden: true,
-	description: 'Link to **@thechessnerd** Twitter page.',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'Link to @thechessnerd Twitter page',
-		links['Twitter'].emoji + ' ' + links['Twitter'].url,
-		links['Twitter'].color
-	)
-});
-
-createCommand({
-	name: 'discord', emoji: links['Discord'].emoji,
-    aliases: [ 'invite' ], hidden: true,
-	description: 'Invite link to *thechessnerd* Discord.',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'Invite link to thechessnerd Discord',
-		links['Discord'].emoji + ' ' + links['Discord'].url,
+		'Invite link to __thechessnerd__ Discord.',
+		':tickets: ' + links['Discord'].url,
 		links['Discord'].color
 	)
 });
-
-createCommand({
-	name: 'club', emoji: links['Chess.com'].emoji, hidden: true,
-	description: 'Invite link to the **chess.com** club.',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'Invite link to the chess.com club',
-		links['Chess.com'].emoji + ' ' + links['Chess.com'].url,
-		links['Chess.com'].color
-	)
-});
-
-createCommand({
-	name: 'reddit', emoji: links['reddit'].emoji, hidden: true,
-	description: 'Link to __/r/thechessnerd__ reddit.',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'Link to /r/thechessnerd reddit',
-		links['reddit'].emoji + ' ' + links['reddit'].url,
-		links['reddit'].color
-	)
-});
-
-createCommand({
-	name: 'merch', emoji: links['Merch'].emoji, hidden: true,
-    aliases: [ 'shop', 'store', 'drop' ],
-	description: 'Link to __thechessnerd co.__ merch',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'thechessnerd co. Brand',
-		links['Merch'].emoji + ' ' + links['Merch'].url,
-		links['Merch'].color
-	)
-});
-
-createCommand({
-	name: 'tiktok', emoji: links['tiktok'].emoji, hidden: true,
-	description: 'Link to __thechessnerd__ tiktok.',
-	permissions: Roles.everyone,
-	execute: () => card(
-		'Link to thechessnerd tiktok',
-		links['tiktok'].emoji + ' ' + links['tiktok'].url,
-		links['tiktok'].color
-	)
-});
-*/

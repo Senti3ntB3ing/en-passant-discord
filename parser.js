@@ -297,10 +297,10 @@ export const guild = async g => await getGuild(bot, g, { counts: true });
 export const snow = id => Number(id / 4194304n + 1420070400000n);
 export const send = (channel, content) => sendMessage(bot, channel, content);
 export const publish = (channel, id) => publishMessage(bot, channel, id);
-export const messages = async (channel, limit) => getMessages(bot, channel, { limit });
-export const remove = async (data, channel, bulk = false) => {
-	if (bulk) return deleteMessages(bot, channel, data);
-	else return deleteMessage(bot, channel, data);
+export const messages = async (channel, limit) => await getMessages(bot, channel, { limit });
+export const remove = async (data, channel) => {
+	if (Array.isArray(data)) return await deleteMessages(bot, channel, data);
+	else return await deleteMessage(bot, channel, data);
 };
 
 

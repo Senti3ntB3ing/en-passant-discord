@@ -1,6 +1,6 @@
 
-import { ColorCodes, Roles } from '../config.js';
-import { createCommand, card } from '../parser.js';
+import { Roles } from '../config.js';
+import { command, createCommand, card } from '../parser.js';
 
 const links = {
 	'Instagram': {
@@ -41,7 +41,24 @@ const links = {
 	},
 };
 
-createCommand({
+command({
+	name: 'links', emoji: ':link:', options: [],
+	description: '🔗 List of useful links.',
+	execute: () => ({
+		embeds: [{
+			type: 'rich',
+			title: 'Community Links',
+			color: 0xFFFFFF,
+			fields: Object.keys(links).map(name => ({
+				name: `${links[name].emoji} **${name}**:`,
+				value: links[name].url,
+				inline: false
+			}))
+		}]
+	})
+});
+
+/*createCommand({
 	name: 'links', emoji: ':link:', aliases: [ 'link' ],
 	description: 'List of useful links.',
 	permissions: Roles.everyone,
@@ -59,7 +76,7 @@ createCommand({
 			})
 		}]
 	})
-});
+});*/
 
 createCommand({
 	name: 'instagram', emoji: links['Instagram'].emoji,

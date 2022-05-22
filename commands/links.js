@@ -53,8 +53,8 @@ command({
 	name: 'links', emoji: ':link:',
 	description: '🔗 List of useful links.',
 	options: [{
-		description: 'Number of messages to delete.',
-		name: 'count', type: CommandTypes.String,
+		description: 'Specific platform link to display.',
+		name: 'platform', type: CommandTypes.String,
 		required: false, choices: Object.keys(links).map(
 			key => ({ name: key, value: key })
 		),

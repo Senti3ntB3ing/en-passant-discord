@@ -1,5 +1,7 @@
 
-import { command, error, card, send, react, remove } from '../parser.js';
+import {
+	Option, command, error, card, send, react, remove
+} from '../parser.js';
 import { Emoji } from '../components/emoji.js';
 
 command({

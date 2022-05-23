@@ -1,5 +1,5 @@
 
-import { CommandTypes, command, card } from '../parser.js';
+import { Option, command, card } from '../parser.js';
 
 const links = {
 	'Instagram': {
@@ -54,7 +54,7 @@ command({
 	description: '🔗 List of useful links.',
 	options: [{
 		description: 'Specific platform link to display.',
-		name: 'platform', type: CommandTypes.String,
+		name: 'platform', type: Option.String,
 		required: false, choices: Object.keys(links).map(
 			name => ({ name: `${links[name].emoji} ${name}`, value: name })
 		),
@@ -95,7 +95,7 @@ command({
 
 command({
 	name: 'invite', emoji: ':tickets:', options: [],
-	description: '🎟 Invite link to __thechessnerd__ Discord.',
+	description: '🎫 Invite link to __thechessnerd__ Discord.',
 	execute: () => card(
 		'Invite link to __thechessnerd__ Discord.',
 		':tickets: ' + links['Discord'].url,

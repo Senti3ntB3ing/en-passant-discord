@@ -1,5 +1,5 @@
 
-import { CommandTypes, createCommand, command, error, send } from '../parser.js';
+import { Option, createCommand, command, error, send } from '../parser.js';
 import { Chess } from '../components/chess.js';
 import { diagram, gif } from '../components/diagram/diagram.js';
 import { Channels } from '../config.js';
@@ -9,7 +9,7 @@ command({
 	description: '📋 Display a chess board diagram from FEN.',
 	options: [{
 		description: 'Forsyth–Edwards Notation.', name: 'fen',
-		type: CommandTypes.String, required: true,
+		type: Option.String, required: true,
 	}],
 	execute: async interaction => {
 		const fen = interaction.data.options[0].value.trim();

@@ -1,36 +1,28 @@
 
-import { Roles, ColorCodes } from '../config.js';
-import { createCommand, error, card, info } from '../parser.js';
-
+import { command, error, card, send, react, remove } from '../parser.js';
 import { Emoji } from '../components/emoji.js';
 
-import { sendMessage, addReaction, deleteMessage } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
-
-createCommand({
-	name: 'poll', emoji: ':bar_chart:', hidden: true,
-	description: 'Make a poll with the given unicode emojis.',
-	permissions: Roles.moderator,
-	execute: async message => {
-		if (message.arguments.length == 0) return info(
-			'Community Poll Help',
-			'You must provide text with unicode emojis.'
-		);
-		// extract emojis:
-		const emojis = message.text.match(Emoji);
+command({
+	name: 'poll', emoji: ':bar_chart:',
+	description: '📊 Make a poll with the given reactions.',
+	options: [{
+		description: 'Text to display in the poll.',
+		name: 'text', type: Option.String, required: true
+	}],
+	execute: async interaction => {
+		const title = 'Community Poll';
+		const text = interaction.data.options[0].value;
+		const emojis = text.match(Emoji);
+		const channel = interaction.channelId;
 		let id = null;
 		try {
 			// send poll message:
-			id = (await sendMessage(message.bot, message.channelId, card(
-				'Community Poll', message.text, ColorCodes.normal
-			))).id;
+			id = (await send(channel, card(title, text))).id;
 			// add emoji reactions:
-			for (const e of emojis) await addReaction(message.bot, message.channelId, id, e);
-			// delete user message:
-			await deleteMessage(message.bot, message.channelId, message.id);
+			for (const e of emojis) await react(channel, id, e);
 		} catch {
-			if (id != null) deleteMessage(message.bot, message.channelId, id);
-			return error('Community Poll', 'Detected invalid emojis or symbols!');
+			if (id != null) remove(id, channel);
+			return error(title, 'Detected invalid emojis or symbols!');
 		}
-		return undefined;
     }
 });

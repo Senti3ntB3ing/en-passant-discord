@@ -3,8 +3,8 @@ import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
-	InteractionResponseTypes, ApplicationCommandOptionTypes,
-	editApplicationCommandPermissions, ApplicationCommandPermissionTypes,
+	InteractionResponseTypes, ApplicationCommandOptionTypes, addReaction,
+	BitwisePermissionFlags
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -292,11 +292,13 @@ export function fetchLog() {
 
 // ==== Redirects ==============================================================
 
-export const CommandTypes = ApplicationCommandOptionTypes;
+export const Option = ApplicationCommandOptionTypes;
+export const Permission = BitwisePermissionFlags;
 export const guild = async g => await getGuild(bot, g, { counts: true });
 export const snow = id => Number(id / 4194304n + 1420070400000n);
 export const send = (channel, content) => sendMessage(bot, channel, content);
 export const publish = (channel, id) => publishMessage(bot, channel, id);
+export const react = async (channel, id, emoji) => await addReaction(bot, channel, id, emoji);
 export const messages = async (channel, limit) => await getMessages(bot, channel, { limit });
 export const remove = async (data, channel) => {
 	if (Array.isArray(data)) return await deleteMessages(bot, channel, data);
@@ -313,7 +315,6 @@ export const clear = async (channel, limit) => {
 		return await deleteMessages(bot, channel, m.map(e => e.id));
 };
 
-
 // ==== Application Commands ===================================================
 
 const appCommands = [], handlers = {};
@@ -324,12 +325,16 @@ export async function dispatch(interaction) {
 	if (handler.constructor.name == 'AsyncFunction') {
 		response = await handler(interaction)
 	} else response = handler(interaction);
-	if (response != undefined) sendInteractionResponse(
-		bot, interaction.id, interaction.token, {
-			type: InteractionResponseTypes.ChannelMessageWithSource,
-			data: response
-		}
-	);
+	if (response != undefined) {
+		sendInteractionResponse(
+			bot, interaction.id, interaction.token, {
+				type: InteractionResponseTypes.ChannelMessageWithSource,
+				data: response
+			}
+		);
+	} else sendInteractionResponse(bot, interaction.id, interaction.token, {
+		type: InteractionResponseTypes.Pong
+	});
 }
 
 export function command(data) {
@@ -338,6 +343,7 @@ export function command(data) {
 		description: data.description,
 		options: data.options,
 		moderation: 'moderation' in data ? data.moderation : false,
+		defaultMemberPermissions: data.permissions
 	};
 	appCommands.push(command);
 	handlers[data.name] = data.execute;

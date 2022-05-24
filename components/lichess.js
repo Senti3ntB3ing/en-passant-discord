@@ -10,7 +10,7 @@ export async function getLichessUser(user) {
 }
 
 export async function getLichessRatings(user) {
-	const categories = [ 'rapid', 'blitz', 'bullet' ];
+	const categories = [ 'classical', 'rapid', 'blitz', 'bullet' ];
 	let ratings = [];
 	const lichess = await getLichessUser(user);
 	if (lichess == null || lichess.perfs == undefined) return undefined;

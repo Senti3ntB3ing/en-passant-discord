@@ -252,13 +252,14 @@ command({
 		const guild = interaction.guildId;
 		const tag = interaction.member.id;
 		let member = await Database.get(tag);
-		if (member == null) return info(title, 'You currently have `0` linked accounts.');
+		if (member == null)
+			return info(title, 'You currently have `0` linked accounts.');
 		if (interaction.data.options == undefined ||
 			interaction.data.options.length == 0) {
 			member.accounts = [];
 		} else {
-			const platform = interaction.data.options[0].value;
-			switch (platform.toLowerCase()) {
+			const platform = interaction.data.options[0].value.toLowerCase();
+			switch (platform) {
 				case 'lichess.org':
 					await curse(guild, tag, Roles.platforms['lichess.org']);
 				case 'chess.com':
@@ -266,7 +267,9 @@ command({
 				break;
 				default: return process;
 			}
-			member.accounts = member.accounts.filter(a => a.platform != platform);
+			member.accounts = member.accounts.filter(
+				a => a.platform.toLowerCase() != platform
+			);
 		}
 		await Database.set(tag, member);
 		return info(title, 'You have successfully unlinked your profile(s).');

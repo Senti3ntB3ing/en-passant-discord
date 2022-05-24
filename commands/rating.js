@@ -12,7 +12,7 @@ import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc34/
 const platforms = [ 'lichess.org', 'Chess.com', 'FIDE' ];
 const names = { 'lichess.org': 'lichess.org', 'chess.com': 'Chess.com', 'fide': 'FIDE' };
 
-const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'chess.com': 0x7FA650 };
+const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'Chess.com': 0x7FA650 };
 const emojis = {
 	'FIDE': ':yellow_heart:', 'lichess.org': ':white_heart:', 'chess.com': ':green_heart:',
 	'bullet': ':gun:', 'rapid': ':clock:', 'blitz': ':zap:', 'standard': ':hourglass:',
@@ -313,6 +313,19 @@ createCommand({
 
 // ==== New Commands ===========================================================
 
+function ratingCard(author, id, platform, ratings) {
+	platform = names[platform.toLowerCase()];
+	return {
+		title: `Ratings - ${platform}`,
+		message: `:star: <@${author}> aka \`${id}\`` + 
+			`${highlight(platform)} ratings:\n` +
+			ratings.map(
+				r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
+			).join(' ｜ '),
+		color: colors[platform]
+	};
+}
+
 /// verify <platform> <username | id> <@mention>
 /// manually verify the given account
 /// in case of fide, use fide id instead of username
@@ -357,16 +370,8 @@ command({
 					ratings = await getChess_comRatings(username);
 				break;
 			}
-			const color = colors[platform];
-			const title = 'Ratings - ' + names[platform];
-			platform = highlight(names[platform]);
 			if (ratings == null || ratings.length == 0) continue;
-			list.push({
-				title,
-				message: `:star: <@${author}> aka \`${username}\` ${platform} ratings:\n` +
-					ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
-				color
-			});
+			list.push(ratingCard(author, username, platform, ratings));
 		}
 		if (list.length != 0) return cards(list);
 		return not_linked_info(title);

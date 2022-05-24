@@ -4,7 +4,7 @@ import {
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes, addReaction,
-	BitwisePermissionFlags, addRole, removeRole
+	BitwisePermissionFlags, addRole, removeRole, getUser
 } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -316,6 +316,10 @@ export const clear = async (channel, limit) => {
 };
 export const bless = async (guild, user, role) => await addRole(bot, guild, user, role);
 export const curse = async (guild, user, role) => await removeRole(bot, guild, user, role);
+export const discriminator = async tag => {
+	const user = await getUser(bot, tag);
+	return user.username + '#' + user.discriminator;
+};
 
 // ==== Application Commands ===================================================
 

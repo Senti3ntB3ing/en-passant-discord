@@ -2,7 +2,7 @@
 import { Roles } from '../config.js';
 import {
 	Permission, Option, command, success, info,
-	card, cards, warn, error, bless, curse
+	card, cards, warn, error, bless, curse, discriminator
 } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
@@ -193,6 +193,7 @@ command({
 		const platform = interaction.data.options[0].value;
 		const name = interaction.data.options[1].value;
 		const tag = interaction.member.id;
+		const discord = await discriminator(tag);
 		let member = await Database.get(tag);
 		if (member == null) member = { accounts: [ ] };
 		let verified = false;
@@ -200,7 +201,7 @@ command({
 			case 'lichess.org':
 				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
 					return warn(title, `You already linked a __lichess.org__ account!`);
-				verified = await verifyLichessUser(name, tag);
+				verified = await verifyLichessUser(name, discord);
 				if (verified == undefined)
 					return warn(title, 'No __lichess.org__ user found with the username `' + name + '`!');
 				if (!verified) return cards([
@@ -213,7 +214,7 @@ command({
 			case 'chess.com':
 				if (member.accounts.find(a => a.platform == 'chess.com') != undefined)
 					return warn(title, `You already linked a __chess.com__ account!`);
-				verified = await verifyChess_comUser(name, tag);
+				verified = await verifyChess_comUser(name, discord);
 				if (verified == undefined)
 					return warn(title, 'No __chess.com__ user found with the username `' + name + '`!');
 				if (!verified) return cards([

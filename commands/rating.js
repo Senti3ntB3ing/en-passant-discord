@@ -319,11 +319,10 @@ function ratingCard(author, id, platform, ratings) {
 	return {
 		title: `Ratings - ${platform}`,
 		message: `:star: <@${author}> aka \`${id}\` ` + 
-				 `${highlight(platform)} ratings:\n`,
-		fields: ratings.map(rating => ({
-			name: `${emojis[rating.category]} ${rating.category}`,
-			value: `\`${rating.rating}\``, inline: true
-		})),
+			`${highlight(platform)} ratings:\n` +
+			ratings.map(
+				r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
+			).join(' ｜ '),
 		color: colors[platform]
 	};
 }

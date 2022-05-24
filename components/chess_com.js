@@ -20,7 +20,7 @@ export async function getChess_comUserStats(user) {
 }
 
 export async function getChess_comRatings(user) {
-	const categories = [ 'classical', 'rapid', 'blitz', 'bullet' ];
+	const categories = [ 'rapid', 'blitz', 'bullet' ];
 	let ratings = [];
 	const chess_com = await getChess_comUserStats(user);
 	if (chess_com == null) return undefined;

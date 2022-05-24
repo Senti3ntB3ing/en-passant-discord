@@ -4,7 +4,7 @@ import { Option, command, createCommand, success, info, card, cards, warn, error
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
 import { getFIDERatings, getFIDEName } from '../components/fide.js';
-import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.0/mod.ts';
+import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.1/mod.ts';
 import { countries } from '../components/countries.js';
 
 

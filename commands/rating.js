@@ -317,11 +317,15 @@ function ratingCard(author, id, platform, ratings) {
 	platform = names[platform.toLowerCase()];
 	return {
 		title: `Ratings - ${platform}`,
-		message: `:star: <@${author}> aka \`${id}\`` + 
+		message: `:star: <@${author}> aka \`${id}\` ` + 
 			`${highlight(platform)} ratings:\n` +
 			ratings.map(
 				r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
 			).join(' ｜ '),
+		fields: ratings.map(rating => ({
+			name: rating.category, inline: true,
+			value: `${emojis[rating.category]} \`${rating.rating}\``
+		})),
 		color: colors[platform]
 	};
 }

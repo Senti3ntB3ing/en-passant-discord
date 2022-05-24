@@ -377,7 +377,7 @@ command({
 /// challenge <lichess.org | chess.com>
 command({
 	name: 'challenge', emoji: ':crossed_swords:',
-	description: '⚔️ Creates a challenge link.',
+	description: '🔥 Creates a challenge link.',
 	options: [{
 		description: 'Online chess platform',
 		name: 'platform', type: Option.String,
@@ -388,7 +388,7 @@ command({
 	}],
 	execute: async interaction => {
 		const title = 'Challenge';
-		const member = await Database.get(interaction.member.user.id);
+		const member = await Database.get(interaction.member.id);
 		if (member == null || member.accounts == undefined ||
 			Object.keys(member.accounts).length == 0)
 			return not_linked_info(title);

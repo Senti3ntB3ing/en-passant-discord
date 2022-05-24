@@ -328,7 +328,7 @@ command({
 	}],
 	execute: async interaction => {
 		const title = 'Ratings';
-		const author = interaction.member.user.id;
+		const author = interaction.member.id;
 		const member = await Database.get(author);
 		if (member == null || member.accounts == undefined ||
 			Object.keys(member.accounts).length == 0)

@@ -1,5 +1,5 @@
 
-import { Prefix, Roles, ColorCodes } from '../config.js';
+import { Prefix, Roles } from '../config.js';
 import { Option, command, createCommand, success, info, card, cards, warn, error } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
@@ -14,8 +14,9 @@ const names = { 'lichess.org': 'lichess.org', 'chess.com': 'Chess.com', 'fide': 
 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'Chess.com': 0x7FA650 };
 const emojis = {
-	'FIDE': ':yellow_heart:', 'lichess.org': ':white_heart:', 'chess.com': ':green_heart:',
-	'bullet': ':gun:', 'rapid': ':clock:', 'blitz': ':zap:', 'standard': ':hourglass:',
+	'FIDE': ':yellow_heart:', 'lichess.org': ':white_heart:',
+	'chess.com': ':green_heart:', 'bullet': ':gun:', 'rapid': ':clock:',
+	'blitz': ':zap:', 'standard': ':hourglass:', 'classical': ':hourglass:'
 };
 
 const not_linked_info = title => info(
@@ -318,13 +319,10 @@ function ratingCard(author, id, platform, ratings) {
 	return {
 		title: `Ratings - ${platform}`,
 		message: `:star: <@${author}> aka \`${id}\` ` + 
-			`${highlight(platform)} ratings:\n` +
-			ratings.map(
-				r => `${emojis[r.category]} ${r.category} \`${r.rating}\``
-			).join(' ｜ '),
+				 `${highlight(platform)} ratings:\n`,
 		fields: ratings.map(rating => ({
-			name: rating.category, inline: true,
-			value: `${emojis[rating.category]} \`${rating.rating}\``
+			name: `${emojis[rating.category]} ${rating.category}`,
+			value: `\`${rating.rating}\``, inline: true
 		})),
 		color: colors[platform]
 	};

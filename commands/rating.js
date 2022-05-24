@@ -326,9 +326,9 @@ async function fideCard(author, id) {
 		title: 'Ratings - FIDE',
 		message: `:star: <@${author}>, ${user.country || '🇺🇳'} ` +
 			`\`${user.name}\` **FIDE** ratings:\n` +
-			user.ratings.length > 0 ? user.ratings.map(
+			(user.ratings.length > 0 ? user.ratings.map(
 				r => `${emojis[r.category]} **${r.category}** \`${r.rating}\``
-			).join('** ｜ **') : '`UNR` (Unrated)',
+			).join('** ｜ **') : '`UNR` (Unrated)'),
 		color: colors['FIDE']
 	};
 }

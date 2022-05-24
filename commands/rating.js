@@ -324,7 +324,7 @@ async function fideCard(author, id) {
 	user.name = user.name.replace(/^\s*(.*?),\s*(.*?)\s*$/g, '$2 $1');
 	return {
 		title: 'Ratings - FIDE',
-		message: `:star: <@${author}>, ${user.country || '🇺🇳'} ` +
+		message: `:star: <@${author}> - ${user.country || '🇺🇳'} ` +
 			`\`${user.name}\` **FIDE** ratings:\n` +
 			(user.ratings.length > 0 ? user.ratings.map(
 				r => `${emojis[r.category]} **${r.category}** \`${r.rating}\``
@@ -383,8 +383,7 @@ command({
 					const card = await fideCard(author, username);
 					if (card == undefined) continue;
 					list.push(card);
-					/*ratings = await getFIDERatings(username);
-					username = await getFIDEName(username);*/
+					continue;
 				break;
 				case 'lichess.org':
 					ratings = await getLichessRatings(username);

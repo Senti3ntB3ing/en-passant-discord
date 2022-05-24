@@ -1,6 +1,6 @@
 
 import { Prefix, Roles } from '../config.js';
-import { Option, command, createCommand, success, info, card, cards, warn, error } from '../parser.js';
+import { Permission, Option, command, createCommand, success, info, card, cards, warn, error, bless, curse } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
 import { getFIDERatings, getFIDEName } from '../components/fide.js';
@@ -349,6 +349,57 @@ function ratingCard(author, id, platform, ratings) {
 /// verify <platform> <username | id> <@mention>
 /// manually verify the given account
 /// in case of fide, use fide id instead of username
+command({
+	name: 'verify', emoji: ':white_check_mark:',
+	description: '✅ Manually verify a user platform.',
+	permissions: [ Permission.MODERATE_MEMBERS ],
+	options: [{
+		name: 'platform',
+		description: 'The platform to verify',
+		type: Option.String, required: true,
+		choices: platforms.map(name => ({ name, value: name }))
+	}, {
+		name: 'username',
+		description: 'The username or id of the user',
+		type: Option.String, required: true,
+	}, {
+		name: 'member',
+		description: 'The member to verify',
+		type: Option.User, required: true,
+	}],
+	execute: async interaction => {
+		const title = 'Account Verification';
+		const guild = interaction.guildId;
+		const platform = interaction.data.options[0].value;
+		const name = interaction.data.options[1].value;
+		const tag = interaction.data.options[2].value;
+		let member = await Database.get(tag);
+		if (member == null) member = { accounts: [ ] };
+		switch (platform.toLowerCase()) {
+			case 'fide':
+				if (member.accounts.find(a => a.platform.toLowerCase() == 'fide') != undefined)
+					return warn(title, `<@${tag}> already linked a **FIDE** account!`);
+				member.accounts.push({ platform: 'fide', username: name });
+				await bless(guild, tag, Roles.platforms['FIDE']);
+			break;
+			case 'lichess.org':
+				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
+					return warn(title, `<@${tag}> already linked a __lichess.org__ account!`);
+				member.accounts.push({ platform: 'lichess.org', username: name });
+				await bless(guild, tag, Roles.platforms['lichess.org']);
+			break;
+			case 'chess.com':
+				if (member.accounts.find(a => a.platform == 'chess.com') != undefined)
+					return warn(title, `<@${tag}> already linked a __chess.com__ account!`);
+				member.accounts.push({ platform: 'chess.com', username: name });
+				await bless(guild, tag, Roles.platforms['chess.com']);
+			break;
+			default: return process;
+		}
+		await Database.set(tag, member);
+		return success(title, `<@${tag}> successfully verified!`);
+	}
+});
 
 /// ratings <platform>?
 command({

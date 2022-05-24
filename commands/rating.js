@@ -372,7 +372,7 @@ command({
 		if (interaction.data.options != undefined &&
 			interaction.data.options.length > 0) {
 			const platform = interaction.data.options[0].value.toLowerCase();
-			data = data.filter(a => a.platform == platform);
+			data = data.filter(a => a.platform.toLowerCase() == platform);
 		}
 		const list = [];
 		for (let { platform, username } of data) {

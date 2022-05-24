@@ -380,7 +380,7 @@ command({
 			platform = platform.toLowerCase();
 			switch (platform) {
 				case 'fide':
-					const card = fideCard(author, username);
+					const card = await fideCard(author, username);
 					if (card == undefined) continue;
 					list.push(card);
 					/*ratings = await getFIDERatings(username);

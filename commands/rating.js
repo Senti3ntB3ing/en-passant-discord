@@ -344,7 +344,8 @@ command({
 		const list = [];
 		for (let { platform, username } of data) {
 			let ratings = [];
-			switch (platform.toLowerCase()) {
+			platform = platform.toLowerCase();
+			switch (platform) {
 				case 'fide':
 					ratings = await getFIDERatings(username);
 					username = await getFIDEName(username);

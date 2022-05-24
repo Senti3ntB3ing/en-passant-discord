@@ -4,6 +4,9 @@ import { Option, command, createCommand, success, info, card, cards, warn, error
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
 import { getFIDERatings, getFIDEName } from '../components/fide.js';
+import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.0/mod.ts';
+import { countries } from '../components/countries.js';
+
 
 import { Database } from '../database.js';
 
@@ -15,8 +18,8 @@ const names = { 'lichess.org': 'lichess.org', 'chess.com': 'Chess.com', 'fide': 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'Chess.com': 0x7FA650 };
 const emojis = {
 	'FIDE': ':yellow_heart:', 'lichess.org': ':white_heart:',
-	'chess.com': ':green_heart:', 'bullet': ':gun:', 'rapid': ':clock:',
-	'blitz': ':zap:', 'standard': ':hourglass:', 'classical': ':hourglass:'
+	'chess.com': ':green_heart:', 'bullet': ':gun:', 'rapid': ':stopwatch:',
+	'blitz': ':zap:', 'standard': ':clock:', 'classical': ':hourglass:'
 };
 
 const not_linked_info = title => info(
@@ -314,6 +317,22 @@ createCommand({
 
 // ==== New Commands ===========================================================
 
+async function fideCard(author, id) {
+	const user = await FIDE(id);
+	if (user == undefined || user == null) return undefined;
+	if (user.country != undefined) user.country = countries[user.country][1];
+	user.name = user.name.replace(/^\s*(.*?),\s*(.*?)\s*$/g, '$2 $1');
+	return {
+		title: 'Ratings - FIDE',
+		message: `:star: <@${author}>, ${user.country || '🇺🇳'} ` +
+			`\`${user.name}\` **FIDE** ratings:\n` +
+			user.ratings.length > 0 ? user.ratings.map(
+				r => `${emojis[r.category]} **${r.category}** \`${r.rating}\``
+			).join('** ｜ **') : '`UNR` (Unrated)',
+		color: colors['FIDE']
+	};
+}
+
 function ratingCard(author, id, platform, ratings) {
 	platform = names[platform.toLowerCase()];
 	return {
@@ -361,8 +380,11 @@ command({
 			platform = platform.toLowerCase();
 			switch (platform) {
 				case 'fide':
-					ratings = await getFIDERatings(username);
-					username = await getFIDEName(username);
+					const card = fideCard(author, username);
+					if (card == undefined) continue;
+					list.push(card);
+					/*ratings = await getFIDERatings(username);
+					username = await getFIDEName(username);*/
 				break;
 				case 'lichess.org':
 					ratings = await getLichessRatings(username);

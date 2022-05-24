@@ -367,6 +367,8 @@ command({
 				color
 			});
 		}
+		if (list.length != 0) return cards(list);
+		return not_linked_info(title);
 	}
 });
 
@@ -406,6 +408,6 @@ command({
 				url = `https://lichess.org/?user=${data.username}#friend`;
 			break;
 		}
-		return card(title, `**Challenge Link:**\n${url}`, colors[platform]);
+		return card(`${title} - ${names[platform]}`, url, colors[platform]);
 	}
 });

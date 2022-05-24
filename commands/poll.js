@@ -6,9 +6,9 @@ import { Emoji } from '../components/emoji.js';
 
 command({
 	name: 'poll', emoji: ':bar_chart:',
-	description: '📊 Make a poll with the given reactions.',
+	description: '📊 Makes a poll with the given message.',
 	options: [{
-		description: 'Text to display in the poll.',
+		description: 'Text to display in the poll',
 		name: 'text', type: Option.String, required: true
 	}],
 	execute: async interaction => {

@@ -3,9 +3,9 @@ import { Option, Permission, command, error, card, clear } from '../parser.js';
 
 command({
 	name: 'clear', emoji: ':wastebasket:',
-	description: '🗑 Clear messages in a text channel.',
+	description: '🗑 Clears messages in a text channel.',
 	options: [{
-		description: 'Number of messages to delete.',
+		description: 'Number of messages to delete',
 		name: 'count', type: Option.Number,
 		required: true, maxValue: 100, minValue: 1,
 	}],

@@ -53,7 +53,7 @@ command({
 	name: 'links', emoji: ':link:',
 	description: '🔗 List of useful links.',
 	options: [{
-		description: 'Specific platform link to display.',
+		description: 'Specific platform link to display',
 		name: 'platform', type: Option.String,
 		required: false, choices: Object.keys(links).map(
 			name => ({ name: `${links[name].emoji} ${name}`, value: name })
@@ -85,7 +85,7 @@ command({
 
 command({
 	name: 'schedule', emoji: ':calendar_spiral:', options: [],
-	description: '🗓 Link to __thechessnerd__ Twitch schedule.',
+	description: '📅 Link to __thechessnerd__ Twitch schedule.',
 	execute: () => card(
 		'Link to thechessnerd Twitch schedule',
 		':calendar_spiral: ' + links['Twitch'].url + 'schedule',

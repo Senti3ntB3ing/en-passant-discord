@@ -1,6 +1,6 @@
 
 import { Prefix, Roles, ColorCodes } from '../config.js';
-import { createCommand, success, info, card, cards, warn, error } from '../parser.js';
+import { Option, command, createCommand, success, info, card, cards, warn, error } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
 import { getFIDERatings, getFIDEName } from '../components/fide.js';
@@ -8,6 +8,9 @@ import { getFIDERatings, getFIDEName } from '../components/fide.js';
 import { Database } from '../database.js';
 
 import { addRole, removeRole } from 'https://deno.land/x/discordeno@13.0.0-rc34/mod.ts';
+
+const platforms = [ 'lichess.org', 'Chess.com', 'FIDE' ];
+const names = { 'lichess.org': 'lichess.org', 'chess.com': 'Chess.com', 'fide': 'FIDE' };
 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'chess.com': 0x7FA650 };
 const emojis = {
@@ -308,31 +311,101 @@ createCommand({
 	}
 });
 
-/// challenge
-/// create a challenge url for the linked account.
-createCommand({
-	name: 'challenge', emoji: ':crossed_swords:', hidden: false,
-	description: 'Create a challenge link.',
-	execute: async message => {
+// ==== New Commands ===========================================================
+
+/// verify <platform> <username | id> <@mention>
+/// manually verify the given account
+/// in case of fide, use fide id instead of username
+
+/// ratings <platform>?
+command({
+	name: 'ratings', emoji: ':sparkles:',
+	description: '✨ Displays your current ratings.',
+	options: [{
+		description: 'Online chess platform',
+		name: 'platform', type: Option.String, required: false,
+		choices: platforms.map(name => ({ name, value: name })),
+	}],
+	execute: async interaction => {
+		const title = 'Ratings';
+		const author = interaction.member.user.id;
+		const member = await Database.get(author);
+		if (member == null || member.accounts == undefined ||
+			Object.keys(member.accounts).length == 0)
+			return not_linked_info(title);
+		let data = member.accounts;
+		if (data == undefined || data.length == 0)
+			return not_linked_info(title);
+		if (interaction.data.options != undefined &&
+			interaction.data.options.length > 0) {
+			const platform = interaction.data.options[0].value.toLowerCase();
+			data = data.filter(a => a.platform == platform);
+		}
+		const list = [];
+		for (let { platform, username } of data) {
+			let ratings = [];
+			switch (platform.toLowerCase()) {
+				case 'fide':
+					ratings = await getFIDERatings(username);
+					username = await getFIDEName(username);
+				break;
+				case 'lichess.org':
+					ratings = await getLichessRatings(username);
+				break;
+				case 'chess.com':
+					ratings = await getChess_comRatings(username);
+				break;
+			}
+			const color = colors[platform];
+			const title = 'Ratings - ' + names[platform];
+			platform = highlight(names[platform]);
+			if (ratings == null || ratings.length == 0) continue;
+			list.push({
+				title,
+				message: `:star: <@${author}> aka \`${username}\` ${platform} ratings:\n` +
+					ratings.map(r => `${emojis[r.category]} ${r.category} \`${r.rating}\``).join(' ｜ '),
+				color
+			});
+		}
+	}
+});
+
+/// connect <platform> <username>
+
+/// disconnect <platform | all>
+
+/// challenge <lichess.org | chess.com>
+command({
+	name: 'challenge', emoji: ':crossed_swords:',
+	description: '⚔️ Creates a challenge link.',
+	options: [{
+		description: 'Online chess platform',
+		name: 'platform', type: Option.String,
+		required: true, choices: [
+			{ name: `Chess.com`, value: 'Chess.com' },
+			{ name: `lichess.org`, value: 'lichess.org' }
+		],
+	}],
+	execute: async interaction => {
 		const title = 'Challenge';
-		const member = await Database.get(message.member.id);
-		if (member == null || member.accounts == undefined) return not_linked_info(title);
-		if (Object.keys(member.accounts).length == 0) return not_linked_info(title);
-		//return card(title, `Click on a link to challenge <@${message.member.id}>:` + list.join('\n'));
-		return {
-			embeds: [{
-				type: 'rich', title,
-				color: ColorCodes.normal,
-				fields: member.accounts.map(account => {
-					let url = '';
-					switch (account.platform) {
-						case 'FIDE': break;
-						case 'lichess.org': url = `https://lichess.org/?user=${account.username}#friend`; break;
-						case 'chess.com': url = `https://www.chess.com/live?#time=5m0s0i&game=chess&rated=rated&minrating=any&maxrating=any&color=random&member=${account.username}`; break;
-					}
-					return { name: `__${account.platform}__:`, value: url, inline: false };
-				})
-			}]
-		};
+		const member = await Database.get(interaction.member.user.id);
+		if (member == null || member.accounts == undefined ||
+			Object.keys(member.accounts).length == 0)
+			return not_linked_info(title);
+		const platform = interaction.data.options[0].value.toLowerCase();
+		const data = member.accounts.find(a => a.platform == platform);
+		if (data == undefined) return not_linked_info(title);
+		let url = '';
+		switch (platform) {
+			case 'chess.com':
+				url = `https://www.chess.com/live?#time=5m0s0i&game=chess&` +
+					`rated=rated&minrating=any&maxrating=any&` +
+					`color=random&member=${data.username}`;
+			break;
+			case 'lichess.org':
+				url = `https://lichess.org/?user=${data.username}#friend`;
+			break;
+		}
+		return card(title, `**Challenge Link:**\n${url}`, colors[platform]);
 	}
 });

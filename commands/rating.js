@@ -34,7 +34,7 @@ const process = (platform, mention) => warn(
 	'**Discord** username (`' + mention + '`) to the `location` field.\n' +
 	'2️⃣ Type `/connect` to connect your account.\n' +
 	(platform == 'chess.com' ?
-	'🆘 The __chess.com__ servers are slow, give it 15 minutes.' : '') +
+	'🆘 The __chess.com__ servers are slow, give it 15 minutes.\n' : '') +
 	'If your username contains spaces or symbols it might not work.\n' +
 	'If you need help tag a <@&' + Roles.moderator + '>.'
 );

@@ -60,7 +60,9 @@ const baseBot = createBot({
 	intents: [
 		GatewayIntents.Guilds,
 		GatewayIntents.GuildMembers,
-		GatewayIntents.GuildMessages
+		GatewayIntents.GuildMessages,
+		GatewayIntents.GuildIntegrations,
+		GatewayIntents.MessageContent
 	],
 	events: {
 		// _ is bot, but it is not necessary

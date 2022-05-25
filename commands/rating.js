@@ -27,13 +27,14 @@ const not_linked_info = title => info(
 
 const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
 
-const process = (platform, mention) => info(
+const process = (platform, mention) => warn(
 	names[platform] + ' Instructions',
-	`Go on your ${highlight(names[platform])} settings page and add your` + 
+	'Verification failed, try these steps:\n' +
+	`1️⃣ Go on your ${highlight(names[platform])} settings page and add your ` + 
 	'**Discord** username (`' + mention + '`) to the `location` field.\n' +
-	'Type `/verify` to connect your account.\n' +
-	'If your username contains spaces or symbols it might not work.\n' +
-	'If you need help tag a <@&' + Roles.moderator + '>.'
+	'2️⃣ Type `/connect` to connect your account.\n' +
+	'✴️ If your username contains spaces or symbols it might not work.\n' +
+	'❇️ If you need help tag a <@&' + Roles.moderator + '>.'
 );
 
 async function fideCard(author, id) {
@@ -113,7 +114,6 @@ command({
 				member.accounts.push({ platform: 'chess.com', username: name });
 				await bless(guild, tag, Roles.platforms['chess.com']);
 			break;
-			default: return process;
 		}
 		await Database.set(tag, member);
 		return success(title, `<@${tag}> successfully verified!`);
@@ -206,7 +206,7 @@ command({
 					return warn(title, 'No __lichess.org__ user found with the username `' + name + '`!');
 				if (!verified) return cards([
 					error(title, 'Verification with __lichess.org__ failed!'),
-					process('lichess.org', tag)
+					process('lichess.org', discord)
 				]);
 				member.accounts.push({ platform: 'lichess.org', username: name });
 				await bless(guild, tag, Roles.platforms['lichess.org']);
@@ -222,7 +222,7 @@ command({
 						title,
 						'Verification with __chess.com__ failed!\n' +
 						'The __chess.com__ servers are slow, give it 15 minutes.'
-					), process('chess.com', tag)
+					), process('chess.com', discord)
 				]);
 				member.accounts.push({ platform: 'chess.com', username: name });
 				await bless(guild, tag, Roles.platforms['chess.com']);
@@ -265,7 +265,6 @@ command({
 				case 'chess.com':
 					await curse(guild, tag, Roles.platforms['chess.com']);
 				break;
-				default: return process;
 			}
 			member.accounts = member.accounts.filter(
 				a => a.platform.toLowerCase() != platform

@@ -29,14 +29,14 @@ const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
 
 const process = (platform, mention) => warn(
 	names[platform] + ' Instructions',
-	'Verification failed, try these steps:\n' +
+	'**Verification failed, try these steps:**\n\n' +
 	`1️⃣ Go on your ${highlight(names[platform])} settings page and add your ` + 
 	'**Discord** username (`' + mention + '`) to the `location` field.\n' +
 	'2️⃣ Type `/connect` to connect your account.\n' +
 	(platform == 'chess.com' ?
 	'🆘 The __chess.com__ servers are slow, give it 15 minutes.' : '') +
-	'✴️ If your username contains spaces or symbols it might not work.\n' +
-	'❇️ If you need help tag a <@&' + Roles.moderator + '>.'
+	'If your username contains spaces or symbols it might not work.\n' +
+	'If you need help tag a <@&' + Roles.moderator + '>.'
 );
 
 async function fideCard(author, id) {

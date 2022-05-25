@@ -1,6 +1,6 @@
 
 import {
-	createBot, startBot, editBotStatus, sendMessage
+	createBot, startBot, editBotStatus, sendMessage, GatewayIntents
 } from 'https://deno.land/x/discordeno@13.0.0-rc40/mod.ts';
 import { enableCachePlugin, enableCacheSweepers }
 from 'https://deno.land/x/discordeno_cache_plugin@0.0.18/mod.ts';
@@ -57,7 +57,11 @@ function setRandomAction() {
 const baseBot = createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),
-	intents: [ 'Guilds', 'GuildMessages', 'GuildMembers' ],
+	intents: [
+		GatewayIntents.Guilds,
+		GatewayIntents.GuildMembers,
+		GatewayIntents.GuildMessages
+	],
 	events: {
 		// _ is bot, but it is not necessary
 		messageCreate(_, message) {

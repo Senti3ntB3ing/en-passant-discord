@@ -25,7 +25,7 @@ command({
 		} else status = game.turn == 'w' ? '◽️ WHITE TO MOVE' : '◾️ BLACK TO MOVE';
 		const data = await diagram(game.board, game.turn);
 		console.log(data);
-		send(Channels.dev_chat, {
+		return {
 			file: [{
 				blob: new Blob([ await diagram(game.board, game.turn) ]),
 				name: 'board.png',
@@ -35,7 +35,7 @@ command({
 				image: { url: 'attachment://board.png', height: 800, width: 800 },
 				footer: { text: status },
 			}]
-		});
+		};
 	}
 });
 

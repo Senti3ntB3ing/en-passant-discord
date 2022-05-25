@@ -98,7 +98,7 @@ export function parse(message) {
 	));
 }
 
-export function createCommand(command) {
+export function prefix(command) {
 	if (typeof command.execute != 'function') return;
 	if (command.name == undefined) return;
 	if (command.aliases == undefined) command.aliases = [ ];
@@ -355,7 +355,7 @@ export function command(data) {
 	handlers[data.name] = data.execute;
 }
 
-createCommand({
+prefix({
 	name: 'register', emoji: ':pencil:', hidden: true,
 	description: 'Registers application commands.',
 	permissions: [ Roles.administrator ],
@@ -371,7 +371,7 @@ createCommand({
 	}
 });
 
-createCommand({
+prefix({
 	name: 'forget', emoji: ':pencil:', hidden: true,
 	description: 'Deletes application commands.',
 	permissions: [ Roles.administrator ],

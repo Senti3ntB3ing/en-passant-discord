@@ -1,14 +1,14 @@
 
-import { Option, createCommand, command, error, send } from '../parser.js';
+import { Option, prefix, command, error, send } from '../parser.js';
 import { Chess } from '../components/chess.js';
 import { diagram, gif } from '../components/diagram/diagram.js';
 import { Channels } from '../config.js';
 
 command({
 	name: 'fen', emoji: ':page_with_curl:',
-	description: '📋 Display a chess board diagram from FEN.',
+	description: '📋 Displays a chess board diagram from FEN.',
 	options: [{
-		description: 'Forsyth–Edwards Notation.', name: 'fen',
+		description: 'Forsyth–Edwards Notation', name: 'fen',
 		type: Option.String, required: true,
 	}],
 	execute: async interaction => {
@@ -39,7 +39,7 @@ command({
 	}
 });
 
-createCommand({
+prefix({
 	name: 'gif', emoji: ':page_with_curl:', aliases: [ 'pgn' ], rate: 4,
 	description: 'Display a chess gif from a list of moves.',
 	execute: async message => {

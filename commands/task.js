@@ -1,8 +1,8 @@
 
 import { Roles } from '../config.js';
-import { createCommand, tasks, card, error, info } from '../parser.js';
+import { prefix, tasks, card, error, info } from '../parser.js';
 
-createCommand({
+prefix({
 	name: 'task', emoji: ':mechanical_arm:', hidden: true,
 	description: 'Force the execution of a task.',
 	permissions: Roles.moderator,

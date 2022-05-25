@@ -1,8 +1,8 @@
 
 import { Channels, Roles } from '../config.js';
-import { createCommand, createHelp } from '../parser.js';
+import { prefix, createHelp } from '../parser.js';
 
-createCommand({
+prefix({
 	name: 'help', emoji: ':grey_question:',
 	aliases: [ 'usage', 'commands' ], rate: 3,
 	description: 'Display the list of commands.',

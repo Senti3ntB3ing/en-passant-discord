@@ -1,8 +1,8 @@
 
 import { Roles } from '../config.js';
-import { createCommand, send, error } from '../parser.js';
+import { prefix, send, error } from '../parser.js';
 
-createCommand({
+prefix({
 	name: 'shutdown', emoji: ':firecracker:', hidden: true,
 	aliases: [ 'die' ],
 	description: 'Shutdown the bot.',

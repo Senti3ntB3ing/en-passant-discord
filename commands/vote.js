@@ -95,7 +95,7 @@ command({
 		);
 		vote(interaction.member.id, move);
 		bless(interaction.guildId, interaction.member.id, Roles.voter);
-		return success(title, 'Vote registered successfully!');
+		return success(title, 'Move `' + move + '` registered successfully!');
 	}
 });
 

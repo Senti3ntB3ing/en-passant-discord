@@ -3,7 +3,8 @@ import { Channels, Roles } from '../config.js';
 import { prefix, createHelp } from '../parser.js';
 
 prefix({
-	name: 'help', emoji: ':grey_question:',
+	name: 'help', emoji: ':grey_question:', hidden: true,
+	permissions: Roles.moderator,
 	aliases: [ 'usage', 'commands' ], rate: 3,
 	description: 'Display the list of commands.',
 	execute: message => createHelp(

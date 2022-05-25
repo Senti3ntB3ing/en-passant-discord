@@ -1,5 +1,5 @@
 
-import { Option, Permission, command, error, card, clear } from '../parser.js';
+import { Option, command, error, card, clear } from '../parser.js';
 
 command({
 	name: 'clear', emoji: ':wastebasket:',
@@ -9,7 +9,6 @@ command({
 		name: 'count', type: Option.Number,
 		required: true, maxValue: 100, minValue: 1,
 	}],
-	permissions: [ Permission.MANAGE_MESSAGES ],
 	execute: async interaction => {
 		const limit = parseInt(interaction.data.options[0].value);
 		try { await clear(interaction.channelId, limit); }

@@ -1,8 +1,8 @@
 
 import { Roles } from '../config.js';
 import {
-	Permission, Option, command, success, info,
-	card, cards, warn, error, bless, curse, discriminator
+	Option, command, success, info, card,
+	cards, warn, bless, curse, discriminator
 } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
@@ -74,7 +74,6 @@ function ratingCard(author, id, platform, ratings) {
 command({
 	name: 'verify', emoji: ':white_check_mark:',
 	description: '✅ Manually verify a user platform.',
-	permissions: [ Permission.MODERATE_MEMBERS ],
 	options: [{
 		name: 'platform',
 		description: 'The platform to verify',

@@ -3,8 +3,8 @@ import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
-	InteractionResponseTypes, ApplicationCommandOptionTypes, addReaction,
-	BitwisePermissionFlags, addRole, removeRole, getUser
+	InteractionResponseTypes, ApplicationCommandOptionTypes,
+	addRole, removeRole, getUser, addReaction
 } from 'https://deno.land/x/discordeno@13.0.0-rc40/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -293,7 +293,6 @@ export function fetchLog() {
 // ==== Redirects ==============================================================
 
 export const Option = ApplicationCommandOptionTypes;
-export const Permission = BitwisePermissionFlags;
 export const guild = async g => await getGuild(bot, g, { counts: true });
 export const snow = id => Number(id / 4194304n + 1420070400000n);
 export const send = (channel, content) => sendMessage(bot, channel, content);
@@ -348,8 +347,7 @@ export function command(data) {
 		name: data.name,
 		description: data.description,
 		options: data.options,
-		moderation: 'moderation' in data ? data.moderation : false,
-		defaultMemberPermissions: data.permissions
+		moderation: 'moderation' in data ? data.moderation : false
 	};
 	appCommands.push(command);
 	handlers[data.name] = data.execute;
@@ -365,10 +363,7 @@ prefix({
 			// register new commands:
 			for (const command of appCommands)
 				await createApplicationCommand(bot, command, id);
-		} catch (e) {
-			console.error(e);
-			return error('Application Commands', 'Registration error!');
-		}
+		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:
 		return success('Application Commands', 'Registration completed!');
 	}

@@ -1,14 +1,12 @@
 
-import { soxa } from "https://deno.land/x/soxa@1.4/mod.ts"
-
 const TWITCH_CLIENT_ID = Deno.env.get("TWITCH_CLIENT_ID");
-const TWITCH_SECRET = Deno.env.get("TWITCH_SECRET");
 const TWITCH_AUTH_TOKEN = Deno.env.get("TWITCH_AUTH_TOKEN");
 
-export const API_BASE_URL = "https://api.twitch.tv/helix/";
+export const BASE_URL = "https://api.twitch.tv/helix/";
 export const QUERIES = {
 	search: { channel: "search/channels?query=" },
-	streams: "streams?user_id="
+	streams: "streams?user_id=",
+	schedule: "schedule?broadcaster_id="
 };
 const HEADERS = { 
 	headers: { 
@@ -17,15 +15,15 @@ const HEADERS = {
 	} 
 };
 
-export const buildUrl = uri => API_BASE_URL + uri;
+export const buildUrl = uri => BASE_URL + uri;
 
 export async function channel(streamer) {
 	if (streamer === '') return undefined;
 	try {
 		const queryUrl = buildUrl(QUERIES.search.channel);
-		const req = await soxa.get(queryUrl + streamer + "&first=100", HEADERS);
+		const req = await fetch(queryUrl + streamer + "&first=10", HEADERS);
 		if (req.status != 200) return null;
-		const data = req.data.data;
+		const data = (await req.json()).data;
 		for (const channel of data)
 			if (channel.display_name.toLowerCase() === streamer.toLowerCase())
 				return channel;
@@ -34,15 +32,16 @@ export async function channel(streamer) {
 }
 
 export async function streams(user_ids) {
-	if (user_ids.length === 0) return [];
+	if (user_ids.length === 0) return null;
+	let data = null;
 	try {
 		let queryUrl = buildUrl(QUERIES.streams);
 		for (let i = 0; i < user_ids.length; i++)
 			if (i === user_ids.length - 1) queryUrl += user_ids[i];
 			else queryUrl += `${user_ids[i]}&user_id=`;
-		const req = await soxa.get(queryUrl, HEADERS);
+		const req = await fetch(queryUrl, HEADERS);
 		if (req.status != 200) return null;
-		const data = req.data.data;
+		data = (await req.json()).data;
 	} catch { return undefined; }
 	return data;
 }
@@ -51,4 +50,15 @@ export async function live(streamer) {
 	const c = await channel(streamer);
 	if (c == undefined || c == null) return c;
 	return c.is_live;
+}
+
+export async function schedule(id, date) {
+	date = date || new Date().toISOString();
+	const url = `${BASE_URL}schedule?broadcaster_id=${id}&start_time=${date}&first=7`;
+	try {
+		const req = await fetch(url, HEADERS);
+		if (req.status != 200) return null;
+		const data = (await req.json()).data;
+		return data;
+	} catch { return null; }
 }

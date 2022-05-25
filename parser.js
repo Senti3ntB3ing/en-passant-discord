@@ -178,7 +178,7 @@ export const cards = elements => ({
 		title: element.embeds[0].title || Name,
 		color: element.embeds[0].color || ColorCodes.normal,
 		fields: element.embeds[0].fields || [],
-		description: element.embeds[0].message || ''
+		description: element.embeds[0].description || ''
 	}))
 });
 

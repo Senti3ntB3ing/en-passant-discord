@@ -175,10 +175,10 @@ export const card = (title, message, color) => ({
 export const cards = elements => ({
 	embeds: elements.map(element => ({
 		type: 'rich',
-		title: element.embeds[0].title || Name,
-		color: element.embeds[0].color || ColorCodes.normal,
-		fields: element.embeds[0].fields || [],
-		description: element.embeds[0].description || ''
+		title: element.title || Name,
+		color: element.color || ColorCodes.normal,
+		fields: element.fields || [],
+		description: element.message || ''
 	}))
 });
 

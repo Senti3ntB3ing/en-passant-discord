@@ -365,7 +365,10 @@ prefix({
 			// register new commands:
 			for (const command of appCommands)
 				await createApplicationCommand(bot, command, id);
-		} catch { return error('Application Commands', 'Registration error!'); }
+		} catch (e) {
+			console.error(e);
+			return error('Application Commands', 'Registration error!');
+		}
 		// send success message:
 		return success('Application Commands', 'Registration completed!');
 	}

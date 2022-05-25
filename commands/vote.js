@@ -48,7 +48,7 @@ prefix({
 
 command({
 	name: 'vote', emoji: ':ballot_box:',
-	description: `🔖 Vote a move for <#${Channels.vote_chess}>.`,
+	description: `🔖 Vote a move for vote chess.`,
 	options: [{
 		description: 'Move to vote for.', name: 'move',
 		type: Option.String, required: true
@@ -100,10 +100,10 @@ command({
 });
 
 command({
-	name: 'count', emoji: ':ballot_box:', options: [],
-	description: `🗳 Count <#${Channels.vote_chess}> votes.`,
+	name: 'ballot', emoji: ':ballot_box:', options: [],
+	description: `🗳 Count vote chess votes.`,
 	execute: async () => {
-		const title = 'Vote Chess Count';
+		const title = 'Vote Chess Ballot';
 		if (!(await playing())) return info(title,
 			`There is no <#${Channels.vote_chess}> game in progress right now!`
 		);

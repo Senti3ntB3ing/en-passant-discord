@@ -57,13 +57,13 @@ function setRandomAction() {
 const baseBot = createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),
-	intents: [
-		GatewayIntents.Guilds,
-		GatewayIntents.GuildMembers,
-		GatewayIntents.GuildMessages,
-		GatewayIntents.GuildIntegrations,
+	intents: (
+		GatewayIntents.Guilds            |
+		GatewayIntents.GuildMembers      |
+		GatewayIntents.GuildMessages     |
+		GatewayIntents.GuildIntegrations |
 		GatewayIntents.MessageContent
-	],
+	),
 	events: {
 		// _ is bot, but it is not necessary
 		messageCreate(_, message) {

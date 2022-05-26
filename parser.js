@@ -343,7 +343,7 @@ export async function dispatch(interaction) {
 		}
 	);
 	for (const reaction of reactions) {
-		try { await react(interaction.channelId, id, reaction); }
+		try { await react(interaction.channelId, id, '😄'); }
 		catch (e) { console.log(e); }
 	}
 }

@@ -341,11 +341,11 @@ export async function dispatch(interaction) {
 			type: InteractionResponseTypes.ChannelMessageWithSource,
 			data: response
 		}
-	);
-	for (const reaction of reactions) {
+	);await react(interaction.channelId, id, '😄');
+	/*for (const reaction of reactions) {
 		try { await react(interaction.channelId, id, '😄'); }
 		catch (e) { console.log(e); }
-	}
+	}*/
 }
 
 export function command(data) {

@@ -54,7 +54,7 @@ function setRandomAction() {
 	});
 }
 
-const baseBot = createBot({
+const baseBot = await createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),
 	intents: (

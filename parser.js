@@ -336,16 +336,16 @@ export async function dispatch(interaction) {
 		reactions = response.reactions;
 		delete response.reactions;
 	}
-	const id = await sendInteractionResponse(
+	const id = (await sendInteractionResponse(
 		bot, interaction.id, interaction.token, {
 			type: InteractionResponseTypes.ChannelMessageWithSource,
 			data: response
 		}
-	);await react(interaction.channelId, id, '😄');
-	/*for (const reaction of reactions) {
-		try { await react(interaction.channelId, id, '😄'); }
+	).id);
+	for (const reaction of reactions) {
+		try { await react(interaction.channelId, id, reaction); }
 		catch (e) { console.log(e); }
-	}*/
+	}
 }
 
 export function command(data) {

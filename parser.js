@@ -5,7 +5,7 @@ import {
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes,
 	addRole, removeRole, getUser, addReaction
-} from 'https://deno.land/x/discordeno@13.0.0-rc40/mod.ts';
+} from 'https://deno.land/x/discordeno@13.0.0-rc42/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 
@@ -330,16 +330,22 @@ export async function dispatch(interaction) {
 	if (handler.constructor.name == 'AsyncFunction') {
 		response = await handler(interaction)
 	} else response = handler(interaction);
-	if (response != undefined) {
-		sendInteractionResponse(
-			bot, interaction.id, interaction.token, {
-				type: InteractionResponseTypes.ChannelMessageWithSource,
-				data: response
-			}
-		);
-	} else sendInteractionResponse(bot, interaction.id, interaction.token, {
-		type: InteractionResponseTypes.Pong
-	});
+	if (response == undefined) return;
+	let reactions = [];
+	if (response.reactions != undefined) {
+		reactions = response.reactions;
+		delete response.reactions;
+	}
+	const id = await sendInteractionResponse(
+		bot, interaction.id, interaction.token, {
+			type: InteractionResponseTypes.ChannelMessageWithSource,
+			data: response
+		}
+	);
+	for (const reaction of reactions) {
+		try { await react(interaction.channelId, id, reaction); }
+		catch (e) { console.log(e); }
+	}
 }
 
 export function command(data) {

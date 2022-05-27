@@ -181,7 +181,7 @@ command({
 		type: Option.User, required: true,
 	}],
 	execute: async interaction => {
-		const title = 'Ratings';
+		const title = 'Information';
 		const user = interaction.data.options[0].value;
 		const member = await Database.get(user);
 		const e = info(title, `The user <@${user}> has no linked accounts.`);

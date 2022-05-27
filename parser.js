@@ -342,6 +342,7 @@ export async function dispatch(interaction) {
 			data: response
 		}
 	).id);
+	console.log(id)
 	for (const reaction of reactions) {
 		try { //await react(interaction.channelId, id, reaction); }
 			await addReaction(bot, interaction.channelId, id, reaction); }

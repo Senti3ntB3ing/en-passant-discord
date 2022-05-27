@@ -13,8 +13,7 @@ command({
 		const title = 'Community Poll';
 		const text = interaction.data.options[0].value;
 		const result = card(title, text);
-		result.reactions = text.match(Emoji);
-		console.log(result);
+		result.reactions = text.match(Emoji) ?? [];
 		return result;
     }
 });

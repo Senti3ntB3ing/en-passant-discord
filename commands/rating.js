@@ -6,10 +6,9 @@ import {
 } from '../parser.js';
 import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
-import { countries } from '../components/countries.js';
 import { Database } from '../database.js';
 
-import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.1/mod.ts';
+import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.2/mod.ts';
 
 const platforms = [ 'lichess.org', 'Chess.com', 'FIDE' ];
 const names = { 'lichess.org': 'lichess.org', 'chess.com': 'Chess.com', 'fide': 'FIDE' };
@@ -42,11 +41,10 @@ const process = (platform, mention) => warn(
 async function fideCard(author, id) {
 	const user = await FIDE(id);
 	if (user == undefined || user == null) return undefined;
-	if (user.country != undefined) user.country = countries[user.country][1];
 	user.name = user.name.replace(/^\s*(.*?),\s*(.*?)\s*$/g, '$2 $1');
 	return {
 		title: 'Ratings - FIDE',
-		message: `:star: <@${author}> - ${user.country || '🇺🇳'} ` +
+		message: `:star: <@${author}> - ${user.flag || '🇺🇳'} ` +
 			`\`${user.name}\` **FIDE** ratings:\n` +
 			(user.ratings.length > 0 ? user.ratings.map(
 				r => `${emojis[r.category]} **${r.category}** \`${r.rating}\``

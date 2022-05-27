@@ -183,6 +183,7 @@ command({
 	execute: async interaction => {
 		const title = 'Ratings';
 		const user = interaction.data.options[0].value;
+		console.log(user)
 		const member = await Database.get(user);
 		const e = info(title, `The user <@${user}> has no linked accounts.`);
 		if (member == null || member.accounts == undefined ||

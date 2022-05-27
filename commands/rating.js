@@ -171,7 +171,7 @@ command({
 	}
 });
 
-/// ratings <platform>?
+/// info <@mention>
 command({
 	name: 'info', emoji: ':mag:',
 	description: '🔍 Displays someone\'s ratings.',
@@ -184,12 +184,11 @@ command({
 		const title = 'Ratings';
 		const user = interaction.data.options[0].value;
 		const member = await Database.get(user);
+		const e = info(title, `The user <@${user}> has no linked accounts.`);
 		if (member == null || member.accounts == undefined ||
-			Object.keys(member.accounts).length == 0)
-			return not_linked_info(title);
+			Object.keys(member.accounts).length == 0) return e;
 		let data = member.accounts;
-		if (data == undefined || data.length == 0)
-			return not_linked_info(title);
+		if (data == undefined || data.length == 0) return e;
 		if (interaction.data.options != undefined &&
 			interaction.data.options.length > 0) {
 			const platform = interaction.data.options[0].value.toLowerCase();
@@ -217,7 +216,7 @@ command({
 			list.push(ratingCard(user, username, platform, ratings));
 		}
 		if (list.length != 0) return cards(list);
-		return not_linked_info(title);
+		return e;
 	}
 });
 

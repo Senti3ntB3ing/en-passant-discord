@@ -184,17 +184,11 @@ command({
 		const title = 'Ratings';
 		const user = interaction.data.options[0].value;
 		const member = await Database.get(user);
-		console.log(member);
 		const e = info(title, `The user <@${user}> has no linked accounts.`);
 		if (member == null || member.accounts == undefined ||
 			Object.keys(member.accounts).length == 0) return e;
 		let data = member.accounts;
 		if (data == undefined || data.length == 0) return e;
-		if (interaction.data.options != undefined &&
-			interaction.data.options.length > 0) {
-			const platform = interaction.data.options[0].value.toLowerCase();
-			data = data.filter(a => a.platform.toLowerCase() == platform);
-		}
 		const list = [];
 		for (let { platform, username } of data) {
 			let ratings = [];

@@ -49,13 +49,13 @@ const Pieces = {
 };
 
 export async function stateMessage(title, game, perspective, text) {
-	const white_to_move = '◽️ WHITE TO MOVE';
-	const black_to_move = '◾️ BLACK TO MOVE';
+	const white_to_move = '⬜️ White to Move';
+	const black_to_move = '⬛️ Black to Move';
 	let status = '';
 	if (game.ended()) {
-		if (game.draw()) status = '½-½ ・ DRAW';
+		if (game.draw()) status = '½-½ ・ Draw';
 		else if (game.checkmate())
-			status = game.turn == 'w' ? '0-1 ・ BLACK WON' : '1-0 ・ WHITE WON';
+			status = game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won';
 	} else status = game.turn == 'w' ? white_to_move : black_to_move;
 	if (perspective == undefined) perspective = game.turn;
 	let description = text;

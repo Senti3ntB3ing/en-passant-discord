@@ -2,7 +2,9 @@
 import { createTask, send, error, remove } from '../parser.js';
 import { Zach, Roles, Channels, Time } from '../config.js';
 import { Chess } from '../components/chess.js';
-import { playing, game, getGame, setGame, endGame, clearVotes, moves } from '../components/votechess.js';
+import {
+	playing, game, getGame, setGame, endGame, clearVotes, moves
+} from '../components/votechess.js';
 import { stateMessage } from '../components/diagram/diagram.js';
 
 createTask({
@@ -19,7 +21,9 @@ createTask({
 		try { await remove(st, Channels.vote_chess); } catch { }
 		const b = new Chess(g.pgnHeaders.FEN);
 		for (const move of g.moveList) if (b.move(move) == null) {
-			send(Channels.vote_chess, error('Invalid Move', JSON.stringify(move)));
+			send(Channels.vote_chess,
+				error('Invalid Move', JSON.stringify(move))
+			);
 			return;
 		}
 		const p = g.pgnHeaders.White == 'thechessnerd' ? 'b' : 'w';
@@ -37,6 +41,7 @@ createTask({
 		const move = b.takeback();
 		if (p == t[0]) message += `<@${Zach}> played \`${move.san}\`.`;
 		else message += `**we** played \`${move.san}\`.`;
+		message += `\nhttps://www.chess.com/game/daily/${id}`;
 		b.move(move);
 		st = (await send(Channels.vote_chess,
 			await stateMessage('Vote Chess', b, p, message)

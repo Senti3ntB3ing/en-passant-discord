@@ -4,7 +4,7 @@ import {
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes,
-	addRole, removeRole, getUser, addReaction
+	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse
 } from 'https://deno.land/x/discordeno@13.0.0-rc42/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -336,16 +336,19 @@ export async function dispatch(interaction) {
 		reactions = response.reactions;
 		delete response.reactions;
 	}
-	console.log(await sendInteractionResponse(
+	await sendInteractionResponse(
 		bot, interaction.id, interaction.token, {
 			type: InteractionResponseTypes.ChannelMessageWithSource,
 			data: response
 		}
-	));
-	/*for (const reaction of reactions) {
-		try { await react(interaction.channelId, interaction.id, reaction); }
-		catch (e) { console.log(e); }
-	}*/
+	);
+	if (reactions.length > 0) {
+		const m = await getOriginalInteractionResponse(bot, interaction.token);
+		for (const r of reactions) {
+			try { await react(interaction.channelId, m.id, r); }
+			catch (e) { console.log(e); }
+		}
+	}
 }
 
 export function command(data) {

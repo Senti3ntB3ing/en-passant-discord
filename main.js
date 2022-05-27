@@ -7,7 +7,7 @@ from 'https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts';
 
 import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 
-import { parse, text, fetchLog, log, executeTasks, dispatch } from './parser.js';
+import { parse, text, fetchLog, log, executeTasks, dispatch, onAir } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================
@@ -38,7 +38,7 @@ import './tasks/move.js';
 
 // =========================================
 
-function setRandomAction() {
+export function setRandomAction() {
 	const action = Actions[
 		Math.floor(Math.random() * Actions.length)
 	];
@@ -66,10 +66,7 @@ const baseBot = await createBot({
 	),
 	events: {
 		// _ is bot, but it is not necessary
-		messageCreate(_, message) {
-			parse(message);
-			if (Math.random() <= 0.2) setRandomAction();
-		},
+		messageCreate(_, message) { parse(message); },
 		guildMemberAdd(bot, member, _) {
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
 			sendMessage(bot, Channels.general, text(`**Welcome** <@${member.id}>, ${message}`));

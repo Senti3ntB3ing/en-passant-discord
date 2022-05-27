@@ -3,16 +3,16 @@ import {
 	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
-	InteractionResponseTypes, ApplicationCommandOptionTypes,
+	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse
 } from 'https://deno.land/x/discordeno@13.0.0-rc42/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 
-import { Name, Prefix, Roles, Time, ColorCodes } from './config.js';
-import { bot } from './main.js';
+import { Name, Prefix, Roles, Time, ColorCodes, ActionTypes } from './config.js';
+import { bot, setRandomAction } from './main.js';
 
-export let commands = [], tasks = {}, attachments = [], record = [];
+export let commands = [], tasks = {}, attachments = [], record = [], onAir = false;
 let attempts = {}, lastPing = new Date();
 
 export const resetAttempts = () => attempts = {};
@@ -318,6 +318,18 @@ export const curse = async (guild, user, role) => await removeRole(bot, guild, u
 export const discriminator = async tag => {
 	const user = await getUser(bot, tag);
 	return user.username + '#' + user.discriminator;
+};
+export const streamAction = (streaming) => {
+	onAir = streaming;
+	if (streaming) editBotStatus(bot, {
+		activities: [{
+			name: 'thechessnerdlive',
+			type: ActionTypes.watching,
+			createdAt: Date.now()
+		}],
+		since: Date.now(), afk: false, status: 'online'
+	});
+	else setRandomAction();
 };
 
 // ==== Application Commands ===================================================

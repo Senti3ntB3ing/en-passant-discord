@@ -1,7 +1,7 @@
 
 import { live } from '../components/twitch.js';
 import { Zach, Channels, Roles, Time, Twitch_Streamer } from '../config.js';
-import { createTask, send, publish, card } from '../parser.js';
+import { createTask, send, publish, card, streamAction } from '../parser.js';
 import { Database } from '../database.js';
 
 const Twitch = {
@@ -30,6 +30,7 @@ createTask({
 			));
 		} else if (await Database.get('twitch_live')) {
 			Database.set('twitch_live', streaming);
+			streamAction(streaming == true);
 		} else if (streaming) {
 			Database.set('twitch_live', true);
 			try {

@@ -171,6 +171,56 @@ command({
 	}
 });
 
+/// ratings <platform>?
+command({
+	name: 'info', emoji: ':mag:',
+	description: '🔍 Displays someone\'s ratings.',
+	options: [{
+		name: 'member',
+		description: 'The member to enquire',
+		type: Option.User, required: true,
+	}],
+	execute: async interaction => {
+		const title = 'Ratings';
+		const user = interaction.data.options[0].value;
+		const member = await Database.get(user);
+		if (member == null || member.accounts == undefined ||
+			Object.keys(member.accounts).length == 0)
+			return not_linked_info(title);
+		let data = member.accounts;
+		if (data == undefined || data.length == 0)
+			return not_linked_info(title);
+		if (interaction.data.options != undefined &&
+			interaction.data.options.length > 0) {
+			const platform = interaction.data.options[0].value.toLowerCase();
+			data = data.filter(a => a.platform.toLowerCase() == platform);
+		}
+		const list = [];
+		for (let { platform, username } of data) {
+			let ratings = [];
+			platform = platform.toLowerCase();
+			switch (platform) {
+				case 'fide':
+					const card = await fideCard(user, username);
+					if (card == undefined) continue;
+					list.push(card);
+					continue;
+				break;
+				case 'lichess.org':
+					ratings = await getLichessRatings(username);
+				break;
+				case 'chess.com':
+					ratings = await getChess_comRatings(username);
+				break;
+			}
+			if (ratings == null || ratings.length == 0) continue;
+			list.push(ratingCard(user, username, platform, ratings));
+		}
+		if (list.length != 0) return cards(list);
+		return not_linked_info(title);
+	}
+});
+
 /// connect <platform> <username>
 command({
 	name: 'connect', emoji: ':white_check_mark:',

@@ -8,7 +8,7 @@ import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
 import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
 import { Database } from '../database.js';
 
-import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.2/mod.ts';
+import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.3/mod.ts';
 
 const platforms = [ 'lichess.org', 'Chess.com', 'FIDE' ];
 const names = { 'lichess.org': 'lichess.org', 'chess.com': 'Chess.com', 'fide': 'FIDE' };

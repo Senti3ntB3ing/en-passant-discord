@@ -7,7 +7,7 @@ from 'https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts';
 
 import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 
-import { parse, text, fetchLog, log, executeTasks, dispatch, onAir } from './parser.js';
+import { parse, text, fetchLog, log, executeTasks, dispatch } from './parser.js';
 import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================

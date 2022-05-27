@@ -341,11 +341,9 @@ export async function dispatch(interaction) {
 			type: InteractionResponseTypes.ChannelMessageWithSource,
 			data: response
 		}
-	).id);
-	console.log(id)
+	)).id;
 	for (const reaction of reactions) {
-		try { //await react(interaction.channelId, id, reaction); }
-			await addReaction(bot, interaction.channelId, id, reaction); }
+		try { await react(interaction.channelId, id, reaction); }
 		catch (e) { console.log(e); }
 	}
 }

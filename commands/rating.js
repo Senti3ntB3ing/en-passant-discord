@@ -32,7 +32,7 @@ const process = (platform, mention) => card(
 		platform[0] == 'c' ?
 		'https://www.chess.com/settings' : 'https://lichess.org/account/profile'
 	}) and add your ` + 
-	'**Discord** username (`' + mention + '`) to the `location` field.\n' +
+	'**Discord** username (`' + mention + '`) to the `Location` field.\n' +
 	'2️⃣ Type `/connect` to connect your account.\n' +
 	(platform[0] == 'c' ?
 	'🆘 The __chess.com__ servers are slow, give it 15 minutes.\n' : '') +

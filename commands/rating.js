@@ -1,5 +1,5 @@
 
-import { Roles } from '../config.js';
+import { Roles, ColorCodes } from '../config.js';
 import {
 	Option, command, success, info, card,
 	cards, warn, bless, curse, discriminator
@@ -26,16 +26,18 @@ const not_linked_info = title => info(
 
 const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
 
-const process = (platform, mention) => warn(
+const process = (platform, mention) => card(
 	names[platform] + ' Instructions',
-	'**Verification failed, try these steps:**\n\n' +
-	`1️⃣ Go on your ${highlight(names[platform])} settings page and add your ` + 
+	`1️⃣ Go on your ${highlight(names[platform])} settings (${
+		platform[0] == 'c' ?
+		'https://www.chess.com/settings' : 'https://lichess.org/account/profile'
+	}) and add your ` + 
 	'**Discord** username (`' + mention + '`) to the `location` field.\n' +
 	'2️⃣ Type `/connect` to connect your account.\n' +
-	(platform == 'chess.com' ?
+	(platform[0] == 'c' ?
 	'🆘 The __chess.com__ servers are slow, give it 15 minutes.\n' : '') +
 	'If your username contains spaces or symbols it might not work.\n' +
-	'If you need help tag a <@&' + Roles.moderator + '>.'
+	'If you need help tag a <@&' + Roles.moderator + '>.', ColorCodes.info
 );
 
 async function fideCard(author, id) {

@@ -1,5 +1,5 @@
 
-import { Roles, ColorCodes } from '../config.js';
+import { Channels, Roles, ColorCodes } from '../config.js';
 import {
 	Option, command, success, info, card,
 	cards, warn, bless, curse, discriminator
@@ -37,7 +37,8 @@ const process = (platform, mention) => card(
 	(platform[0] == 'c' ?
 	'🆘 The __chess.com__ servers are slow, give it 15 minutes.\n' : '') +
 	'If your username contains spaces or symbols it might not work.\n' +
-	'If you need help tag a <@&' + Roles.moderator + '>.', ColorCodes.info
+	'If you experience issues open a thread in <#' + Channels.help + '>.',
+	ColorCodes.info
 );
 
 async function fideCard(author, id) {

@@ -20,8 +20,9 @@ const emojis = {
 	'blitz': ':zap:', 'standard': ':clock:', 'classical': ':hourglass:'
 };
 
-const not_linked_info = title => info(
-	title, 'You must link an account to use this command.'
+const not_linked_info = title => info(title,
+	'You must `/connect` a chess account in ' +
+	`<#${Channels.bots}> to use this command.`
 );
 
 const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);

@@ -97,7 +97,7 @@ command({
 		if (voted) return success(title,
 			'Your previous vote has been changed to `' + move + '`!'
 		);
-		return success(title, 'Your move `' + move + '` has been registered!');
+		return success(title, 'You voted for the move `' + move + '`!');
 	}
 });
 

@@ -87,15 +87,17 @@ command({
 			);
 			move = move.san; // standard algebraic notations
 		}
-		if (await hasVoted(interaction.member.id))
-			return error(title, 'You can only vote once!');
 		if ((await Database.get(interaction.member.id)) == null) return warn(
 			title,
 			'You must `/connect` your online chess account before voting!'
 		);
+		const voted = await hasVoted(interaction.member.id);
 		vote(interaction.member.id, move);
 		bless(interaction.guildId, interaction.member.id, Roles.voter);
-		return success(title, 'Move `' + move + '` registered successfully!');
+		if (voted) return success(title,
+			'Your previous vote has been changed to `' + move + '`!'
+		);
+		return success(title, 'Your move `' + move + '` has been registered!');
 	}
 });
 

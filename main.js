@@ -1,7 +1,7 @@
 
 import {
 	createBot, startBot, editBotStatus, sendMessage, GatewayIntents
-} from 'https://deno.land/x/discordeno@13.0.0-rc42/mod.ts';
+} from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
 import { enableCachePlugin, enableCacheSweepers }
 from 'https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts';
 

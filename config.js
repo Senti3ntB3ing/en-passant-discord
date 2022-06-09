@@ -1,4 +1,6 @@
 
+export const GuildID = 839594883790012436n;
+
 export const delay = async ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export const Name = 'en passant';

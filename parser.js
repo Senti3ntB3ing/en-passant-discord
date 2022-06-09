@@ -4,12 +4,15 @@ import {
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
-	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse
-} from 'https://deno.land/x/discordeno@13.0.0-rc42/mod.ts';
+	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
+	createScheduledEvent, ScheduledEventEntityType
+} from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 
-import { Name, Prefix, Roles, Time, ColorCodes, ActionTypes } from './config.js';
+import {
+	Name, Prefix, Roles, Time, ColorCodes, ActionTypes, GuildID
+} from './config.js';
 import { bot, setRandomAction } from './main.js';
 
 export let commands = [], tasks = {}, attachments = [], record = [], onAir = false;
@@ -330,6 +333,15 @@ export const streamAction = (streaming) => {
 		since: Date.now(), afk: false, status: 'online'
 	});
 	else setRandomAction();
+};
+export const event = e => {
+	createScheduledEvent(bot, GuildID, {
+		name: e.title, description: '',
+		entityType: ScheduledEventEntityType.External,
+		location: 'https://www.twitch.tv/thechessnerdlive/',
+		scheduledStartTime: e.start.getTime() / 1000,
+		scheduledEndTime: e.end.getTime() / 1000,
+	});
 };
 
 // ==== Application Commands ===================================================

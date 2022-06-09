@@ -336,8 +336,10 @@ export const streamAction = (streaming) => {
 };
 export const event = e => {
 	console.log(e);
+	console.log(e.start.getTime() / 1000);
+	console.log(e.end.getTime() / 1000);
 	createScheduledEvent(bot, GuildID, {
-		name: e.title, description: '',
+		name: e.title, description: 'hello',
 		entityType: ScheduledEventEntityType.External,
 		location: 'https://www.twitch.tv/thechessnerdlive/',
 		scheduledStartTime: e.start.getTime() / 1000,

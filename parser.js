@@ -335,6 +335,7 @@ export const streamAction = (streaming) => {
 	else setRandomAction();
 };
 export const event = e => {
+	console.log(e);
 	createScheduledEvent(bot, GuildID, {
 		name: e.title, description: '',
 		entityType: ScheduledEventEntityType.External,

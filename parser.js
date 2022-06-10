@@ -5,7 +5,7 @@ import {
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
-	createScheduledEvent, ScheduledEventEntityType
+	createScheduledEvent, ScheduledEventEntityType, ScheduledEventPrivacyLevel
 } from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -348,7 +348,8 @@ export const event = e => {
 		entityType: ScheduledEventEntityType.External,
 		location: "my loc",
 		scheduledStartTime: 1654887600,
-		scheduledEndTime: 1654894800
+		scheduledEndTime: 1654894800,
+		privacyLevel: ScheduledEventPrivacyLevel.GuildOnly,
 	});
 };
 

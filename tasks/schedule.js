@@ -1,5 +1,5 @@
 
-import { Twitch_Streamer, Channels } from '../config.js';
+import { Twitch_Streamer, Channels, Time } from '../config.js';
 import { createTask, send, error, event } from '../parser.js';
 import { channel, schedule } from '../components/twitch.js';
 import { Database } from '../database.js';
@@ -42,6 +42,7 @@ createTask({
 			if (s.end > lastDate) lastDate = s.end;
 			event(s);
 		}
+		lastDate.setTime(lastDate.getTime() + Time.minutes(30));
 		// save the last event:
 		await Database.set('event', lastDate.toISOString());
 	}

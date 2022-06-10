@@ -342,15 +342,6 @@ export const event = e => {
 		scheduledStartTime: e.start.getTime(),
 		scheduledEndTime: e.end.getTime(),
 	});
-	/*createScheduledEvent(bot, 839594883790012436n, {
-		name: "test",
-		description: "hello",
-		entityType: ScheduledEventEntityType.External,
-		location: "my loc",
-		scheduledStartTime: 1654887600000,
-		scheduledEndTime: 1654894800,
-		privacyLevel: ScheduledEventPrivacyLevel.GuildOnly,
-	});*/
 };
 
 // ==== Application Commands ===================================================

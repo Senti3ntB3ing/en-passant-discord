@@ -335,22 +335,22 @@ export const streamAction = (streaming) => {
 	else setRandomAction();
 };
 export const event = e => {
-	/*createScheduledEvent(bot, GuildID, {
+	createScheduledEvent(bot, GuildID, {
 		name: e.title, description: 'hello',
 		entityType: ScheduledEventEntityType.External,
 		location: 'https://www.twitch.tv/thechessnerdlive/',
-		scheduledStartTime: e.start.getTime() / 1000,
-		scheduledEndTime: e.end.getTime() / 1000,
-	});*/
-	createScheduledEvent(bot, 839594883790012436n, {
+		scheduledStartTime: e.start.getTime(),
+		scheduledEndTime: e.end.getTime(),
+	});
+	/*createScheduledEvent(bot, 839594883790012436n, {
 		name: "test",
 		description: "hello",
 		entityType: ScheduledEventEntityType.External,
 		location: "my loc",
-		scheduledStartTime: 1654887600,
+		scheduledStartTime: 1654887600000,
 		scheduledEndTime: 1654894800,
 		privacyLevel: ScheduledEventPrivacyLevel.GuildOnly,
-	});
+	});*/
 };
 
 // ==== Application Commands ===================================================

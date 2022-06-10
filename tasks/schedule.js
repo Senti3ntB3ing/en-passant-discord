@@ -8,20 +8,14 @@ createTask({
 	name: 'schedule', emoji: ':calendar_spiral:', time: '12:55',
 	description: 'Adds the streams to the discord events tab.',
 	execute: async () => {
-		// check if today has been fired already
-		const now = new Date();
-		const isToday = date =>
-			date.getDate() == now.getDate() &&
-			date.getMonth() == now.getMonth() &&
-			date.getFullYear() == now.getFullYear();
-		const lastEvent = await Database.get('event');
-		await Database.set('event', now.toISOString());
-		if (lastEvent == null || lastEvent == undefined ||
-			isToday(new Date(lastEvent))) return;
-		// fetch the events on the day 1 week from now:
-		const date_s = new Date(), date_e = new Date();
-		date_s.setDate(date_s.getDate() + 6);
-		date_e.setDate(date_e.getDate() + 7);
+		let lastEvent = await Database.get('event');
+		if (lastEvent == null || lastEvent == undefined) {
+			lastEvent = new Date().toISOString();
+			await Database.set('event', lastEvent);
+		}
+		const date_s = new Date(lastEvent);
+		const date_e = new Date(lastEvent);
+		date_e.setDate(date_e.getDate() + 6);
 		const c = await channel(Twitch_Streamer);
 		if (c == null || c == undefined) {
 			send(Channels.dev_chat, error('Twitch Error',
@@ -41,7 +35,14 @@ createTask({
 				start: new Date(s.start_time),
 				end: new Date(s.end_time), title: s.title
 			})).filter(s => s.start < date_e);
+		if (segments.length == 0) return;
 		// send the events to the discord channel:
-		for (const s of segments) event(s);
+		let lastDate = segments[0].end;
+		for (const s of segments) {
+			if (s.end > lastDate) lastDate = s.end;
+			event(s);
+		}
+		// save the last event:
+		await Database.set('event', lastDate.toISOString());
 	}
 });

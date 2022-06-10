@@ -12,7 +12,6 @@ import { Channels, Welcome, Actions } from './config.js';
 
 // ==== Commands ===========================
 
-import './commands/help.js';
 import './commands/ping.js';
 import './commands/poll.js';
 import './commands/links.js';
@@ -34,7 +33,6 @@ import './tasks/quote.js';
 import './tasks/schedule.js';
 import './tasks/youtube.js';
 import './tasks/twitch.js';
-import './tasks/attempts.js';
 import './tasks/move.js';
 
 // =========================================

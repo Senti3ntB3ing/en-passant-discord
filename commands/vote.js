@@ -25,9 +25,8 @@ import { Database } from '../database.js';
 // command !task move: force the update of the board
 
 prefix({
-	name: 'game', emoji: ':clipboard:', hidden: true,
+	name: 'game', emoji: ':clipboard:',
 	description: `New <#${Channels.vote_chess}> \`${Prefix}game <id>\`.`,
-	permissions: Roles.administrator,
 	execute: async message => {
 		const title = 'Vote Chess';
 		if (await playing()) return error(title, 'Game already in progress!');

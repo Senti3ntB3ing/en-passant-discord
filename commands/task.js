@@ -3,9 +3,8 @@ import { Roles } from '../config.js';
 import { prefix, tasks, card, error, info } from '../parser.js';
 
 prefix({
-	name: 'task', emoji: ':mechanical_arm:', hidden: true,
+	name: 'task', emoji: ':mechanical_arm:',
 	description: 'Force the execution of a task.',
-	permissions: Roles.moderator,
 	execute: message => {
 		if (message.arguments.length == 0)
 			return info('Task Command', 'Type `task <name>` to execute a task.');

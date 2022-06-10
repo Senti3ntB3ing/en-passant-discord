@@ -49,7 +49,7 @@ command({
 });
 
 prefix({
-	name: 'gif', emoji: ':page_with_curl:', aliases: [ 'pgn' ], rate: 4,
+	name: 'gif', emoji: ':page_with_curl:', aliases: [ 'pgn' ],
 	description: 'Display a chess gif from a list of moves.',
 	execute: async message => {
 		const e = error('Chess gif error', 'Provided invalid PGN!');

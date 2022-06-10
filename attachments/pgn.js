@@ -1,14 +1,14 @@
 
 import { Size } from '../config.js';
 import { gif } from '../components/diagram/diagram.js';
-import { createAttachment, error } from '../parser.js';
+import { attachment, error } from '../parser.js';
 
-createAttachment({
+attachment({
 	type: 'pgn', emoji: ':clipboard:',
 	description: 'Creates a preview of a PGN file.',
-	execute: async (_, attachment) => {
-		if (attachment.size > Size.kilobytes(20)) return;
-		let pgn = await fetch(attachment.url);
+	execute: async (_, file) => {
+		if (file.size > Size.kilobytes(20)) return;
+		let pgn = await fetch(file.url);
 		if (pgn.status != 200)
 			return error('PGN preview', 'Failed to fetch PGN file!');
 		pgn = await pgn.text();

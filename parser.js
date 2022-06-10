@@ -16,9 +16,7 @@ import {
 import { bot, setRandomAction } from './main.js';
 
 export let commands = [], tasks = {}, attachments = [], record = [], onAir = false;
-let attempts = {}, lastPing = new Date();
-
-export const resetAttempts = () => attempts = {};
+let lastPing = new Date();
 
 // ==== Commands ===============================================================
 
@@ -27,20 +25,6 @@ function handleText(command, message, content, args) {
 	message.bot = bot;
 	message.command = content;
 	message.text = message.content.replace(/^(.*?)\s+/g, '').trim();
-	if (!message.member.roles.includes(Roles.moderator)) {
-		if (!(message.member.id in attempts)) attempts[message.member.id] = 0;
-		else attempts[message.member.id] += command.rate;
-		if (attempts[message.member.id] >= 10) {
-			editMember(bot, message.guildId, message.member.id, {
-				communicationDisabledUntil: Time.minutes(10) + Date.now()
-			});
-			sendMessage(bot, message.channelId, warn(
-				'Command usage limit exceeded!',
-				`<@${message.member.id}> has been given a \`10m\` **TIMEOUT** for spamming!`
-			));
-			return;
-		}
-	}
 	if (command.execute.constructor.name == 'AsyncFunction') {
 		command.execute(message).then(result => {
 			if (result != undefined) sendMessage(bot, message.channelId, result);
@@ -73,26 +57,26 @@ export function parse(message) {
 		}
 	}
 	if (!message.content.startsWith(Prefix)) return;
+	if (!message.member.roles.includes(Roles.moderator)) {
+		sendMessage(bot, message.channelId, info(
+			'Command Information',
+			'We transitioned to slash commands.\nType `\\` to get started.\n' +
+			'If it doesn\'t work, try updating **Discord**.'
+		));
+		return;
+	}
 	const args = message.content.split(/\s+/g);
 	const content = args.splice(0, 1)[0].substring(Prefix.length).toLowerCase();
 	for (const command of commands) {
-		if (command.name == content ||
-			command.aliases.includes(content)) {
-			if (command.permissions.includes(Roles.everyone)) {
-				handleText(command, message, content, args);
-				return;
-			}
-			for (const role of message.member.roles) {
-				if (command.permissions.includes(role)) {
-					handleText(command, message, content, args);
-					return;
-				}
-			}
+		if (command.name == content || command.aliases.includes(content)) {
+			handleText(command, message, content, args);
+			return;
 		}
 	}
 	// command not found, check for typos:
-	const filtered = commands.filter(command => !command.hidden)
-		.map(command => [ command.name, command.aliases ].flat()).flat();
+	const filtered = commands.map(command => [
+		command.name, command.aliases
+	].flat()).flat();
 	const [ i, d ] = closest(content, filtered);
 	if (d <= 2) sendMessage(bot, message.channelId, info(
 		'Command Information',
@@ -105,25 +89,16 @@ export function prefix(command) {
 	if (typeof command.execute != 'function') return;
 	if (command.name == undefined) return;
 	if (command.aliases == undefined) command.aliases = [ ];
-	if (command.hidden == undefined) command.hidden = false;
-	if (command.rate == undefined) command.rate = 1;
-	if (command.permissions == undefined) {
-		command.permissions = [ Roles.everyone];
-	} else if (typeof command.permissions != 'object') {
-		command.permissions = [ command.permissions ];
-	}
-	if (command.permissions.includes(Roles.moderator))
-		command.permissions.push(Roles.nerd);
 	commands.push(command);
 }
 
 // ==== Attachments ============================================================
 
-export function createAttachment(attachment) {
-	if (typeof attachment.execute != 'function') return;
-	if (attachment.type == undefined) return;
-	attachment.type = attachment.type.toLowerCase();
-	attachments.push(attachment);
+export function attachment(options) {
+	if (typeof options.execute != 'function') return;
+	if (options.type == undefined) return;
+	options.type = options.type.toLowerCase();
+	attachments.push(options);
 }
 
 // ==== Tasks ==================================================================
@@ -225,57 +200,6 @@ export const warn = (title, message) => ({
 		description: ':warning: ' + (message || 'Warning!')
 	}]
 });
-
-// ==== Help ===================================================================
-
-export function createHelp(mod = false) {
-	let fields = commands.filter(command => mod || !command.hidden).map(command => {
-		let aliases = '';
-		if (mod && command.aliases.length > 0)
-			aliases = ' | `' + Prefix + command.aliases.join('` | `' + Prefix) + '`';
-		return {
-			name: `${command.emoji || ''} \`${Prefix}${command.name}\`${aliases}:`,
-			value: command.description || 'No description.',
-			inline: false
-		};
-	});
-	let embeds = [];
-	for (let i = 0; i < fields.length; i += 25) {
-		const end = (i + 25) > fields.length ? fields.length : (i + 25);
-		embeds.push({
-			type: 'rich',
-			title: 'List of Commands',
-			color: ColorCodes.normal,
-			fields: fields.slice(i, end)
-		});
-	}
-	if (mod) {
-		embeds.push({
-			type: 'rich',
-			title: 'List of Tasks',
-			color: ColorCodes.normal,
-			fields: Object.keys(tasks).map(task => ({
-				name: (tasks[task].emoji || ':mechanical_arm:') +
-					' `' + task + '` [' + (tasks[task].time ||
-					Time.value(tasks[task].interval)) + ']:',
-				value: tasks[task].description || 'No description.',
-				inline: false
-			}))
-		});
-		embeds.push({
-			type: 'rich',
-			title: 'List of Attachment Events',
-			color: ColorCodes.normal,
-			fields: attachments.map(attachment => ({
-				name: (attachment.emoji || ':paperclip:') +
-					' `.' + attachment.type + '` files:',
-				value: attachment.description || 'No description.',
-				inline: false
-			}))
-		});
-	}
-	return { embeds };
-}
 
 // ==== Log ====================================================================
 
@@ -387,9 +311,8 @@ export function command(data) {
 }
 
 prefix({
-	name: 'register', emoji: ':pencil:', hidden: true,
+	name: 'register', emoji: ':pencil:',
 	description: 'Registers application commands.',
-	permissions: [ Roles.administrator ],
 	execute: async message => {
 		const id = message.text.includes('global') ? undefined : message.guildId;
 		try {
@@ -403,9 +326,8 @@ prefix({
 });
 
 prefix({
-	name: 'forget', emoji: ':pencil:', hidden: true,
+	name: 'forget', emoji: ':pencil:',
 	description: 'Deletes application commands.',
-	permissions: [ Roles.administrator ],
 	execute: async message => {
 		// fetch old guild commands:
 		let old = await getApplicationCommands(bot, message.guildId);

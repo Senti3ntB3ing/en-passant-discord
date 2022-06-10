@@ -20,8 +20,8 @@ createTask({
 			isToday(new Date(lastEvent))) return;
 		// fetch the events on the day 1 week from now:
 		const date_s = new Date(), date_e = new Date();
-		date_s.setDate(date_s.getDate() + 7);
-		date_e.setDate(date_e.getDate() + 8);
+		date_s.setDate(date_s.getDate() + 6);
+		date_e.setDate(date_e.getDate() + 7);
 		const c = await channel(Twitch_Streamer);
 		if (c == null || c == undefined) {
 			send(Channels.dev_chat, error('Twitch Error',

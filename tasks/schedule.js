@@ -30,8 +30,8 @@ createTask({
 			));
 			return;
 		}
-		segments = segments ?? [];
-		segments = segments.segments.filter(s => s.canceled_until == null)
+		segments = segments.segments ?? [];
+		segments = segments.filter(s => s.canceled_until == null)
 			.map(s => ({
 				start: new Date(s.start_time),
 				end: new Date(s.end_time), title: s.title

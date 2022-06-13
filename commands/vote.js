@@ -88,7 +88,8 @@ command({
 		}
 		if ((await Database.get(interaction.member.id)) == null) return warn(
 			title,
-			'You must `/connect` your online chess account before voting!'
+			'You must `/connect` your chess profile in <#' +
+			Channels.bots + '> before voting!'
 		);
 		const voted = await hasVoted(interaction.member.id);
 		vote(interaction.member.id, move);

@@ -30,6 +30,7 @@ createTask({
 			));
 			return;
 		}
+		console.log(segments);
 		segments = segments.segments.filter(s => s.canceled_until == null)
 			.map(s => ({
 				start: new Date(s.start_time),

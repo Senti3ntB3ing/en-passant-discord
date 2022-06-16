@@ -38,6 +38,6 @@ command({
 		}]
 	}],
 	execute: async interaction => {
-		console.log(interaction);
+		console.log(interaction.data);
 	}
 });

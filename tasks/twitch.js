@@ -1,6 +1,6 @@
 
 import { live } from '../components/twitch.js';
-import { Zach, Channels, Roles, Time, Twitch_Streamer } from '../config.js';
+import { Zach, Channels, Roles, Time, Streamer } from '../config.js';
 import { createTask, send, publish, card, streamAction } from '../parser.js';
 import { Database } from '../database.js';
 
@@ -15,7 +15,7 @@ createTask({
 	execute: async () => {
 		// if streaming already: update state and don't do anything.
 		// else if live: update state and send notification.
-		const streaming = await live(Twitch_Streamer);
+		const streaming = await live(Streamer);
 		if (streaming == undefined) {
 			send(Channels.dev_chat, card(
 				'Twitch live detection task',

@@ -1,5 +1,5 @@
 
-import { Twitch_Streamer, Channels, Time } from '../config.js';
+import { Streamer, Channels, Time } from '../config.js';
 import { createTask, send, error, event } from '../parser.js';
 import { channel, schedule } from '../components/twitch.js';
 import { Database } from '../database.js';
@@ -16,7 +16,7 @@ createTask({
 		const date_s = new Date(lastEvent);
 		const date_e = new Date(lastEvent);
 		date_e.setDate(date_e.getDate() + 6);
-		const c = await channel(Twitch_Streamer);
+		const c = await channel(Streamer);
 		if (c == null || c == undefined) {
 			send(Channels.dev_chat, error('Twitch Error',
 				'The __Twitch.tv__ api returned an error.'

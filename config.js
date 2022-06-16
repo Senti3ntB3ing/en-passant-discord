@@ -6,7 +6,7 @@ export const delay = async ms => new Promise(resolve => setTimeout(resolve, ms))
 export const Name = 'en passant';
 export const Prefix = '!';
 
-export const Twitch_Streamer = 'thechessnerdlive';
+export const Streamer = 'thechessnerdlive';
 
 export const Time = {
 	second: 1000,

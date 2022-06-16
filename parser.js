@@ -14,8 +14,10 @@ import {
 	Name, Prefix, Roles, Time, ColorCodes, ActionTypes, GuildID
 } from './config.js';
 import { bot, setRandomAction } from './main.js';
+import { Database } from './database.js';
 
-export let commands = [], tasks = {}, attachments = [], record = [], onAir = false;
+export let commands = [], tasks = {}, attachments = [], record = [],
+	onAir = false, actions = [];
 let lastPing = new Date();
 
 // ==== Commands ===============================================================
@@ -342,3 +344,50 @@ prefix({
 		return success('Application Commands', 'Commands deleted!');
 	}
 });
+
+// ==== Twitch Actions =========================================================
+
+const RRSLV = new RegExp(`(?:\\s|^)${Prefix}\\w+(?:\\s|$)`, 'i');
+
+export function resolve(data, channel) {
+	if (!data.message.includes(Prefix)) return;
+	let command = RRSLV.exec(data.message);
+	if (command == null) return;
+	command = command[0].trim();
+	for (const action of actions) {
+		// mod is a string and `!=` performs automatic comparison:
+		if (action.moderator && data.tags.mod != true) return;
+		if (action.commands.includes(command)) {
+			if (action.execute.constructor.name == 'AsyncFunction') {
+				action.execute(data, channel).then(result => {
+					if (result != undefined) channel.send(result);
+				});
+				return;
+			}
+			const result = command.execute(data, channel);
+			if (result != undefined) channel.send(result);
+			return;
+		}
+	}
+}
+
+export async function reloadActions() {
+	let a = await Database.get('actions');
+	if (a == undefined || a == null) {
+		await Database.set('actions', []);
+		a = [];
+	}
+	for (let i = 0; i < a.length; i++)
+		a[i].execute = (data, channel) => `${a[i].reply}`
+			.replace(/%user(?:name)?%/gi, '@' + data.username);
+	actions = actions.concat(a);
+}
+
+export function action(command) {
+	if (typeof command.execute != 'function') return;
+	if (command.commands == undefined) return;
+	if (typeof command.commands == 'string')
+		command.commands = command.commands.split(/\s+/g);
+	if (command.moderator == undefined) command.moderator = false;
+	actions.push(command);
+}

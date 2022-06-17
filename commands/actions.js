@@ -64,28 +64,25 @@ command({
 					commands, reply: options[1].value,
 					moderator: options.length > 2 ? options[2].value : false
 				});
-				return success('Twitch Actions', 'Action `' + Prefix +
-				commands[0] + '` added.');
+				return success('Twitch Actions', 'Action `' + Prefix + commands[0] + '` added.');
 			break;
 			case 'remove':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
-					'Twitch Actions', 'Action `' + main + '` not found!'
+					'Twitch Actions', 'Action `' + Prefix + main + '` not found!'
 				);
 				await removeAction(main);
-				return success('Twitch Actions', 'Action `' + Prefix +
-				main + '` removed.');
+				return success('Twitch Actions', 'Action `' + Prefix + main + '` removed.');
 			break;
 			case 'alias':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
-					'Twitch Actions', 'Action `' + main + '` not found!'
+					'Twitch Actions', 'Action `' + Prefix + main + '` not found!'
 				);
 				aliases = options[1].value.split(/\s+/g)
 					.map(c => c.replace(PRFXRGX, '').toLowerCase());
 				await addAliases(main, aliases);
-				return success('Twitch Actions', 'Aliases for `' + Prefix +
-				main + '` added.');
+				return success('Twitch Actions', 'Aliases for `' + Prefix + main + '` added.');
 			break;
 			case 'list':
 				const actions = await fetchActions();
@@ -97,7 +94,7 @@ command({
 						color: ColorCodes.normal,
 						description: '',
 						fields: actions.map(a => ({
-							name: a.commands.map(e => '`' + e + '`').join('｜'),
+							name: a.commands.map(e => '`' + Prefix + e + '`').join('｜'),
 							value: a.reply
 						}))
 					}]

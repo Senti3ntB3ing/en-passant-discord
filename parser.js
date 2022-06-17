@@ -354,7 +354,7 @@ export function resolve(data, channel) {
 	let command = RRSLV.exec(data.message);
 	console.log(command);
 	if (command == null) return;
-	command = command[0].trim();
+	command = command[0].trim().replace(Prefix, '');
 	for (const action of actions) {
 		// mod is a string and `!=` performs automatic comparison:
 		if (action.moderator && data.tags.mod != true) return;

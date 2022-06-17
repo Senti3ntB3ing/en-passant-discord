@@ -352,12 +352,14 @@ const RRSLV = new RegExp(`(?:\\s|^)${Prefix}\\w+(?:\\s|$)`, 'i');
 export function resolve(data, channel) {
 	if (!data.message.includes(Prefix)) return;
 	let command = RRSLV.exec(data.message);
+	console.log(command);
 	if (command == null) return;
 	command = command[0].trim();
 	for (const action of actions) {
 		// mod is a string and `!=` performs automatic comparison:
 		if (action.moderator && data.tags.mod != true) return;
 		if (action.commands.includes(command)) {
+			console.log(data.tags.mod);
 			if (action.execute.constructor.name == 'AsyncFunction') {
 				action.execute(data, channel).then(result => {
 					if (result != undefined) channel.send(result);
@@ -365,6 +367,7 @@ export function resolve(data, channel) {
 				return;
 			}
 			const result = command.execute(data, channel);
+			console.log(result);
 			if (result != undefined) channel.send(result);
 			return;
 		}

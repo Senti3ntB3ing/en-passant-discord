@@ -388,10 +388,7 @@ export async function fetchActions() {
 
 export async function reloadActions() {
 	let a = await fetchActions();
-	for (let i = 0; i < a.length; i++)
-		a[i].execute = (data, channel) => `${a[i].reply}`
-			.replace(/%user(?:name)?%/gi, '@' + data.username);
-	actions = actions.concat(a);
+	actions = actions.filter(a => a.reply != undefined).concat(a);
 	console.log(actions);
 }
 

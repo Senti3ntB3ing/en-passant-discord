@@ -82,6 +82,8 @@ command({
 				aliases = options[1].value.split(/\s+/g)
 					.map(c => c.replace(PRFXRGX, '').toLowerCase());
 				await addAliases(main, aliases);
+				return success('Twitch Actions', 'Aliases for `' + Prefix +
+				main + '` added.');
 			break;
 			case 'list':
 				const actions = await fetchActions();

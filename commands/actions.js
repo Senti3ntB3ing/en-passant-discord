@@ -56,7 +56,7 @@ command({
 		let commands, main, aliases;
 		switch (interaction.data.options[0].name) {
 			case 'action':
-				commands = options[0].value.split(/\w+/g)
+				commands = options[0].value.split(/\s+/g)
 					.map(c => c.replace(PRFXRGX, '').toLowerCase());
 				if (commands.length == 0)
 					return error('Twitch Actions', 'Invalid action name!');
@@ -79,7 +79,7 @@ command({
 				if (!findAction(main)) return error(
 					'Twitch Actions', 'Action `' + main + '` not found!'
 				);
-				aliases = options[1].value.split(/\w+/g)
+				aliases = options[1].value.split(/\s+/g)
 					.map(c => c.replace(PRFXRGX, '').toLowerCase());
 				await addAliases(main, aliases);
 			break;

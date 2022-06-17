@@ -358,6 +358,12 @@ export function resolve(data, channel) {
 		// mod is a string and `!=` performs automatic comparison:
 		if (action.moderator && data.tags.mod != true) return;
 		if (action.commands.includes(command)) {
+			if (action.reply != undefined) {
+				channel.send(action.reply
+					.replace(/%user(?:name)?%/gi, '@' + data.username)
+				);
+				return;
+			}
 			if (action.execute.constructor.name == 'AsyncFunction') {
 				action.execute(data, channel).then(result => {
 					if (result != undefined) channel.send(result);

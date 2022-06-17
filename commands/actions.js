@@ -73,6 +73,8 @@ command({
 					'Twitch Actions', 'Action `' + main + '` not found!'
 				);
 				await removeAction(main);
+				return success('Twitch Actions', 'Action `' + Prefix +
+				main + '` removed.');
 			break;
 			case 'alias':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();

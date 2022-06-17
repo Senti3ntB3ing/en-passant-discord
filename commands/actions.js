@@ -64,8 +64,8 @@ command({
 					commands, reply: options[1].value,
 					moderator: options.length > 2 ? options[2].value : false
 				});
-				return success('Twitch Actions', 'Command `' + Prefix +
-				command[0] + '` added.');
+				return success('Twitch Actions', 'Action `' + Prefix +
+				commands[0] + '` added.');
 			break;
 			case 'remove':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();

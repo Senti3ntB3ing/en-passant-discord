@@ -88,16 +88,21 @@ command({
 				const actions = await fetchActions();
 				if (actions.length == 0)
 					return info('Twitch Actions', 'No actions found!');
+				const chunks = actions.map(a => ({
+					name: a.commands.map(e => '`' + Prefix + e + '`').join('｜'),
+					value: a.reply
+				})).reduce((all, one, i) => {
+					const ch = Math.floor(i / 25); 
+					all[ch] = [].concat((all[ch] || []), one); 
+					return all;
+				}, []);
 				return {
-					embeds: [{
+					embeds: chunks.map(c => ({
 						title: 'Twitch Actions',
 						color: ColorCodes.normal,
 						description: '',
-						fields: actions.map(a => ({
-							name: a.commands.map(e => '`' + Prefix + e + '`').join('｜'),
-							value: a.reply
-						}))
-					}]
+						fields: c
+					}))
 				};
 			break;
 		}

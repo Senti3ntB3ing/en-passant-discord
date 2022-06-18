@@ -91,8 +91,8 @@ command({
 				const chunks = actions.sort(
 					(a, b) => a.commands[0] > b.commands[0] ? 1 : -1
 				).map(a => ({
-					name: a.moderator ? ':passport_control:｜' :
-					':ballot_box_with_check:｜' + a.commands.map(
+					name: (a.moderator ? ':passport_control:｜' :
+					':ballot_box_with_check:｜') + a.commands.map(
 						e => '`' + Prefix + e + '`'
 					).join('｜'), value: a.reply
 				})).reduce((all, one, i) => {

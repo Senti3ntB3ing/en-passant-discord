@@ -350,7 +350,7 @@ prefix({
 
 const RRSLV = new RegExp(`(?:\\s|^)${Prefix}\\w+(?:\\s|$)`, 'i');
 
-export function resolve(data, channel) {
+export async function resolve(data, channel) {
 	if (!data.message.includes(Prefix)) return;
 	let command = RRSLV.exec(data.message);
 	if (command == null) return;
@@ -362,7 +362,7 @@ export function resolve(data, channel) {
 			if (action.reply != undefined) {
 				channel.send(action.reply
 					.replace(/%user(?:name)?%/gi, '@' + data.username)
-					.replace(/%uptime%/gi, uptime())
+					.replace(/%uptime%/gi, await uptime())
 				);
 				return;
 			}

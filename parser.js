@@ -5,13 +5,14 @@ import {
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
-	createScheduledEvent, ScheduledEventEntityType, ScheduledEventPrivacyLevel
+	createScheduledEvent, ScheduledEventEntityType
 } from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
 
 import { closest } from './components/levenshtein.js';
+import { uptime } from './components/twitch.js';
 
 import {
-	Name, Prefix, Roles, Time, ColorCodes, ActionTypes, GuildID
+	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID
 } from './config.js';
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
@@ -361,6 +362,7 @@ export function resolve(data, channel) {
 			if (action.reply != undefined) {
 				channel.send(action.reply
 					.replace(/%user(?:name)?%/gi, '@' + data.username)
+					.replace(/%uptime%/gi, uptime())
 				);
 				return;
 			}

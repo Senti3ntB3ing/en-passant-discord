@@ -1,4 +1,6 @@
 
+import { Time } from '../config.js';
+
 const TWITCH_CLIENT_ID = Deno.env.get("TWITCH_CLIENT_ID");
 const TWITCH_AUTH_TOKEN = Deno.env.get("TWITCH_AUTH_TOKEN");
 
@@ -61,4 +63,16 @@ export async function schedule(id, date) {
 		const data = (await req.json()).data;
 		return data;
 	} catch { return null; }
+}
+
+export async function uptime(streamer) {
+	const c = await channel(streamer);
+	if (c == undefined || c == null || !c.is_live ||
+		c.started_at == undefined || c.started_at == '') return `0h 0m`;
+	const s = new Date(c.started_at);
+	const e = new Date();
+	const d = e.getTime() - s.getTime();
+	const h = Math.floor((d % Time.day) / Time.hour);
+	const m = Math.floor((d % Time.hour) / Time.minute);
+	return `${h}h ${m}m`;
 }

@@ -356,8 +356,7 @@ export async function resolve(data, channel) {
 	command = command[0].trim().replace(Prefix, '');
 	for (const action of actions) {
 		// mod is a string and `!=` performs automatic comparison:
-		console.log(data.tags);
-		if (action.moderator && data.tags.mod != '1') return;
+		if (action.moderator == true && data.tags.mod.includes(0)) return;
 		if (action.commands.includes(command)) {
 			if (action.reply != undefined) {
 				channel.send(action.reply

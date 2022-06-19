@@ -355,9 +355,9 @@ export async function resolve(data, channel) {
 	if (command == null) return;
 	command = command[0].trim().replace(Prefix, '');
 	for (const action of actions) {
-		// mod is a string and `!=` performs automatic comparison:
-		if (action.moderator == true && data.tags.mod.includes(0)) return;
 		if (action.commands.includes(command)) {
+			// mod is a string and `!=` performs automatic comparison:
+			if (action.moderator && data.tags.mod != true) return;
 			if (action.reply != undefined) {
 				channel.send(action.reply
 					.replace(/%user(?:name)?%/gi, '@' + data.username)

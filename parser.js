@@ -1,6 +1,6 @@
 
 import {
-	sendMessage, publishMessage, editMember, deleteMessage, deleteMessages,
+	sendMessage, publishMessage, deleteMessage, deleteMessages,
 	getMessages, createApplicationCommand, getApplicationCommands,
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
@@ -9,7 +9,6 @@ import {
 } from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
 
 import { closest } from './components/levenshtein.js';
-import { uptime } from './components/twitch.js';
 
 import {
 	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID
@@ -357,12 +356,11 @@ export async function resolve(data, channel) {
 	command = command[0].trim().replace(Prefix, '');
 	for (const action of actions) {
 		// mod is a string and `!=` performs automatic comparison:
-		if (action.moderator && data.tags.mod != true) return;
+		if (action.moderator && data.tags.mod != '1') return;
 		if (action.commands.includes(command)) {
 			if (action.reply != undefined) {
 				channel.send(action.reply
 					.replace(/%user(?:name)?%/gi, '@' + data.username)
-					.replace(/%uptime%/gi, await uptime())
 				);
 				return;
 			}

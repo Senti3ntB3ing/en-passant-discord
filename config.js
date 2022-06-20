@@ -13,6 +13,7 @@ export const Name = 'en passant';
 export const Prefix = '!';
 
 export const Streamer = 'thechessnerdlive';
+export const StreamerID = '428214501';
 
 export const Time = {
 	second: 1000,

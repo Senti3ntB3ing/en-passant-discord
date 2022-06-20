@@ -3,6 +3,7 @@ import { Time } from '../config.js';
 
 const TWITCH_CLIENT_ID = Deno.env.get("TWITCH_CLIENT_ID");
 const TWITCH_AUTH_TOKEN = Deno.env.get("TWITCH_AUTH_TOKEN");
+const TWITCH_OAUTH_TOKEN = Deno.env.get("TWITCH_OAUTH_TOKEN");
 
 export const BASE_URL = "https://api.twitch.tv/helix/";
 export const QUERIES = {
@@ -13,6 +14,11 @@ export const QUERIES = {
 const HEADERS = { 
 	headers: { 
 		"Authorization": "Bearer " + TWITCH_AUTH_TOKEN,
+		"Client-Id": TWITCH_CLIENT_ID
+	} 
+}, OAUTH = { 
+	headers: { 
+		"Authorization": "Bearer " + TWITCH_OAUTH_TOKEN,
 		"Client-Id": TWITCH_CLIENT_ID
 	} 
 };
@@ -75,4 +81,27 @@ export async function uptime(streamer) {
 	const h = Math.floor((d % Time.day) / Time.hour);
 	const m = Math.floor((d % Time.hour) / Time.minute);
 	return `${h}h ${m}m`;
+}
+
+export async function follow_count(id) {
+	// https://api.twitch.tv/helix/users/follows?to_id=#&first=1
+	const url = `${BASE_URL}users/follows?to_id=${id}&first=1`;
+	try {
+		const req = await fetch(url, OAUTH);
+		if (req.status != 200) return null;
+		const data = await req.json();
+		return 'total' in data ? data.total : null;
+	} catch { return null; }
+}
+
+export async function sub_count(id) {
+	// https://api.twitch.tv/helix/subscriptions?broadcaster_id=#&first=1
+	const url = `${BASE_URL}subscriptions?broadcaster_id=${id}&first=1`;
+	try {
+		const req = await fetch(url, OAUTH);
+		console.log(req);
+		if (req.status != 200) return null;
+		const data = await req.json();
+		return 'total' in data ? data.total : null;
+	} catch { return null; }
 }

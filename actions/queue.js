@@ -36,7 +36,7 @@ programmable({
 		);
 		if (i == null) return `You are already in the queue.`;
 		const j = ordinal(i);
-		return `@${data.username} aka '${username[1]}' is ${j} in the queue.`;
+		return `@${data.username} aka '${username[1]}' Chess.com is ${j} in the queue.`;
 	}
 });
 
@@ -45,7 +45,7 @@ programmable({
 	description: 'Leave the current queue.',
 	execute: data => {
 		queue.remove(e => e.user != data.username);
-		return `@${data.username} left the queue.`;
+		return `@${data.username}, you left the queue.`;
 	}
 });
 
@@ -55,12 +55,12 @@ programmable({
 	execute: () => {
 		const element = queue.dequeue();
 		if (element == undefined) return `There is no one in the queue.`;
-		return `@${element.user} aka '${element.profile}' is next.`;
+		return `@${element.user} aka '${element.profile}' on Chess.com is next.`;
 	}
 });
 
 programmable({
-	commands: [ 'queue' ],
+	commands: [ 'queue', 'q' ],
 	description: 'Displays the current queue.',
 	execute: () => {
 		const list = queue.list();

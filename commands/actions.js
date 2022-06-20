@@ -105,17 +105,17 @@ command({
 						color: ColorCodes.normal,
 						description: '',
 						fields: c
-					}))/*.concat({
+					})).concat({
 						title: 'Twitch Programmable',
 						color: ColorCodes.normal,
-						description: '',
-						fields: programmables.map(p => ({
+						description: 'test',
+						/*fields: programmables.map(p => ({
 							name: (p.moderator ? ':passport_control:｜' :
 							':ballot_box_with_check:｜') + p.commands.map(
 								e => '`' + Prefix + e + '`'
 							).join('｜'), value: p.description
-						}))
-					})*/
+						}))*/
+					})
 				};
 			break;
 		}

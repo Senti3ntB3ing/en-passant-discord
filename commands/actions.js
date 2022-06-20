@@ -88,13 +88,13 @@ command({
 				const actions = await fetchActions();
 				if (actions.length == 0)
 					return info('Twitch Actions', 'No actions found!');
-				const chunks = actions.sort(
+				const chunks = actions.filter(a => a.reply != undefined).sort(
 					(a, b) => a.commands[0] > b.commands[0] ? 1 : -1
 				).map(a => ({
 					name: (a.moderator ? ':passport_control:｜' :
 					':ballot_box_with_check:｜') + a.commands.map(
 						e => '`' + Prefix + e + '`'
-					).join('｜'), value: (a.reply || a.description)
+					).join('｜'), value: a.reply
 				})).reduce((all, one, i) => {
 					const ch = Math.floor(i / 25); 
 					all[ch] = [].concat((all[ch] || []), one); 

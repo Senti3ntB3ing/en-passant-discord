@@ -110,7 +110,7 @@ command({
 						title: 'Twitch Actions',
 						color: ColorCodes.normal,
 						description: '',
-						fields: c
+						//fields: c
 					})).concat({
 						title: 'Twitch Programmables',
 						color: ColorCodes.normal,

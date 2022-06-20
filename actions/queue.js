@@ -93,6 +93,6 @@ programmable({
 	execute: async () => {
 		const list = await queue.refresh();
 		if (list.length == 0) return 'The queue is empty.';
-		return list.map(e => e.user).join(', ');
+		return list.map(e => e.profile).join(', ');
 	}
 });

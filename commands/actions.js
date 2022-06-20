@@ -87,36 +87,18 @@ command({
 			case 'list':
 				if (actions.length == 0)
 					return info('Twitch Actions', 'No actions found!');
-				const chunks = actions.filter(a => a.reply != undefined).sort(
+				const text = new Blob(['\n# Actions\n\n' +
+				actions.filter(a => a.reply != undefined).sort(
 					(a, b) => a.commands[0] > b.commands[0] ? 1 : -1
-				).map(a => ({
-					name: (a.moderator ? ':passport_control:｜' :
-					':ballot_box_with_check:｜') + a.commands.map(
+				).map(a => (a.moderator ? '🛂｜' : '✅｜') +
+					a.commands.map(e => '`' + Prefix + e + '`').join('｜')
+					+ '\n' + a.reply
+				).join('\n') + '\n# Programmables\n\n' + programmables.map(
+					p => (p.moderator ? '🛂｜' : '✅｜') + p.commands.map(
 						e => '`' + Prefix + e + '`'
-					).join('｜'), value: a.reply
-				})).reduce((all, one, i) => {
-					const ch = Math.floor(i / 25); 
-					all[ch] = [].concat((all[ch] || []), one); 
-					return all;
-				}, []);
-				return {
-					embeds: chunks.map(c => ({
-						title: 'Twitch Actions',
-						color: ColorCodes.normal,
-						description: '',
-						fields: c
-					})).concat({
-						title: 'Twitch Programmables',
-						color: ColorCodes.normal,
-						description: '',
-						fields: programmables.map(p => ({
-							name: (p.moderator ? ':passport_control:｜' :
-							':ballot_box_with_check:｜') + p.commands.map(
-								e => '`' + Prefix + e + '`'
-							).join('｜'), value: p.description
-						}))
-					})
-				};
+					).join('｜') + '\n' + p.description
+				).join('\n') + '\n' ]);
+				return { file: { blob: text, name: 'Actions.md', } };
 			break;
 		}
 	}

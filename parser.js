@@ -364,6 +364,7 @@ export async function resolve(data, channel) {
 				);
 				return;
 			}
+			console.log(action);
 			if (action.execute.constructor.name == 'AsyncFunction') {
 				action.execute(data, channel).then(result => {
 					if (result != undefined) channel.send(result);

@@ -388,7 +388,7 @@ export async function fetchActions() {
 
 export async function reloadActions() {
 	let a = await fetchActions();
-	actions = actions.filter(a => a.reply != undefined).concat(a);
+	actions = actions.filter(a => a.reply == undefined).concat(a);
 }
 
 export function findAction(name) {

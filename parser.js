@@ -371,7 +371,7 @@ export async function resolve(data, channel) {
 			});
 			return;
 		}
-		const result = command.execute(data, channel);
+		const result = action.execute(data, channel);
 		if (result != undefined) channel.send(result);
 		return;
 	}

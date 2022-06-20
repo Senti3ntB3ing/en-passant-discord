@@ -105,7 +105,7 @@ command({
 						color: ColorCodes.normal,
 						description: '',
 						fields: c
-					})).concat([{
+					})).concat({
 						title: 'Twitch Programmable',
 						color: ColorCodes.normal,
 						description: '',
@@ -115,7 +115,7 @@ command({
 								e => '`' + Prefix + e + '`'
 							).join('｜'), value: p.description
 						}))
-					}])
+					})
 				};
 			break;
 		}

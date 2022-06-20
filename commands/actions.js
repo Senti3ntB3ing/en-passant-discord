@@ -87,18 +87,18 @@ command({
 			case 'list':
 				if (actions.length == 0)
 					return info('Twitch Actions', 'No actions found!');
-				const text = new Blob(['\n# Actions\n\n' +
+				const text = new Blob(['\nActions\n\n' +
 				actions.filter(a => a.reply != undefined).sort(
 					(a, b) => a.commands[0] > b.commands[0] ? 1 : -1
-				).map(a => (a.moderator ? '🛂｜' : '✅｜') +
-					a.commands.map(e => '`' + Prefix + e + '`').join('｜')
+				).map(a => (a.moderator ? '🛂 | ' : '✅ | ') +
+					a.commands.map(e => '`' + Prefix + e + '`').join(' | ')
 					+ '\n' + a.reply
-				).join('\n') + '\n# Programmables\n\n' + programmables.map(
-					p => (p.moderator ? '🛂｜' : '✅｜') + p.commands.map(
+				).join('\n') + '\n\nProgrammables\n\n' + programmables.map(
+					p => (p.moderator ? '🛂 | ' : '✅ | ') + p.commands.map(
 						e => '`' + Prefix + e + '`'
-					).join('｜') + '\n' + p.description
+					).join(' | ') + '\n' + p.description
 				).join('\n') + '\n' ]);
-				return { file: { blob: text, name: 'Actions.md', } };
+				return { file: { blob: text, name: 'Actions.txt', } };
 			break;
 		}
 	}

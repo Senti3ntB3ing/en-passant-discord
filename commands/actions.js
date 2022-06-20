@@ -2,7 +2,7 @@
 import { Prefix, ColorCodes } from '../config.js';
 import {
 	Option, command, error, info, success, addAction, findAction, removeAction,
-	addAliases, fetchActions
+	addAliases, actions, programmable
 } from '../parser.js';
 
 const PRFXRGX = new RegExp(Prefix, 'g');
@@ -85,7 +85,6 @@ command({
 				return success('Twitch Actions', 'Aliases for `' + Prefix + main + '` added.');
 			break;
 			case 'list':
-				const actions = await fetchActions();
 				if (actions.length == 0)
 					return info('Twitch Actions', 'No actions found!');
 				const chunks = actions.filter(a => a.reply != undefined).sort(
@@ -106,7 +105,17 @@ command({
 						color: ColorCodes.normal,
 						description: '',
 						fields: c
-					}))
+					})).concat([{
+						title: 'Twitch Programmable',
+						color: ColorCodes.normal,
+						description: '',
+						fields: programmable.map(p => ({
+							name: (p.moderator ? ':passport_control:｜' :
+							':ballot_box_with_check:｜') + p.commands.map(
+								e => '`' + Prefix + e + '`'
+							).join('｜'), value: p.description
+						}))
+					}])
 				};
 			break;
 		}

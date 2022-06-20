@@ -378,12 +378,12 @@ export async function resolve(data, channel) {
 }
 
 export async function reloadActions() {
-	let a = await Database.get('actions');
-	if (a == undefined || a == null) {
+	actions = await Database.get('actions');
+	if (actions == undefined || actions == null) {
 		await Database.set('actions', []);
-		a = [];
+		actions = [];
 	}
-	return a;
+	return actions;
 }
 
 export function findAction(name) {
@@ -393,20 +393,20 @@ export function findAction(name) {
 }
 
 export async function removeAction(name) {
-	actions = await reloadActions();
+	await reloadActions();
 	actions = actions.filter(a => !a.commands.includes(name));
 	await Database.set('actions', actions);
 }
 
 export async function addAction(data) {
-	actions = await reloadActions();
+	await reloadActions();
 	actions.push(data);
 	await Database.set('actions', actions);
 }
 
 export async function addAliases(name, aliases) {
 	const remove_duplicates = a => [...new Set(a)];
-	actions = await reloadActions();
+	await reloadActions();
 	for (const action of actions) if (action.commands.includes(name)) {
 		action.commands = remove_duplicates(action.commands.concat(aliases));
 		await Database.set('actions', actions);

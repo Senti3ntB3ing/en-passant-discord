@@ -44,7 +44,7 @@ programmable({
 	commands: [ 'leave' ],
 	description: 'Leave the current queue.',
 	execute: data => {
-		queue.remove(e => e.user == data.username);
+		queue.remove(e => e.user != data.username);
 		return `@${data.username} left the queue.`;
 	}
 });

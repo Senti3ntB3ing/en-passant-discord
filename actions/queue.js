@@ -8,9 +8,8 @@ class Queue {
 
 	constructor() { this.#queue = []; }
 
-	enqueue(element) {
-		const index = this.#queue.findIndex(e => e.user == element.user);
-		if (index != -1) return null;
+	enqueue(element, find_lambda) {
+		if (this.#queue.findIndex(find_lambda) != -1) return null;
 		this.#queue.push(element);
 		const position = this.#queue.length;
 		return position;
@@ -31,7 +30,10 @@ programmable({
 		const username = data.message.match(/join\s+(\w+)/);
 		if (username == null || username.length < 2)
 			return `Try with ${Prefix}join <Chess.com username>.`;
-		const i = queue.enqueue({ user: data.username, profile: username[1] });
+		const i = queue.enqueue({
+			user: data.username, profile: username[1] },
+			e => e.user == data.username
+		);
 		if (i == null) return `You are already in the queue.`;
 		const j = ordinal(i);
 		return `@${data.username} aka '${username[1]}' is ${i} in the queue.`;

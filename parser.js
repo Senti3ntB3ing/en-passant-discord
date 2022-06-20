@@ -17,7 +17,7 @@ import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
 
 export let commands = [], tasks = {}, attachments = [], record = [],
-	onAir = false, actions = [];
+	onAir = false, actions = [], programmable = [];
 let lastPing = new Date();
 
 // ==== Commands ===============================================================
@@ -355,41 +355,35 @@ export async function resolve(data, channel) {
 	if (command == null) return;
 	command = command[0].trim().replace(Prefix, '');
 	for (const action of actions) {
-		if (action.commands.includes(command)) {
-			// mod is a string and `!=` performs automatic comparison:
-			if (action.moderator && data.tags.mod != true) return;
-			if (action.reply != undefined) {
-				channel.send(action.reply
-					.replace(/%user(?:name)?%/gi, '@' + data.username)
-				);
-				return;
-			}
-			console.log(action);
-			if (action.execute.constructor.name == 'AsyncFunction') {
-				action.execute(data, channel).then(result => {
-					if (result != undefined) channel.send(result);
-				});
-				return;
-			}
-			const result = command.execute(data, channel);
-			if (result != undefined) channel.send(result);
+		if (!action.commands.includes(command)) continue;
+		// mod is a string and `!=` performs automatic comparison:
+		if (action.moderator && data.tags.mod != true) return;
+		if (action.reply != undefined) channel.send(action.reply
+			.replace(/%user(?:name)?%/gi, '@' + data.username)
+		);
+		return;
+	}
+	for (const action of programmable) {
+		if (!action.commands.includes(command)) continue;
+		if (action.execute.constructor.name == 'AsyncFunction') {
+			action.execute(data, channel).then(result => {
+				if (result != undefined) channel.send(result);
+			});
 			return;
 		}
+		const result = command.execute(data, channel);
+		if (result != undefined) channel.send(result);
+		return;
 	}
 }
 
-export async function fetchActions() {
+export async function reloadActions() {
 	let a = await Database.get('actions');
 	if (a == undefined || a == null) {
 		await Database.set('actions', []);
 		a = [];
 	}
 	return a;
-}
-
-export async function reloadActions() {
-	let a = await fetchActions();
-	actions = actions.filter(a => a.reply == undefined).concat(a);
 }
 
 export function findAction(name) {
@@ -399,14 +393,14 @@ export function findAction(name) {
 }
 
 export async function removeAction(name) {
-	let a = await fetchActions();
+	let a = await reloadActions();
 	a = a.filter(action => !action.commands.includes(name));
 	await Database.set('actions', a);
 	await reloadActions();
 }
 
 export async function addAction(data) {
-	let a = await fetchActions();
+	let a = await reloadActions();
 	if (a == undefined || a == null) a = [ data ];
 	else a.push(data);
 	await Database.set('actions', a);
@@ -415,7 +409,7 @@ export async function addAction(data) {
 
 export async function addAliases(name, aliases) {
 	const remove_duplicates = a => [...new Set(a)];
-	let a = await fetchActions();
+	let a = await reloadActions();
 	for (const action of a) if (action.commands.includes(name)) {
 		action.commands = remove_duplicates(action.commands.concat(aliases));
 		await Database.set('actions', a);
@@ -430,5 +424,5 @@ export function action(command) {
 	if (typeof command.commands == 'string')
 		command.commands = command.commands.split(/\s+/g);
 	if (command.moderator == undefined) command.moderator = false;
-	actions.push(command);
+	programmable.push(command);
 }

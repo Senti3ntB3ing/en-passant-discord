@@ -9,7 +9,7 @@ const queueLock = new Lock();
 
 class Queue {
 
-	#queue = [];
+	constructor() { this.#queue = []; }
 
 	async refresh() {
 		this.#queue = [];

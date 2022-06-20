@@ -2,7 +2,7 @@
 import { Lock } from "https://deno.land/x/unified_deno_lock@v0.1.1/mod.ts";
 
 import { Prefix, ordinal } from '../config.js';
-import { addAction } from '../parser.js';
+import { action } from '../parser.js';
 import { Database } from '../database.js';
 
 const queueLock = new Lock();
@@ -53,7 +53,7 @@ class Queue {
 
 const queue = new Queue();
 
-addAction({
+action({
 	commands: [ 'join' ],
 	description: 'Join the current queue.',
 	execute: async data => {
@@ -66,7 +66,7 @@ addAction({
 	}
 });
 
-addAction({
+action({
 	commands: [ 'leave' ],
 	description: 'Leave the current queue.',
 	execute: async data => {
@@ -75,7 +75,7 @@ addAction({
 	}
 });
 
-addAction({
+action({
 	commands: [ 'next' ],
 	description: 'Get the next in line in the queue.',
 	execute: async () => {
@@ -85,7 +85,7 @@ addAction({
 	}
 });
 
-addAction({
+action({
 	commands: [ 'queue' ],
 	description: 'Displays the current queue.',
 	execute: async () => {

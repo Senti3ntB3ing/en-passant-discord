@@ -36,7 +36,7 @@ programmable({
 		);
 		if (i == null) return `You are already in the queue.`;
 		const j = ordinal(i);
-		return `@${data.username} aka '${username[1]}' is ${i} in the queue.`;
+		return `@${data.username} aka '${username[1]}' is ${j} in the queue.`;
 	}
 });
 

@@ -60,7 +60,9 @@ programmable({
 		const username = data.message.match(/join\s+(\w+)/);
 		if (username == null || username.length < 2)
 			return `Try with ${Prefix}join username.`;
-		const index = queue.push({ user: data.username, profile: username[1] });
+		const index = await queue.push({
+			user: data.username, profile: username[1]
+		});
 		const i = ordinal(index);
 		return `@${data.username} aka ${username[1]} is ${i} in the queue.`;
 	}
@@ -79,7 +81,7 @@ programmable({
 	commands: [ 'next' ],
 	description: 'Get the next in line in the queue.',
 	execute: async () => {
-		const element = queue.pop();
+		const element = await queue.pop();
 		if (element == undefined) return `There is no one in the queue.`;
 		return `@${element.user} aka ${element.profile} is next.`;
 	}

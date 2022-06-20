@@ -358,8 +358,8 @@ export async function resolve(data, channel) {
 		if (!action.commands.includes(command)) continue;
 		// mod is a string and `!=` performs automatic comparison:
 		if (action.moderator && data.tags.mod != true) return;
-		if (action.reply != undefined) channel.send(action.reply
-			.replace(/%user(?:name)?%/gi, '@' + data.username)
+		if (action.reply != undefined) channel.send(
+			action.reply.replace(/%user(?:name)?%/gi, '@' + data.username)
 		);
 		return;
 	}
@@ -393,27 +393,23 @@ export function findAction(name) {
 }
 
 export async function removeAction(name) {
-	let a = await reloadActions();
-	a = a.filter(action => !action.commands.includes(name));
-	await Database.set('actions', a);
-	await reloadActions();
+	actions = await reloadActions();
+	actions = actions.filter(a => !a.commands.includes(name));
+	await Database.set('actions', actions);
 }
 
 export async function addAction(data) {
-	let a = await reloadActions();
-	if (a == undefined || a == null) a = [ data ];
-	else a.push(data);
-	await Database.set('actions', a);
-	await reloadActions();
+	actions = await reloadActions();
+	actions.push(data);
+	await Database.set('actions', actions);
 }
 
 export async function addAliases(name, aliases) {
 	const remove_duplicates = a => [...new Set(a)];
-	let a = await reloadActions();
-	for (const action of a) if (action.commands.includes(name)) {
+	actions = await reloadActions();
+	for (const action of actions) if (action.commands.includes(name)) {
 		action.commands = remove_duplicates(action.commands.concat(aliases));
-		await Database.set('actions', a);
-		await reloadActions();
+		await Database.set('actions', actions);
 		return;
 	}
 }

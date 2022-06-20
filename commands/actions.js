@@ -99,28 +99,12 @@ command({
 					all[ch] = [].concat((all[ch] || []), one); 
 					return all;
 				}, []);
-				console.log(chunks.map(c => ({
-					title: 'Twitch Actions',
-					color: ColorCodes.normal,
-					description: '',
-					//fields: c
-				})).concat({
-					title: 'Twitch Programmables',
-					color: ColorCodes.normal,
-					description: '',
-					fields: programmables.map(p => ({
-						name: (p.moderator ? ':passport_control:｜' :
-						':ballot_box_with_check:｜') + p.commands.map(
-							e => '`' + Prefix + e + '`'
-						).join('｜'), value: p.description
-					}))
-				}));
 				return {
 					embeds: chunks.map(c => ({
 						title: 'Twitch Actions',
 						color: ColorCodes.normal,
 						description: '',
-						//fields: c
+						fields: c
 					})).concat({
 						title: 'Twitch Programmables',
 						color: ColorCodes.normal,

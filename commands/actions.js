@@ -94,7 +94,7 @@ command({
 					name: (a.moderator ? ':passport_control:｜' :
 					':ballot_box_with_check:｜') + a.commands.map(
 						e => '`' + Prefix + e + '`'
-					).join('｜'), value: a.reply
+					).join('｜'), value: (a.reply || a.description)
 				})).reduce((all, one, i) => {
 					const ch = Math.floor(i / 25); 
 					all[ch] = [].concat((all[ch] || []), one); 

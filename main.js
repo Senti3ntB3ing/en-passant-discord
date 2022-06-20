@@ -14,6 +14,11 @@ import {
 } from './parser.js';
 import { Channels, Welcome, Actions, Streamer } from './config.js';
 
+// ==== Actions ============================
+
+import './actions/info.js';
+import './actions/queue.js';
+
 // ==== Commands ===========================
 
 import './commands/actions.js';

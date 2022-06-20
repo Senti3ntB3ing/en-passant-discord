@@ -10,19 +10,13 @@ class Queue {
 
 	enqueue(element) {
 		const index = this.#queue.findIndex(e => e.user == element.user);
+		if (index != -1) return index;
 		this.#queue.push(element);
 		const position = this.#queue.length;
 		return position;
 	}
-	dequeue() {
-		const element = this.#queue.shift();
-		return element;
-	}
-	remove(filter_lambda) {
-		this.refresh();
-		this.#queue = this.#queue.filter(filter_lambda);
-	}
-
+	dequeue() { return this.#queue.shift(); }
+	remove(filter_lambda) { this.#queue = this.#queue.filter(filter_lambda); }
 	clear() { this.#queue = []; }
 
 }

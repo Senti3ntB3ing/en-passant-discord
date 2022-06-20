@@ -17,7 +17,7 @@ import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
 
 export let commands = [], tasks = {}, attachments = [], record = [],
-	onAir = false, actions = [], programmable = [];
+	onAir = false, actions = [], programmables = [];
 let lastPing = new Date();
 
 // ==== Commands ===============================================================
@@ -363,7 +363,7 @@ export async function resolve(data, channel) {
 		);
 		return;
 	}
-	for (const action of programmable) {
+	for (const action of programmables) {
 		if (!action.commands.includes(command)) continue;
 		if (action.execute.constructor.name == 'AsyncFunction') {
 			action.execute(data, channel).then(result => {
@@ -414,11 +414,11 @@ export async function addAliases(name, aliases) {
 	}
 }
 
-export function action(command) {
+export function programmable(command) {
 	if (typeof command.execute != 'function') return;
 	if (command.commands == undefined) return;
 	if (typeof command.commands == 'string')
 		command.commands = command.commands.split(/\s+/g);
 	if (command.moderator == undefined) command.moderator = false;
-	programmable.push(command);
+	programmables.push(command);
 }

@@ -2,7 +2,7 @@
 import { Prefix, ColorCodes } from '../config.js';
 import {
 	Option, command, error, info, success, addAction, findAction, removeAction,
-	addAliases, actions, programmable
+	addAliases, actions, programmables
 } from '../parser.js';
 
 const PRFXRGX = new RegExp(Prefix, 'g');
@@ -109,7 +109,7 @@ command({
 						title: 'Twitch Programmable',
 						color: ColorCodes.normal,
 						description: '',
-						fields: programmable.map(p => ({
+						fields: programmables.map(p => ({
 							name: (p.moderator ? ':passport_control:｜' :
 							':ballot_box_with_check:｜') + p.commands.map(
 								e => '`' + Prefix + e + '`'

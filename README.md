@@ -6,7 +6,7 @@ This bot is made with ❤️ by [thechessnerd](https://www.instagram.com/theches
 The environment uses `deno`, with the [Discordeno API](https://discordeno.mod.land/),
 [GitHub](https://github.com/discordeno/discordeno/).
 
-[Docs are available here](https://doc.deno.land/https://deno.land/x/discordeno@13.0.0-rc34/mod.ts).
+[Docs are available here](https://doc.deno.land/https://deno.land/x/discordeno@13.0.0-rc45/mod.ts).
 
 🖥 Hosting is provided by [Deno Deploy](https://deno.com/deploy/).
 🏓 Task ping is provided by [UptimeRobot](https://uptimerobot.com).

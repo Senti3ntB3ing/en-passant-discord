@@ -62,7 +62,7 @@ export function parse(message) {
 	if (!message.member.roles.includes(Roles.moderator)) {
 		sendMessage(bot, message.channelId, info(
 			'Command Information',
-			'We transitioned to slash commands.\nType `\\` to get started.\n' +
+			'We transitioned to slash commands.\nType `/` to get started.\n' +
 			'If it doesn\'t work, try updating **Discord**.'
 		));
 		return;

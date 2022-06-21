@@ -18,8 +18,9 @@ The environment uses `deno`, with the [Discordeno API](https://discordeno.mod.la
 - Public [chess.com API](https://www.chess.com/news/view/published-data-api).
 - Public [YouTube API](https://developers.google.com/youtube/v3/docs).
 - Public [Twitch API](https://dev.twitch.tv/docs/api/).
-- Chess engine [chess.js](https://github.com/jhlywa/chess.js) by `Jeff Hlywa`,
-  `Cristian Antonuccio` refactor and bug fixes.
+- Chess engine [beta_chess](https://github.com/Cristian-A/beta_chess) based on
+[chess.js](https://github.com/jhlywa/chess.js) by `Jeff Hlywa`,
+`Cristian Antonuccio` refactor and bug fixes.
 
 The rights of the `Alpha Chess` Set belong to **Eric Bentzen** and have been
 legally purchased under the name of Zachary Saine. Do not use the chess set

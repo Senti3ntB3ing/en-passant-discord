@@ -1,6 +1,6 @@
 
 import { Option, prefix, command, error } from '../parser.js';
-import { Chess } from '../components/chess.js';
+import { Chess } from 'https://deno.land/x/beta_chess@v1.0.0/chess.js';
 import { diagram, gif } from '../components/diagram/diagram.js';
 
 command({

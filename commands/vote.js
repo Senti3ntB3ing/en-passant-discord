@@ -1,4 +1,5 @@
 
+import { Chess } from 'https://deno.land/x/beta_chess@v1.0.0/chess.js';
 import { Prefix, Roles, Channels } from '../config.js';
 import {
 	Option, command, prefix, card, error, info, success, warn,
@@ -7,7 +8,6 @@ import {
 import {
 	game, playing, moves, getGame, setGame, count, hasVoted, vote
 } from '../components/votechess.js';
-import { Chess } from '../components/chess.js';
 import { stateMessage } from '../components/diagram/diagram.js';
 import { Database } from '../database.js';
 

@@ -1,7 +1,7 @@
 
-import { encode, decode, ColorType } from "https://deno.land/x/pngs@0.1.1/mod.ts";
-import { Chess } from "../chess.js";
-import { GIFEncoder, quantize, applyPalette } from "https://unpkg.com/gifenc@1.0.3/dist/gifenc.esm.js";
+import { encode, decode, ColorType } from 'https://deno.land/x/pngs@0.1.1/mod.ts';
+import { Chess } from 'https://deno.land/x/beta_chess@v1.0.0/chess.js';
+import { GIFEncoder, quantize, applyPalette } from 'https://unpkg.com/gifenc@1.0.3/dist/gifenc.esm.js';
 
 const duplicate = image => ({
 	width: image.width,

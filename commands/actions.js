@@ -1,5 +1,5 @@
 
-import { Prefix, ColorCodes } from '../config.js';
+import { Prefix } from '../config.js';
 import {
 	Option, command, error, info, success, addAction, findAction, removeAction,
 	addAliases, actions, programmables

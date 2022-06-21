@@ -400,6 +400,13 @@ export async function removeAction(name) {
 
 export async function addAction(data) {
 	await reloadActions();
+	const action = actions.find(a => a.commands.includes(data.commands[0]));
+	if (action != undefined) {
+		if (data.reply != '') action.reply = data.reply;
+		action.moderator = data.moderator;
+		await Database.set('actions', actions);
+		return;
+	}
 	actions.push(data);
 	await Database.set('actions', actions);
 }

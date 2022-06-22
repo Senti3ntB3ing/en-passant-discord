@@ -8,9 +8,7 @@ prefix({
 	execute: async command => {
 		await send(command.channelId, error(
 			'Shutdown', 'The system is now offline.\n' +
-			'The bot will be restarted automatically in `3m`.\n' +
-			'If absolutely necessary you can restart it with this link:\n' +
-			'https://en-passant.deno.dev/'
+			'Restart it here: https://en-passant.deno.dev/'
 		));
 		Deno.exit(1);
 	}

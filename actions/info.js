@@ -22,7 +22,7 @@ programmable({
 });
 
 programmable({
-	commands: [ 'so', 'shoutout' ],
+	commands: [ 'so', 'shoutout' ], moderator: true,
 	description: 'Shout out to the specified streamer.',
 	execute: async data => {
 		const args = data.message.split(/\s+/);
@@ -33,7 +33,7 @@ programmable({
 });
 
 programmable({
-	commands: [ 'tos' ],
+	commands: [ 'tos' ], moderator: true,
 	description: 'Chess.com terms of service.',
 	execute: async data => {
 		const args = data.message.split(/\s+/);

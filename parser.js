@@ -206,7 +206,7 @@ export const warn = (title, message) => ({
 // ==== Log ====================================================================
 
 export function log(component, text) {
-	if (record.length == 20) record.shift();
+	if (record.length == 10) record.shift();
 	record.push(`[${(new Date()).toLocaleTimeString('en-GB', {
 		timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric'
 	})} UTC] ${component}: ${text}`);

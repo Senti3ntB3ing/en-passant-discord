@@ -1,5 +1,6 @@
 
 import { command, card, snow } from '../parser.js';
+import { PID } from '../main.js';
 
 command({
 	name: 'ping', emoji: ':ping_pong:', options: [],
@@ -8,6 +9,6 @@ command({
 		'Ping Command',
 		`:ping_pong: **Pong**. Server latency: \`${
 			Date.now() - snow(interaction.id)
-		}ms\`.`
+		}ms\`, PID: \`${PID}\`.`
 	),
 });

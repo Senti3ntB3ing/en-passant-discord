@@ -12,6 +12,8 @@ import {
 } from './parser.js';
 import { Channels, Welcome, Actions, Streamer, Time } from './config.js';
 
+export const PID = Math.floor(Math.random() * 10000);
+
 // ==== Actions ============================
 
 import './actions/info.js';

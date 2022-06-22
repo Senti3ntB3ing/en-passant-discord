@@ -10,7 +10,7 @@ prefix({
 		const match = /\s+(\d+)/.test(command.message);
 		if (match != null) {
 			if (match[1] == PID) {
-				await send(info(
+				await send(command.channelId, info(
 					'Shutdown', `The process \`${PID}\` is now offline.` 
 				));
 				Deno.exit(1);

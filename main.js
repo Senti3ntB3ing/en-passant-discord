@@ -5,8 +5,6 @@ import {
 import { enableCachePlugin, enableCacheSweepers }
 from 'https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts';
 
-//import { serve } from 'https://deno.land/std@0.120.0/http/server.ts';
-
 import { TwitchChat } from 'https://deno.land/x/tmi@v1.0.5/mod.ts';
 
 import {
@@ -99,13 +97,6 @@ addEventListener('fetch', e => {
 		status: 200
 	}));
 });
-/*serve(async _ => {
-	executeTasks();
-	return new Response(fetchLog(), {
-		headers: { 'content-type': 'text/plain' },
-		status: 200
-	});
-});*/
 log('status', 'web server ready');
 
 // =========================================

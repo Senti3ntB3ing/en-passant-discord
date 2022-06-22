@@ -210,7 +210,7 @@ export function log(component, text) {
 	record.push(`[${(new Date()).toLocaleTimeString('en-GB', {
 		timeZone: 'UTC', hour12: false, hour: 'numeric', minute: 'numeric'
 	})} UTC] ${component}: ${text}`);
-	console.log(record[record.length - 1]);
+	if (component == 'status') console.log(record[record.length - 1]);
 }
 
 export function fetchLog() {

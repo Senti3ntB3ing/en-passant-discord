@@ -10,7 +10,7 @@ import { TwitchChat } from 'https://deno.land/x/tmi@v1.0.5/mod.ts';
 import {
 	parse, text, fetchLog, log, executeTasks, dispatch, resolve, reloadActions
 } from './parser.js';
-import { Channels, Welcome, Actions, Streamer } from './config.js';
+import { Channels, Welcome, Actions, Streamer, Time } from './config.js';
 
 // ==== Actions ============================
 
@@ -91,13 +91,15 @@ setRandomAction();
 
 // web server for constant uptime:
 addEventListener('fetch', request => {
-	executeTasks();
 	request.respondWith(new Response(fetchLog(), {
 		headers: { 'content-type': 'text/plain' },
 		status: 200
 	}));
 });
 log('status', 'web server ready');
+
+// tasks interval:
+setInterval(executeTasks, Time.minutes(5));
 
 // =========================================
 

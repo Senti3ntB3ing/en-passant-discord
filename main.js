@@ -13,7 +13,7 @@ import {
 import { Channels, Welcome, Actions, Streamer, Time } from './config.js';
 
 export const PID = Math.floor(Math.random() * 10000);
-log('status', 'PID: ' + PID);
+log('status', 'PID ' + PID);
 
 // ==== Actions ============================
 

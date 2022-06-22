@@ -101,7 +101,7 @@ log('status', 'web server ready');
 
 // =========================================
 
-// twitch bot:
+/* twitch bot:
 export const chat = new TwitchChat(
 	Deno.env.get('TWITCH_OAUTH_BOT'), 'en_passant_bot'
 );
@@ -118,7 +118,7 @@ try {
 	channel.addEventListener('privmsg', data => resolve(data, channel));
 } catch (e) { console.error(e); }
 reloadActions(); // loads the twitch actions from database
-log('status', 'twitch chat ready');
+log('status', 'twitch chat ready');*/
 
 // =========================================
 

@@ -37,6 +37,7 @@ programmable({
 	description: 'Chess.com terms of service.',
 	execute: async data => {
 		const args = data.message.split(/\s+/);
+		console.log(args);
 		if (args.length < 2) return
 			`Please don't suggest moves for the current position as ` +
 			`it's against chess.com terms of service. Instead please ask ` +

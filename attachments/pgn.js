@@ -24,7 +24,7 @@ attachment({
 		let description = '';
 		if (w != null && b != null) description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 		let t = pgn.match(/\[TimeControl\s+["'](\w+)["']\]/i);
-		if (t != null && t.length > 1) description += ` ・ \`${t[1]}s\``;
+		if (t != null && t.length > 1 && t[1] != '') description += ` ・ \`${t[1]}s\``;
 		let status = '';
 		if (game.ended()) {
 			if (game.draw()) status = '½-½ ・ Draw';

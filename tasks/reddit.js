@@ -11,9 +11,10 @@ createTask({
 	description: 'Sends out the hot reddit post.',
 	execute: async () => {
 		const id = Database.get('reddit_id');
-		const data = await fetch(ENDPOINT);
+		let data = await fetch(ENDPOINT);
+		if (data.response.status != 200) return;
+		data = await data.json();
 		if (data == null || data == undefined) return;
-		console.log(data);
 		if (id != data.data.children[0].data.id) {
 			Database.set('reddit_id', data.data.children[0].data.id);
 			send(Channels.reddit, text(

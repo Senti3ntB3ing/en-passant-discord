@@ -1,13 +1,13 @@
 
 
-import { Channels } from '../config.js';
+import { Channels, Time } from '../config.js';
 import { Database } from '../database.js';
 import { createTask, send, text } from '../parser.js';
 
 const ENDPOINT = 'https://www.reddit.com/r/thechessnerd.json?limit=1';
 
 createTask({
-	name: 'reddit', emoji: ':large_orange_diamond:', time: '9:55',
+	name: 'reddit', emoji: ':large_orange_diamond:', interval: Time.hours(6),
 	description: 'Sends out the hot reddit post.',
 	execute: async () => {
 		const id = Database.get('reddit_id');

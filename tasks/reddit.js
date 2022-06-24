@@ -12,7 +12,7 @@ createTask({
 	execute: async () => {
 		const id = Database.get('reddit_id');
 		let data = await fetch(ENDPOINT);
-		if (data.response.status != 200) return;
+		if (data.status != 200) return;
 		data = await data.json();
 		if (data == null || data == undefined) return;
 		if (id != data.data.children[0].data.id) {

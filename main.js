@@ -45,6 +45,7 @@ import './tasks/schedule.js';
 import './tasks/youtube.js';
 import './tasks/twitch.js';
 import './tasks/move.js';
+import './tasks/reddit.js';
 
 // =========================================
 

@@ -10,7 +10,7 @@ createTask({
 	name: 'reddit', emoji: ':large_orange_diamond:', interval: Time.hours(6),
 	description: 'Sends out the hot reddit post.',
 	execute: async () => {
-		const id = Database.get('reddit_id');
+		const id = await Database.get('reddit_id');
 		let data = await fetch(ENDPOINT);
 		if (data.status != 200) return;
 		data = await data.json();

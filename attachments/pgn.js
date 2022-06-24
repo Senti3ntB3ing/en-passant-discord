@@ -22,7 +22,7 @@ attachment({
 		let b = pgn.match(/\[Black\s+["'](\w+)["']\]/i);
 		if (b != null && b.length > 1) b = b[1]; else b = null;
 		let description = '';
-		if (w != null && b != null) description = `${w} vs ${b}`;
+		if (w != null && b != null) description = `⬜️ **${w}** vs ⬛️ **${b}**`;
 		let status = '';
 		if (game.ended()) {
 			if (game.draw()) status = '½-½ ・ Draw';

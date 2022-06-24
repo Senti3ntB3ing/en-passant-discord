@@ -17,10 +17,12 @@ attachment({
 		const game = new Chess();
 		if (!game.pgn(pgn)) return error(title, 'Invalid PGN file!');
 		const data = await gif(game);
-		const header = game.header(); console.log(header);
-		const w = header['White'], b = header['Black'];
+		let w = pgn.match(/\[White\s+["'](\w+)["']\]/i);
+		if (w != null && w.length > 1) w = w[1]; else w = null;
+		let b = pgn.match(/\[Black\s+["'](\w+)["']\]/i);
+		if (b != null && b.length > 1) b = b[1]; else b = null;
 		let description = '';
-		if (w != undefined && b != undefined) description = `${w} vs ${b}`;
+		if (w != null && b != null) description = `${w} vs ${b}`;
 		let status = '';
 		if (game.ended()) {
 			if (game.draw()) status = '½-½ ・ Draw';
@@ -32,7 +34,7 @@ attachment({
 			embeds: [{
 				type: 'rich', title, description, color: 0xFFFFFF,
 				image: { url: 'attachment://board.gif' },
-				footer: status
+				footer: { text: status }
 			}]
 		};
 	}

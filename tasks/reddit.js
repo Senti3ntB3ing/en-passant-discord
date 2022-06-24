@@ -13,6 +13,7 @@ createTask({
 		const id = Database.get('reddit_id');
 		const data = await fetch(ENDPOINT);
 		if (data == null || data == undefined) return;
+		console.log(data.data);
 		if (id != data.data.children[0].data.id) {
 			Database.set('reddit_id', data.data.children[0].data.id);
 			send(Channels.reddit, text(

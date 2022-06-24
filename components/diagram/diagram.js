@@ -87,10 +87,8 @@ function board_to_data(board) {
 	return data;
 }
 
-export async function gif(pgn, perspective = 'w') {
-	const game = new Chess();
+export async function gif(game, perspective = 'w') {
 	let data = board_to_data(await frame(game.board, perspective));
-	if (!game.pgn(pgn)) return undefined;
 	const moves = game.history();
 	game.reset();
 	const palette = quantize(data, 16, { format: 'rgb444' });

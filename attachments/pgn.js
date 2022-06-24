@@ -16,7 +16,7 @@ attachment({
 		pgn = await pgn.text();
 		const game = new Chess();
 		if (!game.pgn(pgn)) return error(title, 'Invalid PGN file!');
-		const data = await gif(pgn);
+		const data = await gif(game);
 		const w = game.header()['White'], b = game.header()['Black'];
 		let description = '';
 		if (w != undefined && b != undefined) description = `${w} vs ${b}`;

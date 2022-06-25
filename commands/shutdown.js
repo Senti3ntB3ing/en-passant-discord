@@ -6,7 +6,8 @@ prefix({
 	name: 'shutdown', emoji: ':firecracker:', aliases: [ 'die' ],
 	description: 'Shutdown the bot.',
 	execute: async command => {
-		if (command.text.match(/\d+/)[0] === PID) Deno.exit(1);
+		const m = command.text.match(/\d+/);
+		if (m != null && m.length > 1 && m[1] == PID) Deno.exit(1);
 		await send(command.channelId, error(
 			'Shutdown', 'The system is now offline.\n' +
 			'It will be back online in a few minutes.\n' +

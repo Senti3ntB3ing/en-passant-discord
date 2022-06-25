@@ -20,9 +20,10 @@ attachment({
 		const data = await gif(game);
 		const w = h['White'], b = h['Black'];
 		let description = '';
-		if (w != undefined && b != undefined) description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
+		if (w != undefined && b != undefined)
+			description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 		const t = h['TimeControl'];
-		if (t != undefined && t.length > 1 && t[1] != '') description += ` ・ \`${t[1]}s\``;
+		if (t != undefined && t != '') description += ` ・ \`${t}s\``;
 		let status = '';
 		if (game.ended()) {
 			if (game.draw()) status = '½-½ ・ Draw';

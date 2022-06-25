@@ -364,6 +364,7 @@ export async function resolve(data, channel) {
 	}
 	for (const action of programmables) {
 		if (!action.commands.includes(command)) continue;
+		if (action.moderator && data.tags.mod != true) return;
 		if (action.execute.constructor.name == 'AsyncFunction') {
 			action.execute(data, channel).then(result => {
 				if (result != undefined) channel.send(result);

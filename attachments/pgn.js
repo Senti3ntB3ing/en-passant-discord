@@ -22,6 +22,7 @@ attachment({
 		let b = pgn.match(/\[Black\s+["'](\w+)["']\]/i);
 		if (b != null && b.length > 1) b = b[1]; else b = null;*/
 		const h = game.header(); const w = h['White'], b = h['Black'];
+		console.log(h);
 		let description = '';
 		//if (w != null && b != null) description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 		if (w != undefined && b != undefined) description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;

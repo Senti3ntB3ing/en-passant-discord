@@ -16,17 +16,11 @@ attachment({
 		pgn = await pgn.text();
 		const game = new Chess();
 		if (!game.pgn(pgn)) return error(title, 'Invalid PGN file!');
+		const h = game.header();
 		const data = await gif(game);
-		/*let w = pgn.match(/\[White\s+["'](\w+)["']\]/i);
-		if (w != null && w.length > 1) w = w[1]; else w = null;
-		let b = pgn.match(/\[Black\s+["'](\w+)["']\]/i);
-		if (b != null && b.length > 1) b = b[1]; else b = null;*/
-		const h = game.header(); const w = h['White'], b = h['Black'];
-		console.log(h);
+		const w = h['White'], b = h['Black'];
 		let description = '';
-		//if (w != null && b != null) description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 		if (w != undefined && b != undefined) description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
-		//let t = pgn.match(/\[TimeControl\s+["'](.*?)["']\]/i);
 		const t = h['TimeControl'];
 		if (t != undefined && t.length > 1 && t[1] != '') description += ` ・ \`${t[1]}s\``;
 		let status = '';

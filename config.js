@@ -5,7 +5,6 @@ export const delay = async ms => new Promise(resolve => setTimeout(resolve, ms))
 export const ordinal = n => {
 	const s = [ 'th', 'st', 'nd', 'rd' ];
 	const v = `${n}`, l = parseInt(v[v.length - 1]);
-	console.log(v, n, l);
 	return n + (l < 4 ? s[l] : s[0]);
 };
 

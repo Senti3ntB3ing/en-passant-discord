@@ -295,8 +295,7 @@ export async function dispatch(interaction) {
 	if (reactions.length > 0) {
 		const m = await getOriginalInteractionResponse(bot, interaction.token);
 		for (const r of reactions) {
-			try { await react(interaction.channelId, m.id, r); }
-			catch (e) { console.log(e); }
+			try { await react(interaction.channelId, m.id, r); } catch { }
 		}
 	}
 }

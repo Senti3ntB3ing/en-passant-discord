@@ -1,7 +1,7 @@
 
-import { Option, prefix, command, error } from '../parser.js';
+import { Option, command, error } from '../parser.js';
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
-import { diagram, gif } from '../components/diagram/diagram.js';
+import { diagram } from '../components/diagram/diagram.js';
 
 command({
 	name: 'fen', emoji: ':page_with_curl:',
@@ -30,7 +30,6 @@ command({
 				status = game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won';
 		} else status = game.turn == 'w' ? '⬜️ White to Move' : '⬛️ Black to Move';
 		const data = await diagram(game.board, game.turn);
-		console.log(data);
 		let perspective = game.turn;
 		if (interaction.data.options.length > 1)
 			perspective = interaction.data.options[1].value[0];

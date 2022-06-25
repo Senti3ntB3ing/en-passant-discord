@@ -99,7 +99,6 @@ export async function sub_count(id) {
 	const url = `${BASE_URL}subscriptions?broadcaster_id=${id}&first=1`;
 	try {
 		const req = await fetch(url, OAUTH);
-		console.log(req);
 		if (req.status != 200) return null;
 		const data = await req.json();
 		return 'total' in data ? data.total : null;

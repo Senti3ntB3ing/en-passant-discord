@@ -1,5 +1,5 @@
 
-import { Chess } from 'https://deno.land/x/beta_chess@v1.0.0/chess.js';
+import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 import { Prefix, Roles, Channels } from '../config.js';
 import {
 	Option, command, prefix, card, error, info, success, warn,

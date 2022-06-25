@@ -2,7 +2,7 @@
 import { Size } from '../config.js';
 import { gif } from '../components/diagram/diagram.js';
 import { attachment, error } from '../parser.js';
-import { Chess } from 'https://deno.land/x/beta_chess@v1.0.0/chess.js';
+import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 
 attachment({
 	type: 'pgn', emoji: ':clipboard:',

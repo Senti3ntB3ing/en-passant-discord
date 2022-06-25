@@ -1,6 +1,6 @@
 
 import { Option, prefix, command, error } from '../parser.js';
-import { Chess } from 'https://deno.land/x/beta_chess@v1.0.0/chess.js';
+import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 import { diagram, gif } from '../components/diagram/diagram.js';
 
 command({
@@ -48,28 +48,3 @@ command({
 	}
 });
 
-prefix({
-	name: 'gif', emoji: ':page_with_curl:', aliases: [ 'pgn' ],
-	description: 'Display a chess gif from a list of moves.',
-	execute: async message => {
-		const e = error('Chess gif error', 'Provided invalid PGN!');
-		let perspective = 'w', pgn;
-		if (message.arguments.length == 0) return e;
-		const a = message.arguments[0].toLowerCase();
-		if (a == 'white' || a == 'black') {
-			perspective = a[0];
-			pgn = message.text.replace(/^\s*(white|black)\s*/g, '');
-		} else pgn = message.text;
-		const title = 'Chess gif from moves';
-		const data = await gif(pgn, perspective);
-		if (data == undefined) return e;
-		return {
-			file: { blob: new Blob([ data ]), name: 'board.gif', },
-			embeds: [{
-				type: 'rich', title,
-				color: perspective == 'w' ? 0xFFFFFF : 0x000000,
-				image: { url: 'attachment://board.gif' }
-			}]
-		};
-	}
-});

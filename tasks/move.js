@@ -16,7 +16,7 @@ createTask({
 		let g = await game(id);
 		if (g == undefined) return;
 		g.moveList = moves(g.moveList);
-		if (g.moveList.length == m) return;
+		if (g.moveList.length == m && !g.isFinished) return;
 		// someone moved, delete old status, make new one.
 		try { await remove(st, Channels.vote_chess); } catch { }
 		const b = new Chess(g.pgnHeaders.FEN);

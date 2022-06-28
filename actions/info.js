@@ -22,9 +22,9 @@ programmable({
 });
 
 programmable({
-	commands: [ 'so', 'shoutout' ], moderator: true,
+	commands: [ 'so', 'shoutout' ], permissions: 'mod',
 	description: 'Shout out to the specified streamer.',
-	execute: async data => {
+	execute: data => {
 		const args = data.message.split(/\s+/);
 		if (args.length < 2) return;
 		const streamer = args[1].replace(/^@+/, '');
@@ -33,9 +33,9 @@ programmable({
 });
 
 programmable({
-	commands: [ 'tos' ], moderator: true,
+	commands: [ 'tos' ], permissions: 'mod',
 	description: 'Chess.com terms of service.',
-	execute: async data => {
+	execute: data => {
 		const args = data.message.split(/\s+/);
 		if (args.length < 2)
 			return `Please don't suggest moves for the current position as ` +

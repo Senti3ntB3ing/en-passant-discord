@@ -1,6 +1,6 @@
 
 import { Prefix, ordinal } from '../config.js';
-import { programmable } from '../parser.js';
+import { programmable, programmables } from '../parser.js';
 
 class Queue {
 
@@ -27,6 +27,9 @@ programmable({
 	commands: [ 'join' ],
 	description: 'Join the current queue.',
 	execute: data => {
+		const join = programmables.find(p => p.commands.includes('join'));
+		if (join.permissions == 'sub' && !data.badges.subscriber)
+			return `Today the ${Prefix}queue is only for subscribers.`;
 		const username = data.message.match(/join\s+(\w+)/);
 		if (username == null || username.length < 2)
 			return `Try with ${Prefix}join <Chess.com username>.`;
@@ -36,7 +39,7 @@ programmable({
 		);
 		if (i == null) return `You are already in the queue.`;
 		const j = ordinal(i);
-		return `@${data.username} aka '${username[1]}' Chess.com is ${j} in the queue.`;
+		return `@${data.username} aka '${username[1]}' on Chess.com is ${j} in the queue.`;
 	}
 });
 
@@ -50,7 +53,7 @@ programmable({
 });
 
 programmable({
-	commands: [ 'next' ], moderator: true,
+	commands: [ 'next' ], permissions: 'mod',
 	description: 'Get the next in line in the queue.',
 	execute: () => {
 		const element = queue.dequeue();
@@ -70,10 +73,20 @@ programmable({
 });
 
 programmable({
-	commands: [ 'clear' ], moderator: true,
+	commands: [ 'clear' ], permissions: 'mod',
 	description: 'Clears the current queue.',
 	execute: () => {
 		queue.clear();
 		return 'The queue has been cleared.';
+	}
+});
+
+programmable({
+	commands: [ 'toggleq' ], permissions: 'mod',
+	description: 'Toggles subonly mode for the current queue.',
+	execute: () => {
+		const join = programmables.find(p => p.commands.includes('join'));
+		join.permissions = join.permissions == 'sub' ? 'all' : 'sub';
+		return `Queue subonly mode is now ${join.permissions == 'sub' ? 'on' : 'off'}.`;
 	}
 });

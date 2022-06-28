@@ -59,6 +59,7 @@ command({
 	execute: async interaction => {
 		const options = interaction.data.options[0].options;
 		let commands, main, aliases;
+		const emoji = p => ({ 'mod': '🛂', 'sub': '💟', 'vip': '🆒', 'all': '✅' }[p]);
 		switch (interaction.data.options[0].name) {
 			case 'action':
 				commands = options[0].value.split(/\s+/g)
@@ -92,11 +93,11 @@ command({
 				const text = new Blob(['\n# Actions\n\n' +
 				actions.filter(a => a.reply != undefined).sort(
 					(a, b) => a.commands[0] > b.commands[0] ? 1 : -1
-				).map(a => (a.moderator ? '🛂 | ' : '✅ | ') +
+				).map(a => (emoji(a.permissions) + ' | ') +
 					a.commands.map(e => Prefix + e).join(' | ')
 					+ '\n' + a.reply
 				).join('\n') + '\n\n# Programmables\n\n' + programmables.map(
-					p => (p.moderator ? '🛂 | ' : '✅ | ') + p.commands.map(
+					p => (emoji(p.permissions) + ' | ') + p.commands.map(
 						e => Prefix + e
 					).join(' | ') + '\n' + p.description
 				).join('\n') + '\n\n' ]);

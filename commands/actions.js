@@ -22,9 +22,14 @@ command({
 			description: 'Expected message reply',
 			required: true
 		}, {
-			name: 'mod', type: Option.Boolean,
-			description: 'Is this command mod only?',
-			required: false
+			name: 'permissions', type: Option.String,
+			description: 'Who can use this action?',
+			required: false, choices: [
+				{ name: `mod`, value: 'mod' },
+				{ name: `sub`, value: 'sub' },
+				{ name: `vip`, value: 'vip' },
+				{ name: `all`, value: 'all' },
+			],
 		}]
 	}, {
 		name: 'remove', type: Option.SubCommand,
@@ -62,10 +67,9 @@ command({
 					return error('Twitch Actions', 'Invalid action name!');
 				await addAction({
 					commands, reply: options[1].value,
-					moderator: options.length > 2 ? options[2].value : false
+					permissions: options.length > 2 ? options[2].value : 'all'
 				});
 				return success('Twitch Actions', 'Action `' + Prefix + commands[0] + '` added.');
-			break;
 			case 'remove':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
@@ -73,7 +77,6 @@ command({
 				);
 				await removeAction(main);
 				return success('Twitch Actions', 'Action `' + Prefix + main + '` removed.');
-			break;
 			case 'alias':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
@@ -83,8 +86,7 @@ command({
 					.map(c => c.replace(PRFXRGX, '').toLowerCase());
 				await addAliases(main, aliases);
 				return success('Twitch Actions', 'Aliases for `' + Prefix + main + '` added.');
-			break;
-			case 'list':
+			case 'list': {
 				if (actions.length == 0)
 					return info('Twitch Actions', 'No actions found!');
 				const text = new Blob(['\n# Actions\n\n' +
@@ -99,7 +101,7 @@ command({
 					).join(' | ') + '\n' + p.description
 				).join('\n') + '\n\n' ]);
 				return { file: { blob: text, name: 'Actions.txt', } };
-			break;
+			}
 		}
 	}
 });

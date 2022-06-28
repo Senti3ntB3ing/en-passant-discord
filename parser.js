@@ -37,7 +37,7 @@ function handleText(command, message, content, args) {
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
-async function handleFile(event, message, attachment) {
+function handleFile(event, message, attachment) {
 	if (event.execute.constructor.name == 'AsyncFunction') {
 		event.execute(message, attachment).then(result => {
 			if (result != undefined) sendMessage(bot, message.channelId, result);
@@ -115,7 +115,7 @@ export function createTask(task) {
 	tasks[task.name] = task;
 }
 
-export async function executeTasks() {
+export function executeTasks() {
 	const now = new Date();
 	lastPing = now;
 	const isToday = date =>
@@ -348,15 +348,27 @@ prefix({
 
 const RRSLV = new RegExp(`(?:\\s|^)${Prefix}\\w+(?:\\s|$)`, 'i');
 
-export async function resolve(data, channel) {
+function allowed(badges, permissions) {
+	if ((badges.broadcaster != undefined && badges.broadcaster) ||
+		(badges.moderator != undefined && badges.moderator)) return true;
+	switch (permissions) {
+		case 'mod': return false;
+		case 'sub':
+			return badges.subscriber != undefined && badges.subscriber;
+		case 'vip':
+			return badges.vip != undefined && badges.vip;
+		case 'all': default: return true;
+	}
+}
+
+export function resolve(data, channel) {
 	if (!data.message.includes(Prefix)) return;
 	let command = RRSLV.exec(data.message);
 	if (command == null) return;
 	command = command[0].trim().replace(Prefix, '');
 	for (const action of actions) {
 		if (!action.commands.includes(command)) continue;
-		// mod is a string and `!=` performs automatic comparison:
-		if (action.moderator && data.tags.mod != true) return;
+		if (!allowed(data.badges, action.permissions)) return;
 		if (action.reply != undefined) channel.send(
 			action.reply.replace(/%user(?:name)?%/gi, '@' + data.username)
 		);
@@ -364,7 +376,7 @@ export async function resolve(data, channel) {
 	}
 	for (const action of programmables) {
 		if (!action.commands.includes(command)) continue;
-		if (action.moderator && data.tags.mod != true) return;
+		if (!allowed(data.badges, action.permissions)) return;
 		if (action.execute.constructor.name == 'AsyncFunction') {
 			action.execute(data, channel).then(result => {
 				if (result != undefined) channel.send(result);
@@ -403,7 +415,7 @@ export async function addAction(data) {
 	const action = actions.find(a => a.commands.includes(data.commands[0]));
 	if (action != undefined) {
 		if (data.reply != '') action.reply = data.reply;
-		action.moderator = data.moderator;
+		action.permissions = data.permissions;
 		await Database.set('actions', actions);
 		return;
 	}
@@ -426,6 +438,6 @@ export function programmable(command) {
 	if (command.commands == undefined) return;
 	if (typeof command.commands == 'string')
 		command.commands = command.commands.split(/\s+/g);
-	if (command.moderator == undefined) command.moderator = false;
+	if (command.permissions == undefined) command.permissions = 'all';
 	programmables.push(command);
 }

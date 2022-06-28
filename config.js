@@ -1,10 +1,11 @@
 
 export const GuildID = 839594883790012436n;
 
-export const delay = async ms => new Promise(resolve => setTimeout(resolve, ms));
+export const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 export const ordinal = n => {
 	const s = [ 'th', 'st', 'nd', 'rd' ];
 	const v = `${n}`, l = parseInt(v[v.length - 1]);
+	if (n == 11 || n == 12 || n == 13) return `${n}th`;
 	return n + (l < 4 ? s[l] : s[0]);
 };
 
@@ -93,8 +94,7 @@ export const Channels = {
 	        games: 912840725375377478n,
 	// == VOTE CHESS ====================
 	   vote_chess: 845769660108636171n,
-	   discussion: 911278525129064458n,
-	   past_games: 865897303822172160n,
+	   discussion: 991311871376363600n,
 	// == MODERATORS ====================
 	     mod_chat: 955959278315917333n,
 		 mid_chat: 988778063057809428n,

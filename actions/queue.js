@@ -6,6 +6,8 @@ class Queue {
 
 	#queue = [];
 
+	enabled = true;
+
 	constructor() { this.#queue = []; }
 
 	enqueue(element, find_lambda) {
@@ -27,6 +29,7 @@ programmable({
 	commands: [ 'join' ],
 	description: 'Join the current queue.',
 	execute: data => {
+		if (!queue.enabled) return `The queue is disabled.`;
 		const join = programmables.find(p => p.commands.includes('join'));
 		if (join.permissions == 'sub' && !data.badges.subscriber)
 			return `Today the ${Prefix}queue is only for subscribers.`;
@@ -47,6 +50,7 @@ programmable({
 	commands: [ 'leave' ],
 	description: 'Leave the current queue.',
 	execute: data => {
+		if (!queue.enabled) return `The queue is disabled.`;
 		queue.remove(e => e.user != data.username);
 		return `@${data.username}, you left the queue.`;
 	}
@@ -56,6 +60,7 @@ programmable({
 	commands: [ 'next' ], permissions: 'mod',
 	description: 'Get the next in line in the queue.',
 	execute: () => {
+		if (!queue.enabled) return `The queue is disabled.`;
 		const element = queue.dequeue();
 		if (element == undefined) return `There is no one in the queue.`;
 		return `@${element.user} aka '${element.profile}' on Chess.com is next.`;
@@ -66,6 +71,7 @@ programmable({
 	commands: [ 'queue', 'q' ],
 	description: 'Displays the current queue.',
 	execute: () => {
+		if (!queue.enabled) return `The queue is disabled.`;
 		const list = queue.list();
 		if (list.length == 0) return 'The queue is empty.';
 		return 'Queue: ' + list.map(e => e.profile).join(', ');
@@ -82,11 +88,20 @@ programmable({
 });
 
 programmable({
-	commands: [ 'toggleq' ], permissions: 'mod',
+	commands: [ 'subq', 'subonlyq' ], permissions: 'mod',
 	description: 'Toggles subonly mode for the current queue.',
 	execute: () => {
 		const join = programmables.find(p => p.commands.includes('join'));
 		join.permissions = join.permissions == 'sub' ? 'all' : 'sub';
 		return `Queue subonly mode is now ${join.permissions == 'sub' ? 'on' : 'off'}.`;
+	}
+});
+
+programmable({
+	commands: [ 'toggleq' ], permissions: 'mod',
+	description: 'Toggles the queue on and off.',
+	execute: () => {
+		queue.enabled = !queue.enabled;
+		return `The queue is currently ${queue.enabled ? 'on' : 'off'}.`;
 	}
 });

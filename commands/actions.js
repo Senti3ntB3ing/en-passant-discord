@@ -86,7 +86,7 @@ command({
 				});
 				return success(
 					'Twitch Actions',
-					'Action `' + Prefix + commands[0] + '` added:\n> ' + 
+					'Action `' + Prefix + commands[0] + '` added with text:\n\n> ' + 
 					options[1].value
 				);
 			case 'remove':
@@ -114,7 +114,7 @@ command({
 				if (!findAction(main)) return error(
 					'Twitch Actions', 'Action `' + Prefix + main + '` not found!'
 				);
-				actionPermissions(main, options[1].name);
+				actionPermissions(main, options[1].value);
 				return success(
 					'Twitch Actions',
 					'Permissions for `' + Prefix + main + '` set to ' +

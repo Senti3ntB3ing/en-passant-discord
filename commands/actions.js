@@ -9,10 +9,10 @@ const PRFXRGX = new RegExp(Prefix, 'g');
 
 const emoji = p => ({ 'mod': '🛂', 'sub': '💟', 'vip': '🆒', 'all': '✅' }[p]);
 const PERM = [
-	{ name: `mod`, value: '🛂 mod' },
-	{ name: `sub`, value: '💟 sub' },
-	{ name: `vip`, value: '🆒 vip' },
-	{ name: `all`, value: '✅ all' },
+	{ name: '🛂 mod', value: 'mod' },
+	{ name: '💟 sub', value: 'sub' },
+	{ name: '🆒 vip', value: 'vip' },
+	{ name: '✅ all', value: 'all' },
 ];
 
 command({
@@ -64,7 +64,7 @@ command({
 		}, {
 			name: 'permissions', type: Option.String,
 			description: 'Who can use this action?',
-			required: false, choices: PERM,
+			required: true, choices: PERM,
 		}]
 	}, {
 		name: 'list', type: Option.SubCommand,
@@ -82,7 +82,7 @@ command({
 					return error('Twitch Actions', 'Invalid action name!');
 				await addAction({
 					commands, reply: options[1].value,
-					permissions: options.length > 2 ? options[2].name : 'all'
+					permissions: options.length > 2 ? options[2].value : 'all'
 				});
 				return success(
 					'Twitch Actions',
@@ -118,7 +118,7 @@ command({
 				return success(
 					'Twitch Actions',
 					'Permissions for `' + Prefix + main + '` set to ' +
-					emoji(options[1].name) + ' `' + options[1].name + '`.'
+					emoji(options[1].value) + ' `' + options[1].value + '`.'
 				);
 			case 'list': {
 				if (actions.length == 0)

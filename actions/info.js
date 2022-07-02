@@ -1,5 +1,5 @@
 
-import { StreamerID } from '../config.js';
+import { Streamer, StreamerID } from '../config.js';
 import { programmable } from '../parser.js';
 import { uptime, sub_count, follow_count } from '../components/twitch.js';
 
@@ -36,15 +36,28 @@ programmable({
 	commands: [ 'tos' ], permissions: 'mod',
 	description: 'Chess.com terms of service.',
 	execute: data => {
-		const args = data.message.split(/\s+/);
-		if (args.length < 2)
+		let user = data.message.match(/@(\w+)/);
+		if (user == null || user.length < 2)
 			return `Please don't suggest moves for the current position as ` +
 			`it's against chess.com terms of service. Instead please ask ` +
 			`Zach about a possible move after the position has passed`;
-		const user = args[1].replace(/^@+/, '');
+		user = user[1];
 		return `@${user} please don't suggest moves for the current position ` +
 			`as it's against chess.com terms of service. Instead please ask ` +
 			`Zach about a possible move after the position has passed`;
 	}
 });
 
+// https://api.2g.be/twitch/followage/thechessnerdlive/user?format=ymwd)
+programmable({
+	commands: [ 'followage' ], permissions: 'all',
+	description: 'Gets your current follow age.',
+	execute: async data => {
+		const user = data.username;
+		const response = await fetch(
+			`https://api.2g.be/twitch/followage/${Streamer}/${user}/user?format=ymwd`
+		);
+		if (response.status != 200) return;
+		return '@' + (await response.text()).replace(Streamer + ' ', '');
+	}
+});

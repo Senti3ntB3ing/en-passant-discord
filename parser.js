@@ -423,6 +423,16 @@ export async function addAction(data) {
 	await Database.set('actions', actions);
 }
 
+export async function actionPermissions(action, perm) {
+	if (![ 'mod', 'sub', 'vip', 'all' ].includes(perm)) perm = 'all';
+	await reloadActions();
+	action = actions.find(a => a.commands.includes(action));
+	if (action == undefined) return;
+	action.permissions = perm;
+	await Database.set('actions', actions);
+	return;
+}
+
 export async function addAliases(name, aliases) {
 	const remove_duplicates = a => [...new Set(a)];
 	await reloadActions();

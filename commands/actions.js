@@ -2,10 +2,18 @@
 import { Prefix } from '../config.js';
 import {
 	Option, command, error, info, success, addAction, findAction, removeAction,
-	addAliases, actions, programmables
+	addAliases, actions, actionPermissions, programmables,
 } from '../parser.js';
 
 const PRFXRGX = new RegExp(Prefix, 'g');
+
+const emoji = p => ({ 'mod': '🛂', 'sub': '💟', 'vip': '🆒', 'all': '✅' }[p]);
+const PERM = [
+	{ name: `mod`, value: '🛂 mod' },
+	{ name: `sub`, value: '💟 sub' },
+	{ name: `vip`, value: '🆒 vip' },
+	{ name: `all`, value: '✅ all' },
+];
 
 command({
 	name: 'twitch', emoji: ':gem:',
@@ -24,12 +32,7 @@ command({
 		}, {
 			name: 'permissions', type: Option.String,
 			description: 'Who can use this action?',
-			required: false, choices: [
-				{ name: `mod`, value: 'mod' },
-				{ name: `sub`, value: 'sub' },
-				{ name: `vip`, value: 'vip' },
-				{ name: `all`, value: 'all' },
-			],
+			required: false, choices: PERM,
 		}]
 	}, {
 		name: 'remove', type: Option.SubCommand,
@@ -52,6 +55,18 @@ command({
 			required: true
 		}]
 	}, {
+		name: 'permissions', type: Option.SubCommand,
+		description: '🚸 Sets permissions for the specified command.',
+		options: [{
+			name: 'name', type: Option.String,
+			description: 'Name of the action to remove',
+			required: true
+		}, {
+			name: 'permissions', type: Option.String,
+			description: 'Who can use this action?',
+			required: false, choices: PERM,
+		}]
+	}, {
 		name: 'list', type: Option.SubCommand,
 		description: '🛟 List all the available actions.',
 		options: []
@@ -59,7 +74,6 @@ command({
 	execute: async interaction => {
 		const options = interaction.data.options[0].options;
 		let commands, main, aliases;
-		const emoji = p => ({ 'mod': '🛂', 'sub': '💟', 'vip': '🆒', 'all': '✅' }[p]);
 		switch (interaction.data.options[0].name) {
 			case 'action':
 				commands = options[0].value.split(/\s+/g)
@@ -68,9 +82,13 @@ command({
 					return error('Twitch Actions', 'Invalid action name!');
 				await addAction({
 					commands, reply: options[1].value,
-					permissions: options.length > 2 ? options[2].value : 'all'
+					permissions: options.length > 2 ? options[2].name : 'all'
 				});
-				return success('Twitch Actions', 'Action `' + Prefix + commands[0] + '` added.');
+				return success(
+					'Twitch Actions',
+					'Action `' + Prefix + commands[0] + '` added:\n> ' + 
+					options[1].value
+				);
 			case 'remove':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
@@ -86,7 +104,22 @@ command({
 				aliases = options[1].value.split(/\s+/g)
 					.map(c => c.replace(PRFXRGX, '').toLowerCase());
 				await addAliases(main, aliases);
-				return success('Twitch Actions', 'Aliases for `' + Prefix + main + '` added.');
+				return success(
+					'Twitch Actions', 'Aliases ' +
+					aliases.map(a => '`' + Prefix + a + '`').join(', ') +
+					' for `' + Prefix + main + '` added.'
+				);
+			case 'permissions':
+				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
+				if (!findAction(main)) return error(
+					'Twitch Actions', 'Action `' + Prefix + main + '` not found!'
+				);
+				actionPermissions(main, options[1].name);
+				return success(
+					'Twitch Actions',
+					'Permissions for `' + Prefix + main + '` set to ' +
+					emoji(options[1].name) + ' `' + options[1].name + '`.'
+				);
 			case 'list': {
 				if (actions.length == 0)
 					return info('Twitch Actions', 'No actions found!');

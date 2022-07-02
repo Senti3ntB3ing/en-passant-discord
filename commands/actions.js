@@ -7,11 +7,11 @@ import {
 
 const PRFXRGX = new RegExp(Prefix, 'g');
 
-const emoji = p => ({ 'mod': '🛂', 'sub': '💟', 'vip': '🆒', 'all': '✅' }[p]);
+const emoji = p => ({ 'mod': '🛂', 'sub': '💟', 'vip': '📳', 'all': '✅' }[p]);
 const PERM = [
 	{ name: '🛂 mod', value: 'mod' },
 	{ name: '💟 sub', value: 'sub' },
-	{ name: '🆒 vip', value: 'vip' },
+	{ name: '📳 vip', value: 'vip' },
 	{ name: '✅ all', value: 'all' },
 ];
 

@@ -54,13 +54,9 @@ programmable({
 	description: 'Gets your current follow age.',
 	execute: async data => {
 		const user = data.username;
-		console.log(user);
-		console.log(Streamer);
-		console.log(`https://api.2g.be/twitch/followage/${Streamer}/${user}/user?format=ymwd`);
 		const response = await fetch(
-			`https://api.2g.be/twitch/followage/${Streamer}/${user}/user?format=ymwd`
+			`https://api.2g.be/twitch/followage/${Streamer}/${user}?format=ymwd`
 		);
-		console.log(response);
 		if (response.status != 200) return;
 		return '@' + (await response.text()).replace(Streamer + ' ', '');
 	}

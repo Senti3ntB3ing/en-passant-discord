@@ -108,7 +108,7 @@ setInterval(executeTasks, Time.minutes(5));
 
 // =========================================
 
-// twitch bot:
+/* twitch bot:
 export const chat = new TwitchChat(
 	Deno.env.get('TWITCH_OAUTH_BOT'), 'en_passant_bot'
 );
@@ -125,7 +125,9 @@ try {
 	channel.addEventListener('privmsg', data => resolve(data, channel));
 } catch (e) { console.error(e); }
 reloadActions(); // loads the twitch actions from database
-log('status', 'twitch chat ready');
+log('status', 'twitch chat ready');*/
+
+console.log(Deno.env.get('FIREBASE_SECRET'));
 
 // =========================================
 

@@ -7,7 +7,9 @@ from 'https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts';
 
 import { serve } from "https://deno.land/std@0.145.0/http/server.ts";
 
-import { parse, text, fetchLog, log, executeTasks, dispatch } from './parser.js';
+import {
+	parse, text, fetchLog, log, executeTasks, dispatch, reloadActions
+} from './parser.js';
 import { Channels, Welcome, Actions, Time } from './config.js';
 
 export const PID = Math.floor(Math.random() * 10000);
@@ -99,5 +101,7 @@ log('status', 'web server ready');
 setInterval(executeTasks, Time.minutes(5));
 
 // =========================================
+
+reloadActions();
 
 await startBot(bot);

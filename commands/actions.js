@@ -123,7 +123,7 @@ command({
 			case 'list':
 				return card(
 					'Twitch Actions',
-					'🛟 https://en-passant-twitch.cristian-98.repl.co'
+					':bellhop: https://en-passant-twitch.cristian-98.repl.co'
 				);
 		}
 	}

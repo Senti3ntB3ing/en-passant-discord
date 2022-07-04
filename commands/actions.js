@@ -1,8 +1,8 @@
 
 import { Prefix } from '../config.js';
 import {
-	Option, command, error, info, success, addAction, findAction, removeAction,
-	addAliases, actions, actionPermissions, programmables,
+	Option, command, error, card, success, addAction, findAction, removeAction,
+	addAliases, actions, actionPermissions
 } from '../parser.js';
 
 const PRFXRGX = new RegExp(Prefix, 'g');
@@ -120,22 +120,11 @@ command({
 					'Permissions for `' + Prefix + main + '` set to ' +
 					emoji(options[1].value) + ' `' + options[1].value + '`.'
 				);
-			case 'list': {
-				if (actions.length == 0)
-					return info('Twitch Actions', 'No actions found!');
-				const text = new Blob(['\n# Actions\n\n' +
-				actions.filter(a => a.reply != undefined).sort(
-					(a, b) => a.commands[0] > b.commands[0] ? 1 : -1
-				).map(a => (emoji(a.permissions) + ' | ') +
-					a.commands.map(e => Prefix + e).join(' | ')
-					+ '\n' + a.reply
-				).join('\n') + '\n\n# Programmables\n\n' + programmables.map(
-					p => (emoji(p.permissions) + ' | ') + p.commands.map(
-						e => Prefix + e
-					).join(' | ') + '\n' + p.description
-				).join('\n') + '\n\n' ]);
-				return { file: { blob: text, name: 'Actions.txt', } };
-			}
+			case 'list':
+				return card(
+					'Twitch Actions',
+					'🛟 https://en-passant-twitch.cristian-98.repl.co'
+				);
 		}
 	}
 });

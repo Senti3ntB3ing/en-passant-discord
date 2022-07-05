@@ -87,7 +87,7 @@ command({
 				return success(
 					'Twitch Actions',
 					'Action `' + Prefix + commands[0] + '` added with text:\n\n> ' + 
-					options[1].value
+					options[1].value.replace(/->/g, '→')
 				);
 			case 'remove':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();

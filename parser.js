@@ -5,7 +5,7 @@ import {
 	deleteApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
-	createScheduledEvent, ScheduledEventEntityType
+	createScheduledEvent, ScheduledEventEntityType, createChannel, ChannelTypes
 } from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
 
 import { closest } from './components/levenshtein.js';
@@ -341,6 +341,18 @@ prefix({
 			await deleteApplicationCommand(bot, id);
 		});
 		return success('Application Commands', 'Commands deleted!');
+	}
+});
+
+prefix({
+	name: 'forum', emoji: ':envelope_with_arrow:',
+	description: 'Make a new forum channel.',
+	execute: async message => {
+		const description = message.text.split(' ').slice(1).join(' ');
+		await createChannel(bot, message.guildId, {
+			type: ChannelTypes.GuildForum, name: description
+		});
+		return success('Forum', 'New forum created!');
 	}
 });
 

@@ -350,7 +350,7 @@ prefix({
 	execute: async message => {
 		const description = message.text.split(' ').slice(1).join(' ');
 		await createChannel(bot, message.guildId, {
-			type: ChannelTypes.GuildForum, name: description
+			type: ChannelTypes.GuildText, name: description
 		});
 		return success('Forum', 'New forum created!');
 	}

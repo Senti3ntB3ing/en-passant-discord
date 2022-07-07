@@ -348,9 +348,8 @@ prefix({
 	name: 'forum', emoji: ':envelope_with_arrow:',
 	description: 'Make a new forum channel.',
 	execute: async message => {
-		const description = message.text.split(' ').slice(1).join(' ');
 		await createChannel(bot, message.guildId, {
-			type: ChannelTypes.GuildText, name: 'forum'
+			type: ChannelTypes.GuildForum, name: 'forum'
 		});
 		return success('Forum', 'New forum created!');
 	}

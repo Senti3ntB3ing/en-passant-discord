@@ -120,6 +120,7 @@ export const Roles = {
 		  student: 845240403246841897n,
 		human_res: 987633991362420737n,
 		moderator: 839596287787794502n,
+		 baby_mod: 997103870306160661n,
 	 discord_head: 965237029451477014n,
 	  discord_mod: 952330006263103488n,
 	  twitch_head: 965235946205372426n,
@@ -127,6 +128,7 @@ export const Roles = {
 	   reddit_mod: 952330229504942120n,
 			voter: 964868785767059487n,
 		 streamer: 967840952737751120n,
+		      vip: 997104755572756501n,
 	youtube_notification: 973343815148642425n,
 	 twitch_notification: 973344119239880734n,
 	platforms: {

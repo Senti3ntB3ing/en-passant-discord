@@ -41,6 +41,7 @@ import './tasks/youtube.js';
 import './tasks/twitch.js';
 import './tasks/move.js';
 import './tasks/reddit.js';
+import './tasks/sweep.js';
 
 // =========================================
 

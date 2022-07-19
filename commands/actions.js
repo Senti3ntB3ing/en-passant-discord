@@ -120,7 +120,9 @@ command({
 					'Permissions for `' + Prefix + main + '` set to ' +
 					emoji(options[1].value) + ' `' + options[1].value + '`.'
 				);
-			case 'list': return card('Twitch Actions', ':bookmark: ' + ActionURL + '/mod/');
+			case 'list': return card('Twitch Actions',
+				`:bookmark: ${ActionURL}/mod/\n:map: ${ActionURL}/map/`
+			);
 		}
 	}
 });

@@ -12,6 +12,8 @@ export const ordinal = n => {
 export const Name = 'en passant';
 export const Prefix = '!';
 
+export const ActionURL = 'https://en-passant-twitch.cristian-98.repl.co/';
+
 export const Streamer = 'thechessnerdlive';
 export const StreamerID = '428214501';
 
@@ -32,21 +34,6 @@ export const Time = {
 	weeks: t => t * 7 * 24 * 60 * 60 * 1000,
 	months: t => t * 30 * 24 * 60 * 60 * 1000,
 	years: t => t * 365 * 24 * 60 * 60 * 1000,
-	value: t => {
-		let cd = 24 * 60 * 60 * 1000,
-		ch = 60 * 60 * 1000,
-		d = Math.floor(t / cd),
-		h = Math.floor((t - d * cd) / ch),
-		m = Math.round((t - d * cd - h * ch) / 60000),
-		pad = n => n < 10 ? '0' + n : n;
-		if (m === 60) { h++; m = 0; }
-		if (h === 24) { d++; h = 0; }
-		let v = '';
-		if (d > 0) v += d + 'd ';
-		if (h > 0) v += h + 'h ';
-		if (m > 0) v += m + 'm ';
-		return v.trim();
-	}
 };
 
 export const Size = {
@@ -99,11 +86,14 @@ export const Channels = {
 	     mod_chat: 996939904275714108n,
 		 mid_chat: 996939922588057710n,
 	     mad_chat: 996929332134023258n,
-		 dev_chat: 996929310801788929n,
 		 schedule: 951276135004667944n,
 		  company: 969478466015744030n,
 		audit_log: 920428101656248350n,
 	    mod_voice: 936021898612047892n,
+	// == Developers ====================
+		 dev_chat: 998669238917144659n,
+		bot_tests: 996929310801788929n,
+		dev_voice: 998670633170911252n,
 	// ==================================
 };
 

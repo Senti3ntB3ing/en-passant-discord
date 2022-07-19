@@ -11,7 +11,7 @@ import {
 import { closest } from './components/levenshtein.js';
 
 import {
-	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID
+	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL
 } from './config.js';
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
@@ -255,7 +255,8 @@ export const streamAction = (streaming) => {
 		activities: [{
 			name: 'thechessnerdlive',
 			type: ActionTypes.watching,
-			createdAt: Date.now()
+			createdAt: Date.now(),
+			url: 'https://www.twitch.tv/thechessnerdlive',
 		}],
 		since: Date.now(), afk: false, status: 'online'
 	});
@@ -377,6 +378,7 @@ export async function removeAction(name) {
 	await reloadActions();
 	actions = actions.filter(a => !a.commands.includes(name));
 	await Database.set('actions', actions);
+	fetch(ActionURL);
 }
 
 export async function addAction(data) {
@@ -390,6 +392,7 @@ export async function addAction(data) {
 	}
 	actions.push(data);
 	await Database.set('actions', actions);
+	fetch(ActionURL);
 }
 
 export async function actionPermissions(action, perm) {
@@ -399,7 +402,7 @@ export async function actionPermissions(action, perm) {
 	if (action == undefined) return;
 	action.permissions = perm;
 	await Database.set('actions', actions);
-	return;
+	fetch(ActionURL);
 }
 
 export async function addAliases(name, aliases) {
@@ -408,6 +411,7 @@ export async function addAliases(name, aliases) {
 	for (const action of actions) if (action.commands.includes(name)) {
 		action.commands = remove_duplicates(action.commands.concat(aliases));
 		await Database.set('actions', actions);
+		fetch(ActionURL);
 		return;
 	}
 }

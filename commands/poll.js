@@ -8,10 +8,14 @@ command({
 	options: [{
 		description: 'Text to display in the poll',
 		name: 'text', type: Option.String, required: true
+	}, {
+		description: 'Title of the poll',
+		name: 'text', type: Option.String, required: false
 	}],
-	execute: async interaction => {
-		const title = 'Community Poll';
-		const text = interaction.data.options[0].value;
+	execute: interaction => {
+		const options = interaction.data.options;
+		const title = options.length == 2 ? options[1].value : 'Community Poll';
+		const text = options[0].value;
 		const result = card(title, text);
 		result.reactions = text.match(Emoji) ?? [];
 		return result;

@@ -1,8 +1,8 @@
 
-import { Prefix } from '../config.js';
+import { Prefix, ActionURL } from '../config.js';
 import {
 	Option, command, error, card, success, addAction, findAction, removeAction,
-	addAliases, actions, actionPermissions
+	addAliases, actionPermissions
 } from '../parser.js';
 
 const PRFXRGX = new RegExp(Prefix, 'g');
@@ -68,7 +68,7 @@ command({
 		}]
 	}, {
 		name: 'list', type: Option.SubCommand,
-		description: '🛟 List all the available actions.',
+		description: '🏹 List all the available actions.',
 		options: []
 	}],
 	execute: async interaction => {
@@ -114,17 +114,13 @@ command({
 				if (!findAction(main)) return error(
 					'Twitch Actions', 'Action `' + Prefix + main + '` not found!'
 				);
-				actionPermissions(main, options[1].value);
+				await actionPermissions(main, options[1].value);
 				return success(
 					'Twitch Actions',
 					'Permissions for `' + Prefix + main + '` set to ' +
 					emoji(options[1].value) + ' `' + options[1].value + '`.'
 				);
-			case 'list':
-				return card(
-					'Twitch Actions',
-					':bellhop: https://en-passant-twitch.cristian-98.repl.co/mod/'
-				);
+			case 'list': return card('Twitch Actions', ':bookmark: ' + ActionURL + '/mod/');
 		}
 	}
 });

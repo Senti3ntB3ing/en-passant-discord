@@ -10,7 +10,7 @@ command({
 		name: 'text', type: Option.String, required: true
 	}, {
 		description: 'Title of the poll',
-		name: 'text', type: Option.String, required: false
+		name: 'title', type: Option.String, required: false
 	}],
 	execute: interaction => {
 		const options = interaction.data.options;

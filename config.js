@@ -78,9 +78,6 @@ export const Channels = {
 	     endgames: 839594884289921081n,
 	      puzzles: 844684087981244467n,
 	        games: 912840725375377478n,
-	// == VOTE CHESS ====================
-	   vote_chess: 845769660108636171n,
-	   discussion: 991311871376363600n,
 	// == MODERATORS ====================
 	      academy: 996930857250062387n,
 	     mod_chat: 996939904275714108n,

@@ -27,7 +27,7 @@ import './commands/rating.js';
 import './commands/task.js';
 import './commands/shutdown.js';
 import './commands/record.js';
-import './commands/vote.js';
+// import './commands/vote.js';
 
 // ==== Attachments ========================
 
@@ -39,9 +39,9 @@ import './tasks/quote.js';
 import './tasks/schedule.js';
 import './tasks/youtube.js';
 import './tasks/twitch.js';
-import './tasks/move.js';
 import './tasks/reddit.js';
 import './tasks/sweep.js';
+// import './tasks/move.js';
 
 // =========================================
 

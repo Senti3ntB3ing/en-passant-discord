@@ -27,19 +27,12 @@ const not_linked_info = title => info(title,
 
 const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
 
-const process = (platform, mention) => card(
-	names[platform] + ' Instructions',
-	`1️⃣ Go on your ${highlight(names[platform])} settings (${
-		platform[0] == 'c' ?
+const process = (platform, mention) => warn(
+	'Instructions for ' + names[platform],
+	`In your settings (${ platform[0] == 'c' ?
 		'https://www.chess.com/settings' : 'https://lichess.org/account/profile'
-	}) and add your ` + 
-	'**Discord** username (`' + mention + '`) to the `Location` field.\n' +
-	'2️⃣ Type `/connect` to connect your account.\n' +
-	(platform[0] == 'c' ?
-	'🆘 The __chess.com__ servers are slow, give it 15 minutes.\n' : '') +
-	'If your username contains spaces or symbols it might not work.\n' +
-	'If you experience issues open a thread in <#' + Channels.help + '>.',
-	ColorCodes.info
+	}) set the \`Location\` field to your username (\`${mention}\`) and retry.`
+	+ `\n*If you experience issues*, open a **thread** in <#${Channels.help}>.`
 );
 
 async function fideCard(author, id) {

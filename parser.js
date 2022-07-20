@@ -201,7 +201,7 @@ export const warn = (title, message) => ({
 	embeds: [{
 		title: title || Name,
 		color: ColorCodes.warn,
-		description: ':warning: ' + (message || 'Warning!')
+		description: ':children_crossing: ' + (message || 'Warning!')
 	}]
 });
 

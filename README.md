@@ -1,5 +1,5 @@
 
-# en-passant BOT
+# en-passant Discord BOT
 
 This bot is made with ❤️ by [thechessnerd](https://www.instagram.com/thechessnerd/) team.
 

@@ -1,4 +1,5 @@
 
+import { RevivalURL } from '../config.js';
 import { prefix, send, info, error } from '../parser.js';
 import { PID } from '../main.js';
 
@@ -14,7 +15,7 @@ prefix({
 		await send(command.channelId, error(
 			'Shutdown', 'The system is now offline.\n' +
 			'It will be back online in a few minutes.\n' +
-			'Restart only if necessary: https://en-passant.deno.dev/'
+			'Emergency revival: ' + RevivalURL
 		));
 		Deno.exit(1);
 	}

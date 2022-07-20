@@ -30,11 +30,13 @@ function handleText(command, message, content, args) {
 	if (command.execute.constructor.name == 'AsyncFunction') {
 		command.execute(message).then(result => {
 			if (result != undefined) sendMessage(bot, message.channelId, result);
+			deleteMessage(bot, message.channelId, message.id);
 		});
 		return;
 	}
 	const result = command.execute(message);
 	if (result != undefined) sendMessage(bot, message.channelId, result);
+	deleteMessage(bot, message.channelId, message.id);
 }
 
 function handleFile(event, message, attachment) {

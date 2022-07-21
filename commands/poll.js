@@ -17,7 +17,7 @@ command({
 		const title = options.length == 2 ? options[1].value : 'Community Poll';
 		const text = options[0].value;
 		const result = card(title, text);
-		result.reactions = text.match(Emoji) ?? [];
+		result.reactions = text.match(Emoji) ?? [ '✅', '🚫' ];
 		return result;
     }
 });

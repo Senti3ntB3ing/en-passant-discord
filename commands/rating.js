@@ -31,7 +31,7 @@ const process = (platform, mention) => warn(
 	'Instructions for ' + names[platform],
 	`In your settings (${ platform[0] == 'c' ?
 		'https://www.chess.com/settings' : 'https://lichess.org/account/profile'
-	}) set the \`Location\` field to your username (\`${mention}\`) and retry.`
+	}), write your username (\`${mention}\`) in the \`Location\` field and retry.`
 	+ `\n*If you experience issues*, open a **thread** in <#${Channels.help}>.`
 );
 

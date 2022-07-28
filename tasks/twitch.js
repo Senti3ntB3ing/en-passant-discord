@@ -10,7 +10,7 @@ const Twitch = {
 };
 
 createTask({
-	name: 'twitch', emoji: ':gem:', interval: Time.minutes(5),
+	name: 'twitch', emoji: ':gem:', interval: Time.minutes(3),
 	description: `Notifies members when <@${Zach}> is streaming.`,
 	execute: async () => {
 		// if streaming already: update state and don't do anything.
@@ -41,7 +41,13 @@ createTask({
 					Twitch.color
 				));
 				publish(Channels.notifications, m.id);
-			} catch { }
+			} catch {
+				send(Channels.dev_chat, card(
+					'Twitch live detection task',
+					`${Twitch.emoji} <@&${Roles.moderator}>s __twitch__ detection task crashed!`,
+					Twitch.color
+				));
+			}
 		}
 	}
 });

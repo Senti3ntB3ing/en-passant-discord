@@ -1,5 +1,6 @@
 
-export function composeURL(id) { return `https://www.youtube.com/watch?v=${id}`; }
+export const composeURL = id => `https://www.youtube.com/watch?v=${id}`;
+export const composeSHARE = id => `youtu.be/${id}`;
 
 export async function getLatestVideos(key, channel) {
 	const url = `https://www.googleapis.com/youtube/v3/search?key=${key}` + 
@@ -12,7 +13,7 @@ export async function getLatestVideos(key, channel) {
 }
 
 export async function getVideosAfterDate(key, channel, date) {
-	let videos = await getLatestVideos(key, channel);
+	const videos = await getLatestVideos(key, channel);
 	if (videos == null || videos.items == undefined) return [];
 	if (typeof date == 'string') date = new Date(date);
 	return videos.items.filter(

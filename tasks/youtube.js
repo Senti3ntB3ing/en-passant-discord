@@ -1,8 +1,12 @@
 
-import { getVideosAfterDate, composeURL } from '../components/youtube.js';
-import { Zach, Time, Channels } from '../config.js';
+import {
+	getVideosAfterDate, composeURL, composeSHARE
+} from '../components/youtube.js';
+import { Zach, Time, Channels, Roles, card } from '../config.js';
 import { createTask, send, publish, text } from '../parser.js';
 import { Database } from '../database.js';
+
+const YouTube = { color: 0xFF0000, emoji: '🔻' };
 
 createTask({
 	name: 'youtube', emoji: ':tv:', interval: Time.minutes(30),
@@ -23,7 +27,14 @@ createTask({
 					`Hey @everyone, check out <@${Zach}>'s new video!\n${url}`
 				));
 				publish(Channels.notifications, m.id);
-			} catch { }
+				Database.set('youtube_video', composeSHARE(video.id.videoId));
+			} catch {
+				send(Channels.dev_chat, card(
+					'Youtube video detection task',
+					`${YouTube.emoji} <@&${Roles.developer}>s, time to update tokens for __youtube__!`,
+					YouTube.color
+				));
+			}
 		}
 		Database.set('youtube', (new Date()).toISOString());
 	}

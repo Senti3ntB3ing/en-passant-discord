@@ -2,8 +2,8 @@
 import {
 	getVideosAfterDate, composeURL, composeSHARE
 } from '../components/youtube.js';
-import { Zach, Time, Channels, Roles, card } from '../config.js';
-import { createTask, send, publish, text } from '../parser.js';
+import { Zach, Time, Channels, Roles } from '../config.js';
+import { createTask, send, publish, text, card } from '../parser.js';
 import { Database } from '../database.js';
 
 const YouTube = { color: 0xFF0000, emoji: '🔻' };

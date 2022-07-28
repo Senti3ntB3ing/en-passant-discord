@@ -27,7 +27,8 @@ createTask({
 					`Hey @everyone, check out <@${Zach}>'s new video!\n${url}`
 				));
 				publish(Channels.notifications, m.id);
-				Database.set('youtube_video', composeSHARE(video.id.videoId));
+				Database.set('yt_video_link', composeSHARE(video.id.videoId));
+				Database.set('yt_video_title', video.title);
 			} catch {
 				send(Channels.dev_chat, card(
 					'Youtube video detection task',

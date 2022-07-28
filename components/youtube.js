@@ -4,7 +4,7 @@ export const composeSHARE = id => `youtu.be/${id}`;
 
 export async function getLatestVideos(key, channel) {
 	const url = `https://www.googleapis.com/youtube/v3/search?key=${key}` + 
-				`&channelId=${channel}&part=snippet,id&order=date&maxResults=10`;
+		`&channelId=${channel}&part=snippet,id,title&order=date&maxResults=10`;
 	try {
 		const response = await fetch(url);
 		if (response.status != 200) return null;

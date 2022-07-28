@@ -28,7 +28,7 @@ createTask({
 				));
 				publish(Channels.notifications, m.id);
 				Database.set('yt_video_link', composeSHARE(video.id.videoId));
-				Database.set('yt_video_title', video.title);
+				Database.set('yt_video_title', video.snippet.title);
 			} catch {
 				send(Channels.dev_chat, card(
 					'YouTube video detection task',

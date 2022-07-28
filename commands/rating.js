@@ -22,7 +22,7 @@ const emojis = {
 
 const not_linked_info = title => info(title,
 	'You must `/connect` a chess account in ' +
-	`<#${Channels.bots}> to use this command.`
+	`<#${Channels.commands}> to use this command.`
 );
 
 const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
@@ -32,7 +32,7 @@ const process = (platform, mention) => warn(
 	`In your settings (${ platform[0] == 'c' ?
 		'https://www.chess.com/settings' : 'https://lichess.org/account/profile'
 	}), write your username (\`${mention}\`) in the \`Location\` field and retry.`
-	+ `\n*If you experience issues*, open a **thread** in <#${Channels.help}>.`
+	+ `\n*If you experience issues*, ping a <#&${Roles.moderator}>.`
 );
 
 async function fideCard(author, id) {

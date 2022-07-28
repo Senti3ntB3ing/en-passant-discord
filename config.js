@@ -51,40 +51,38 @@ export const Size = {
 };
 
 export const Channels = {
+	// == INFORMATION ===================
+			rules: 844682003139002369n,
+	notifications: 839594884289921077n,
+		questions: 999784843208560661n,
+	  recruitment: 950121447249039403n,
 	// == GENERAL =======================
 	      general: 839594884289921076n,
-	notifications: 839594884289921077n,
-	    brilliant: 950350208649273385n,
 		challenge: 858358887416594463n,
-	   chess_club: 911588588930629683n,
+		   reddit: 973541665258242068n,
+		    memes: 910623921093623868n,
+	    off_topic: 900781481704706159n,
+	   positivity: 957373368749928448n,
+	     commands: 996939135900205056n,
+	general_voice: 845012057655869523n,
+	// == TWITCH ========================
+	  subscribers: 959118899398467684n,
+	    streamers: 973335526704816189n,
 	  elo_guesser: 973543620558880768n,
 	 eval_guesser: 989255062117285898n,
-			memes: 910623921093623868n,
-		off_topic: 900781481704706159n,
-		   reddit: 973541665258242068n,
-		     bots: 996939135900205056n,
-	general_voice: 845012057655869523n,
-	// == FEEDBACK ======================
-	         help: 970803118663139378n,
-		 feedback: 882712808050003978n,
-	  recruitment: 950121447249039403n,
-	   positivity: 957373368749928448n,
-	// == SUB BAY =======================
-	   pro_league: 959118899398467684n,
-	    streamers: 973335526704816189n,
 	    sub_voice: 959119103950463046n,
 	// == CHESS =========================
 	     openings: 839594884289921079n,
 	  middlegames: 839594884289921080n,
 	     endgames: 839594884289921081n,
 	      puzzles: 844684087981244467n,
+		brilliant: 950350208649273385n,
 	        games: 912840725375377478n,
 	// == MODERATORS ====================
 	      academy: 996930857250062387n,
 	     mod_chat: 996939904275714108n,
 		 mid_chat: 996939922588057710n,
 	     mad_chat: 996929332134023258n,
-		 schedule: 951276135004667944n,
 		  company: 969478466015744030n,
 		audit_log: 920428101656248350n,
 	    mod_voice: 936021898612047892n,

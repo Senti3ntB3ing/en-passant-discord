@@ -31,8 +31,8 @@ createTask({
 				Database.set('yt_video_title', video.title);
 			} catch {
 				send(Channels.dev_chat, card(
-					'Youtube video detection task',
-					`${YouTube.emoji} <@&${Roles.developer}>s, time to update tokens for __youtube__!`,
+					'YouTube video detection task',
+					`${YouTube.emoji} <@&${Roles.developer}>s, the yt api hates us!`,
 					YouTube.color
 				));
 			}

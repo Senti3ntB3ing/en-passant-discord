@@ -37,6 +37,12 @@ export const Time = {
 	years: t => t * 365 * 24 * 60 * 60 * 1000,
 };
 
+export const control = t => (
+    t.match(/(\d+)\s*(?:\+\s*(\d+))?/).slice(1)
+    .map(e => !(e % 60) ? e / 60 : e)
+    .filter(e => !!e).join('+')
+);
+
 export const Size = {
 	byte: 1,
 	kilobyte: 1024,

@@ -1,5 +1,5 @@
 
-import { Size } from '../config.js';
+import { Size, control } from '../config.js';
 import { gif } from '../components/diagram/diagram.js';
 import { attachment, error } from '../parser.js';
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
@@ -23,7 +23,7 @@ attachment({
 		if (w != undefined && b != undefined)
 			description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 		const t = h['TimeControl'];
-		if (t != undefined && t != '') description += ` ・ \`${t}s\``;
+		if (t != undefined && t != '') description += ` ・ \`${control(t)}s\``;
 		let status = '';
 		if (game.ended()) {
 			if (game.draw()) status = '½-½ ・ Draw';

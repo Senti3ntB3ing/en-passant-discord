@@ -50,7 +50,23 @@ function handleFile(event, message, attachment) {
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
+const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/live\/\d+/g;
+const  LICHESS_REGEX = /https?:\/\/(?:www\.)?lichess\.org\/\w+/g;
+
+function handleChessLinks(message) {
+	// remove automatic previews
+	bot.helpers.editMessage(message.channelId, message.id, { flags: 4 });
+	// TODO: for each link in the message, fetch the game if it is over
+	// and send a preview of the game
+}
+
 export function parse(message) {
+	// check if messages complies to chess link:
+	if (CHESSCOM_REGEX.test(message.content)) {
+		handleChessLinks(message);
+	} else if (LICHESS_REGEX.test(message.content)) {
+		handleChessLinks(message);
+	}
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();
 		for (const event of attachments) {

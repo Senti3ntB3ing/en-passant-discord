@@ -23,12 +23,13 @@ attachment({
 		if (w != undefined && b != undefined)
 			description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 		const t = h['TimeControl'];
-		if (t != undefined && t != '') description += ` ・ \`${control(t)}s\``;
+		if (t != undefined && t != '') description += ` ・ \`${control(t)}\``;
 		let status = '';
 		if (game.ended()) {
 			if (game.draw()) status = '½-½ ・ Draw';
-			else if (game.checkmate())
-				status = game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won';
+			else if (game.checkmate()) status = (
+				game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won'
+			);
 		}
 		return {
 			file: { blob: new Blob([ data ]), name: 'board.gif', },

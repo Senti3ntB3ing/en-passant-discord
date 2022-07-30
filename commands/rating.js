@@ -32,7 +32,7 @@ const process = (platform, mention) => warn(
 	`In your settings (${ platform[0] == 'c' ?
 		'https://www.chess.com/settings' : 'https://lichess.org/account/profile'
 	}), write your username (\`${mention}\`) in the \`Location\` field and retry.`
-	+ `\n*If you experience issues*, ping a <#&${Roles.moderator}>.`
+	+ `\n*If you experience issues*, ping a <@&${Roles.moderator}>.`
 );
 
 async function fideCard(author, id) {

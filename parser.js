@@ -69,12 +69,11 @@ export async function handleChesscomGame(type, id, message) {
 	description += ` ・ \`${control(game.pgnHeaders.TimeControl)}\``;
 	let status = '';
 	if (game.isFinished) {
-		status = game.pgnHeaders.result.replace(/1\/2/, '½').replace(/\-/, '-');
+		status = game.pgnHeaders.Result.replace(/1\/2/, '½').replace(/\-/, '-');
 		if (game.pgnHeaders.Termination != undefined) status += (' ・ ' +
 			(game.pgnHeaders.Termination || '').replace(/(.*?)\s+/g, '`$1` ')
 		);
 	}
-	console.log(`in here3`);
 	sendMessage(bot, message.channelId, {
 		file: { blob: new Blob([ data ]), name: 'board.gif', },
 		embeds: [{

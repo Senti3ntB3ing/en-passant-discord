@@ -60,7 +60,7 @@ export async function handleChesscomGame(type, id, message) {
 	let game = undefined;
 	if (type == 'live') game = await live(id);
 	else game = await daily(id);
-	console.log('h');
+	console.log(id);
 	if (game == undefined) return;
 	console.log(game);
 	const board = new Chess(game.pgnHeaders.FEN);

@@ -41,6 +41,52 @@ export class Chess {
 			return ratings;
 		},
 
+		best: async user => {
+			const categories = [ 'rapid', 'blitz', 'bullet' ];
+			const ratings = [];
+			const chess_com = await Chess.com.stats(user);
+			if (chess_com == null) return undefined;
+			for (const category of categories) {
+				const key = 'chess_' + category;
+				if (chess_com[key] == undefined ||
+					chess_com[key].best == undefined ||
+					chess_com[key].best.rating == undefined) continue;
+				const rating = { category, rating: 'unrated' };
+				if (!isNaN(parseInt(chess_com[key].best.rating)))
+					rating.rating = chess_com[key].best.rating;
+				ratings.push(rating);
+			}
+			return ratings;
+		},
+
+		puzzles: async user => {
+			const ratings = [];
+			const chess_com = await Chess.com.stats(user);
+			if (chess_com == null) return undefined;
+			if (chess_com['tactics'] != undefined &&
+				chess_com['tactics'].highest != undefined &&
+				chess_com['tactics'].highest.rating != undefined &&
+				!isNaN(parseInt(chess_com['tactics'].highest.rating))) ratings.push({
+					category: 'tactics', rating: chess_com['tactics'].highest.rating
+			});
+			if (chess_com['puzzle_rush'] != undefined &&
+				chess_com['puzzle_rush'].best != undefined &&
+				chess_com['puzzle_rush'].best.score != undefined &&
+				!isNaN(parseInt(chess_com['puzzle_rush'].best.score))) ratings.push({
+					category: 'puzzle rush', rating: chess_com['puzzle_rush'].best.score
+			});
+			return ratings;
+		},
+
+		exists: async user => {
+			user = encodeURIComponent(user);
+			const url = `https://api.chess.com/pub/player/${user}/stats`;
+			try {
+				const response = await fetch(url);
+				return (response.status == 200);
+			} catch { return false; }
+		},
+
 		/// gets daily game from chess.com given its
 		/// id returns undefined in case of error.
 		daily: async id => {

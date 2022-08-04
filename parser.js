@@ -55,7 +55,7 @@ const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(?:live|daily)\/(
 export function parse(message) {
 	const c = message.content.match(CHESSCOM_REGEX);
 	if (c != null && c.length > 1) {
-		sendMessage(bot, message.channelId, c[1]);
+		sendMessage(bot, message.channelId, text(c[1]));
 	}
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();

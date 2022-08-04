@@ -50,13 +50,12 @@ function handleFile(event, message, attachment) {
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
-const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(?:live|daily)\/(\d+)\/?/g;
+const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(live|daily)\/(\d+)\/?/g;
 
 export function parse(message) {
 	const c = message.content.match(CHESSCOM_REGEX);
-	console.log(c);
 	if (c != null) {
-		sendMessage(bot, message.channelId, text(c[1]));
+		console.log(c);
 	}
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();

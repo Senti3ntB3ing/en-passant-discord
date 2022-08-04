@@ -17,7 +17,7 @@ command({
 			{ name: `⬛️ Black`, value: 'black' }
 		]
 	}],
-	execute: async interaction => {
+	execute: interaction => {
 		const title = 'Chess Diagram';
 		const fen = interaction.data.options[0].value.trim();
 		const game = new Chess(fen);
@@ -32,13 +32,12 @@ command({
 			else if (game.checkmate())
 				status = game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won';
 		} else status = game.turn == 'w' ? '⬜️ White to Move' : '⬛️ Black to Move';
-		const data = await diagram(game.board, game.turn);
 		let perspective = game.turn;
 		if (interaction.data.options.length > 1)
 			perspective = interaction.data.options[1].value[0];
 		return {
 			file: [{
-				blob: new Blob([ await diagram(game.board, perspective) ]),
+				blob: new Blob([ diagram(game.board, perspective) ]),
 				name: 'board.png',
 			}],
 			embeds: [{

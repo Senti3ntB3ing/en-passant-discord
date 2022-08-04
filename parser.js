@@ -59,10 +59,10 @@ const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(live|daily)\/(\d
 export async function handleChesscomGame(type, id, message) {
 	console.log(`in here`);
 	let game = undefined;
-	if (type == 'live') game = live(id);
-	else game = daily(id);
+	if (type == 'live') game = await live(id);
+	else game = await daily(id);
 	if (game == undefined) return;
-	const board = new Chess(game.pgnHeaders.FEN || undefined);
+	const board = new Chess(game.pgnHeaders.FEN);
 	for (const move of game.moveList) if (board.move(move) == null) return;
 	const data = await gif(board);
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;

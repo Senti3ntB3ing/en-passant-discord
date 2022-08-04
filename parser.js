@@ -50,7 +50,7 @@ function handleFile(event, message, attachment) {
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
-const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/(?:live|daily)\/(\d+)/g;
+const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(?:live|daily)\/(\d+)\/?/g;
 
 export function parse(message) {
 	const c = message.content.match(CHESSCOM_REGEX);

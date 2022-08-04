@@ -27,7 +27,6 @@ import './commands/rating.js';
 import './commands/task.js';
 import './commands/shutdown.js';
 import './commands/record.js';
-// import './commands/vote.js';
 
 // ==== Attachments ========================
 
@@ -41,7 +40,6 @@ import './tasks/youtube.js';
 import './tasks/twitch.js';
 import './tasks/reddit.js';
 import './tasks/sweep.js';
-// import './tasks/move.js';
 
 // =========================================
 
@@ -90,7 +88,7 @@ setRandomAction();
 // =========================================
 
 // web server for constant uptime:
-serve(request => {
+serve(_request => {
 	return new Response(fetchLog(), {
 		headers: { 'content-type': 'text/plain' },
 		status: 200

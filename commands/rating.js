@@ -1,11 +1,11 @@
 
-import { Channels, Roles, ColorCodes } from '../config.js';
+import { Channels, Roles } from '../config.js';
 import {
 	Option, command, success, info, card,
 	cards, warn, bless, curse, discriminator
 } from '../parser.js';
-import { getLichessRatings, verifyLichessUser } from '../components/lichess.js';
-import { getChess_comRatings, verifyChess_comUser } from '../components/chess_com.js';
+import { Chess } from '../components/chesscom.js';
+import { lichess } from '../components/lichessorg.js';
 import { Database } from '../database.js';
 
 import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.3/mod.ts';
@@ -145,17 +145,17 @@ command({
 			let ratings = [];
 			platform = platform.toLowerCase();
 			switch (platform) {
-				case 'fide':
+				case 'fide': {
 					const card = await fideCard(author, username);
 					if (card == undefined) continue;
 					list.push(card);
 					continue;
-				break;
+				}
 				case 'lichess.org':
-					ratings = await getLichessRatings(username);
+					ratings = await lichess.org.ratings(username);
 				break;
 				case 'chess.com':
-					ratings = await getChess_comRatings(username);
+					ratings = await Chess.com.ratings(username);
 				break;
 			}
 			if (ratings == null || ratings.length == 0) continue;
@@ -182,24 +182,24 @@ command({
 		const e = info(title, `The user <@${user}> has no linked accounts.`);
 		if (member == null || member.accounts == undefined ||
 			Object.keys(member.accounts).length == 0) return e;
-		let data = member.accounts;
+		const data = member.accounts;
 		if (data == undefined || data.length == 0) return e;
 		const list = [];
 		for (let { platform, username } of data) {
 			let ratings = [];
 			platform = platform.toLowerCase();
 			switch (platform) {
-				case 'fide':
+				case 'fide': {
 					const card = await fideCard(user, username);
 					if (card == undefined) continue;
 					list.push(card);
 					continue;
-				break;
+				}
 				case 'lichess.org':
-					ratings = await getLichessRatings(username);
+					ratings = await lichess.org.ratings(username);
 				break;
 				case 'chess.com':
-					ratings = await getChess_comRatings(username);
+					ratings = await Chess.com.ratings(username);
 				break;
 			}
 			if (ratings == null || ratings.length == 0) continue;
@@ -241,7 +241,7 @@ command({
 			case 'lichess.org':
 				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
 					return warn(title, `You already linked a __lichess.org__ account!`);
-				verified = await verifyLichessUser(name, discord);
+				verified = await verifyLichessorgUser(name, discord);
 				if (verified == undefined)
 					return warn(title, 'No __lichess.org__ user found with the username `' + name + '`!');
 				if (!verified) return process('lichess.org', discord);
@@ -251,7 +251,7 @@ command({
 			case 'chess.com':
 				if (member.accounts.find(a => a.platform == 'chess.com') != undefined)
 					return warn(title, `You already linked a __chess.com__ account!`);
-				verified = await verifyChess_comUser(name, discord);
+				verified = await verifyChesscomUser(name, discord);
 				if (verified == undefined)
 					return warn(title, 'No __chess.com__ user found with the username `' + name + '`!');
 				if (!verified) return process('chess.com', discord);
@@ -282,7 +282,7 @@ command({
 		const title = 'Disconnection';
 		const guild = interaction.guildId;
 		const tag = interaction.member.id;
-		let member = await Database.get(tag);
+		const member = await Database.get(tag);
 		if (member == null)
 			return info(title, 'You currently have `0` linked accounts.');
 		if (interaction.data.options == undefined ||
@@ -293,6 +293,7 @@ command({
 			switch (platform) {
 				case 'lichess.org':
 					await curse(guild, tag, Roles.platforms['lichess.org']);
+				break;
 				case 'chess.com':
 					await curse(guild, tag, Roles.platforms['chess.com']);
 				break;
@@ -341,3 +342,24 @@ command({
 		return card(`${title} - ${names[platform]}`, url, colors[platform]);
 	}
 });
+
+async function verifyChesscomUser(name, discord) {
+	const chess_com = await Chess.com.profile(name);
+	if (chess_com == null) return undefined;
+	discord = discord.replace(/\s+/g, '');
+	return !(
+		chess_com.location == undefined ||
+		chess_com.location.replace(/\s+/g, '') != discord
+	);
+}
+
+async function verifyLichessorgUser(name, discord) {
+	const lichess_org = await lichess.org.profile(name);
+	if (lichess_org == null) return undefined;
+	discord = discord.replace(/\s+/g, '');
+	return !(
+		lichess_org.profile == undefined ||
+		lichess_org.profile.location == undefined ||
+		lichess_org.profile.location.replace(/\s+/g, '') != discord
+	);
+}

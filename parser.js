@@ -8,10 +8,10 @@ import {
 	createScheduledEvent, ScheduledEventEntityType, createChannel, ChannelTypes
 } from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
 
-import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
+import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 
 import { closest } from './components/levenshtein.js';
-import { live, daily } from './components/chess_com.js';
+import { Chess } from './components/chesscom.js';
 import { gif } from './components/diagram/diagram.js';
 
 import {
@@ -20,9 +20,9 @@ import {
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
 
-export let commands = [], tasks = {}, attachments = [], record = [],
-	onAir = false, actions = [], programmables = [];
-let lastPing = new Date();
+export const commands = [], tasks = {}, attachments = [],
+			 record = [], programmables = [];
+let actions = [], lastPing = new Date();
 
 // ==== Commands ===============================================================
 
@@ -58,10 +58,10 @@ const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(live|daily)\/(\d
 
 export async function handleChesscomGame(type, id, message) {
 	let game = undefined;
-	if (type == 'live') game = await live(id);
-	else game = await daily(id);
+	if (type == 'live') game = await Chess.com.live(id);
+	else game = await Chess.com.daily(id);
 	if (game == undefined) return;
-	const board = new Chess(game.pgnHeaders.FEN);
+	const board = new ChessBoard(game.pgnHeaders.FEN);
 	for (const move of game.moveList) if (board.move(move) == null) return;
 	const data = await gif(board);
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
@@ -81,10 +81,18 @@ export async function handleChesscomGame(type, id, message) {
 			footer: { text: status }
 		}]
 	});
-	console.log(`in here4`);
 }
 
 export function parse(message) {
+	if (/^\s+\[\s+"/g.test(message.content)) {
+		sendMessage(bot, message.channelId, error(
+			'No PGN Text Allowed!',
+			`Please <@${message.member.id}>, just send the __chess.com__ link or drop the file.\n` +
+			'Raw moves and **PGN** text are not allowed!'
+		));
+		deleteMessage(bot, message.channelId, message.id);
+		return;
+	}
 	const c = CHESSCOM_REGEX.exec(message.content);
 	if (c != null && c.length >= 3) handleChesscomGame(c[1], c[2], message);
 	for (const attachment of message.attachments) {
@@ -288,7 +296,6 @@ export const discriminator = async tag => {
 	return user.username + '#' + user.discriminator;
 };
 export const streamAction = (streaming) => {
-	onAir = streaming;
 	if (streaming) editBotStatus(bot, {
 		activities: [{
 			name: 'thechessnerdlive',

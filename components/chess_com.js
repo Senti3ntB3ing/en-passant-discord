@@ -58,7 +58,7 @@ export async function daily(id) {
 		);
 	} catch { return undefined; }
 	if (g == undefined || g.moveList == undefined) return undefined;
-	g.moveList = moves(g.moveList);
+	g.game.moveList = moves(g.game.moveList);
 	return g.game;
 }
 
@@ -73,7 +73,7 @@ export async function live(id) {
 		);
 	} catch { return undefined; }
 	if (g == undefined || g.moveList == undefined) return undefined;
-	g.moveList = moves(g.moveList);
+	g.game.moveList = moves(g.game.moveList);
 	return g.game;
 }
 

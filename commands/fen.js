@@ -21,8 +21,10 @@ command({
 		const title = 'Chess Diagram';
 		const fen = interaction.data.options[0].value.trim();
 		const game = new Chess(fen);
-		if (game == null || game.fen() != fen)
-			return error(title, 'Invalid FEN string / position!');
+		if (game == null || game.fen() != fen) return error(title,
+			`\`${fen}\` is not a valid **FEN** string / position!\n` +
+			'https://en.wikipedia.org/wiki/Forsyth–Edwards_Notation'
+		);
 		let status = '';
 		if (game.ended()) {
 			if (game.draw()) status = '½-½ ・ Draw';

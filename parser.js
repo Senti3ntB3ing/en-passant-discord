@@ -57,6 +57,7 @@ function handleFile(event, message, attachment) {
 const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(live|daily)\/(\d+)\/?/g;
 
 export async function handleChesscomGame(type, id, message) {
+	console.log(`in here`);
 	let game = undefined;
 	if (type == 'live') game = live(id);
 	else game = daily(id);
@@ -68,12 +69,14 @@ export async function handleChesscomGame(type, id, message) {
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 	description += ` ・ \`${control(game.pgnHeaders.TimeControl)}\``;
 	let status = '';
+	console.log(`in here2`);
 	if (game.isFinished) {
 		status = game.pgnHeaders.result.replace(/1\/2/, '½').replace(/\-/, '-');
 		if (game.pgnHeaders.Termination != undefined) status += (' ・ ' +
 			(game.pgnHeaders.Termination || '').replace(/(.*?)\s+/g, '`$1` ')
 		);
 	}
+	console.log(`in here3`);
 	sendMessage(bot, message.channelId, {
 		file: { blob: new Blob([ data ]), name: 'board.gif', },
 		embeds: [{
@@ -82,6 +85,7 @@ export async function handleChesscomGame(type, id, message) {
 			footer: { text: status }
 		}]
 	});
+	console.log(`in here4`);
 }
 
 export function parse(message) {

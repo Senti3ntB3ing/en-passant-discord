@@ -70,9 +70,8 @@ export async function handleChesscomGame(type, id, message) {
 	let status = '';
 	if (game.isFinished) {
 		status = game.pgnHeaders.Result.replace(/1\/2/, '½').replace(/\-/, '-');
-		if (game.pgnHeaders.Termination != undefined) status += (' ・ ' +
-			(game.pgnHeaders.Termination || '').replace(/(.*?)\s+/g, '`$1` ')
-		);
+		if (game.pgnHeaders.Termination != undefined)
+			status += ' ・ ' + game.pgnHeaders.Termination;
 	}
 	sendMessage(bot, message.channelId, {
 		file: { blob: new Blob([ data ]), name: 'board.gif', },

@@ -57,12 +57,14 @@ function handleFile(event, message, attachment) {
 const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(live|daily)\/(\d+)\/?/g;
 
 export async function handleChesscomGame(type, id, message) {
-	console.log(`in here`);
 	let game = undefined;
 	if (type == 'live') game = await live(id);
 	else game = await daily(id);
+	console.log('h');
 	if (game == undefined) return;
+	console.log(game);
 	const board = new Chess(game.pgnHeaders.FEN);
+	console.log('j');
 	for (const move of game.moveList) if (board.move(move) == null) return;
 	const data = await gif(board);
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;

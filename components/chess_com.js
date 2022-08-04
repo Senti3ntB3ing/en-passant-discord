@@ -57,7 +57,7 @@ export async function daily(id) {
 			r => r.status == 200 ? r.json() : undefined
 		);
 	} catch { return undefined; }
-	if (g == undefined || g.moveList == undefined) return undefined;
+	if (g == undefined || g.game.moveList == undefined) return undefined;
 	g.game.moveList = moves(g.game.moveList);
 	return g.game;
 }
@@ -72,7 +72,7 @@ export async function live(id) {
 			r => r.status == 200 ? r.json() : undefined
 		);
 	} catch { return undefined; }
-	if (g == undefined || g.moveList == undefined) return undefined;
+	if (g == undefined || g.game.moveList == undefined) return undefined;
 	g.game.moveList = moves(g.game.moveList);
 	return g.game;
 }

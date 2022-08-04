@@ -84,7 +84,7 @@ export async function handleChesscomGame(type, id, message) {
 }
 
 export function parse(message) {
-	if (/^\s+\[\s+"/g.test(message.content)) {
+	if (/^\s*\[\s*"/g.test(message.content)) {
 		sendMessage(bot, message.channelId, error(
 			'No PGN Text Allowed!',
 			`Please <@${message.member.id}>, just send the __chess.com__ link or drop the file.\n` +

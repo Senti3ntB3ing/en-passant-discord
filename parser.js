@@ -62,7 +62,7 @@ export async function handleChesscomGame(type, id, message) {
 	if (type == 'live') game = live(id);
 	else game = daily(id);
 	if (game == undefined) return;
-	const board = new Chess(game.pgnHeaders.FEN);
+	const board = new Chess(game.pgnHeaders.FEN || undefined);
 	for (const move of game.moveList) if (board.move(move) == null) return;
 	const data = await gif(board);
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
@@ -89,10 +89,8 @@ export async function handleChesscomGame(type, id, message) {
 }
 
 export function parse(message) {
-	console.log(`in here-----`);
 	const c = CHESSCOM_REGEX.exec(message.content);
 	if (c != null && c.length >= 3) handleChesscomGame(c[1], c[2], message);
-	console.log(c);
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();
 		for (const event of attachments) {

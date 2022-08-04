@@ -8,10 +8,14 @@ import {
 	createScheduledEvent, ScheduledEventEntityType, createChannel, ChannelTypes
 } from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
 
+import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
+
 import { closest } from './components/levenshtein.js';
+import { live, daily } from './components/chess_com.js';
+import { gif } from './components/diagram/diagram.js';
 
 import {
-	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL
+	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL, control
 } from './config.js';
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
@@ -52,11 +56,37 @@ function handleFile(event, message, attachment) {
 
 const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com\/game\/(live|daily)\/(\d+)\/?/g;
 
-export function parse(message) {
-	const c = message.content.match(CHESSCOM_REGEX);
-	if (c != null) {
-		console.log(c);
+export async function handleChesscomGame(type, id, message) {
+	let game = undefined;
+	if (type == 'live') game = live(id);
+	else game = daily(id);
+	if (game == undefined) return;
+	const board = new Chess(game.pgnHeaders.FEN);
+	for (const move of game.moveList) if (board.move(move) == null) return;
+	const data = await gif(board);
+	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
+	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
+	description += ` ・ \`${control(game.pgnHeaders.TimeControl)}\``;
+	let status = '';
+	if (game.isFinished) {
+		status = game.pgnHeaders.result.replace(/1\/2/, '½').replace(/\-/, '-');
+		if (game.pgnHeaders.Termination != undefined) status += (' ・ ' +
+			(game.pgnHeaders.Termination || '').replace(/(.*?)\s+/g, '`$1` ')
+		);
 	}
+	sendMessage(bot, message.channelId, {
+		file: { blob: new Blob([ data ]), name: 'board.gif', },
+		embeds: [{
+			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
+			image: { url: 'attachment://board.gif' },
+			footer: { text: status }
+		}]
+	});
+}
+
+export function parse(message) {
+	const c = CHESSCOM_REGEX.exec(message.content);
+	if (c != null && c.length >= 3) handleChesscomGame(c[1], c[2], message);
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();
 		for (const event of attachments) {

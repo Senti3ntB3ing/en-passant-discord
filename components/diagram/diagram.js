@@ -57,7 +57,7 @@ export async function stateMessage(title, game, perspective, text) {
 			status = game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won';
 	} else status = game.turn == 'w' ? white_to_move : black_to_move;
 	if (perspective == undefined) perspective = game.turn;
-	let description = text;
+	const description = text;
 	return {
 		file: {
 			blob: new Blob([ await diagram(game.board, perspective) ]),
@@ -74,7 +74,7 @@ export async function stateMessage(title, game, perspective, text) {
 
 function board_to_data(board) {
 	if (board.colorType == ColorType.RGBA) return board.image.slice(0);
-	let data = new Uint8Array(Math.floor(board.image.length / 3) * 4);
+	const data = new Uint8Array(Math.floor(board.image.length / 3) * 4);
 	for (let i = 0; i < board.image.length; i += 3) {
 		data.set([
 			board.image[i + 0],
@@ -104,7 +104,7 @@ export async function gif(game, perspective = 'w') {
 	return gif.bytes();
 }
 
-async function frame(board, color) {
+function frame(board, color) {
 	color = color || 'w';
 	let img = duplicate(GBoard[color]);
 	// drawing pieces:
@@ -128,7 +128,7 @@ async function frame(board, color) {
 	return img;
 }
 
-export async function diagram(board, color) {
+export function diagram(board, color) {
 	color = color || 'w';
 	let img = duplicate(Board[color]);
 	// drawing pieces:
@@ -177,7 +177,7 @@ function getPixel(image, x, y) {
 
 function setPixel(image, x, y, color) {
 	const a = image.colorType == ColorType.RGBA;
-	let d = image.image;
+	const d = image.image;
 	const p = (x + y * image.width) * (a ? 4 : 3);
 	d[p] = color.r; d[p + 1] = color.g; d[p + 2] = color.b;
 	if (!a) return image;
@@ -188,9 +188,9 @@ function setPixel(image, x, y, color) {
 function blend(c1, c2) {
 	if (c1.a == undefined) c1.a = 255;
 	if (c2.a == undefined) c2.a = 255;
-	let a = 255 - ((255 - c1.a) * (255 - c2.a) / 255);
-	let r = (c1.r * (255 - c2.a) + c2.r * c2.a) / 255;
-	let g = (c1.g * (255 - c2.a) + c2.g * c2.a) / 255;
-	let b = (c1.b * (255 - c2.a) + c2.b * c2.a) / 255;
+	const a = 255 - ((255 - c1.a) * (255 - c2.a) / 255);
+	const r = (c1.r * (255 - c2.a) + c2.r * c2.a) / 255;
+	const g = (c1.g * (255 - c2.a) + c2.g * c2.a) / 255;
+	const b = (c1.b * (255 - c2.a) + c2.b * c2.a) / 255;
 	return { r, g, b, a };
 }

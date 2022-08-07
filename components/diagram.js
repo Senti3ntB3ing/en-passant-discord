@@ -6,10 +6,10 @@ export async function gif(game, perspective = 'w') {
 	const moves = game.history(); game.reset();
 	const p = new Position(game.board);
 	const frames = [ await p.frame(perspective, true) ];
-	for (const move of moves) {
+	/*for (const move of moves) {
 		game.move(move);
 		frames.push(await (p.set(game.board).frame(perspective, true)));
-	}
+	}*/
 	return encoder(frames);
 }
 

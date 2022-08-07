@@ -4,7 +4,7 @@ import { send } from '../parser.js';
 
 import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 import { Chess } from '../components/chesscom.js';
-import { gif } from '../components/diagram/diagram.js';
+import { gif } from '../components/diagram.js';
 
 export async function handleChesscomGame(type, id, message) {
 	let game = undefined;

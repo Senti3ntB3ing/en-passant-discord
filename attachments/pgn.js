@@ -1,7 +1,8 @@
 
 import { Size, control } from '../config.js';
-import { gif } from '../components/diagram/diagram.js';
 import { attachment, error } from '../parser.js';
+import { gif } from '../components/diagram.js';
+
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 
 attachment({

@@ -1,7 +1,8 @@
 
 import { Option, command, error } from '../parser.js';
+import { diagram } from '../components/diagram.js';
+
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
-import { diagram } from '../components/diagram/diagram.js';
 
 command({
 	name: 'fen', emoji: ':page_with_curl:',
@@ -37,13 +38,13 @@ command({
 			perspective = interaction.data.options[1].value[0];
 		return {
 			file: [{
-				blob: new Blob([ await diagram(game.board, perspective) ]),
+				blob: new Blob([ await diagram(game.board, perspective)]),
 				name: 'board.png',
 			}],
 			embeds: [{
 				type: 'image', title, color: game.turn == 'w' ? 0xFFFFFF : 0x000000,
 				image: { url: 'attachment://board.png', height: 800, width: 800 },
-				description: '`' + fen + '`', footer: { text: status },
+				description: '**FEN: **`' + fen + '`', footer: { text: status },
 			}]
 		};
 	}

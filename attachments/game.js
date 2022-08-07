@@ -14,6 +14,7 @@ export async function handleChesscomGame(type, id, message) {
 	const board = new ChessBoard(game.pgnHeaders.FEN);
 	for (const move of game.moveList) if (board.move(move) == null) return;
 	const data = await gif(board);
+	console.log('the gif is here', data.length);
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 	description += ` ・ \`${control(game.pgnHeaders.TimeControl)}\``;

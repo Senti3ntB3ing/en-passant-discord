@@ -1,6 +1,7 @@
 
 import { encode, decode, ColorType } from 'https://deno.land/x/pngs@0.1.1/mod.ts';
 import { GIFEncoder, quantize, applyPalette } from 'https://unpkg.com/gifenc@1.0.3/dist/gifenc.esm.js';
+import { Position } from 'https://deno.land/x/beta_chess_diagrams@v1.0.1/mod.ts';
 
 const duplicate = image => ({
 	width: image.width,
@@ -128,9 +129,10 @@ function frame(board, color) {
 	return img;
 }
 
-export function diagram(board, color) {
-	color = color || 'w';
-	let img = duplicate(Board[color]);
+export async function diagram(board, perspective = 'w') {
+	const p = new Position(board);
+	return await p.picture(perspective);
+	/*let img = duplicate(Board[color]);
 	// drawing pieces:
 	if (color[0] == 'w') {
 		for (let i = 0; i < 8; i++) {
@@ -151,7 +153,7 @@ export function diagram(board, color) {
 	}
 	return encode(img.image, img.width, img.height, {
 		depth: img.bitDepth, color: img.colorType
-	});
+	});*/
 }
 
 /// overlays foreground f on background b, at position x, y.

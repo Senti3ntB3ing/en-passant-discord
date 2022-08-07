@@ -17,7 +17,7 @@ command({
 			{ name: `⬛️ Black`, value: 'black' }
 		]
 	}],
-	execute: interaction => {
+	execute: async interaction => {
 		const title = 'Chess Diagram';
 		const fen = interaction.data.options[0].value.trim();
 		const game = new Chess(fen);
@@ -37,7 +37,7 @@ command({
 			perspective = interaction.data.options[1].value[0];
 		return {
 			file: [{
-				blob: new Blob([ diagram(game.board, perspective) ]),
+				blob: new Blob([ await diagram(game.board, perspective) ]),
 				name: 'board.png',
 			}],
 			embeds: [{

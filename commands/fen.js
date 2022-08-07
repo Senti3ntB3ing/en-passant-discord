@@ -43,7 +43,7 @@ command({
 			embeds: [{
 				type: 'image', title, color: game.turn == 'w' ? 0xFFFFFF : 0x000000,
 				image: { url: 'attachment://board.png', height: 800, width: 800 },
-				description: fen, footer: { text: status },
+				description: '`' + fen + '`', footer: { text: status },
 			}]
 		};
 	}

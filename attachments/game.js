@@ -1,10 +1,9 @@
 
-import { control } from '../config.js';
+import { PGNURL, control } from '../config.js';
 import { send } from '../parser.js';
 
 import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 import { Chess } from '../components/chesscom.js';
-import { gif } from '../components/diagram.js';
 
 export async function handleChesscomGame(type, id, message) {
 	let game = undefined;
@@ -13,8 +12,11 @@ export async function handleChesscomGame(type, id, message) {
 	if (game == undefined) return;
 	const board = new ChessBoard(game.pgnHeaders.FEN);
 	for (const move of game.moveList) if (board.move(move) == null) return;
-	const data = await gif(board);
-	console.log('the gif is here', data.length);
+	const data = await fetch(PGNURL, {
+		headers: { 'Content-Type': 'application/json' },
+		method: 'POST', body: JSON.stringify({ pgn: board.pgn() })
+	});
+	if (data.status != 200) return;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 	description += ` ・ \`${control(game.pgnHeaders.TimeControl)}\``;
@@ -25,7 +27,7 @@ export async function handleChesscomGame(type, id, message) {
 			status += ' ・ ' + game.pgnHeaders.Termination;
 	}
 	send(message.channelId, {
-		file: { blob: new Blob([ data ]), name: 'board.gif', },
+		file: { blob: await data.blob(), name: 'board.gif', },
 		embeds: [{
 			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
 			image: { url: 'attachment://board.gif' },

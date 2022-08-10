@@ -14,6 +14,8 @@ export const Prefix = '!';
 
 export const ActionURL = 'https://en-passant-twitch.cristian-98.repl.co/';
 export const RevivalURL = 'https://en-passant-discord.deno.dev';
+export const MapURL = ActionURL + 'map/';
+export const FenURL = ActionURL + 'fen/';
 
 export const Streamer = 'thechessnerdlive';
 export const StreamerID = '428214501';

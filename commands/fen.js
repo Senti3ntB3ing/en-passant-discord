@@ -46,7 +46,7 @@ command({
 			`**FEN:** \`${fen}\`\n` +
 			'There was an issue generating the diagram.'
 		);
-		const image = await readAll(diagram.body);
+		const image = (await diagram.body.getReader().read()).value;
 		return {
 			file: [{ blob: new Blob([ image ]), name: 'board.png' }],
 			embeds: [{

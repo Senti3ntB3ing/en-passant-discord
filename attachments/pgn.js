@@ -1,7 +1,6 @@
 
-import { Size, control } from '../config.js';
+import { PGNURL, Size, control } from '../config.js';
 import { attachment, error } from '../parser.js';
-import { gif } from '../components/diagram.js';
 
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 
@@ -18,7 +17,10 @@ attachment({
 		const game = new Chess();
 		if (!game.pgn(pgn)) return error(title, 'Invalid PGN file!');
 		const h = game.header();
-		const data = await gif(game);
+		const data = await fetch(PGNURL, {
+			headers: { 'Content-Type': 'application/json' },
+			method: 'POST', body: JSON.stringify({ pgn, perspective: "w" })
+		});
 		const w = h['White'], b = h['Black'];
 		let description = '';
 		if (w != undefined && b != undefined)
@@ -33,7 +35,7 @@ attachment({
 			);
 		}
 		return {
-			file: { blob: new Blob([ data ]), name: 'board.gif', },
+			file: { blob: await data.blob(), name: 'board.gif', },
 			embeds: [{
 				type: 'rich', title, description, color: 0xFFFFFF,
 				image: { url: 'attachment://board.gif' },

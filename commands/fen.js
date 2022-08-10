@@ -1,7 +1,7 @@
 
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 
-import { FenURL } from '../config.js';
+import { FENURL } from '../config.js';
 import { Option, command, error } from '../parser.js';
 
 command({
@@ -36,7 +36,7 @@ command({
 		let perspective = game.turn;
 		if (interaction.data.options.length > 1)
 			perspective = interaction.data.options[1].value[0];
-		const diagram = await fetch(FenURL, {
+		const diagram = await fetch(FENURL, {
 			headers: { 'Content-Type': 'application/json' },
 			method: 'POST', body: JSON.stringify({ fen, perspective })
 		});

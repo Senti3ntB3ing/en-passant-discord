@@ -1,5 +1,4 @@
 
-import { readAll } from 'https://deno.land/std@0.150.0/streams/conversion.ts';
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 
 import { FenURL } from '../config.js';
@@ -46,9 +45,8 @@ command({
 			`**FEN:** \`${fen}\`\n` +
 			'There was an issue generating the diagram.'
 		);
-		const image = (await diagram.body.getReader().read()).value;
 		return {
-			file: [{ blob: new Blob([ image ]), name: 'board.png' }],
+			file: [{ blob: await diagram.blob(), name: 'board.png' }],
 			embeds: [{
 				type: 'image', title, color: game.turn == 'w' ? 0xFFFFFF : 0x000000,
 				image: { url: 'attachment://board.png', height: 800, width: 800 },

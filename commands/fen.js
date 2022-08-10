@@ -45,11 +45,12 @@ command({
 			`**FEN:** \`${fen}\`\n` +
 			'There was an issue generating the diagram.'
 		);
+		const filename = fen.replace(/[^A-Za-z0-9_.\-]/g, '_') + '.png';
 		return {
-			file: [{ blob: await diagram.blob(), name: 'board.png' }],
+			file: [{ blob: await diagram.blob(), name: filename }],
 			embeds: [{
 				type: 'image', title, color: game.turn == 'w' ? 0xFFFFFF : 0x000000,
-				image: { url: 'attachment://board.png', height: 800, width: 800 },
+				image: { url: 'attachment://' + filename, height: 800, width: 800 },
 				description: '**FEN: **`' + fen + '`', footer: { text: status },
 			}]
 		};

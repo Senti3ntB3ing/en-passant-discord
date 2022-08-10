@@ -35,12 +35,13 @@ attachment({
 				game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won'
 			);
 		}
+		const filename = file.filename.replace(/[^A-Za-z0-9_.\-]/g, '_')
+			.replace(/\.pgn$/g, '.gif');
 		return {
-			file: { blob: await data.blob(), name: 'board.gif', },
+			file: { blob: await data.blob(), name: filename },
 			embeds: [{
 				type: 'rich', title, description, color: 0xFFFFFF,
-				image: { url: 'attachment://board.gif' },
-				footer: { text: status }
+				image: { url: 'attachment://' + filename }, footer: { text: status }
 			}]
 		};
 	}

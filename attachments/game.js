@@ -26,12 +26,12 @@ export async function handleChesscomGame(type, id, message) {
 		if (game.pgnHeaders.Termination != undefined)
 			status += ' ・ ' + game.pgnHeaders.Termination;
 	}
+	const filename = `${w}_vs_${b}.gif`.replace(/[^A-Za-z0-9_.\-]/g, '_');
 	send(message.channelId, {
-		file: { blob: await data.blob(), name: 'board.gif', },
+		file: { blob: await data.blob(), name: filename, },
 		embeds: [{
 			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
-			image: { url: 'attachment://board.gif' },
-			footer: { text: status }
+			image: { url: 'attachment://' + filename }, footer: { text: status }
 		}]
 	});
 }

@@ -39,7 +39,7 @@ command({
 			perspective = interaction.data.options[1].value[0];
 		const diagram = await fetch(FenURL, {
 			headers: { 'Content-Type': 'application/json' },
-			method: 'GET', body: JSON.stringify({ fen, perspective })
+			method: 'POST', body: JSON.stringify({ fen, perspective })
 		});
 		if (diagram.status != 200) return error(
 			'FEN Diagram Issue',

@@ -27,7 +27,7 @@ attachment({
 		if (w != undefined && b != undefined)
 			description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 		const t = h['TimeControl'];
-		if (t != undefined && t != '') description += ` ・ \`${control(t)}\``;
+		if (t != undefined && t != '') description += ` ・ **Clock:** \`${control(t)}\``;
 		let status = '';
 		if (game.ended()) {
 			if (game.draw()) status = '½-½ ・ Draw';

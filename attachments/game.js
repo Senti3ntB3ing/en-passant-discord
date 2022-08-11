@@ -19,7 +19,8 @@ export async function handleChesscomGame(type, id, message) {
 	if (data.status != 200) return;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
-	description += ` ・ \`${control(game.pgnHeaders.TimeControl)}\``;
+	description += ` ・ **Clock:** \`${control(game.pgnHeaders.TimeControl)}\``;
+	description += `\nhttps://chess.com/game/${type}/${id}`;
 	let status = '';
 	if (game.isFinished) {
 		status = game.pgnHeaders.Result.replace(/1\/2/, '½').replace(/\-/, '-');

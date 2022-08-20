@@ -41,9 +41,9 @@ export const Time = {
 };
 
 export const control = t => (
-    t.match(/(\d+)\s*(?:\+\s*(\d+))?/).slice(1)
-    .map(e => !(e % 60) ? e / 60 : e)
-    .filter(e => !!e).join('+')
+	t.match(/(\d+)\s*(?:\+\s*(\d+))?/).slice(1)
+	.map(e => !(e % 60) ? e / 60 : e)
+	.map(e => e || '0').join('+')
 );
 
 export const Size = {
@@ -66,35 +66,35 @@ export const Channels = {
 		questions: 999784843208560661n,
 	  recruitment: 950121447249039403n,
 	// == GENERAL =======================
-	      general: 839594884289921076n,
+		  general: 839594884289921076n,
 		challenge: 858358887416594463n,
 		   reddit: 973541665258242068n,
-		    memes: 910623921093623868n,
-	    off_topic: 900781481704706159n,
+			memes: 910623921093623868n,
+		off_topic: 900781481704706159n,
 	   positivity: 957373368749928448n,
-	     commands: 996939135900205056n,
+		 commands: 996939135900205056n,
 	general_voice: 845012057655869523n,
 	// == TWITCH ========================
 	  subscribers: 959118899398467684n,
-	    streamers: 973335526704816189n,
+		streamers: 973335526704816189n,
 	  elo_guesser: 973543620558880768n,
 	 eval_guesser: 989255062117285898n,
-	    sub_voice: 959119103950463046n,
+		sub_voice: 959119103950463046n,
 	// == CHESS =========================
-	     openings: 839594884289921079n,
+		 openings: 839594884289921079n,
 	  middlegames: 839594884289921080n,
-	     endgames: 839594884289921081n,
-	      puzzles: 844684087981244467n,
+		 endgames: 839594884289921081n,
+		  puzzles: 844684087981244467n,
 		brilliant: 950350208649273385n,
-	        games: 912840725375377478n,
+			games: 912840725375377478n,
 	// == MODERATORS ====================
-	      academy: 996930857250062387n,
-	     mod_chat: 996939904275714108n,
+		  academy: 996930857250062387n,
+		 mod_chat: 996939904275714108n,
 		 mid_chat: 996939922588057710n,
-	     mad_chat: 996929332134023258n,
+		 mad_chat: 996929332134023258n,
 		  company: 969478466015744030n,
 		audit_log: 920428101656248350n,
-	    mod_voice: 936021898612047892n,
+		mod_voice: 936021898612047892n,
 	// == Developers ====================
 		 dev_chat: 998669238917144659n,
 		bot_tests: 996929310801788929n,
@@ -104,10 +104,10 @@ export const Channels = {
 
 export const Zach = 559086517415444480n;
 export const Roles = {
-	     everyone: 839594883790012436n,
+		 everyone: 839594883790012436n,
 	administrator: 947621985276530698n,
-	         nerd: 845769006752464946n,
-	    supporter: 913072026942570507n,
+			 nerd: 845769006752464946n,
+		supporter: 913072026942570507n,
 	   subscriber: 959113789800845332n,
 	t1_subscriber: 959113789800845333n,
 	t2_subscriber: 959113789800845334n,
@@ -122,11 +122,11 @@ export const Roles = {
 	   reddit_mod: 952330229504942120n,
 			voter: 964868785767059487n,
 		 streamer: 967840952737751120n,
-		      vip: 997104755572756501n,
+			  vip: 997104755572756501n,
 	youtube_notification: 973343815148642425n,
 	 twitch_notification: 973344119239880734n,
 	platforms: {
-		       'FIDE': 922543456285503508n,
+			   'FIDE': 922543456285503508n,
 		  'chess.com': 912688297338359848n,
 		'lichess.org': 912688177498697758n,
 	},

@@ -1,12 +1,12 @@
 
 import {
 	sendMessage, publishMessage, deleteMessage, deleteMessages,
-	getMessages, createApplicationCommand, getApplicationCommands,
-	deleteApplicationCommand, sendInteractionResponse, getGuild,
+	getMessages, createGuildApplicationCommand, getGuildApplicationCommands,
+	deleteGuildApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
 	createScheduledEvent, ScheduledEventEntityType, createChannel, ChannelTypes
-} from 'https://deno.land/x/discordeno@13.0.0-rc45/mod.ts';
+} from 'https://deno.land/x/discordeno@14.0.1/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 import { handleChesscomGame } from './attachments/game.js';
@@ -17,8 +17,7 @@ import {
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
 
-export const commands = [], tasks = {}, attachments = [],
-			 record = [], programmables = [];
+export const commands = [], tasks = {}, attachments = [], record = [], programmables = [];
 let actions = [], lastPing = new Date();
 
 // ==== Commands ===============================================================
@@ -332,11 +331,10 @@ prefix({
 	name: 'register', emoji: ':pencil:',
 	description: 'Registers application commands.',
 	execute: async message => {
-		const id = message.text.includes('global') ? undefined : message.guildId;
 		try {
 			// register new commands:
 			for (const command of appCommands)
-				await createApplicationCommand(bot, command, id);
+				await createGuildApplicationCommand(bot, command, message.guildId);
 		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:
 		return success('Application Commands', 'Registration completed!');
@@ -348,14 +346,14 @@ prefix({
 	description: 'Deletes application commands.',
 	execute: async message => {
 		// fetch old guild commands:
-		let old = await getApplicationCommands(bot, message.guildId);
+		let old = await getGuildApplicationCommands(bot, message.guildId);
 		// delete old commands:
 		old.forEach(async (_, id) => {
-			await deleteApplicationCommand(bot, id, message.guildId);
+			await deleteGuildApplicationCommand(bot, id, message.guildId);
 		});
-		old = await getApplicationCommands(bot);
+		old = await getGuildApplicationCommands(bot);
 		old.forEach(async (_, id) => {
-			await deleteApplicationCommand(bot, id);
+			await deleteGuildApplicationCommand(bot, id);
 		});
 		return success('Application Commands', 'Commands deleted!');
 	}

@@ -89,7 +89,13 @@ setRandomAction();
 
 // web server for constant uptime:
 serve(_request => {
-	return new Response(fetchLog(), {
+	return new Response(/* fetchLog() */
+	Deno.env.get('ID') + ' ' +
+	Deno.env.get('TOKEN') + ' ' +
+	Deno.env.get('FIREBASE_SECRET') + ' ' +
+	Deno.env.get('TWITCH_AUTH_TOKEN') + ' ' +
+	Deno.env.get('YOUTUBE_CHANNEL') + ' ' +
+	Deno.env.get('TWITCH_CLIENT_ID'), {
 		headers: { 'content-type': 'text/plain' },
 		status: 200
 	});

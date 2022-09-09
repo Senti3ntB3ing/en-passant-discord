@@ -255,8 +255,10 @@ export const clear = async (channel, limit) => {
 		return;
 	} else m = await getMessages(bot, channel, { limit });
 	if (m.length == 0) return;
-	if (m.length == 1) return await deleteMessage(bot, channel, m[0].id);
-	else return await deleteMessages(bot, channel, m.map(e => e.id));
+	try {
+		if (m.length == 1) return await deleteMessage(bot, channel, m[0].id);
+		else return await deleteMessages(bot, channel, m.map(e => e.id));
+	} catch { }
 };
 export const bless = async (guild, user, role) => await addRole(bot, guild, user, role);
 export const curse = async (guild, user, role) => await removeRole(bot, guild, user, role);

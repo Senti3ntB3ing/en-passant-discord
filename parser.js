@@ -6,7 +6,7 @@ import {
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
 	createScheduledEvent, ScheduledEventEntityType, createChannel, ChannelTypes
-} from 'https://deno.land/x/discordeno@15.0.1/mod.ts';
+} from 'https://deno.land/x/discordeno@15.0.2/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 import { handleChesscomGame } from './attachments/game.js';

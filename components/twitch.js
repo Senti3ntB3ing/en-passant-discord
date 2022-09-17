@@ -23,7 +23,7 @@ export async function channel(streamer) {
 	if (streamer === '') return undefined;
 	try {
 		const queryUrl = buildUrl(QUERIES.search.channel);
-		const req = await fetch(queryUrl + streamer + "&first=10", HEADERS);
+		const req = await fetch(queryUrl + streamer + "&first=1", HEADERS);
 		if (req.status != 200) return null;
 		const data = (await req.json()).data;
 		for (const channel of data)

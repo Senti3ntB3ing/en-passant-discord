@@ -28,7 +28,7 @@ createTask({
 			.map(s => ({
 				start: new Date(s.start_time),
 				end: new Date(s.end_time), title: s.title
-			})).filter(s => s.start < date_e);
+			}));/*.filter(s => s.start < date_e);*/
 		if (segments.length == 0) return;
 		// send the events to the discord channel:
 		let lastDate = segments[0].end;

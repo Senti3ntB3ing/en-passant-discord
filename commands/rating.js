@@ -14,7 +14,7 @@ const platforms = [ 'lichess.org', 'Chess.com', 'FIDE' ];
 const names = { 'lichess.org': 'lichess.org', 'chess.com': 'Chess.com', 'fide': 'FIDE' };
 const order = { 'lichess.org': 2, 'chess.com': 1, 'fide': 0 };
 const platform_sort = (a, b) =>
-	order[a.platform.toLowerCase()] < order[b.platform.toLowerCase()] ? a : b;
+	order[a.platform.toLowerCase()] - order[b.platform.toLowerCase()];
 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'Chess.com': 0x7FA650 };
 const emojis = {

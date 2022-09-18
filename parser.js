@@ -280,7 +280,7 @@ export const streamAction = (streaming) => {
 	else setRandomAction();
 };
 export const event = async e => (await createScheduledEvent(bot, GuildID, {
-	name: e.title, description: e.title,
+	name: e.title, description: '',
 	entityType: ScheduledEventEntityType.External,
 	location: 'https://www.twitch.tv/thechessnerdlive/',
 	scheduledStartTime: e.start.getTime(),
@@ -291,7 +291,7 @@ export const cancel = id => deleteScheduledEvent(bot, GuildID, BigInt(id));
 
 export const reschedule = (id, e) =>
 	editScheduledEvent(bot, GuildID, BigInt(id), {
-		name: e.title, description: e.title,
+		name: e.title,
 		scheduledStartTime: e.start.getTime(),
 		scheduledEndTime: e.end.getTime(),
 	});

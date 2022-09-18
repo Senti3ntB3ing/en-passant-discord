@@ -12,6 +12,9 @@ import { FIDE } from 'https://deno.land/x/fide_rs@v1.0.3/mod.ts';
 
 const platforms = [ 'lichess.org', 'Chess.com', 'FIDE' ];
 const names = { 'lichess.org': 'lichess.org', 'chess.com': 'Chess.com', 'fide': 'FIDE' };
+const order = { 'lichess.org': 2, 'chess.com': 1, 'fide': 0 };
+const platform_sort = (a, b) =>
+	order[a.platform.toLowerCase()] < order[b.platform.toLowerCase()] ? a : b;
 
 const colors = { 'FIDE': 0xF1C40F, 'lichess.org': 0xFFFFFF, 'Chess.com': 0x7FA650 };
 const emojis = {
@@ -41,7 +44,7 @@ async function fideCard(author, id) {
 	user.name = user.name.replace(/^\s*(.*?),\s*(.*?)\s*$/g, '$2 $1');
 	return {
 		title: 'Ratings - FIDE',
-		message: `:star: <@${author}> - ${user.flag || '🇺🇳'} ` +
+		message: `:star: <@${author}> ・ ${user.flag || '🇺🇳'} ` +
 			`\`${user.name}\` **FIDE** ratings:\n` +
 			(user.ratings.length > 0 ? user.ratings.map(
 				r => `${emojis[r.category]} **${r.category}** \`${r.rating}\``
@@ -141,6 +144,7 @@ command({
 			data = data.filter(a => a.platform.toLowerCase() == platform);
 		}
 		const list = [];
+		data = data.sort(platform_sort);
 		for (let { platform, username } of data) {
 			let ratings = [];
 			platform = platform.toLowerCase();
@@ -182,9 +186,10 @@ command({
 		const e = info(title, `The user <@${user}> has no linked accounts.`);
 		if (member == null || member.accounts == undefined ||
 			Object.keys(member.accounts).length == 0) return e;
-		const data = member.accounts;
+		let data = member.accounts;
 		if (data == undefined || data.length == 0) return e;
 		const list = [];
+		data = data.sort(platform_sort);
 		for (let { platform, username } of data) {
 			let ratings = [];
 			platform = platform.toLowerCase();

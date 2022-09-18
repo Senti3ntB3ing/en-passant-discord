@@ -36,11 +36,16 @@ createTask({
 				s.title !== segment.title) reschedule(s.event_id, segment);
 		}
 		// check for removed segments:
+		const remove = [];
 		for (const s of shadow) {
-			const segment = segments.find(s => s.id === segment.id);
-			if (segment == null || segment == undefined) cancel(s.event_id);
+			const segment = segments.find(e => e.id === s.id);
+			if (segment == null || segment == undefined) {
+				cancel(s.event_id); remove.push(s.event_id);
+			}
 		}
-		// update the shadow
-		await Database.set('shadow', segments);
+		// remove the removed segments from the shadow:
+		Database.set('shadow', shadow.filter(
+			s => !remove.includes(s.event_id)
+		));
 	}
 });

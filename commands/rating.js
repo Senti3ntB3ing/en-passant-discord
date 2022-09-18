@@ -1,5 +1,5 @@
 
-import { Channels, Roles } from '../config.js';
+import { Channels, Roles, TitleCode } from '../config.js';
 import {
 	Option, command, success, info, card,
 	cards, warn, bless, curse, discriminator
@@ -95,12 +95,20 @@ command({
 		let member = await Database.get(tag);
 		if (member == null) member = { accounts: [ ] };
 		switch (platform.toLowerCase()) {
-			case 'fide':
+			case 'fide': {
 				if (member.accounts.find(a => a.platform.toLowerCase() == 'fide') != undefined)
 					return warn(title, `<@${tag}> already linked a **FIDE** account!`);
 				member.accounts.push({ platform: 'fide', username: name });
+				const user = await FIDE(name);
+				if (user == undefined || user == null)
+					return warn(title, `Invalid **FIDE** account for <@${tag}>!`);
+				if (user.title != undefined) {
+					const code = TitleCode[user.title];
+					if (code != undefined)
+						await bless(guild, tag, Roles.titles[code]);
+				}
 				await bless(guild, tag, Roles.platforms['FIDE']);
-			break;
+			} break;
 			case 'lichess.org':
 				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
 					return warn(title, `<@${tag}> already linked a __lichess.org__ account!`);

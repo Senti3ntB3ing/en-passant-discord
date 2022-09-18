@@ -40,6 +40,22 @@ export const Time = {
 	years: t => t * 365 * 24 * 60 * 60 * 1000,
 };
 
+export const TitleCode = {
+	'Grandmaster': 'GM',
+	'Grand Master': 'GM',
+	'International Master': 'IM',
+	'FIDE Master': 'FM',
+	'Candidate Master': 'CM',
+	'National Master': 'NM',
+	'Woman Grandmaster': 'WGM',
+	'Woman Grand Master': 'WGM',
+	'Woman Intl. Master': 'WIM',
+	'Woman International Master': 'WIM',
+	'Woman FIDE Master': 'WFM',
+	'Woman Candidate Master': 'WCM',
+	'Woman National Master': 'WNM',
+};
+
 export const control = t => (
 	t.match(/(\d+)\s*(?:\+\s*(\d+))?/).slice(1)
 	.map(e => !(e % 60) ? e / 60 : e)

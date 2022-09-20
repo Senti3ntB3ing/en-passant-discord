@@ -6,7 +6,7 @@ import { schedule } from '../components/twitch.js';
 import { Database } from '../database.js';
 
 const weeks = Time.week_number;
-
+/*
 createTask({
 	name: 'schedule', emoji: ':calendar_spiral:', time: '12:55',
 	description: 'Adds the streams to the discord events tab.',
@@ -49,3 +49,4 @@ createTask({
 		));
 	}
 });
+*/

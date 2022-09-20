@@ -7,7 +7,7 @@ import {
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
 	createScheduledEvent, ScheduledEventEntityType, createChannel, ChannelTypes,
 	deleteScheduledEvent, editScheduledEvent
-} from 'https://deno.land/x/discordeno@16.0.0/mod.ts';
+} from 'https://deno.land/x/discordeno@16.0.1/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 import { handleChesscomGame } from './attachments/game.js';

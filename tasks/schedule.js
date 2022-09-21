@@ -30,9 +30,10 @@ createTask({
 		// compare the segments to the shadow:
 		for (const segment of segments) {
 			const s = shadow.find(s => s.id === segment.id);
-			if (s == undefined || s == null)
+			if (s == undefined || s == null) { // new event
 				segment.event_id = await event(segment);
-			else if (s.start !== segment.start || s.end !== segment.end ||
+				shadow.push(segment);
+			} else if (s.start !== segment.start || s.end !== segment.end ||
 				s.title !== segment.title) reschedule(s.event_id, segment);
 		}
 		// check for removed segments:

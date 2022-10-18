@@ -88,10 +88,11 @@ export const Channels = {
 	// == INFORMATION ===================
 			rules: 844682003139002369n,
 	notifications: 839594884289921077n,
-		questions: 999784843208560661n,
-	  recruitment: 950121447249039403n,
+		recruitment: 950121447249039403n,
+	questions: 999784843208560661n,
 	// == GENERAL =======================
 		  general: 839594884289921076n,
+			red_drop: 1025103988259045397n,
 		challenge: 858358887416594463n,
 		   reddit: 973541665258242068n,
 			memes: 910623921093623868n,
@@ -102,22 +103,22 @@ export const Channels = {
 	// == TWITCH ========================
 	  subscribers: 959118899398467684n,
 		streamers: 973335526704816189n,
-	  elo_guesser: 973543620558880768n,
-	 eval_guesser: 989255062117285898n,
+	  guess_the_elo: 973543620558880768n,
+	 guess_the_eval: 989255062117285898n,
 		sub_voice: 959119103950463046n,
 	// == CHESS =========================
-		 openings: 839594884289921079n,
-	  middlegames: 839594884289921080n,
-		 endgames: 839594884289921081n,
+		 openings: 1019646682226507807n,
+	  	middlegames: 1019649141690871819n,
+		 endgames: 1019649491277729792n,
 		  puzzles: 844684087981244467n,
 		brilliant: 950350208649273385n,
 			games: 912840725375377478n,
+		study: 1031996220551475251n,
 	// == MODERATORS ====================
 		  academy: 996930857250062387n,
 		 mod_chat: 996939904275714108n,
 		 mid_chat: 996939922588057710n,
 		 mad_chat: 996929332134023258n,
-		  company: 969478466015744030n,
 		audit_log: 920428101656248350n,
 		mod_voice: 936021898612047892n,
 	// == Developers ====================

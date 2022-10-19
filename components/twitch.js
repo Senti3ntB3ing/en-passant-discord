@@ -48,10 +48,11 @@ export async function streams(user_ids) {
 	return data;
 }
 
+/** returns the title of the stream of a falsy value */
 export async function live(streamer) {
 	const c = await channel(streamer);
 	if (c == undefined || c == null) return c;
-	return c.is_live;
+	return c.is_live ? c.title : false;
 }
 
 export async function schedule(id, date) {

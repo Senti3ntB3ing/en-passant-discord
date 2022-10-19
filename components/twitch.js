@@ -48,7 +48,7 @@ export async function streams(user_ids) {
 	return data;
 }
 
-/** returns the title of the stream of a falsy value */
+/** returns the title of the stream or a falsy value */
 export async function live(streamer) {
 	const c = await channel(streamer);
 	if (c == undefined || c == null) return c;

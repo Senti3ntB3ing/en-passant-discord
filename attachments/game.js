@@ -6,16 +6,18 @@ import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess
 import { Chess } from '../components/chesscom.js';
 
 export async function handleChesscomGame(type, id, channel, perspective = 'w') {
-	let game = undefined;
+	let game = undefined, data;
 	if (type == 'live') game = await Chess.com.live(id);
 	else game = await Chess.com.daily(id);
 	if (game == undefined) return;
 	const board = new ChessBoard(game.pgnHeaders.FEN);
 	for (const move of game.moveList) if (board.move(move) == null) return;
-	const data = await fetch(PGNURL, {
-		headers: { 'Content-Type': 'application/json' },
-		method: 'POST', body: JSON.stringify({ pgn: board.pgn(), perspective })
-	});
+	try {
+		data = await fetch(PGNURL, {
+			headers: { 'Content-Type': 'application/json' },
+			method: 'POST', body: JSON.stringify({ pgn: board.pgn(), perspective })
+		});
+	} catch { return; }
 	if (data.status != 200) return;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;

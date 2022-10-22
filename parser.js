@@ -51,7 +51,7 @@ function handleFile(event, message, attachment) {
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
-const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com(?:\/analysis)\/(?:game\/)?(live|daily)\/(?:game\/)?(\d+)/g;
+const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com(?:\/analysis)?\/(?:game\/)?(live|daily)\/(?:game\/)?(\d+)/g;
 
 export function parse(message) {
 	if (/^\s*\[\s*"/g.test(message.content)) {

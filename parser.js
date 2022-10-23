@@ -411,9 +411,10 @@ export async function addAction(data) {
 	await reloadActions();
 	const action = actions.find(a => a.commands.includes(data.commands[0]));
 	if (action != undefined) {
-		if (data.reply != '') action.reply = data.reply;
+		if (data.reply.length > 0) action.reply = data.reply;
 		action.permissions = data.permissions;
 		await Database.set('actions', actions);
+		fetch(ActionURL);
 		return;
 	}
 	actions.push(data);

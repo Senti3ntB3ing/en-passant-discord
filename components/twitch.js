@@ -2,7 +2,7 @@
 import { Time } from '../config.js';
 
 const TWITCH_CLIENT_ID = Deno.env.get("TWITCH_CLIENT_ID");
-const TWITCH_AUTH_TOKEN = Deno.env.get("TWITCH_AUTH_TOKEN");
+const TWITCH_OAUTH_BOT = Deno.env.get("TWITCH_OAUTH_BOT");
 
 export const BASE_URL = "https://api.twitch.tv/helix/";
 export const QUERIES = {
@@ -12,7 +12,7 @@ export const QUERIES = {
 };
 const HEADERS = { 
 	headers: { 
-		"Authorization": "Bearer " + TWITCH_AUTH_TOKEN,
+		"Authorization": "Bearer " + TWITCH_OAUTH_BOT,
 		"Client-Id": TWITCH_CLIENT_ID
 	} 
 };

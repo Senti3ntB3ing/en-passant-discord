@@ -27,7 +27,20 @@ export class lichess {
 				ratings.push(rating);
 			}
 			return ratings;
-		}
+		},
+
+		/// gets game from lichess.org given its id.
+		/// returns undefined in case of error.
+		game: async id => {
+			const API_BASE_URL = 'https://lichess.org/game/export/';
+			try {
+				return await fetch(API_BASE_URL + id, {
+					headers: { 'Accept': 'application/json' }
+				}).then(
+					r => r.status === 200 ? r.json() : undefined
+				);
+			} catch (e) { console.error(e); return undefined; }
+		},
 
 	}
 

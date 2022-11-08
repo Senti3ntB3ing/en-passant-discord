@@ -23,8 +23,8 @@ const emojis = {
 	'blitz': ':zap:', 'standard': ':clock:', 'classical': ':hourglass:'
 };
 
-const not_linked_info = title => info(title,
-	'First `/connect` a chess account in ' + `<#${Channels.commands}>.`
+const not_linked_info = title => info(
+	title, 'First `/connect` a chess account in ' + `<#${Channels.commands}>.`
 );
 
 const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);

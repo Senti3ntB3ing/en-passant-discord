@@ -24,8 +24,8 @@ const emojis = {
 };
 
 const not_linked_info = title => info(title,
-	'You must `/connect` a chess account in ' +
-	`<#${Channels.commands}> to use this command.`
+	'To use this command `/connect` a chess account in ' +
+	`<#${Channels.commands}>.`
 );
 
 const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);

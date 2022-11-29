@@ -121,7 +121,7 @@ command({
 					emoji(options[1].value) + ' `' + options[1].value + '`.'
 				);
 			case 'list': return card('Twitch Actions',
-				`:bookmark: ${ActionURL}mod/\n:map: ${ActionURL}map/`
+				`:bookmark: ${ActionURL}mod/\n:map: ${ActionURL}map/\n:rotating_light: ${ActionURL}audit/`
 			);
 		}
 	}

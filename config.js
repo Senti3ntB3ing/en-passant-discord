@@ -119,7 +119,6 @@ export const Channels = {
 		 mod_chat: 996939904275714108n,
 		 mid_chat: 996939922588057710n,
 		 mad_chat: 996929332134023258n,
-		audit_log: 920428101656248350n,
 		mod_voice: 936021898612047892n,
 	// == Developers ====================
 		 dev_chat: 998669238917144659n,

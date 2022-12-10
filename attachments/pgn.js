@@ -21,7 +21,12 @@ attachment({
 			headers: { 'Content-Type': 'application/json' },
 			method: 'POST', body: JSON.stringify({ pgn, perspective: "w" })
 		});
-		if (data.status != 200) return;
+		if (data.status != 200) {
+			console.error('Failed to fetch PGN preview!');
+			console.error(pgn);
+			console.error(data);
+			return;
+		}
 		const w = h['White'], b = h['Black'];
 		let description = '';
 		if (w != undefined && b != undefined)

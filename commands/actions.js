@@ -1,5 +1,6 @@
 
 import { Prefix, ActionURL } from '../config.js';
+import { shorten } from '../components/shortener.js';
 import {
 	Option, command, error, card, success, addAction, findAction, removeAction,
 	addAliases, actionPermissions
@@ -67,6 +68,14 @@ command({
 			required: true, choices: PERM,
 		}]
 	}, {
+		name: 'shorten', type: Option.SubCommand,
+		description: '✂️ Shorten links for command usage.',
+		options: [{
+			name: 'link', type: Option.String,
+			description: 'The link to shorten',
+			required: true
+		}]
+	}, {
 		name: 'list', type: Option.SubCommand,
 		description: '🏹 List all the available actions.',
 		options: []
@@ -119,6 +128,10 @@ command({
 					'Twitch Actions',
 					'Permissions for `' + Prefix + main + '` set to ' +
 					emoji(options[1].value) + ' `' + options[1].value + '`.'
+				);
+			case 'shorten':
+				return card('Twitch Shorten',
+					':scissors: **Link:** `' + shorten(options[0].value) + '`'
 				);
 			case 'list': return card('Twitch Actions',
 				`:bookmark: ${ActionURL}mod/\n:map: ${ActionURL}map/\n:scroll: ${ActionURL}queue/\n:rotating_light: ${ActionURL}audit/`

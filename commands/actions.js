@@ -69,7 +69,7 @@ command({
 		}]
 	}, {
 		name: 'shorten', type: Option.SubCommand,
-		description: '✂️ Shorten links for command usage.',
+		description: '📌 Shorten links for command usage.',
 		options: [{
 			name: 'link', type: Option.String,
 			description: 'The link to shorten',
@@ -131,6 +131,8 @@ command({
 				);
 			case 'shorten':
 				return card('Twitch Shorten',
+					':pushpin: **Remember to test your links!**\n' +
+					':link: **Original:** ' + options[0].value + '\n' +
 					':scissors: **Link:** `' + shorten(options[0].value) + '`'
 				);
 			case 'list': return card('Twitch Actions',

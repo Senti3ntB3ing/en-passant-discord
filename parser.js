@@ -7,7 +7,7 @@ import {
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
 	createScheduledEvent, ScheduledEventEntityType, createChannel, ChannelTypes,
 	deleteScheduledEvent, editScheduledEvent
-} from 'https://deno.land/x/discordeno@16.0.1/mod.ts';
+} from 'https://deno.land/x/discordeno@17.1.0/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 import { handleChesscomGame, handlelichessorgGame } from './attachments/game.js';
@@ -368,10 +368,6 @@ prefix({
 		// delete old commands:
 		old.forEach(async (_, id) => {
 			await deleteGuildApplicationCommand(bot, id, message.guildId);
-		});
-		old = await getGuildApplicationCommands(bot);
-		old.forEach(async (_, id) => {
-			await deleteGuildApplicationCommand(bot, id);
 		});
 		return success('Application Commands', 'Commands deleted!');
 	}

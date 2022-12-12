@@ -4,6 +4,14 @@ import { Zach, Channels, Roles, Time, Streamer } from '../config.js';
 import { createTask, send, publish, card, streamAction } from '../parser.js';
 import { Database } from '../database.js';
 
+const notification = title => ({
+	content: `💎 Hey @everyone, <@${Zach}> is streaming on __twitch.tv__!`,
+	embeds: [{
+		title: "thechessnerdlive", color: 0x9047FF,
+		description: `**${title}**\nhttps://www.twitch.tv/thechessnerdlive/`
+	}]
+});
+
 createTask({
 	name: 'twitch', emoji: ':gem:', interval: Time.minutes(3),
 	description: `Notifies members when <@${Zach}> is streaming.`,
@@ -24,16 +32,13 @@ createTask({
 				0x9047FF
 			));
 		} else if (await Database.get('twitch_live')) {
-			Database.set('twitch_live', streaming);
-			streamAction(streaming == true);
+			const cast = streaming !== false;
+			Database.set('twitch_live', cast);
+			streamAction(cast);
 		} else if (typeof streaming === 'string') {
 			Database.set('twitch_live', true);
 			try {
-				const m = await send(Channels.notifications, card(
-					'Zach is now live on Twitch!',
-					`💎 Hey @everyone, <@${Zach}> is streaming on __twitch.tv__!\n**` +
-					streaming + `**\nhttps://www.twitch.tv/thechessnerdlive/`, 0x9047FF
-				));
+				const m = await send(Channels.notifications, notification(streaming));
 				publish(Channels.notifications, m.id);
 			} catch {
 				send(Channels.dev_chat, card(

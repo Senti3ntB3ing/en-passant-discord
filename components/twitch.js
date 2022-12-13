@@ -48,13 +48,6 @@ export async function streams(user_ids) {
 	return data;
 }
 
-/** returns the title of the stream or a falsy value */
-export async function live(streamer) {
-	const c = await channel(streamer);
-	if (c == undefined || c == null) return c;
-	return c.is_live ? c.title : false;
-}
-
 export async function schedule(id, date) {
 	date = date || new Date().toISOString();
 	const url = `${BASE_URL}schedule?broadcaster_id=${id}&start_time=${date}&first=7`;

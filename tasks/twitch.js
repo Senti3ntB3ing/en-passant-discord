@@ -1,14 +1,27 @@
 
-import { live } from '../components/twitch.js';
 import { Zach, Channels, Roles, Time, Streamer } from '../config.js';
 import { createTask, send, publish, card, streamAction } from '../parser.js';
+import { channel } from '../components/twitch.js';
 import { Database } from '../database.js';
 
-const notification = title => ({
+const extract = commands => {
+	commands = commands.match(/!\w+/g);
+	if (commands === null) return '';
+	return commands.map(c => '`' + c + '`').join(' ');
+};
+
+const notification = (title, category, timestamp) => ({
 	content: `💎 Hey @everyone, <@${Zach}> is streaming on __twitch.tv__!`,
 	embeds: [{
-		title: "thechessnerdlive", color: 0x9047FF,
-		description: `**${title}**\nhttps://www.twitch.tv/thechessnerdlive/`
+		title: title.replace(/!\w+|\|/g, '').replace(/\s+/g, ' '),
+		color: 0x9047FF,
+		url: "https://www.twitch.tv/thechessnerdlive/",
+		author: {
+			name: "thechessnerdlive",
+			url: "https://www.twitch.tv/thechessnerdlive/"
+		},
+		footer: { text: category },	timestamp,
+		description: extract(title),
 	}]
 });
 
@@ -18,7 +31,7 @@ createTask({
 	execute: async () => {
 		// if streaming already: update state and don't do anything.
 		// else if live: update state and send notification.
-		const streaming = await live(Streamer);
+		const streaming = await channel(Streamer);
 		if (streaming === undefined) {
 			send(Channels.dev_chat, card(
 				'Twitch live detection task',
@@ -32,13 +45,14 @@ createTask({
 				0x9047FF
 			));
 		} else if (await Database.get('twitch_live')) {
-			const cast = streaming !== false;
-			Database.set('twitch_live', cast);
-			streamAction(cast);
-		} else if (typeof streaming === 'string') {
+			Database.set('twitch_live', streaming.type === 'live');
+			streamAction(streaming, streaming.type === 'live');
+		} else if ('type' in streaming && streaming.type === 'live') {
 			Database.set('twitch_live', true);
 			try {
-				const m = await send(Channels.notifications, notification(streaming));
+				const m = await send(Channels.notifications, notification(
+					streaming.title, streaming.game_name, streaming.started_at
+				));
 				publish(Channels.notifications, m.id);
 			} catch {
 				send(Channels.dev_chat, card(

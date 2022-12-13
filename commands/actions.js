@@ -90,7 +90,7 @@ command({
 				if (commands.length == 0)
 					return error('Twitch Actions', 'Invalid action name!');
 				await addAction({
-					commands, reply: options[1].value,
+					commands, reply: options[1].value.replace(/(\s*):(\s*)/g, ' -> '),
 					permissions: options.length > 2 ? options[2].value : 'all'
 				});
 				return success(

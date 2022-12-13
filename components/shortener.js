@@ -30,7 +30,7 @@ export function shorten(url) {
 	else queries = { };
 	if (site === null) return null;
 	if (site === 'youtube.com' || site === 'youtu.be') {
-		site = 'youtu.be';
+		site = path.includes('shorts') ? 'youtube.com' : 'youtu.be';
 		if ('v' in queries) path = '/' + queries['v'];
 		if ('t' in queries && queries['t'] !== '0s')
 			queries = { 't': queries['t'] };

@@ -36,6 +36,7 @@ command({
 		let perspective = game.turn;
 		if (interaction.data.options.length > 1)
 			perspective = interaction.data.options[1].value[0];
+		console.log("all good here");
 		const diagram = await fetch(FENURL, {
 			headers: { 'Content-Type': 'application/json' },
 			method: 'POST', body: JSON.stringify({ fen, perspective })
@@ -45,6 +46,7 @@ command({
 			`**FEN:** \`${fen}\`\n` +
 			'There was an issue generating the diagram.'
 		);
+		console.log("even better here");
 		const filename = fen.replace(/[^A-Za-z0-9_.\-]/g, '_') + '.png';
 		return {
 			file: [{ blob: await diagram.blob(), name: filename }],

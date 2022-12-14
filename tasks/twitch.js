@@ -20,13 +20,13 @@ const notification = (title, category, timestamp) => ({
 			name: "thechessnerdlive",
 			url: "https://www.twitch.tv/thechessnerdlive/"
 		},
-		footer: { text: category },	timestamp,
+		footer: { text: 'Category: ' + category },	timestamp,
 		description: extract(title),
 	}]
 });
 
 createTask({
-	name: 'twitch', emoji: ':gem:', interval: Time.minutes(3),
+	name: 'twitch', emoji: ':gem:', interval: Time.minutes(2),
 	description: `Notifies members when <@${Zach}> is streaming.`,
 	execute: async () => {
 		// if streaming already: update state and don't do anything.
@@ -45,9 +45,9 @@ createTask({
 				0x9047FF
 			));
 		} else if (await Database.get('twitch_live')) {
-			Database.set('twitch_live', streaming.type === 'live');
-			streamAction(streaming, streaming.type === 'live');
-		} else if ('type' in streaming && streaming.type === 'live') {
+			Database.set('twitch_live', streaming.is_live);
+			streamAction(streaming, streaming.is_live);
+		} else if ('is_live' in streaming && streaming.is_live) {
 			Database.set('twitch_live', true);
 			try {
 				const m = await send(Channels.notifications, notification(

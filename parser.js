@@ -55,15 +55,6 @@ const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com(?:\/analysis)?\/(?:game\
 const LICHESSORG_REGEX = /https?:\/\/(?:www\.)?lichess\.org\/(\w{8})/g;
 
 export function parse(message) {
-	if (/^\s*\[\s*"/g.test(message.content)) {
-		sendMessage(bot, message.channelId, error(
-			'No PGN Text Allowed!',
-			`Please <@${message.member.id}>, just send the __chess.com__ link or drop the file.\n` +
-			'Raw moves and **PGN** text are not allowed!'
-		));
-		deleteMessage(bot, message.channelId, message.id);
-		return;
-	}
 	const c = CHESSCOM_REGEX.exec(message.content);
 	if (c != null && c.length >= 3) handleChesscomGame(
 		c[1], c[2], message.channelId,
@@ -364,7 +355,7 @@ prefix({
 	description: 'Deletes application commands.',
 	execute: async message => {
 		// fetch old guild commands:
-		let old = await getGuildApplicationCommands(bot, message.guildId);
+		const old = await getGuildApplicationCommands(bot, message.guildId);
 		// delete old commands:
 		old.forEach(async (_, id) => {
 			await deleteGuildApplicationCommand(bot, id, message.guildId);

@@ -46,11 +46,10 @@ command({
 	execute: async interaction => {
 		const tag = await discriminator(interaction.data.options[0].value);
 		const punishment = interaction.data.options[1].value;
-		const type = interaction.data.options[1].name;
 		const reason = interaction.data.options[2].value;
 		const audit = (await Database.get('audit')) || [];
 		audit.push({ tag, punishment, reason });
 		await Database.set('audit', audit);
-		return card('Punish', `:no_entry: Punished \`${tag}\` with \`${type}\` for ||\`${reason}\`||.`);
+		return card('Punish', `:no_entry: Punished \`${tag}\` with \`${punishment}\` for ||\`${reason}\`||.`);
 	}
 });

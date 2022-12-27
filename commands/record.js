@@ -42,7 +42,7 @@ command({
 		description: 'Reason for punishment',
 		name: 'reason', type: Option.String, required: true
 	}],
-	description: '⛔ Punish a member.',
+	description: '⛔ Log the punishment of a member.',
 	execute: async interaction => {
 		const tag = await discriminator(interaction.data.options[0].value);
 		const punishment = interaction.data.options[1].value;

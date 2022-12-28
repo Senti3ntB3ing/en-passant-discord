@@ -17,7 +17,7 @@ createTask({
 		const videos = await getVideosAfterDate(
 			Deno.env.get('YOUTUBE_KEY'),
 			Deno.env.get('YOUTUBE_CHANNEL'),
-			new Date(date)
+			date
 		);
 		if (videos == null) return;
 		for (const video of videos) {

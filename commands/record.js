@@ -51,7 +51,7 @@ command({
 		audit.push({ tag, punishment, reason });
 		await Database.set('audit', audit);
 		return card('Punish',
-			`:no_entry: Punished \`${tag}\` with \`${punishment}\` for:\n>` +
+			`:no_entry: Punished \`${tag}\` with \`${punishment}\` for:\n> ` +
 			reason + '\nhttps://en-passant-twitch.cristian-98.repl.co/audit/'
 		);
 	}

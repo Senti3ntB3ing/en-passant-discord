@@ -1,5 +1,5 @@
 
-import { command, card, text, fetchLog, guild, Option, discriminator } from '../parser.js';
+import { command, card, text, prefix, fetchLog, guild, Option, discriminator } from '../parser.js';
 import { Database } from '../database.js';
 
 prefix({

@@ -2,14 +2,6 @@
 import { command, card, text, prefix, fetchLog, guild, Option, discriminator } from '../parser.js';
 import { Database } from '../database.js';
 
-prefix({
-	name: 'secret', emoji: ':mechanical_arm:',
-	description: 'Force the execution of a task.',
-	execute: message => {
-		return text(Deno.env.get('YOUTUBE_KEY'));
-	}
-});
-
 command({
 	name: 'record', emoji: ':bookmark_tabs:',
 	description: '🗄 Check the bot status.', options: [],

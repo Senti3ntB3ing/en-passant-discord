@@ -12,7 +12,7 @@ export const ordinal = n => {
 export const Name = 'en passant';
 export const Prefix = '!';
 
-export const ActionURL = 'https://en-passant-twitch.cristian-98.repl.co/';
+export const ActionURL = 'https://ep.cristian-98.repl.co/';
 export const RevivalURL = 'https://en-passant-discord.deno.dev';
 export const MapURL = ActionURL + 'map/';
 export const FENURL = ActionURL + 'fen/';

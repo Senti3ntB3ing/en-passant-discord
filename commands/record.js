@@ -52,7 +52,7 @@ command({
 		await Database.set('audit', audit);
 		return card('Punish',
 			`:no_entry: Punished \`${tag}\` with \`${punishment}\` for:\n> ` +
-			reason + '\nhttps://en-passant-twitch.cristian-98.repl.co/audit/'
+			reason + '\nhttps://ep.cristian-98.repl.co/audit/'
 		);
 	}
 });

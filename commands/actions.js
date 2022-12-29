@@ -136,7 +136,7 @@ command({
 					':scissors: **Link:** `' + shorten(options[0].value) + '`'
 				);
 			case 'list': return card('Twitch Actions',
-				`:bookmark: ${ActionURL}mod/\n:map: ${ActionURL}map/\n:scroll: ${ActionURL}queue/\n:rotating_light: ${ActionURL}audit/`
+				`:bookmark: ${ActionURL}mod/\n:map: ${ActionURL}map/\n:scroll: ${ActionURL}queue/\n:rotating_light: ${ActionURL}audit/\n:clock: ${ActionURL}time/`
 			);
 		}
 	}

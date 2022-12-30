@@ -31,6 +31,8 @@ export class lichess {
 
 		/// gets game from lichess.org given its id.
 		/// returns undefined in case of error.
+		/// test: curl https://lichess.org/game/export/PFQkvYvy
+		/// -H 'Accept: application/json'
 		game: async id => {
 			const API_BASE_URL = 'https://lichess.org/game/export/';
 			try {

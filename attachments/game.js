@@ -6,7 +6,9 @@ import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess
 import { lichess } from '../components/lichessorg.js';
 import { Chess } from '../components/chesscom.js';
 
-export async function handleChesscomGame(type, id, channel, perspective = 'w') {
+const avg = (a, b) => Math.floor((a + b) / 2);
+
+export async function handleChesscomGame(type, id, channel, perspective = 'w', elo = false) {
 	let game = undefined, data;
 	if (type === 'live') game = await Chess.com.live(id);
 	else game = await Chess.com.daily(id);
@@ -23,6 +25,7 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w') {
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 	description += ` ・ **Clock:** \`${control(game.pgnHeaders.TimeControl)}\``;
+	if (elo) description += `\n**Average Elo:** ||\`${avg(game.pgnHeaders.WhiteElo, game.pgnHeaders.BlackElo)}\`||`;
 	description += `\n**Link:** https://chess.com/game/${type}/${id}`;
 	let status = '';
 	if (game.isFinished) {
@@ -39,7 +42,7 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w') {
 	});
 }
 
-export async function handlelichessorgGame(id, channel, perspective = 'w') {
+export async function handlelichessorgGame(id, channel, perspective = 'w', elo = false) {
 	const game = await lichess.org.game(id); let data;
 	if (game === undefined || game.variant !== 'standard') return;
 	const board = new ChessBoard();
@@ -58,6 +61,7 @@ export async function handlelichessorgGame(id, channel, perspective = 'w') {
 	let clock = 'clock' in game ? game.clock.initial : '';
 	if ('increment' in game.clock) clock += game.clock.increment;
 	if (clock.length > 0) description += ` ・ **Clock:** \`${control(clock)}\``;
+	if (elo) description += `\n**Average Elo:** ||\`${avg(game.players.white.rating, game.players.black.rating)}\`||`;
 	description += `\n**Link:** https://lichess.org/${id}`;
 	if (perspective === 'b') description += `/black`;
 	const filename = `${w}_vs_${b}.gif`.replace(/[^A-Za-z0-9_.\-]/g, '_');

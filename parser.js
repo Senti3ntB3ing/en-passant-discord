@@ -13,7 +13,7 @@ import { closest } from './components/levenshtein.js';
 import { handleChesscomGame, handlelichessorgGame } from './attachments/game.js';
 
 import {
-	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL
+	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL, Channels
 } from './config.js';
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
@@ -58,11 +58,13 @@ export function parse(message) {
 	const c = CHESSCOM_REGEX.exec(message.content);
 	if (c != null && c.length >= 3) handleChesscomGame(
 		c[1], c[2], message.channelId,
-		(message.content.toLowerCase().includes('black') ? 'b' : 'w')
+		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
+		message.channelId == Channels.guess_the_elo
 	);
 	const l = LICHESSORG_REGEX.exec(message.content);
 	if (l != null && l.length >= 2) handlelichessorgGame(l[1], message.channelId,
-		(message.content.toLowerCase().includes('black') ? 'b' : 'w')
+		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
+		message.channelId == Channels.guess_the_elo
 	);
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();

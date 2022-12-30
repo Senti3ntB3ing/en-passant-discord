@@ -70,13 +70,12 @@ const baseBot = createBot({
 		GatewayIntents.MessageContent
 	),
 	events: {
-		// _ is bot, but it is not necessary
-		messageCreate(_, message) { parse(message); },
+		messageCreate(_bot, message) { parse(message); },
 		guildMemberAdd(bot, member, _) {
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
 			sendMessage(bot, Channels.general, text(`**Welcome** <@${member.id}>, ${message}`));
 		},
-		interactionCreate(_, interaction) { dispatch(interaction); }
+		interactionCreate(_bot, interaction) { dispatch(interaction); }
 	}
 });
 

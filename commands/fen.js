@@ -36,7 +36,8 @@ command({
 		let perspective = game.turn;
 		if (interaction.data.options.length > 1)
 			perspective = interaction.data.options[1].value[0];
-		const diagram = await fetch(FENURL + perspective + '/' + fen.replace(/ .*$/, ''));
+		const diagram = await fetch(FENURL + perspective + '/' + fen.replace(/\s.+$/, ''));
+		console.log(FENURL + perspective + '/' + fen.replace(/\s.+$/, ''));
 		if (diagram.status != 200) return error(
 			'FEN Diagram Issue',
 			`**FEN:** \`${fen}\`\n` +

@@ -35,7 +35,7 @@ command({
 		} else status = game.turn == 'w' ? '⬜️ White to Move' : '⬛️ Black to Move';
 		let perspective = game.turn == 'w' ? 'white' : 'black';
 		if (interaction.data.options.length > 1)
-			perspective = interaction.data.options[1].value[0];
+			perspective = interaction.data.options[1].value;
 		const diagram = await fetch(FENURL + perspective + '/' + fen.replace(/\s.+$/, ''));
 		if (diagram.status != 200) return error(
 			'FEN Diagram Issue',

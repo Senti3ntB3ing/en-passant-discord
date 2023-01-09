@@ -28,7 +28,7 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 		}
 		moves += move.from + move.to;
 		if (move.promotion) moves += '=' + (
-			move.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
+			move.color === 'w' ? move.promotion.toUpperCase() : move.promotion.toLowerCase()
 		);
 		moves += ';';
 	}
@@ -72,7 +72,7 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 		}
 		moves += move.from + move.to;
 		if (move.promotion) moves += '=' + (
-			move.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
+			move.color === 'w' ? move.promotion.toUpperCase() : move.promotion.toLowerCase()
 		);
 		moves += ';';
 	}

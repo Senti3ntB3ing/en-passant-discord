@@ -22,11 +22,9 @@ attachment({
 				m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
 			) : '')
 		);
-		const data = await fetch(PGNURL, {
-			headers: { 'Content-Type': 'application/json' },
-			method: 'POST', body: JSON.stringify({ pgn, perspective: "w" })
-		});
-		if (data.status != 200) return;
+		let data;
+		try { data = await fetch(PGNURL + themes.random() + '/white/' + moves); } catch { return; }
+		if (data.status !== 200) return;
 		const w = h['White'], b = h['Black'];
 		let description = '';
 		if (w != undefined && b != undefined)

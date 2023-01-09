@@ -16,7 +16,7 @@ export const ActionURL = 'https://ep.cristian-98.repl.co/';
 export const RevivalURL = 'https://en-passant-discord.deno.dev';
 export const MapURL = ActionURL + 'map/';
 export const FENURL = 'https://game.cristian-98.repl.co/fen/';
-export const PGNURL = ActionURL + 'pgn/';
+export const PGNURL = 'https://game.cristian-98.repl.co/pgn/';
 
 export const Streamer = 'thechessnerdlive';
 export const StreamerID = '428214501';

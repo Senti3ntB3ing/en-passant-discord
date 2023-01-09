@@ -14,13 +14,22 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 	else game = await Chess.com.daily(id);
 	if (game === undefined) return;
 	const board = new ChessBoard(game.pgnHeaders.FEN);
-	for (const move of game.moveList) if (board.move(move) == null) return;
-	try {
-		data = await fetch(PGNURL, {
-			headers: { 'Content-Type': 'application/json' },
-			method: 'POST', body: JSON.stringify({ pgn: board.pgn(), perspective })
-		});
-	} catch { return; }
+	let moves = '';
+	for (let move of game.moveList) {
+		if ((move = board.move(move)) == null) return;
+		if (move.san === 'O-O') {
+			moves += (board.turn() === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
+			continue;
+		} else if (move.san === 'O-O-O') {
+			moves += (board.turn() === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
+			continue;
+		}
+		moves += move.from + move.to;
+		if (move.promotion) moves += '=' + move.promotion;
+		moves += ';';
+	}
+	perspective = perspective == 'w' ? 'white' : 'black';
+	try { data = await fetch(PGNURL + 'bubble/' + perspective + '/' + moves); } catch { return; }
 	if (data.status !== 200) return;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
@@ -47,14 +56,23 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 	if (game === undefined || game.variant !== 'standard') return;
 	const board = new ChessBoard();
 	game.moves = game.moves.split(' ');
-	for (const move of game.moves) if (board.move(move) == null) { console.log(move); return; }
-	try {
-		data = await fetch(PGNURL, {
-			headers: { 'Content-Type': 'application/json' },
-			method: 'POST', body: JSON.stringify({ pgn: board.pgn(), perspective })
-		});
-	} catch { return; }
-	if (data.status !== 200) {console.log('err2'); return; }
+	let moves = '';
+	for (let move of game.moveList) {
+		if ((move = board.move(move)) == null) return;
+		if (move.san === 'O-O') {
+			moves += (board.turn() === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
+			continue;
+		} else if (move.san === 'O-O-O') {
+			moves += (board.turn() === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
+			continue;
+		}
+		moves += move.from + move.to;
+		if (move.promotion) moves += '=' + move.promotion;
+		moves += ';';
+	}
+	perspective = perspective == 'w' ? 'white' : 'black';
+	try { data = await fetch(PGNURL + 'bubble/' + perspective + '/' + moves); } catch { return; }
+	if (data.status !== 200) return;
 	const w = 'user' in game.players.white ? game.players.white.user.name : 'Anonymous';
 	const b = 'user' in game.players.black ? game.players.black.user.name : 'Anonymous';
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;

@@ -18,10 +18,10 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 	for (let move of game.moveList) {
 		if ((move = board.move(move)) == null) return;
 		if (move.san === 'O-O') {
-			moves += (board.turn() === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
+			moves += (board.turn === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
 			continue;
 		} else if (move.san === 'O-O-O') {
-			moves += (board.turn() === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
+			moves += (board.turn === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
 			continue;
 		}
 		moves += move.from + move.to;
@@ -61,10 +61,10 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 	for (let move of game.moveList) {
 		if ((move = board.move(move)) == null) return;
 		if (move.san === 'O-O') {
-			moves += (board.turn() === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
+			moves += (board.turn === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
 			continue;
 		} else if (move.san === 'O-O-O') {
-			moves += (board.turn() === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
+			moves += (board.turn === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
 			continue;
 		}
 		moves += move.from + move.to;

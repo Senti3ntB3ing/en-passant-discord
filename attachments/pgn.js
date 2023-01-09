@@ -1,5 +1,5 @@
 
-import { PGNURL, Size, control } from '../config.js';
+import { PGNURL, Size, control, themes } from '../config.js';
 import { attachment, error } from '../parser.js';
 
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';

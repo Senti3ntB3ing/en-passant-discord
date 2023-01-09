@@ -249,3 +249,5 @@ export const Welcome = [
 	'the pin is mightier than the sword!',
 	'fight till the end!',
 ];
+
+export const themes = [ 'bubble', 'nature', 'iceage', 'wooden', 'grapes' ];

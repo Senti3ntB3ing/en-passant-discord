@@ -1,5 +1,5 @@
 
-import { PGNURL, control } from '../config.js';
+import { PGNURL, control, themes } from '../config.js';
 import { send } from '../parser.js';
 
 import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
@@ -7,8 +7,6 @@ import { lichess } from '../components/lichessorg.js';
 import { Chess } from '../components/chesscom.js';
 
 const avg = (a, b) => Math.floor((a + b) / 2);
-
-const themes = [ 'bubble', 'nature', 'iceage', 'wooden', 'grapes' ];
 
 export async function handleChesscomGame(type, id, channel, perspective = 'w', elo = false) {
 	let game = undefined, data;

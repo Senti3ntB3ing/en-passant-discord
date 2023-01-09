@@ -29,7 +29,6 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	console.log(PGNURL + 'bubble/' + perspective + '/' + moves);
 	try { data = await fetch(PGNURL + 'bubble/' + perspective + '/' + moves); } catch { return; }
 	if (data.status !== 200) return;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
@@ -58,7 +57,7 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 	const board = new ChessBoard();
 	game.moves = game.moves.split(' ');
 	let moves = '';
-	for (let move of game.moveList) {
+	for (let move of game.moves) {
 		if ((move = board.move(move)) == null) return;
 		if (move.san === 'O-O') {
 			moves += (board.turn === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
@@ -72,7 +71,6 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	console.log(PGNURL + 'bubble/' + perspective + '/' + moves);
 	try { data = await fetch(PGNURL + 'bubble/' + perspective + '/' + moves); } catch { return; }
 	if (data.status !== 200) return;
 	const w = 'user' in game.players.white ? game.players.white.user.name : 'Anonymous';

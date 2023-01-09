@@ -33,11 +33,10 @@ command({
 			else if (game.checkmate())
 				status = game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won';
 		} else status = game.turn == 'w' ? '⬜️ White to Move' : '⬛️ Black to Move';
-		let perspective = game.turn;
+		let perspective = game.turn == 'w' ? 'white' : 'black';
 		if (interaction.data.options.length > 1)
 			perspective = interaction.data.options[1].value[0];
 		const diagram = await fetch(FENURL + perspective + '/' + fen.replace(/\s.+$/, ''));
-		console.log(FENURL + perspective + '/' + fen.replace(/\s.+$/, ''));
 		if (diagram.status != 200) return error(
 			'FEN Diagram Issue',
 			`**FEN:** \`${fen}\`\n` +

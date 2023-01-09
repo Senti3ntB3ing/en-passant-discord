@@ -44,9 +44,7 @@ import './tasks/sweep.js';
 // =========================================
 
 export function setRandomAction() {
-	const action = Actions[
-		Math.floor(Math.random() * Actions.length)
-	];
+	const action = Actions.random();
 	editBotStatus(bot, {
 		activities: [{
 			name: action.status,

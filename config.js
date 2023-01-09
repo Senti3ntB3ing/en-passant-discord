@@ -49,6 +49,10 @@ export const Time = {
 	}
 };
 
+Array.prototype.random = function() {
+	return this[Math.floor(Math.random() * this.length)];
+};
+
 export const TitleCode = {
 	'Grandmaster': 'GM',
 	'Grand Master': 'GM',

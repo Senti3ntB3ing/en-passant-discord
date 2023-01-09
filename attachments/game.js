@@ -8,6 +8,8 @@ import { Chess } from '../components/chesscom.js';
 
 const avg = (a, b) => Math.floor((a + b) / 2);
 
+const themes = [ 'bubble', 'nature', 'iceage', 'wooden', 'grapes' ];
+
 export async function handleChesscomGame(type, id, channel, perspective = 'w', elo = false) {
 	let game = undefined, data;
 	if (type === 'live') game = await Chess.com.live(id);
@@ -25,11 +27,13 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 			continue;
 		}
 		moves += move.from + move.to;
-		if (move.promotion) moves += '=' + move.promotion;
+		if (move.promotion) moves += '=' + (
+			move.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
+		);
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + 'bubble/' + perspective + '/' + moves); } catch { return; }
+	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); } catch { return; }
 	if (data.status !== 200) return;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
@@ -67,11 +71,13 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 			continue;
 		}
 		moves += move.from + move.to;
-		if (move.promotion) moves += '=' + move.promotion;
+		if (move.promotion) moves += '=' + (
+			move.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
+		);
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + 'bubble/' + perspective + '/' + moves); } catch { return; }
+	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); } catch { return; }
 	if (data.status !== 200) return;
 	const w = 'user' in game.players.white ? game.players.white.user.name : 'Anonymous';
 	const b = 'user' in game.players.black ? game.players.black.user.name : 'Anonymous';

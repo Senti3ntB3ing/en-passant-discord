@@ -17,16 +17,16 @@ attachment({
 		const game = new Chess();
 		if (!game.pgn(pgn)) return error(title, 'Invalid PGN file!');
 		const h = game.header();
+		const history = game.history({ verbose: true }).map(
+			m => m.from + m.to + (m.promotion ? '=' + (
+				m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
+			) : '')
+		);
 		const data = await fetch(PGNURL, {
 			headers: { 'Content-Type': 'application/json' },
 			method: 'POST', body: JSON.stringify({ pgn, perspective: "w" })
 		});
-		if (data.status != 200) {
-			console.error('Failed to fetch PGN preview!');
-			console.error(pgn);
-			console.error(data);
-			return;
-		}
+		if (data.status != 200) return;
 		const w = h['White'], b = h['Black'];
 		let description = '';
 		if (w != undefined && b != undefined)

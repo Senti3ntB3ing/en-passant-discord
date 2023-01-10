@@ -23,7 +23,7 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 		} else if (move.san === 'O-O-O') {
 			moves += (board.turn === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
 			continue;
-		}
+		} else if (move.flags.includes('e')) moves += '$'; // en-passant
 		moves += move.from + move.to;
 		if (move.promotion) moves += '=' + (
 			move.color === 'w' ? move.promotion.toUpperCase() : move.promotion.toLowerCase()
@@ -67,7 +67,7 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 		} else if (move.san === 'O-O-O') {
 			moves += (board.turn === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
 			continue;
-		}
+		} else if (move.flags.includes('e')) moves += '$'; // en-passant
 		moves += move.from + move.to;
 		if (move.promotion) moves += '=' + (
 			move.color === 'w' ? move.promotion.toUpperCase() : move.promotion.toLowerCase()

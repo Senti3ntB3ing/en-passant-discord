@@ -18,12 +18,13 @@ attachment({
 		if (!game.pgn(pgn)) return error(title, 'Invalid PGN file!');
 		const h = game.header();
 		const history = game.history({ verbose: true }).map(
-			m => m.from + m.to + (m.promotion ? '=' + (
+			m => (m.flags.includes('e') ? '$' : '') + m.from + m.to + (m.promotion ? '=' + (
 				m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
 			) : '')
-		);
+		).join(';');
 		let data;
-		try { data = await fetch(PGNURL + themes.random() + '/white/' + moves); } catch { return; }
+		try { data = await fetch(PGNURL + themes.random() + '/white/' + history); } catch { return; }
+		console.log(data)
 		if (data.status !== 200) return;
 		const w = h['White'], b = h['Black'];
 		let description = '';

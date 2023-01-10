@@ -18,9 +18,17 @@ attachment({
 		if (!game.pgn(pgn)) return error(title, 'Invalid PGN file!');
 		const h = game.header();
 		const history = game.history({ verbose: true }).map(
-			m => (m.flags.includes('e') ? '$' : '') + m.from + m.to + (m.promotion ? '=' + (
-				m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
-			) : '')
+			m => (m.flags.includes('e') ? '$' : '') + // en passant
+			(move.san === 'O-O' ? // castling
+				(move.color === 'b' ? 'h8f8e8g8' : 'h1f1e1g1') :
+				(move.san === 'O-O-O' ?
+					(move.color === 'b' ? 'a8d8e8c8' : 'a1d1e1c1') : ( // normal
+						m.from + m.to + (m.promotion ? '=' + ( // promotion
+							m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
+						) : '')
+					)
+				)
+			)
 		).join(';');
 		let data;
 		try { data = await fetch(PGNURL + themes.random() + '/white/' + history); } catch { return; }

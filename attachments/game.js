@@ -13,7 +13,7 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 	if (type === 'live') game = await Chess.com.live(id);
 	else game = await Chess.com.daily(id);
 	if (game === undefined) return;
-	const board = new ChessBoard(game.pgnHeaders.FEN);
+	const board = new ChessBoard();
 	let moves = '';
 	for (let move of game.moveList) {
 		if ((move = board.move(move)) == null) return;

@@ -76,8 +76,8 @@ command({
 			required: true
 		}]
 	}, {
-		name: 'list', type: Option.SubCommand,
-		description: '🏹 List all the available actions.',
+		name: 'tools', type: Option.SubCommand,
+		description: '🧰 List all the available tools.',
 		options: []
 	}],
 	execute: async interaction => {
@@ -101,31 +101,31 @@ command({
 			case 'remove':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
-					'Twitch Actions', 'Action `' + Prefix + main + '` not found!'
+					'Twitch Remove', 'Action `' + Prefix + main + '` not found!'
 				);
 				await removeAction(main);
-				return success('Twitch Actions', 'Action `' + Prefix + main + '` removed.');
+				return success('Twitch Remove', 'Action `' + Prefix + main + '` removed.');
 			case 'alias':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
-					'Twitch Actions', 'Action `' + Prefix + main + '` not found!'
+					'Twitch Aliases', 'Action `' + Prefix + main + '` not found!'
 				);
 				aliases = options[1].value.split(/\s+/g)
 					.map(c => c.replace(PRFXRGX, '').toLowerCase());
 				await addAliases(main, aliases);
 				return success(
-					'Twitch Actions', 'Aliases ' +
+					'Twitch Aliases', 'Aliases ' +
 					aliases.map(a => '`' + Prefix + a + '`').join(', ') +
 					' for `' + Prefix + main + '` added.'
 				);
 			case 'permissions':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
-					'Twitch Actions', 'Action `' + Prefix + main + '` not found!'
+					'Twitch Permissions', 'Action `' + Prefix + main + '` not found!'
 				);
 				await actionPermissions(main, options[1].value);
 				return success(
-					'Twitch Actions',
+					'Twitch Permissions',
 					'Permissions for `' + Prefix + main + '` set to ' +
 					emoji(options[1].value) + ' `' + options[1].value + '`.'
 				);
@@ -135,8 +135,12 @@ command({
 					':link: **Original:** ' + options[0].value + '\n' +
 					':scissors: **Link:** `' + shorten(options[0].value) + '`'
 				);
-			case 'list': return card('Twitch Actions',
-				`:bookmark: ${ActionURL}mod/\n:map: ${ActionURL}map/\n:scroll: ${ActionURL}queue/\n:rotating_light: ${ActionURL}audit/\n:clock: ${ActionURL}time/`
+			case 'tools': return card('Twitch Tools',
+				`:bookmark: ${ActionURL}mod/\n` +
+				`:map: ${ActionURL}map/\n` + 
+				`:scroll: ${ActionURL}queue/\n` +
+				`:rotating_light: ${ActionURL}audit/\n` +
+				`:clock: ${ActionURL}time/`
 			);
 		}
 	}

@@ -85,7 +85,7 @@ command({
 
 command({
 	name: 'schedule', emoji: ':calendar_spiral:', options: [],
-	description: '📅 Link to __thechessnerd__ Twitch schedule.',
+	description: '📅 Link to @thechessnerd Twitch schedule.',
 	execute: () => card(
 		'Link to thechessnerd Twitch schedule',
 		':calendar_spiral: ' + links['Twitch'].url + 'schedule',
@@ -95,7 +95,7 @@ command({
 
 command({
 	name: 'invite', emoji: ':tickets:', options: [],
-	description: '🎫 Invite link to __thechessnerd__ Discord.',
+	description: '🎫 Invite link to @thechessnerd Discord.',
 	execute: () => card(
 		'Invite link to __thechessnerd__ Discord.',
 		':tickets: ' + links['Discord'].url,

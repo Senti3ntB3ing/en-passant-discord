@@ -73,7 +73,7 @@ export function parse(message) {
 		}
 	}
 	if (!message.content.startsWith(Prefix)) return;
-	if (!message.member.roles.includes(Roles.developer)) {
+	if (!message.member.roles.includes(Roles.developer) && /!\w/.test(message.content)) {
 		sendMessage(bot, message.channelId, info(
 			'Command Information',
 			'We transitioned to slash commands.\nType `/` to get started.\n' +

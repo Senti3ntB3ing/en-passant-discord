@@ -1,19 +1,19 @@
 
 import {
-	sendMessage, publishMessage, deleteMessage, deleteMessages,
+	sendMessage, publishMessage, editScheduledEvent, deleteScheduledEvent,
 	getMessages, createGuildApplicationCommand, getGuildApplicationCommands,
 	deleteGuildApplicationCommand, sendInteractionResponse, getGuild,
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
-	createScheduledEvent, ScheduledEventEntityType, createChannel, ChannelTypes,
-	deleteScheduledEvent, editScheduledEvent
+	createScheduledEvent, ScheduledEventEntityType, deleteMessage, deleteMessages,
 } from 'https://deno.land/x/discordeno@17.1.0/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 import { handleChesscomGame, handlelichessorgGame } from './attachments/game.js';
 
 import {
-	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL, Channels
+	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL, Channels,
+	CHESSCOM_REGEX, LICHESSORG_REGEX
 } from './config.js';
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
@@ -50,9 +50,6 @@ function handleFile(event, message, attachment) {
 	const result = event.execute(message, attachment);
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
-
-const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com(?:\/analysis)?\/(?:game\/)?(live|daily)\/(?:game\/)?(\d+)/g;
-const LICHESSORG_REGEX = /https?:\/\/(?:www\.)?lichess\.org\/(\w{8})/g;
 
 export function parse(message) {
 	const c = CHESSCOM_REGEX.exec(message.content);
@@ -342,10 +339,15 @@ prefix({
 	name: 'register', emoji: ':pencil:',
 	description: 'Registers application commands.',
 	execute: async message => {
+		if (message.arguments.length == 0) return info(
+			'Application Commands',
+			'Type `' +  Prefix + 'register <name>` to register the command.'
+		);
 		try {
 			// register new commands:
 			for (const command of appCommands)
-				await createGuildApplicationCommand(bot, command, message.guildId);
+				if (message.arguments.includes(command.name))
+					await createGuildApplicationCommand(bot, command, message.guildId);
 		} catch { return error('Application Commands', 'Registration error!'); }
 		// send success message:
 		return success('Application Commands', 'Registration completed!');
@@ -356,24 +358,16 @@ prefix({
 	name: 'forget', emoji: ':pencil:',
 	description: 'Deletes application commands.',
 	execute: async message => {
-		// fetch old guild commands:
+		if (message.arguments.length == 0) return info(
+			'Application Commands',
+			'Type `' +  Prefix + 'forget <name>` to delete the command.'
+		);
 		const old = await getGuildApplicationCommands(bot, message.guildId);
-		// delete old commands:
-		old.forEach(async (_, id) => {
-			await deleteGuildApplicationCommand(bot, id, message.guildId);
+		old.forEach(async (command, id) => {
+			if (message.arguments.includes(command.name))
+				await deleteGuildApplicationCommand(bot, id, message.guildId);
 		});
-		return success('Application Commands', 'Commands deleted!');
-	}
-});
-
-prefix({
-	name: 'forum', emoji: ':envelope_with_arrow:',
-	description: 'Make a new forum channel.',
-	execute: async message => {
-		await createChannel(bot, message.guildId, {
-			type: ChannelTypes.GuildForum, name: 'forum'
-		});
-		return success('Forum', 'New forum created!');
+		return success('Application Commands', 'Command deleted!');
 	}
 });
 

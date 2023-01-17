@@ -21,6 +21,9 @@ export const PGNURL = 'https://game.cristian-98.repl.co/pgn/';
 export const Streamer = 'thechessnerdlive';
 export const StreamerID = '428214501';
 
+export const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com(?:\/analysis)?\/(?:game\/)?(live|daily)\/(?:game\/)?(\d+)/g;
+export const LICHESSORG_REGEX = /https?:\/\/(?:www\.)?lichess\.org\/(\w{8})/g;
+
 export const Time = {
 	second: 1000,
 	minute: 60 * 1000,

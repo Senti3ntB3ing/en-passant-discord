@@ -15,19 +15,6 @@ import { Channels, Welcome, Actions, Time } from './config.js';
 export const PID = Math.floor(Math.random() * 10000);
 log('status', 'PID ' + PID);
 
-// ==== Commands ===========================
-
-import './commands/actions.js';
-import './commands/ping.js';
-import './commands/poll.js';
-import './commands/links.js';
-import './commands/clear.js';
-import './commands/fen.js';
-import './commands/rating.js';
-import './commands/task.js';
-import './commands/shutdown.js';
-import './commands/record.js';
-
 // ==== Attachments ========================
 
 import './attachments/pgn.js';
@@ -40,6 +27,18 @@ import './tasks/youtube.js';
 import './tasks/twitch.js';
 import './tasks/reddit.js';
 import './tasks/sweep.js';
+
+// ==== Commands ===========================
+
+import './commands/actions.js';
+import './commands/clear.js';
+import './commands/diagram.js';
+import './commands/links.js';
+import './commands/poll.js';
+import './commands/rating.js';
+
+// leave last for tasks
+import './commands/system.js';
 
 // =========================================
 

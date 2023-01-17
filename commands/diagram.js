@@ -1,7 +1,8 @@
 
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 
-import { FENURL } from '../config.js';
+import { FENURL, CHESSCOM_REGEX, LICHESSORG_REGEX } from '../config.js';
+import { handleChesscomGame, handlelichessorgGame } from '../attachments/game.js';
 import { Option, command, error } from '../parser.js';
 
 command({
@@ -54,3 +55,23 @@ command({
 	}
 });
 
+/*command({
+	name: 'pgn', emoji: ':page_with_curl:',
+	description: '📋 Displays an animated game preview.',
+	options: [{
+		description: 'The Chess.com or lichess.org game link', name: 'link',
+		type: Option.String, required: true,
+	}, {
+		description: 'Perspective of the board',
+		name: 'perspective', type: Option.String, required: false,
+		choices: [
+			{ name: `⬜️ White`, value: 'white' },
+			{ name: `⬛️ Black`, value: 'black' }
+		]
+	}],
+	execute: async interaction => {
+		const title = 'Game Preview';
+		const link = interaction.data.options[0].value.trim();
+		
+	}
+});*/

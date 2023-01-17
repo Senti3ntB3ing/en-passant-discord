@@ -1,11 +1,21 @@
 
-import { command, card, text, prefix, fetchLog, guild, Option, discriminator } from '../parser.js';
+import { Prefix, RevivalURL } from '../config.js';
+import {
+	command, send, prefix, card, error, info, tasks,
+	guild, Option, discriminator, snow
+} from '../parser.js';
 import { Database } from '../database.js';
+import { PID } from '../main.js';
 
 command({
-	name: 'record', emoji: ':bookmark_tabs:',
-	description: '🗄 Check the bot status.', options: [],
-	execute: () => card('Status Log', '```elm\n' + fetchLog() + '\n```')
+	name: 'ping', emoji: ':ping_pong:', options: [],
+	description: '🏓 Checks the latency of the bot.',
+	execute: interaction => card(
+		'Ping Command',
+		`:ping_pong: **Pong**. Server latency: \`${
+			Date.now() - snow(interaction.id)
+		}ms\`, PID: \`${PID}\`.`
+	),
 });
 
 command({
@@ -54,5 +64,46 @@ command({
 			`:no_entry: Punished \`${tag}\` with \`${punishment}\` for:\n> ` +
 			reason + '\nhttps://ep.cristian-98.repl.co/audit/'
 		);
+	}
+});
+
+prefix({ // TODO: make it a command?
+	name: 'task', emoji: ':mechanical_arm:',
+	description: 'Force the execution of a task.',
+	execute: message => {
+		if (message.arguments.length == 0)
+			return info('Task Command', 'Type `' + Prefix + 'task <name>` to execute a task.');
+		for (const name of message.arguments) {
+			tasks[name].execute(message.bot);
+			return card('Task Command', `${tasks[name].emoji} Task \`${name}\` executed successfully.`);
+		}
+		return error('Task Command', `Task \`${message.arguments[0]}\` not found.`);
+	}
+});
+
+prefix({
+	name: 'shutdown', emoji: ':firecracker:', aliases: [ 'die', 'kill' ],
+	description: 'Shutdown the bot.',
+	execute: async command => {
+		const m = command.text.match(/(\d+)/);
+		if (m != null && m.length >= 2) {
+			if (m[2] == PID) Deno.exit(1);
+			else return;
+		}
+		await send(command.channelId, error(
+			'Shutdown', 'The system is now offline.\n' +
+			'Emergency revival: ' + RevivalURL
+		));
+		Deno.exit(1);
+	}
+});
+
+prefix({
+	name: 'instances', emoji: ':construction:', aliases: [ 'threads' ],
+	description: 'Shows the current thread instances.',
+	execute: async command => {
+		await send(command.channelId, info(
+			'Instances', 'Process ID: `' + PID + '`.'
+		));
 	}
 });

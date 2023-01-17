@@ -1,6 +1,5 @@
 
 import { PGNURL, control, themes } from '../config.js';
-import { send } from '../parser.js';
 
 import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 import { lichess } from '../components/lichessorg.js';
@@ -8,15 +7,15 @@ import { Chess } from '../components/chesscom.js';
 
 const avg = (a, b) => Math.floor((a + b) / 2);
 
-export async function handleChesscomGame(type, id, channel, perspective = 'w', elo = false) {
+export async function handleChesscomGame(type, id, perspective = 'w', elo = false) {
 	let game = undefined, data;
 	if (type === 'live') game = await Chess.com.live(id);
 	else game = await Chess.com.daily(id);
-	if (game === undefined) return;
+	if (game === undefined) return undefined;
 	const board = new ChessBoard();
 	let moves = '';
 	for (let move of game.moveList) {
-		if ((move = board.move(move)) == null) return;
+		if ((move = board.move(move)) == null) return undefined;
 		if (move.san === 'O-O') {
 			moves += (board.turn === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
 			continue;
@@ -31,8 +30,9 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); } catch { return; }
-	if (data.status !== 200) return;
+	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); }
+	catch { return undefined; }
+	if (data.status !== 200) return undefined;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
 	description += ` ・ **Clock:** \`${control(game.pgnHeaders.TimeControl)}\``;
@@ -45,22 +45,22 @@ export async function handleChesscomGame(type, id, channel, perspective = 'w', e
 			status += ' ・ ' + game.pgnHeaders.Termination;
 	}
 	const filename = `${w}_vs_${b}.gif`.replace(/[^A-Za-z0-9_.\-]/g, '_');
-	send(channel, { file: { blob: await data.blob(), name: filename, },
+	return { file: { blob: await data.blob(), name: filename, },
 		embeds: [{
 			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
 			image: { url: 'attachment://' + filename }, footer: { text: status }
 		}]
-	});
+	};
 }
 
-export async function handlelichessorgGame(id, channel, perspective = 'w', elo = false) {
+export async function handlelichessorgGame(id, perspective = 'w', elo = false) {
 	const game = await lichess.org.game(id); let data;
-	if (game === undefined || game.variant !== 'standard') return;
+	if (game === undefined || game.variant !== 'standard') return undefined;
 	const board = new ChessBoard();
 	game.moves = game.moves.split(' ');
 	let moves = '';
 	for (let move of game.moves) {
-		if ((move = board.move(move)) == null) return;
+		if ((move = board.move(move)) == null) return undefined;
 		if (move.san === 'O-O') {
 			moves += (board.turn === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
 			continue;
@@ -75,8 +75,9 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); } catch { return; }
-	if (data.status !== 200) return;
+	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); }
+	catch { return undefined; }
+	if (data.status !== 200) return undefined;
 	const w = 'user' in game.players.white ? game.players.white.user.name : 'Anonymous';
 	const b = 'user' in game.players.black ? game.players.black.user.name : 'Anonymous';
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
@@ -87,10 +88,10 @@ export async function handlelichessorgGame(id, channel, perspective = 'w', elo =
 	description += `\n**Link:** https://lichess.org/${id}`;
 	if (perspective === 'b') description += `/black`;
 	const filename = `${w}_vs_${b}.gif`.replace(/[^A-Za-z0-9_.\-]/g, '_');
-	send(channel, { file: { blob: await data.blob(), name: filename, },
+	return { file: { blob: await data.blob(), name: filename, },
 		embeds: [{
 			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
 			image: { url: 'attachment://' + filename }
 		}]
-	});
+	};
 }

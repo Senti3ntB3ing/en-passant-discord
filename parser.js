@@ -52,17 +52,18 @@ function handleFile(event, message, attachment) {
 }
 
 export function parse(message) {
+	let game = undefined;
 	const c = CHESSCOM_REGEX.exec(message.content);
-	if (c != null && c.length >= 3) handleChesscomGame(
-		c[1], c[2], message.channelId,
+	if (c != null && c.length >= 3) game = handleChesscomGame(c[1], c[2],
 		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
 		message.channelId == Channels.guess_the_elo
 	);
 	const l = LICHESSORG_REGEX.exec(message.content);
-	if (l != null && l.length >= 2) handlelichessorgGame(l[1], message.channelId,
+	if (l != null && l.length >= 2) game = handlelichessorgGame(l[1],
 		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
 		message.channelId == Channels.guess_the_elo
 	);
+	if (game != undefined) sendMessage(bot, message.channelId, game);
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();
 		for (const event of attachments) {

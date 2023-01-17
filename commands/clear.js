@@ -3,7 +3,7 @@ import { Option, command, error, card, clear } from '../parser.js';
 
 command({
 	name: 'clear', emoji: ':wastebasket:',
-	description: '🗑 Clears messages in a text channel.',
+	description: '🧹 Clears messages in a text channel.',
 	options: [{
 		description: 'Number of messages to delete',
 		name: 'count', type: Option.Number,
@@ -14,7 +14,7 @@ command({
 		try { await clear(interaction.channelId, limit); }
 		catch {
 			return error(
-				'Clean Command', 'Internal error. Please try again later.',
+				'Clean Command', 'Internal error. Please try again later.'
 			);
 		}
 		return card(

@@ -397,7 +397,7 @@ export async function removeAction(name) {
 	await reloadActions();
 	actions = actions.filter(a => !a.commands.includes(name));
 	await Database.set('actions', actions);
-	fetch(ActionURL);
+	fetch(ActionURL + "refresh/");
 }
 
 export async function addAction(data) {
@@ -407,12 +407,12 @@ export async function addAction(data) {
 		if (data.reply.length > 0) action.reply = data.reply;
 		action.permissions = data.permissions;
 		await Database.set('actions', actions);
-		fetch(ActionURL);
+		fetch(ActionURL + "refresh/");
 		return;
 	}
 	actions.push(data);
 	await Database.set('actions', actions);
-	fetch(ActionURL);
+	fetch(ActionURL + "refresh/");
 }
 
 export async function actionPermissions(action, perm) {
@@ -422,7 +422,7 @@ export async function actionPermissions(action, perm) {
 	if (action == undefined) return;
 	action.permissions = perm;
 	await Database.set('actions', actions);
-	fetch(ActionURL);
+	fetch(ActionURL + "refresh/");
 }
 
 export async function addAliases(name, aliases) {
@@ -431,7 +431,7 @@ export async function addAliases(name, aliases) {
 	for (const action of actions) if (action.commands.includes(name)) {
 		action.commands = remove_duplicates(action.commands.concat(aliases));
 		await Database.set('actions', actions);
-		fetch(ActionURL);
+		fetch(ActionURL + "refresh/");
 		return;
 	}
 }

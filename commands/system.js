@@ -87,7 +87,7 @@ prefix({
 	execute: async command => {
 		const m = command.text.match(/(\d+)/);
 		if (m != null && m.length >= 2) {
-			if (m[2] == PID) Deno.exit(1);
+			if (m[1] === PID) Deno.exit(1);
 			else return;
 		}
 		await send(command.channelId, error(

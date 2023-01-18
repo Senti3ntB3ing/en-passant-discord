@@ -51,19 +51,23 @@ function handleFile(event, message, attachment) {
 	if (result != undefined) sendMessage(bot, message.channelId, result);
 }
 
-export function parse(message) {
+async function handleLinks(message) {
 	let game = undefined;
 	const c = CHESSCOM_REGEX.exec(message.content);
-	if (c != null && c.length >= 3) game = handleChesscomGame(c[1], c[2],
+	if (c !== null && c.length >= 3) game = await handleChesscomGame(c[1], c[2],
 		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
-		message.channelId == Channels.guess_the_elo
+		message.channelId === Channels.guess_the_elo
 	);
 	const l = LICHESSORG_REGEX.exec(message.content);
-	if (l != null && l.length >= 2) game = handlelichessorgGame(l[1],
+	if (l !== null && l.length >= 2) game = await handlelichessorgGame(l[1],
 		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
-		message.channelId == Channels.guess_the_elo
+		message.channelId === Channels.guess_the_elo
 	);
-	if (game != undefined) { console.log(game); sendMessage(bot, message.channelId, game); }
+	if (game !== undefined) sendMessage(bot, message.channelId, game);
+}
+
+export function parse(message) {
+	handleLinks(message);
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();
 		for (const event of attachments) {

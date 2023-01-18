@@ -63,7 +63,7 @@ export function parse(message) {
 		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
 		message.channelId == Channels.guess_the_elo
 	);
-	if (game != undefined) { sendMessage(bot, message.channelId, game);console.log(game); }
+	if (game != undefined) { console.log(game); sendMessage(bot, message.channelId, game); }
 	for (const attachment of message.attachments) {
 		const filename = attachment.filename.toLowerCase();
 		for (const event of attachments) {

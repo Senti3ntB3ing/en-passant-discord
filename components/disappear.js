@@ -1,8 +1,8 @@
 
 // Disappearing Messages
 
-import { Database } from "../database";
-import { remove, send } from "../parser";
+import { Database } from "../database.js";
+import { remove, send } from "../parser.js";
 
 export async function disappearing(channel, message, minutes = 10) {
 	const disappearing = (await Database.get("disappearing")) || [];

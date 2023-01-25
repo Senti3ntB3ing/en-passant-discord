@@ -1,9 +1,10 @@
 
 import { Zach, Channels, Roles, Time, Streamer } from '../config.js';
-import { createTask, send, publish, card, streamAction } from '../parser.js';
+import { createTask, send, publish, card, streamAction, error } from '../parser.js';
+import { disappearing } from '../components/disappear.js';
 import { channel } from '../components/twitch.js';
-import { Database } from '../database.js';
 
+import { Database } from '../database.js';
 const extract = commands => {
 	commands = commands.match(/!\w+/g);
 	if (commands === null) return '';
@@ -32,17 +33,10 @@ createTask({
 		// if streaming already: update state and don't do anything.
 		// else if live: update state and send notification.
 		const streaming = await channel(Streamer);
-		if (streaming === undefined) {
-			send(Channels.dev_chat, card(
+		if (streaming === undefined || streaming === null) {
+			disappearing(Channels.dev_chat, error(
 				'Twitch live detection task',
-				`💎 <@&${Roles.moderator}>s, __twitch__ live detection task is not working!`,
-				0x9047FF
-			));
-		} else if (streaming === null) {
-			send(Channels.dev_chat, card(
-				'Twitch live detection task',
-				`💎 <@&${Roles.moderator}>s, time to update tokens for __twitch__!`,
-				0x9047FF
+				`<@&${Roles.developer}>s, time to update tokens for __twitch__!`
 			));
 		} else if (await Database.get('twitch_live')) {
 			Database.set('twitch_live', streaming.is_live);
@@ -55,10 +49,9 @@ createTask({
 				));
 				publish(Channels.notifications, m.id);
 			} catch {
-				send(Channels.dev_chat, card(
+				disappearing(Channels.dev_chat, error(
 					'Twitch live detection task',
-					`💎 <@&${Roles.moderator}>s __twitch__ detection task crashed!`,
-					0x9047FF
+					`<@&${Roles.developer}>s __twitch__ detection task crashed!`
 				));
 			}
 		}

@@ -21,6 +21,7 @@ import './attachments/pgn.js';
 
 // ==== Tasks ==============================
 
+import './tasks/disappear.js';
 import './tasks/quote.js';
 import './tasks/schedule.js';
 import './tasks/youtube.js';
@@ -36,7 +37,6 @@ import './commands/diagram.js';
 import './commands/links.js';
 import './commands/poll.js';
 import './commands/rating.js';
-
 // leave last for tasks
 import './commands/system.js';
 

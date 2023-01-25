@@ -1,6 +1,6 @@
 
 import { Zach, Channels, Roles, Time, Streamer } from '../config.js';
-import { createTask, send, publish, card, streamAction, error } from '../parser.js';
+import { createTask, send, publish, streamAction, error } from '../parser.js';
 import { disappearing } from '../components/disappear.js';
 import { channel } from '../components/twitch.js';
 

@@ -1,4 +1,5 @@
 
+import { Time } from '../config.js';
 import { createTask } from "../parser.js";
 import { sweep } from "../components/disappear.js";
 

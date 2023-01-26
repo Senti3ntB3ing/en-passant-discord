@@ -21,7 +21,6 @@ import './attachments/pgn.js';
 
 // ==== Tasks ==============================
 
-import './tasks/disappear.js';
 import './tasks/quote.js';
 import './tasks/schedule.js';
 import './tasks/youtube.js';

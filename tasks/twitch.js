@@ -1,10 +1,9 @@
 
 import { Zach, Channels, Roles, Time, Streamer } from '../config.js';
 import { createTask, send, publish, streamAction, error } from '../parser.js';
-import { disappearing } from '../components/disappear.js';
 import { channel } from '../components/twitch.js';
-
 import { Database } from '../database.js';
+
 const extract = commands => {
 	commands = commands.match(/!\w+/g);
 	if (commands === null) return '';
@@ -34,7 +33,7 @@ createTask({
 		// else if live: update state and send notification.
 		const streaming = await channel(Streamer);
 		if (streaming === undefined || streaming === null) {
-			disappearing(Channels.dev_chat, error(
+			send(Channels.bot_tests, error(
 				'Twitch live detection task',
 				`<@&${Roles.developer}>s, time to update tokens for __twitch__!`
 			));
@@ -49,7 +48,7 @@ createTask({
 				));
 				publish(Channels.notifications, m.id);
 			} catch {
-				disappearing(Channels.dev_chat, error(
+				send(Channels.bot_tests, error(
 					'Twitch live detection task',
 					`<@&${Roles.developer}>s __twitch__ detection task crashed!`
 				));

@@ -18,7 +18,8 @@ const notification = (title, category, timestamp) => ({
 		url: "https://www.twitch.tv/thechessnerdlive/",
 		author: {
 			name: "thechessnerdlive",
-			url: "https://www.twitch.tv/thechessnerdlive/"
+			url: "https://www.twitch.tv/thechessnerdlive/",
+			icon_url: "https://static-cdn.jtvnw.net/jtv_user_pictures/c75cc644-e4ca-4e83-8244-4db8fc84c570-profile_image-70x70.png"
 		},
 		footer: { text: 'Category: ' + category },	timestamp,
 		description: extract(title),

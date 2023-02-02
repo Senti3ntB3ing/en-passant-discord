@@ -170,6 +170,14 @@ export const Roles = {
 		 CM: 844910027865325598n,
 		WCM: 844910399509233704n,
 	},
+	// Notifications:
+	twitch_follower: 1070673648777711657n,
+	    youtube_sub: 1070673341284892706n,
+	       redditor: 1070675589922574346n,
+	// Pronouns:
+	   he_him: 1070673804885508146n,
+	  she_her: 1070673916026167377n,
+	they_them: 1070673984359764089n,
 };
 
 export const ColorCodes = {

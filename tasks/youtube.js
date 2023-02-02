@@ -24,7 +24,7 @@ createTask({
 			try {
 				const url = composeURL(video.id.videoId);
 				const m = await send(Channels.notifications, text(
-					`:heart_on_fire: Hey <@&${Roles.youtube_sub}>s, check out <@${Zach}>'s new video!\n${url}`
+					`:heart_on_fire: Hey guys, check out <@${Zach}>'s new <@&${Roles.youtube}> video!\n${url}`
 				));
 				publish(Channels.notifications, m.id);
 				Database.set('yt_video_link', composeSHARE(video.id.videoId));

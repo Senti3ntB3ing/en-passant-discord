@@ -18,7 +18,7 @@ createTask({
 		if (id != data.data.children[0].data.id) {
 			Database.set('reddit_id', data.data.children[0].data.id);
 			send(Channels.reddit, text(
-				`Hey <@&${Roles.redditor}>s, check out our new __reddit__ post!\n` +
+				`Hey guys, check out our new <@&${Roles.reddit}> post!\n` +
 				'https://www.reddit.com' + data.data.children[0].data.permalink
 			));
 		}

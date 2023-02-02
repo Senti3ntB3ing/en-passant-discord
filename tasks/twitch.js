@@ -11,7 +11,7 @@ const extract = commands => {
 };
 
 const notification = (title, category, timestamp) => ({
-	content: `💎 Hey <@&${Roles.twitch_follower}>s, <@${Zach}> is streaming on __twitch.tv__!`,
+	content: `💎 Hey guys, <@${Zach}> is streaming on <@&${Roles.twitch}>!`,
 	embeds: [{
 		title: title.replace(/!\w+|\|/g, '').replace(/\s+/g, ' '),
 		color: 0x9047FF,

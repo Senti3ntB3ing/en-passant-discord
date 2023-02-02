@@ -171,9 +171,9 @@ export const Roles = {
 		WCM: 844910399509233704n,
 	},
 	// Notifications:
-	twitch_follower: 1070673648777711657n,
-	    youtube_sub: 1070673341284892706n,
-	       redditor: 1070675589922574346n,
+	 twitch: 1070673648777711657n,
+	youtube: 1070673341284892706n,
+	 reddit: 1070675589922574346n,
 	// Pronouns:
 	   he_him: 1070673804885508146n,
 	  she_her: 1070673916026167377n,

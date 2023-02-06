@@ -81,12 +81,11 @@ command({
 	}],
 	execute: async interaction => {
 		const link = interaction.data.options[0].value.trim();
-		let theme = undefined;
-		if (interaction.data.options.length > 1)
-			theme = interaction.data.options[1].value;
-		let perspective = "white";
-		if (interaction.data.options.length > 2)
-			perspective = interaction.data.options[2].value;
+		let theme = undefined, perspective = "white";
+		for (const option of interaction.data.options) {
+			if (option.name == "perspective") perspective = option.value;
+			else if (option.name == "theme") theme = option.value;
+		}
 		let game = undefined;
 		if (link.startsWith("1.") || link.startsWith("["))
 			game = handlePGNGame(link, perspective[0], theme);

@@ -2,7 +2,7 @@
 import { Chess } from "https://deno.land/x/beta_chess@v1.0.1/chess.js";
 
 import { FENURL, CHESSCOM_REGEX, LICHESSORG_REGEX, Channels } from "../config.js";
-import { handleChesscomGame, handlelichessorgGame } from "../attachments/game.js";
+import { handleChesscomGame, handlelichessorgGame, handlePGNGame } from "../attachments/game.js";
 import { Option, command, error } from "../parser.js";
 
 command({
@@ -75,6 +75,7 @@ command({
 		if (interaction.data.options.length > 1)
 			perspective = interaction.data.options[1].value;
 		let game = undefined;
+		if (link.startsWith("1.") || link.startsWith("[")) game = handlePGNGame(link, perspective[0]);
 		const c = CHESSCOM_REGEX.exec(link);
 		if (c != null && c.length >= 3) game = handleChesscomGame(c[1], c[2],
 			perspective[0], interaction.channelId == Channels.guess_the_elo
@@ -85,9 +86,9 @@ command({
 		);
 		if (game != undefined) return game;
 		return error(
-			"Invalid Game Link",
-			`**Link:** \`${link}\`\n` +
-			"It should be a valid __Chess.com__ or __lichess.org__ link."
+			"Invalid Game",
+			`**Data:** \`${link}\`\n` +
+			"It should be a valid PGN game, or a __Chess.com__ / __lichess.org__ link."
 		);
 	}
 });

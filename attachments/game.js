@@ -43,7 +43,7 @@ export async function handleChesscomGame(type, id, perspective = 'w', elo = fals
 			status += ' ・ ' + game.pgnHeaders.Termination;
 	}
 	const filename = `${w}_vs_${b}.gif`.replace(/[^A-Za-z0-9_.\-]/g, '_');
-	return { file: { blob: await data.blob(), name: filename, },
+	return { file: { blob: await data.blob(), name: filename },
 		embeds: [{
 			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
 			image: { url: 'attachment://' + filename }, footer: { text: status }
@@ -86,7 +86,52 @@ export async function handlelichessorgGame(id, perspective = 'w', elo = false) {
 	description += `\n**Link:** https://lichess.org/${id}`;
 	if (perspective === 'b') description += `/black`;
 	const filename = `${w}_vs_${b}.gif`.replace(/[^A-Za-z0-9_.\-]/g, '_');
-	return { file: { blob: await data.blob(), name: filename, },
+	return { file: { blob: await data.blob(), name: filename },
+		embeds: [{
+			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
+			image: { url: 'attachment://' + filename }
+		}]
+	};
+}
+
+export async function handlePGNGame(pgn, perspective = 'w') {
+	const game = new Chess();
+	if (!game.pgn(pgn)) return undefined;
+	const h = game.header();
+	const history = game.history({ verbose: true }).map(
+		m => (m.flags.includes('e') ? '$' : '') + // en passant
+		(m.san === 'O-O' ? // castling
+			(m.color === 'b' ? 'h8f8e8g8' : 'h1f1e1g1') :
+			(m.san === 'O-O-O' ?
+				(m.color === 'b' ? 'a8d8e8c8' : 'a1d1e1c1') : ( // normal
+					m.from + m.to + (m.promotion ? '=' + ( // promotion
+						m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
+					) : '')
+				)
+			)
+		)
+	).join(';');
+	perspective = perspective == 'w' ? 'white' : 'black';
+	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); }
+	catch { return undefined; }
+	if (data.status !== 200) return undefined;
+	const w = h['White'] || "Anonymous", b = h['Black'] || "Anonymous";
+	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
+	const t = h['TimeControl'];
+	if (t != undefined && t != '') description += ` ・ **Clock:** \`${control(t)}\``;
+	let status = '';
+	if (game.ended()) {
+		if (game.draw()) status = '½-½ ・ Draw';
+		else if (game.checkmate()) status = (
+			game.turn == 'w' ? '0-1 ・ ⬛️ Black Won' : '1-0 ・ ⬜️ White Won'
+		);
+	}
+	const filename = `${w}_vs_${b}`.replace(/[^A-Za-z0-9_.\-]/g, '_');
+	return {
+		file: [
+			{ blob: await data.blob(), name: filename + '.gif' },
+			{ blob: new Blob([ pgn ], { type: 'text/plain' }), name: filename + '.pgn' },
+		],
 		embeds: [{
 			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
 			image: { url: 'attachment://' + filename }

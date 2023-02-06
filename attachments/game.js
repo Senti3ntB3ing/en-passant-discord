@@ -5,7 +5,7 @@ import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess
 import { lichess } from '../components/lichessorg.js';
 import { Chess } from '../components/chesscom.js';
 
-export async function handleChesscomGame(type, id, perspective = 'w', elo = false) {
+export async function handleChesscomGame(type, id, perspective = 'w', theme, elo = false) {
 	let game = undefined, data;
 	if (type === 'live') game = await Chess.com.live(id);
 	else game = await Chess.com.daily(id);
@@ -28,7 +28,7 @@ export async function handleChesscomGame(type, id, perspective = 'w', elo = fals
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); }
+	try { data = await fetch(PGNURL + (theme || themes.random()) + '/' + perspective + '/' + moves); }
 	catch { return undefined; }
 	if (data.status !== 200) return undefined;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
@@ -51,7 +51,7 @@ export async function handleChesscomGame(type, id, perspective = 'w', elo = fals
 	};
 }
 
-export async function handlelichessorgGame(id, perspective = 'w', elo = false) {
+export async function handlelichessorgGame(id, perspective = 'w', theme, elo = false) {
 	const game = await lichess.org.game(id); let data;
 	if (game === undefined || game.variant !== 'standard') return undefined;
 	const board = new ChessBoard();
@@ -73,7 +73,7 @@ export async function handlelichessorgGame(id, perspective = 'w', elo = false) {
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); }
+	try { data = await fetch(PGNURL + (theme || themes.random()) + '/' + perspective + '/' + moves); }
 	catch { return undefined; }
 	if (data.status !== 200) return undefined;
 	const w = 'user' in game.players.white ? game.players.white.user.name : 'Anonymous';
@@ -94,7 +94,7 @@ export async function handlelichessorgGame(id, perspective = 'w', elo = false) {
 	};
 }
 
-export async function handlePGNGame(pgn, perspective = 'w') {
+export async function handlePGNGame(pgn, perspective = 'w', theme) {
 	const game = new ChessBoard();
 	if (!game.pgn(pgn)) return undefined;
 	const h = game.header();
@@ -112,7 +112,7 @@ export async function handlePGNGame(pgn, perspective = 'w') {
 		)
 	).join(';');
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + themes.random() + '/' + perspective + '/' + moves); }
+	try { data = await fetch(PGNURL + (theme || themes.random()) + '/' + perspective + '/' + moves); }
 	catch { return undefined; }
 	if (data.status !== 200) return undefined;
 	const w = h['White'] || "Anonymous", b = h['Black'] || "Anonymous";

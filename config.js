@@ -261,4 +261,5 @@ export const Welcome = [
 	'fight till the end!',
 ];
 
+// idea: marble
 export const themes = [ 'bubble', 'nature', 'iceage', 'wooden', 'grapes' ];

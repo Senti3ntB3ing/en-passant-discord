@@ -62,6 +62,16 @@ command({
 		name: "link", type: Option.String, required: true,
 		description: "The Chess.com or lichess.org game link",
 	}, {
+		name: "theme", type: Option.String, required: false,
+		description: "Board theme",
+		choices: [
+			{ name: "💗 Bubble", value: "bubble" },
+			{ name: "💚 Nature", value: "nature" },
+			{ name: "💙 IceAge", value: "iceage" },
+			{ name: "🤎 Wooden", value: "wooden" },
+			{ name: "💜 Grapes", value: "grapes" },
+		]
+	}, {
 		name: "perspective", type: Option.String, required: false,
 		description: "Perspective of the board",
 		choices: [
@@ -71,18 +81,22 @@ command({
 	}],
 	execute: async interaction => {
 		const link = interaction.data.options[0].value.trim();
-		let perspective = "white";
+		let theme = undefined;
 		if (interaction.data.options.length > 1)
-			perspective = interaction.data.options[1].value;
+			theme = interaction.data.options[1].value;
+		let perspective = "white";
+		if (interaction.data.options.length > 2)
+			perspective = interaction.data.options[2].value;
 		let game = undefined;
-		if (link.startsWith("1.") || link.startsWith("[")) game = handlePGNGame(link, perspective[0]);
+		if (link.startsWith("1.") || link.startsWith("["))
+			game = handlePGNGame(link, perspective[0], theme);
 		const c = CHESSCOM_REGEX.exec(link);
 		if (c != null && c.length >= 3) game = handleChesscomGame(c[1], c[2],
-			perspective[0], interaction.channelId == Channels.guess_the_elo
+			perspective[0], theme, interaction.channelId == Channels.guess_the_elo
 		);
 		const l = LICHESSORG_REGEX.exec(link);
 		if (l != null && l.length >= 2) game = handlelichessorgGame(l[1],
-			perspective[0], interaction.channelId == Channels.guess_the_elo
+			perspective[0], theme, interaction.channelId == Channels.guess_the_elo
 		);
 		if (game != undefined) return game;
 		return error(

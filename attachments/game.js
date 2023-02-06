@@ -95,7 +95,7 @@ export async function handlelichessorgGame(id, perspective = 'w', elo = false) {
 }
 
 export async function handlePGNGame(pgn, perspective = 'w') {
-	const game = new Chess();
+	const game = new ChessBoard();
 	if (!game.pgn(pgn)) return undefined;
 	const h = game.header();
 	const history = game.history({ verbose: true }).map(

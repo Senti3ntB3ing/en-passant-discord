@@ -2,8 +2,8 @@
 import { Prefix, ActionURL } from '../config.js';
 import { shorten } from '../components/shortener.js';
 import {
-	Option, command, error, card, success, addAction, findAction, removeAction,
-	addAliases, actionPermissions
+	Option, command, error, card, success, addAction,
+	findAction, removeAction, addAliases, actionPermissions
 } from '../parser.js';
 
 const PRFXRGX = new RegExp(Prefix, 'g');
@@ -68,14 +68,6 @@ command({
 			required: true, choices: PERM,
 		}]
 	}, {
-		name: 'shorten', type: Option.SubCommand,
-		description: '📌 Shorten links for command usage.',
-		options: [{
-			name: 'link', type: Option.String,
-			description: 'The link to shorten',
-			required: true
-		}]
-	}, {
 		name: 'tools', type: Option.SubCommand,
 		description: '🧰 List all the available tools.',
 		options: []
@@ -84,20 +76,22 @@ command({
 		const options = interaction.data.options[0].options;
 		let commands, main, aliases;
 		switch (interaction.data.options[0].name) {
-			case 'action':
+			case 'action': {
 				commands = options[0].value.split(/\s+/g)
 					.map(c => c.replace(PRFXRGX, '').toLowerCase());
 				if (commands.length == 0)
 					return error('Twitch Actions', 'Invalid action name!');
+				const text = options[1].value.replace(/(\s*)[:→](\s+)/g, ' -> ')
+					.replace(/(^|\s)(https?:\/\/.+?)(\s|$)/g, (m, s, _, e) => s + shorten(m) + e);
 				await addAction({
-					commands, reply: options[1].value.replace(/(\s*)[:→](\s+)/g, ' -> '),
+					commands, reply: text,
 					permissions: options.length > 2 ? options[2].value : 'all'
 				});
 				return success(
 					'Twitch Actions',
-					'Action `' + Prefix + commands[0] + '` added with text:\n\n> ' + 
-					options[1].value.replace(/->/g, '→')
+					'Action `' + Prefix + commands[0] + '` added with text:\n\n> ' + text
 				);
+			}
 			case 'remove':
 				main = options[0].value.replace(PRFXRGX, '').toLowerCase();
 				if (!findAction(main)) return error(
@@ -128,12 +122,6 @@ command({
 					'Twitch Permissions',
 					'Permissions for `' + Prefix + main + '` set to ' +
 					emoji(options[1].value) + ' `' + options[1].value + '`.'
-				);
-			case 'shorten':
-				return card('Twitch Shorten',
-					':pushpin: **Remember to test your links!**\n' +
-					':link: **Original:** ' + options[0].value + '\n' +
-					':scissors: **Link:** `' + shorten(options[0].value) + '`'
 				);
 			case 'tools': return card('Twitch Tools',
 				`:bookmark: ${ActionURL}mod/\n` +

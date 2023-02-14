@@ -82,7 +82,7 @@ command({
 				if (commands.length == 0)
 					return error('Twitch Actions', 'Invalid action name!');
 				const text = options[1].value.replace(/(\s*)[:→](\s+)/g, ' -> ')
-					.replace(/(^|\s)(https?:\/\/.+?)(\s|$)/g, (m, s, _, e) => s + shorten(m) + e);
+					.replace(/(^|\s)(https?:\/\/.+?)(\s|$)/g, (m, s, _, e) => s + (shorten(m) ?? m) + e);
 				await addAction({
 					commands, reply: text,
 					permissions: options.length > 2 ? options[2].value : 'all'

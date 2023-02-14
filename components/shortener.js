@@ -19,13 +19,13 @@ function compose(query) {
 }
 
 function components(url) {
-	const match = /^(?:https?:\/\/)?(?:www\.)?([^\/?#\n]+)(\/[^?#\n]*)?\??(.*)/i.exec(url);
+	const match = /(https?:\/\/?(?:www\.)?)([^\/?#\n]+)(\/[^?#\n]*)?\??(.*)/i.exec(url);
 	if (match === null) return [ null, null, null, null  ];
 	return match;
 }
 
 export function shorten(url) {
-	let [ _, site, path, queries ]  = components(url);
+	let [ _match, _, site, path, queries ] = components(url);
 	if (queries !== null && queries !== undefined) queries = query(queries);
 	else queries = { };
 	if (site === null) return null;

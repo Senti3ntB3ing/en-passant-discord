@@ -2,7 +2,7 @@
 import { Prefix, RevivalURL } from '../config.js';
 import {
 	command, send, prefix, card, error, info, tasks,
-	guild, Option, discriminator, snow
+	guild, Option, snow
 } from '../parser.js';
 import { Database } from '../database.js';
 import { PID } from '../main.js';
@@ -32,7 +32,7 @@ command({
 command({
 	name: 'punish', emoji: ':no_entry:', options: [{
 		description: 'Member to punish',
-		name: 'member', type: Option.User, required: true
+		name: 'member', type: Option.String, required: true
 	}, {
 		description: 'Type of punishment',
 		name: 'type', type: Option.String, required: true,
@@ -54,7 +54,7 @@ command({
 	}],
 	description: '⛔ Log the punishment of a member.',
 	execute: async interaction => {
-		const tag = await discriminator(interaction.data.options[0].value);
+		const tag = interaction.data.options[0].value;
 		const punishment = interaction.data.options[1].value;
 		const reason = interaction.data.options[2].value;
 		const audit = (await Database.get('audit')) || [];

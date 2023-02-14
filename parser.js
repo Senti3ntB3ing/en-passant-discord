@@ -348,12 +348,16 @@ prefix({
 			'Application Commands',
 			'Type `' +  Prefix + 'register <name>` to register the command.'
 		);
+		let found = false;
 		try {
 			// register new commands:
 			for (const command of appCommands)
-				if (message.arguments.includes(command.name))
+				if (message.arguments.includes(command.name)) {
 					await createGuildApplicationCommand(bot, command, message.guildId);
+					found = true;
+				}
 		} catch { return error('Application Commands', 'Registration error!'); }
+		if (!found) return error('Application Commands', `Cannot find command \`${message.arguments[0]}\`!`);
 		// send success message:
 		return success('Application Commands', 'Registration completed!');
 	}

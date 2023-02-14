@@ -88,13 +88,13 @@ command({
 		}
 		let game = undefined;
 		if (link.startsWith("1.") || link.startsWith("["))
-			game = handlePGNGame(link, perspective[0], theme);
+			game = await handlePGNGame(link, perspective[0], theme);
 		const c = CHESSCOM_REGEX.exec(link);
-		if (c != null && c.length >= 3) game = handleChesscomGame(c[1], c[2],
+		if (c != null && c.length >= 3) game = await handleChesscomGame(c[1], c[2],
 			perspective[0], theme, interaction.channelId == Channels.guess_the_elo
 		);
 		const l = LICHESSORG_REGEX.exec(link);
-		if (l != null && l.length >= 2) game = handlelichessorgGame(l[1],
+		if (l != null && l.length >= 2) game = await handlelichessorgGame(l[1],
 			perspective[0], theme, interaction.channelId == Channels.guess_the_elo
 		);
 		if (game != undefined) return game;

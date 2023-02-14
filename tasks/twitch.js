@@ -11,9 +11,12 @@ const extract = commands => {
 };
 
 const notification = (title, category, timestamp) => ({
-	content: `💎 Hey guys, <@${Zach}> is streaming on <@&${Roles.twitch}>!`,
+	content: `💎 Hey guys, <@${Zach}> is streaming ` + (
+		title.toLowerCase().includes('tourn') ?
+		`a <@&${Roles.tournament}> ` : ''
+	) + `on <@&${Roles.twitch}>!`,
 	embeds: [{
-		title: title.replace(/!\w+|\|/g, '').replace(/\s+/g, ' '),
+		title: title.replace(/\|/g, '').replace(/\s+/g, ' '),
 		color: 0x9047FF,
 		url: "https://www.twitch.tv/thechessnerdlive/",
 		author: {

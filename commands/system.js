@@ -94,7 +94,7 @@ prefix({
 			'Shutdown', 'The system is now offline.\n' +
 			'Emergency revival: ' + RevivalURL
 		));
-		Deno.exit(1);
+		setTimeout(() => Deno.exit(1), 1000);
 	}
 });
 

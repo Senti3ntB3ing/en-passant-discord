@@ -59,8 +59,8 @@ command({
 	name: "pgn", emoji: ":page_with_curl:",
 	description: "📋 Displays an animated game preview.",
 	options: [{
-		name: "link", type: Option.String, required: true,
-		description: "The Chess.com or lichess.org game link",
+		name: "game", type: Option.String, required: true,
+		description: "The PGN game or a Chess.com / lichess.org link",
 	}, {
 		name: "theme", type: Option.String, required: false,
 		description: "Board theme",
@@ -80,11 +80,11 @@ command({
 		]
 	}],
 	execute: async interaction => {
-		const link = interaction.data.options[0].value.trim();
-		let theme = undefined, perspective = "white";
+		let link, theme = undefined, perspective = "white";
 		for (const option of interaction.data.options) {
-			if (option.name == "perspective") perspective = option.value;
-			else if (option.name == "theme") theme = option.value;
+			if (option.name === "game") link = option.value.trim();
+			else if (option.name === "perspective") perspective = option.value;
+			else if (option.name === "theme") theme = option.value;
 		}
 		let game = undefined;
 		if (link.startsWith("1.") || link.startsWith("["))

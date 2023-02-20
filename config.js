@@ -1,5 +1,6 @@
 
 export const GuildID = 839594883790012436n;
+export const BotID = 847102766018199614n;
 
 export const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 export const ordinal = n => {

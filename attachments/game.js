@@ -98,7 +98,7 @@ export async function handlePGNGame(pgn, perspective = 'w', theme) {
 	const game = new ChessBoard();
 	if (!game.pgn(pgn)) return undefined;
 	const h = game.header();
-	const history = game.history({ verbose: true }).map(
+	const moves = game.history({ verbose: true }).map(
 		m => (m.flags.includes('e') ? '$' : '') + // en passant
 		(m.san === 'O-O' ? // castling
 			(m.color === 'b' ? 'h8f8e8g8' : 'h1f1e1g1') :
@@ -112,6 +112,7 @@ export async function handlePGNGame(pgn, perspective = 'w', theme) {
 		)
 	).join(';');
 	perspective = perspective == 'w' ? 'white' : 'black';
+	let data;
 	try { data = await fetch(PGNURL + (theme || themes.random()) + '/' + perspective + '/' + moves); }
 	catch { return undefined; }
 	if (data.status !== 200) return undefined;
@@ -134,7 +135,7 @@ export async function handlePGNGame(pgn, perspective = 'w', theme) {
 		],
 		embeds: [{
 			type: 'rich', title: 'Game Preview', description, color: 0xFFFFFF,
-			image: { url: 'attachment://' + filename }
+			image: { url: 'attachment://' + filename + '.gif' }, footer: { text: status }
 		}]
 	};
 }

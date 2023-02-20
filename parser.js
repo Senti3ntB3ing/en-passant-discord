@@ -12,8 +12,8 @@ import { closest } from './components/levenshtein.js';
 import { handleChesscomGame, handlelichessorgGame } from './attachments/game.js';
 
 import {
-	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL, Channels,
-	CHESSCOM_REGEX, LICHESSORG_REGEX
+	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL,
+	Channels, BotID, CHESSCOM_REGEX, LICHESSORG_REGEX
 } from './config.js';
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
@@ -41,6 +41,7 @@ function handleText(command, message, content, args) {
 }
 
 function handleFile(event, message, attachment) {
+	if (message.member.id === BotID) return;
 	if (event.execute.constructor.name == 'AsyncFunction') {
 		event.execute(message, attachment).then(result => {
 			if (result != undefined) sendMessage(bot, message.channelId, result);

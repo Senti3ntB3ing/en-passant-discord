@@ -32,7 +32,7 @@ attachment({
 		).join(';');
 		let data;
 		try { data = await fetch(PGNURL + themes.random() + '/white/' + history); } catch { return; }
-		console.log(data)
+
 		if (data.status !== 200) return;
 		const w = h['White'], b = h['Black'];
 		let description = '';

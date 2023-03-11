@@ -56,12 +56,12 @@ async function handleLinks(message) {
 	let game = undefined;
 	const c = CHESSCOM_REGEX.exec(message.content);
 	if (c !== null && c.length >= 3) game = await handleChesscomGame(c[1], c[2],
-		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
+		(message.content.toLowerCase().includes('black') ? 'b' : 'w'), undefined,
 		message.channelId === Channels.guess_the_elo
 	);
 	const l = LICHESSORG_REGEX.exec(message.content);
 	if (l !== null && l.length >= 2) game = await handlelichessorgGame(l[1],
-		(message.content.toLowerCase().includes('black') ? 'b' : 'w'),
+		(message.content.toLowerCase().includes('black') ? 'b' : 'w'), undefined,
 		message.channelId === Channels.guess_the_elo
 	);
 	if (game !== undefined) sendMessage(bot, message.channelId, game);

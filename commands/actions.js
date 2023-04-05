@@ -127,8 +127,8 @@ command({
 				`:bookmark: ${ActionURL}mod/\n` +
 				`:map: ${ActionURL}map/\n` + 
 				`:scroll: ${ActionURL}queue/\n` +
-				`:rotating_light: ${ActionURL}audit/\n` +
-				`:clock: ${ActionURL}time/`
+				`:clock: ${ActionURL}time/`,
+				undefined, true
 			);
 		}
 	}

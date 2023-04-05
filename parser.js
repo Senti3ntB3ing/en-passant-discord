@@ -164,12 +164,14 @@ export function executeTasks() {
 
 export const text = message => ({ content: message });
 
-export const card = (title, message, color) => ({
+export const card = (title, message, color, silent = false) => ({
 	embeds: [{
 		title: title || Name,
 		color: color || ColorCodes.normal,
 		description: message || ''
-	}]
+	}],
+	// 64 = ephemeral message (only visible to the user)
+	flags: silent ? 64 : 0
 });
 
 export const cards = elements => ({

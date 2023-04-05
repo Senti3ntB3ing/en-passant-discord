@@ -198,7 +198,9 @@ export const error = (title, message) => ({
 		title: title || Name,
 		color: ColorCodes.error,
 		description: ':no_entry_sign: ' + (message || 'Error!')
-	}]
+	}],
+	// 64 = ephemeral message (only visible to the user)
+	flags: 64
 });
 
 export const info = (title, message) => ({
@@ -206,7 +208,9 @@ export const info = (title, message) => ({
 		title: title || Name,
 		color: ColorCodes.info,
 		description: ':information_source: ' + (message || 'Information.')
-	}]
+	}],
+	// 64 = ephemeral message (only visible to the user)
+	flags: 64
 });
 
 export const success = (title, message) => ({
@@ -214,7 +218,9 @@ export const success = (title, message) => ({
 		title: title || Name,
 		color: ColorCodes.success,
 		description: ':white_check_mark: ' + (message || 'Success!')
-	}]
+	}],
+	// 64 = ephemeral message (only visible to the user)
+	flags: 64
 });
 
 export const warn = (title, message) => ({
@@ -222,7 +228,9 @@ export const warn = (title, message) => ({
 		title: title || Name,
 		color: ColorCodes.warn,
 		description: ':children_crossing: ' + (message || 'Warning!')
-	}]
+	}],
+	// 64 = ephemeral message (only visible to the user)
+	flags: 64
 });
 
 // ==== Log ====================================================================

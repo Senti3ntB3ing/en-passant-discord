@@ -78,7 +78,9 @@ command({
 					value: links[name].url,
 					inline: false
 				}))
-			}]
+			}],
+			// 64 = ephemeral message (only visible to the user)
+			flags: 64
 		};
 	}
 });

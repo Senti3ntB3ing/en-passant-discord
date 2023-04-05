@@ -37,7 +37,10 @@ prefix({ // TODO: make it a command?
 			return info('Task Command', 'Type `' + Prefix + 'task <name>` to execute a task.');
 		for (const name of message.arguments) {
 			tasks[name].execute(message.bot);
-			return info('Task Command', `${tasks[name].emoji} Task \`${name}\` executed successfully.`);
+			return card(
+				'Task Command',
+				`${tasks[name].emoji} Task \`${name}\` executed successfully.`,
+			);
 		}
 		return error('Task Command', `Task \`${message.arguments[0]}\` not found.`);
 	}

@@ -20,7 +20,7 @@ command({
 		return card(
 			'Clear Command',
 			`:wastebasket: Successfully cleared \`${limit}\` messages.`,
-			true
+			undefined, true
 		);
 	}
 });

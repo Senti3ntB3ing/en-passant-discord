@@ -58,7 +58,7 @@ export function setRandomAction() {
 
 async function appendWelcome(id) {
 	const welcome = (await Database.get("welcome")) || [];
-	welcome.push(id.toString());
+	welcome.push({ id: id.toString(), time: Date.now() });
 	Database.set("welcome", welcome);
 }
 

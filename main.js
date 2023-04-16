@@ -27,6 +27,7 @@ import './tasks/youtube.js';
 import './tasks/twitch.js';
 import './tasks/reddit.js';
 import './tasks/sweep.js';
+import './tasks/welcome.js';
 
 // ==== Commands ===========================
 
@@ -55,6 +56,12 @@ export function setRandomAction() {
 	});
 }
 
+async function appendWelcome(id) {
+	const welcome = (await Database.get("welcome")) || [];
+	welcome.push(id.toString());
+	Database.set("welcome", welcome);
+}
+
 const baseBot = createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),
@@ -69,7 +76,10 @@ const baseBot = createBot({
 		messageCreate(_bot, message) { parse(message); },
 		guildMemberAdd(bot, member, _) {
 			const message = Welcome[Math.floor(Math.random() * Welcome.length)];
-			sendMessage(bot, Channels.general, text(`**Welcome** <@${member.id}>, ${message}`));
+			sendMessage(
+				bot, Channels.general,
+				text(`**Welcome** <@${member.id}>, ${message}`)
+			).then(m => appendWelcome(m.id));
 		},
 		interactionCreate(_bot, interaction) { dispatch(interaction); }
 	}

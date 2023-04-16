@@ -31,7 +31,7 @@ const highlight = p => (p == 'FIDE' ? '**FIDE**' : `__${p}__`);
 
 const process = (platform, mention) => warn(
 	'Instructions for ' + names[platform],
-	`In your settings (${ platform[0] == 'c' ?
+	`In your settings (${ platform[0] === 'c' ?
 		'https://www.chess.com/settings' : 'https://lichess.org/account/profile'
 	}), write your username (\`${mention}\`) in the \`Location\` field and retry.`
 	+ `\n*If you experience issues*, ping a <@&${Roles.moderator}>.`
@@ -39,7 +39,7 @@ const process = (platform, mention) => warn(
 
 async function fideCard(author, id) {
 	const user = await FIDE(id);
-	if (user == undefined || user == null) return undefined;
+	if (user === undefined || user === null) return undefined;
 	user.name = user.name.replace(/^\s*(.*?),\s*(.*?)\s*$/g, '$2 $1');
 	return {
 		title: 'Ratings - FIDE',
@@ -91,37 +91,35 @@ command({
 		const platform = interaction.data.options[0].value;
 		const name = interaction.data.options[1].value;
 		const tag = interaction.data.options[2].value;
-		let member = await Database.get(tag);
-		if (member == null) member = { accounts: [ ] };
+		const member = (await Database.get(`accounts/${tag}`)) || [];
 		switch (platform.toLowerCase()) {
 			case 'fide': {
-				if (member.accounts.find(a => a.platform.toLowerCase() == 'fide') != undefined)
+				if (member.find(a => a.platform.toLowerCase() === 'fide') !== undefined)
 					return warn(title, `<@${tag}> already linked a **FIDE** account!`);
-				member.accounts.push({ platform: 'fide', username: name });
+				member.push({ platform: 'fide', username: name });
 				const user = await FIDE(name);
-				if (user == undefined || user == null)
+				if (user === undefined || user === null)
 					return warn(title, `Invalid **FIDE** account for <@${tag}>!`);
-				if (user.title != undefined) {
+				if (user.title !== undefined) {
 					const code = TitleCode[user.title];
-					if (code != undefined)
-						await bless(guild, tag, Roles.titles[code]);
+					if (code !== undefined) await bless(guild, tag, Roles.titles[code]);
 				}
 				await bless(guild, tag, Roles.platforms['FIDE']);
 			} break;
 			case 'lichess.org':
-				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
+				if (member.find(a => a.platform === 'lichess.org') != undefined)
 					return warn(title, `<@${tag}> already linked a __lichess.org__ account!`);
-				member.accounts.push({ platform: 'lichess.org', username: name });
+				member.push({ platform: 'lichess.org', username: name });
 				await bless(guild, tag, Roles.platforms['lichess.org']);
 			break;
 			case 'chess.com':
-				if (member.accounts.find(a => a.platform == 'chess.com') != undefined)
+				if (member.find(a => a.platform === 'chess.com') != undefined)
 					return warn(title, `<@${tag}> already linked a __chess.com__ account!`);
-				member.accounts.push({ platform: 'chess.com', username: name });
+				member.push({ platform: 'chess.com', username: name });
 				await bless(guild, tag, Roles.platforms['chess.com']);
 			break;
 		}
-		await Database.set(tag, member);
+		await Database.set(`accounts/${tag}`, member);
 		return success(title, `<@${tag}> successfully verified!`);
 	}
 });
@@ -138,41 +136,32 @@ command({
 	execute: async interaction => {
 		const title = 'Ratings';
 		const author = interaction.member.id;
-		const member = await Database.get(author);
-		if (member == null || member.accounts == undefined ||
-			Object.keys(member.accounts).length == 0)
-			return not_linked_info(title);
-		let data = member.accounts;
-		if (data == undefined || data.length == 0)
-			return not_linked_info(title);
-		if (interaction.data.options != undefined &&
+		let member = (await Database.get(`accounts/${author}`)) || [];
+		if (member.length === 0) return not_linked_info(title);
+		if (interaction.data.options !== undefined &&
 			interaction.data.options.length > 0) {
 			const platform = interaction.data.options[0].value.toLowerCase();
-			data = data.filter(a => a.platform.toLowerCase() == platform);
+			member = member.filter(a => a.platform.toLowerCase() === platform);
 		}
 		const list = [];
-		data = data.sort(platform_sort);
-		for (let { platform, username } of data) {
+		member = member.sort(platform_sort);
+		for (let { platform, username } of member) {
 			let ratings = [];
 			platform = platform.toLowerCase();
 			switch (platform) {
 				case 'fide': {
 					const card = await fideCard(author, username);
-					if (card == undefined) continue;
+					if (card === undefined) continue;
 					list.push(card);
 					continue;
 				}
-				case 'lichess.org':
-					ratings = await lichess.org.ratings(username);
-				break;
-				case 'chess.com':
-					ratings = await Chess.com.ratings(username);
-				break;
+				case 'lichess.org': ratings = await lichess.org.ratings(username); break;
+				case 'chess.com': ratings = await Chess.com.ratings(username); break;
 			}
-			if (ratings == null || ratings.length == 0) continue;
+			if (ratings === null || ratings.length === 0) continue;
 			list.push(ratingCard(author, username, platform, ratings));
 		}
-		if (list.length != 0) return cards(list);
+		if (list.length !== 0) return cards(list);
 		return not_linked_info(title);
 	}
 });
@@ -189,35 +178,28 @@ command({
 	execute: async interaction => {
 		const title = 'Information';
 		const user = interaction.data.options[0].value;
-		const member = await Database.get(user);
 		const e = info(title, `The user <@${user}> has no linked accounts.`);
-		if (member == null || member.accounts == undefined ||
-			Object.keys(member.accounts).length == 0) return e;
-		let data = member.accounts;
-		if (data == undefined || data.length == 0) return e;
+		let member = (await Database.get(`accounts/${user}`)) || [];
+		if (member.length === 0) return e;
 		const list = [];
-		data = data.sort(platform_sort);
-		for (let { platform, username } of data) {
+		member = member.sort(platform_sort);
+		for (let { platform, username } of member) {
 			let ratings = [];
 			platform = platform.toLowerCase();
 			switch (platform) {
 				case 'fide': {
 					const card = await fideCard(user, username);
-					if (card == undefined) continue;
+					if (card === undefined) continue;
 					list.push(card);
 					continue;
 				}
-				case 'lichess.org':
-					ratings = await lichess.org.ratings(username);
-				break;
-				case 'chess.com':
-					ratings = await Chess.com.ratings(username);
-				break;
+				case 'lichess.org': ratings = await lichess.org.ratings(username); break;
+				case 'chess.com': ratings = await Chess.com.ratings(username); break;
 			}
-			if (ratings == null || ratings.length == 0) continue;
+			if (ratings === null || ratings.length === 0) continue;
 			list.push(ratingCard(user, username, platform, ratings));
 		}
-		if (list.length != 0) return cards(list);
+		if (list.length !== 0) return cards(list);
 		return e;
 	}
 });
@@ -246,33 +228,32 @@ command({
 		const name = interaction.data.options[1].value;
 		const tag = interaction.member.id;
 		const discord = await discriminator(tag);
-		let member = await Database.get(tag);
-		if (member == null) member = { accounts: [ ] };
+		const member = (await Database.get(`accounts/${tag}`)) || [];
 		let verified = false;
 		switch (platform.toLowerCase()) {
 			case 'lichess.org':
-				if (member.accounts.find(a => a.platform == 'lichess.org') != undefined)
+				if (member.find(a => a.platform === 'lichess.org') != undefined)
 					return warn(title, `You already linked a __lichess.org__ account!`);
 				verified = await verifyLichessorgUser(name, discord);
-				if (verified == undefined)
+				if (verified === undefined)
 					return warn(title, 'No __lichess.org__ user found with the username `' + name + '`!');
 				if (!verified) return process('lichess.org', discord);
-				member.accounts.push({ platform: 'lichess.org', username: name });
+				member.push({ platform: 'lichess.org', username: name });
 				await bless(guild, tag, Roles.platforms['lichess.org']);
 			break;
 			case 'chess.com':
-				if (member.accounts.find(a => a.platform == 'chess.com') != undefined)
+				if (member.find(a => a.platform === 'chess.com') !== undefined)
 					return warn(title, `You already linked a __chess.com__ account!`);
 				verified = await verifyChesscomUser(name, discord);
-				if (verified == undefined)
+				if (verified === undefined)
 					return warn(title, 'No __chess.com__ user found with the username `' + name + '`!');
 				if (!verified) return process('chess.com', discord);
-				member.accounts.push({ platform: 'chess.com', username: name });
+				member.push({ platform: 'chess.com', username: name });
 				await bless(guild, tag, Roles.platforms['chess.com']);
 			break;
 			default: return undefined;
 		}
-		await Database.set(tag, member);
+		await Database.set(`accounts/${tag}`, member);
 		return success(title, 'Successfully verified! Type `/ratings` to see your stats.');
 	}
 });
@@ -294,27 +275,20 @@ command({
 		const title = 'Disconnection';
 		const guild = interaction.guildId;
 		const tag = interaction.member.id;
-		const member = await Database.get(tag);
-		if (member == null)
-			return info(title, 'You currently have `0` linked accounts.');
-		if (interaction.data.options == undefined ||
-			interaction.data.options.length == 0) {
-			member.accounts = [];
+		let member = (await Database.get(`accounts/${tag}`)) || [];
+		if (member.length === 0) return info(title, 'You currently have `0` linked accounts.');
+		if (interaction.data.options === undefined ||
+			interaction.data.options.length === 0) {
+			member = [];
 		} else {
 			const platform = interaction.data.options[0].value.toLowerCase();
 			switch (platform) {
-				case 'lichess.org':
-					await curse(guild, tag, Roles.platforms['lichess.org']);
-				break;
-				case 'chess.com':
-					await curse(guild, tag, Roles.platforms['chess.com']);
-				break;
+				case 'lichess.org': await curse(guild, tag, Roles.platforms['lichess.org']); break;
+				case 'chess.com': await curse(guild, tag, Roles.platforms['chess.com']); break;
 			}
-			member.accounts = member.accounts.filter(
-				a => a.platform.toLowerCase() != platform
-			);
+			member = member.filter(a => a.platform.toLowerCase() !== platform);
 		}
-		await Database.set(tag, member);
+		await Database.set(`accounts/${tag}`, member);
 		return info(title, 'You have successfully unlinked your profile(s).');
 	}
 });
@@ -333,13 +307,11 @@ command({
 	}],
 	execute: async interaction => {
 		const title = 'Challenge';
-		const member = await Database.get(interaction.member.id);
-		if (member == null || member.accounts == undefined ||
-			Object.keys(member.accounts).length == 0)
-			return not_linked_info(title);
+		const member = (await Database.get(`accounts/${interaction.member.id}`)) || [];
+		if (member.length === 0) return not_linked_info(title);
 		const platform = interaction.data.options[0].value.toLowerCase();
-		const data = member.accounts.find(a => a.platform == platform);
-		if (data == undefined) return not_linked_info(title);
+		const data = member.find(a => a.platform == platform);
+		if (data === undefined) return not_linked_info(title);
 		let url = '';
 		switch (platform) {
 			case 'chess.com':
@@ -357,21 +329,21 @@ command({
 
 async function verifyChesscomUser(name, discord) {
 	const chess_com = await Chess.com.profile(name);
-	if (chess_com == null) return undefined;
+	if (chess_com === null) return undefined;
 	discord = discord.replace(/\s+/g, '');
 	return !(
-		chess_com.location == undefined ||
+		chess_com.location === undefined ||
 		chess_com.location.replace(/\s+/g, '') != discord
 	);
 }
 
 async function verifyLichessorgUser(name, discord) {
 	const lichess_org = await lichess.org.profile(name);
-	if (lichess_org == null) return undefined;
+	if (lichess_org === null) return undefined;
 	discord = discord.replace(/\s+/g, '');
 	return !(
-		lichess_org.profile == undefined ||
-		lichess_org.profile.location == undefined ||
+		lichess_org.profile === undefined ||
+		lichess_org.profile.location === undefined ||
 		lichess_org.profile.location.replace(/\s+/g, '') != discord
 	);
 }

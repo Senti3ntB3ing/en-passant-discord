@@ -1,7 +1,7 @@
 
 import {
 	createBot, startBot, editBotStatus, sendMessage, GatewayIntents
-} from 'https://deno.land/x/discordeno@17.1.0/mod.ts';
+} from "https://deno.land/x/discordeno@17.1.0/mod.ts";
 import { enableCachePlugin, enableCacheSweepers }
 from "https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts";
 
@@ -9,36 +9,37 @@ import { serve } from "https://deno.land/std@0.145.0/http/server.ts";
 
 import {
 	parse, text, fetchLog, log, executeTasks, dispatch, reloadActions
-} from './parser.js';
-import { Channels, Welcome, Actions, Time } from './config.js';
+} from "./parser.js";
+import { Channels, Welcome, Actions, Time } from "./config.js";
+import { Database } from "./database.js";
 
 export const PID = Math.floor(Math.random() * 10000);
-log('status', 'PID ' + PID);
+log("status", "PID " + PID);
 
 // ==== Attachments ========================
 
-import './attachments/pgn.js';
+import "./attachments/pgn.js";
 
 // ==== Tasks ==============================
 
-import './tasks/quote.js';
-import './tasks/schedule.js';
-import './tasks/youtube.js';
-import './tasks/twitch.js';
-import './tasks/reddit.js';
-import './tasks/sweep.js';
-import './tasks/welcome.js';
+import "./tasks/quote.js";
+import "./tasks/schedule.js";
+import "./tasks/youtube.js";
+import "./tasks/twitch.js";
+import "./tasks/reddit.js";
+import "./tasks/sweep.js";
+import "./tasks/welcome.js";
 
 // ==== Commands ===========================
 
-import './commands/actions.js';
-import './commands/clear.js';
-import './commands/diagram.js';
-import './commands/links.js';
-import './commands/poll.js';
-import './commands/rating.js';
+import "./commands/actions.js";
+import "./commands/clear.js";
+import "./commands/diagram.js";
+import "./commands/links.js";
+import "./commands/poll.js";
+import "./commands/rating.js";
 // leave last for tasks
-import './commands/system.js';
+import "./commands/system.js";
 
 // =========================================
 
@@ -52,13 +53,13 @@ export function setRandomAction() {
 		}],
 		since: Date.now(),
 		afk: false,
-		status: 'online'
+		status: "online"
 	});
 }
 
 const baseBot = createBot({
-	botId: Deno.env.get('ID'),
-	token: Deno.env.get('TOKEN'),
+	botId: Deno.env.get("ID"),
+	token: Deno.env.get("TOKEN"),
 	intents: (
 		GatewayIntents.Guilds            |
 		GatewayIntents.GuildMembers      |
@@ -81,7 +82,7 @@ const baseBot = createBot({
 
 export const bot = enableCachePlugin(baseBot);
 enableCacheSweepers(bot);
-log('status', 'en-passant ready');
+log("status", "en-passant ready");
 setRandomAction();
 
 // =========================================
@@ -89,11 +90,11 @@ setRandomAction();
 // web server for constant uptime:
 serve(_request => {
 	return new Response(fetchLog(), {
-		headers: { 'content-type': 'text/plain' },
+		headers: { "Content-Type": "text/plain" },
 		status: 200
 	});
 });
-log('status', 'web server ready');
+log("status", "web server ready");
 
 // tasks interval:
 setInterval(executeTasks, Time.minutes(5));

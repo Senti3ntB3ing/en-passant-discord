@@ -273,7 +273,7 @@ export const clear = async (channel, limit) => {
 	try {
 		if (m.length == 1) return await deleteMessage(bot, channel, m[0].id);
 		else return await deleteMessages(bot, channel, m.map(e => e.id));
-	} catch { }
+	} catch { log('error', 'failed to clear messages'); }
 };
 export const bless = async (guild, user, role) => await addRole(bot, guild, user, role);
 export const curse = async (guild, user, role) => await removeRole(bot, guild, user, role);
@@ -320,9 +320,9 @@ export async function dispatch(interaction) {
 	if (handler.constructor.name == 'AsyncFunction') {
 		response = await handler(interaction)
 	} else response = handler(interaction);
-	if (response == undefined) return;
+	if (response === undefined) return;
 	let reactions = [];
-	if (response.reactions != undefined) {
+	if (response.reactions !== undefined) {
 		reactions = response.reactions;
 		delete response.reactions;
 	}
@@ -335,7 +335,8 @@ export async function dispatch(interaction) {
 	if (reactions.length > 0) {
 		const m = await getOriginalInteractionResponse(bot, interaction.token);
 		for (const r of reactions) {
-			try { await react(interaction.channelId, m.id, r); } catch { }
+			try { await react(interaction.channelId, m.id, r); }
+			catch { log('error', 'failed to react to message'); }
 		}
 	}
 }
@@ -355,7 +356,7 @@ prefix({
 	name: 'register', emoji: ':pencil:',
 	description: 'Registers application commands.',
 	execute: async message => {
-		if (message.arguments.length == 0) return info(
+		if (message.arguments.length === 0) return info(
 			'Application Commands',
 			'Type `' +  Prefix + 'register <name>` to register the command.'
 		);
@@ -378,7 +379,7 @@ prefix({
 	name: 'forget', emoji: ':pencil:',
 	description: 'Deletes application commands.',
 	execute: async message => {
-		if (message.arguments.length == 0) return info(
+		if (message.arguments.length === 0) return info(
 			'Application Commands',
 			'Type `' +  Prefix + 'forget <name>` to delete the command.'
 		);
@@ -395,7 +396,7 @@ prefix({
 
 export async function reloadActions() {
 	actions = await Database.get('actions');
-	if (actions == undefined || actions == null) {
+	if (actions === undefined || actions === null) {
 		await Database.set('actions', []);
 		actions = [];
 	}
@@ -418,7 +419,7 @@ export async function removeAction(name) {
 export async function addAction(data) {
 	await reloadActions();
 	const action = actions.find(a => a.commands.includes(data.commands[0]));
-	if (action != undefined) {
+	if (action !== undefined) {
 		if (data.reply.length > 0) action.reply = data.reply;
 		action.permissions = data.permissions;
 		await Database.set('actions', actions);
@@ -434,7 +435,7 @@ export async function actionPermissions(action, perm) {
 	if (![ 'mod', 'sub', 'vip', 'all' ].includes(perm)) perm = 'all';
 	await reloadActions();
 	action = actions.find(a => a.commands.includes(action));
-	if (action == undefined) return;
+	if (action === undefined) return;
 	action.permissions = perm;
 	await Database.set('actions', actions);
 	fetch(ActionURL + "refresh/");

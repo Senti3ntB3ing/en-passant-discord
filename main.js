@@ -38,7 +38,7 @@ import "./commands/diagram.js";
 import "./commands/links.js";
 import "./commands/poll.js";
 import "./commands/rating.js";
-// leave last for tasks
+// leave tasks for last:
 import "./commands/system.js";
 
 // =========================================
@@ -74,7 +74,9 @@ const baseBot = createBot({
 			sendMessage(
 				bot, Channels.general,
 				text(`**Welcome** <@${member.id}>, ${message}`)
-			).then(({ id }) => Database.push("welcome", { id, time: Date.now() }));
+			).then(({ id }) => Database.push("welcome", {
+				id: id.toString(), time: Date.now()
+			}));
 		},
 		interactionCreate(_bot, interaction) { dispatch(interaction); }
 	}

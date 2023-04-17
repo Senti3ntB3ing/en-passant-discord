@@ -56,12 +56,6 @@ export function setRandomAction() {
 	});
 }
 
-async function appendWelcome(id) {
-	const welcome = (await Database.get("welcome")) || [];
-	welcome.push({ id: id.toString(), time: Date.now() });
-	Database.set("welcome", welcome);
-}
-
 const baseBot = createBot({
 	botId: Deno.env.get('ID'),
 	token: Deno.env.get('TOKEN'),
@@ -79,7 +73,7 @@ const baseBot = createBot({
 			sendMessage(
 				bot, Channels.general,
 				text(`**Welcome** <@${member.id}>, ${message}`)
-			).then(m => appendWelcome(m.id));
+			).then(({ id }) => Database.push("welcome", { id, time: Date.now() }));
 		},
 		interactionCreate(_bot, interaction) { dispatch(interaction); }
 	}

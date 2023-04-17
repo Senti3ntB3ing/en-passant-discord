@@ -2,14 +2,6 @@
 export const GuildID = 839594883790012436n;
 export const BotID = 847102766018199614n;
 
-export const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-export const ordinal = n => {
-	const s = [ 'th', 'st', 'nd', 'rd' ];
-	const v = `${n}`, l = parseInt(v[v.length - 1]);
-	if (n == 11 || n == 12 || n == 13) return `${n}th`;
-	return n + (l < 4 ? s[l] : s[0]);
-};
-
 export const Name = 'en passant';
 export const Prefix = '!';
 
@@ -97,10 +89,10 @@ export const Channels = {
 			rules: 844682003139002369n,
 	notifications: 839594884289921077n,
 	  recruitment: 950121447249039403n,
+	  // == GENERAL =======================
+	      general: 839594884289921076n,
 	    questions: 999784843208560661n,
-	// == GENERAL =======================
-		  general: 839594884289921076n,
-		 red_drop: 1025103988259045397n,
+	      company: 1025103988259045397n,
 		challenge: 858358887416594463n,
 		   reddit: 973541665258242068n,
 			memes: 910623921093623868n,
@@ -110,7 +102,6 @@ export const Channels = {
 	general_voice: 845012057655869523n,
 	// == TWITCH ========================
 	   subscribers: 959118899398467684n,
-	     streamers: 973335526704816189n,
 	 guess_the_elo: 973543620558880768n,
 	guess_the_eval: 989255062117285898n,
 		 sub_voice: 959119103950463046n,
@@ -275,4 +266,4 @@ export const Welcome = [
 ];
 
 // idea: marble
-export const themes = [ 'bubble', 'nature', 'iceage', 'wooden', 'grapes' ];
+export const Themes = [ 'bubble', 'nature', 'iceage', 'wooden', 'grapes' ];

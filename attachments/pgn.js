@@ -1,5 +1,5 @@
 
-import { PGNURL, Size, control, themes } from '../config.js';
+import { PGNURL, Size, control, Themes } from '../config.js';
 import { attachment, error } from '../parser.js';
 
 import { Chess } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
@@ -31,7 +31,7 @@ attachment({
 			)
 		).join(';');
 		let data;
-		try { data = await fetch(PGNURL + themes.random() + '/white/' + history); } catch { return; }
+		try { data = await fetch(PGNURL + Themes.random() + '/white/' + history); } catch { return; }
 
 		if (data.status !== 200) return;
 		const w = h['White'], b = h['Black'];

@@ -1,5 +1,5 @@
 
-import { PGNURL, control, themes } from '../config.js';
+import { PGNURL, control, Themes } from '../config.js';
 
 import { Chess as ChessBoard } from 'https://deno.land/x/beta_chess@v1.0.1/chess.js';
 import { lichess } from '../components/lichessorg.js';
@@ -28,7 +28,7 @@ export async function handleChesscomGame(type, id, perspective = 'w', theme, elo
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + (theme || themes.random()) + '/' + perspective + '/' + moves); }
+	try { data = await fetch(PGNURL + (theme || Themes.random()) + '/' + perspective + '/' + moves); }
 	catch { return undefined; }
 	if (data.status !== 200) return undefined;
 	const w = game.pgnHeaders.White, b = game.pgnHeaders.Black;
@@ -73,7 +73,7 @@ export async function handlelichessorgGame(id, perspective = 'w', theme, elo = f
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
-	try { data = await fetch(PGNURL + (theme || themes.random()) + '/' + perspective + '/' + moves); }
+	try { data = await fetch(PGNURL + (theme || Themes.random()) + '/' + perspective + '/' + moves); }
 	catch { return undefined; }
 	if (data.status !== 200) return undefined;
 	const w = 'user' in game.players.white ? game.players.white.user.name : 'Anonymous';
@@ -113,7 +113,7 @@ export async function handlePGNGame(pgn, perspective = 'w', theme) {
 	).join(';');
 	perspective = perspective == 'w' ? 'white' : 'black';
 	let data;
-	try { data = await fetch(PGNURL + (theme || themes.random()) + '/' + perspective + '/' + moves); }
+	try { data = await fetch(PGNURL + (theme || Themes.random()) + '/' + perspective + '/' + moves); }
 	catch { return undefined; }
 	if (data.status !== 200) return undefined;
 	const w = h['White'] || "Anonymous", b = h['Black'] || "Anonymous";

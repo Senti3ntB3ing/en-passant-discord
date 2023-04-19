@@ -7,7 +7,7 @@ import { createTask, send, text } from "../parser.js";
 const ENDPOINT = "https://www.reddit.com/r/thechessnerd.json?limit=1";
 
 createTask({
-	name: "reddit", emoji: ":large_orange_diamond:", interval: Time.hours(6),
+	name: "reddit", emoji: "🔶", interval: Time.hours(6),
 	description: "Sends out the hot reddit post.",
 	execute: async () => {
 		const id = await Database.get("reddit_id");

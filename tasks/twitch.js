@@ -37,7 +37,7 @@ const notification = (title, category, timestamp) => ({
 });
 
 createTask({
-	name: "twitch", emoji: ":gem:", interval: Time.minute,
+	name: "twitch", emoji: "💎", interval: Time.minute,
 	description: `Notifies members when <@${Zach}> is streaming.`,
 	execute: async () => {
 		// if streaming already: update state and don't do anything.

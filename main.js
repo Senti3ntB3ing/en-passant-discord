@@ -38,7 +38,6 @@ import "./commands/diagram.js";
 import "./commands/links.js";
 import "./commands/poll.js";
 import "./commands/rating.js";
-// leave tasks for last:
 import "./commands/system.js";
 
 // =========================================

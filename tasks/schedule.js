@@ -7,7 +7,7 @@ import { Database } from "../database.js";
 const weeks = Time.week_number;
 
 createTask({
-	name: "schedule", emoji: ":calendar_spiral:", interval: Time.hours(12),
+	name: "schedule", emoji: "📆", interval: Time.hours(12),
 	description: "Adds the streams to the discord events tab.",
 	execute: async () => {
 		const today = weeks(new Date());

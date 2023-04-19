@@ -22,7 +22,7 @@ const quote_of_the_day = () => {
 };
 
 createTask({
-	name: 'quote', emoji: ':scroll:', time: '9:55',
+	name: 'quote', emoji: '📜', time: '9:55',
 	description: 'Sends out the quote of the day.',
 	execute: async () => {
 		const now = new Date();

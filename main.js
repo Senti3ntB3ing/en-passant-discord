@@ -1,7 +1,7 @@
 
 import {
-	createBot, startBot, editBotStatus, sendMessage, GatewayIntents
-} from "https://deno.land/x/discordeno@17.1.0/mod.ts";
+	createBot, startBot, editBotStatus, sendMessage, GatewayIntents, ActivityTypes
+} from "https://deno.land/x/discordeno@18.0.1/mod.ts";
 import { enableCachePlugin, enableCacheSweepers }
 from "https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts";
 
@@ -10,8 +10,10 @@ import { serve } from "https://deno.land/std@0.145.0/http/server.ts";
 import {
 	parse, text, fetchLog, log, executeTasks, dispatch, reloadActions
 } from "./parser.js";
-import { Channels, Welcome, Actions, Time } from "./config.js";
+import { Channels, Welcome, Time, Icon, TwitchIcon } from "./config.js";
 import { Database } from "./database.js";
+
+import { quote_of_the_day } from "./components/quote.js";
 
 export const PID = Math.floor(Math.random() * 10000);
 log("status", "PID " + PID);
@@ -42,17 +44,27 @@ import "./commands/system.js";
 
 // =========================================
 
-export function setRandomAction() {
-	const action = Actions.random();
+export function setQuoteAction() {
+	console.log("Setting quote action.");
+	const quote = quote_of_the_day();
 	editBotStatus(bot, {
 		activities: [{
-			name: action.status,
-			type: action.type,
-			createdAt: Date.now()
+			name: 'thechessnerdlive',
+			type: ActivityTypes.Watching,
+			createdAt: Date.now(),
+			/*assets: {
+				largeImage: Icon,
+				largeText: 'The Chess Nerd',
+				smallImage: TwitchIcon,
+				smallText: 'Watching the stream.'
+			},
+			buttons: [{
+				label: '💜 Watch Together',
+				url: 'https://www.twitch.tv/thechessnerdlive',
+			}],*/
+			url: 'https://www.twitch.tv/thechessnerdlive',
 		}],
-		since: Date.now(),
-		afk: false,
-		status: "online"
+		since: Date.now(), afk: false, status: 'online'
 	});
 }
 
@@ -84,7 +96,7 @@ const baseBot = createBot({
 export const bot = enableCachePlugin(baseBot);
 enableCacheSweepers(bot);
 log("status", "en-passant ready");
-setRandomAction();
+setQuoteAction();
 
 // =========================================
 

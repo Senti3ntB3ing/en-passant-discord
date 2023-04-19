@@ -1,8 +1,4 @@
 
-import { Channels, ColorCodes } from '../config.js';
-import { Database } from '../database.js';
-import { createTask, send } from '../parser.js';
-
 const dayOfYear = date => {
     date = date || new Date();
     const y = date.getFullYear();
@@ -10,7 +6,7 @@ const dayOfYear = date => {
     return Math.round((date - j1) / (1000 * 60 * 60 * 24) + 1);
 };
 
-const quote_of_the_day = () => {
+export function quote_of_the_day() {
 	const now = new Date();
 	const a_seed = dayOfYear(now) + now.getFullYear();
 	const q_seed = now.getDay() + a_seed;
@@ -19,34 +15,7 @@ const quote_of_the_day = () => {
 		author: element.author, title: element.title,
 		text: element.quotes[q_seed % element.quotes.length]
 	};
-};
-
-createTask({
-	name: 'quote', emoji: '📜', time: '9:55',
-	description: 'Sends out the quote of the day.',
-	execute: async () => {
-		const now = new Date();
-		const isToday = date =>
-			date.getDate() == now.getDate() &&
-			date.getMonth() == now.getMonth() &&
-			date.getFullYear() == now.getFullYear();
-		const lastQuote = await Database.get('quote');
-		await Database.set('quote', now.toISOString());
-		if (lastQuote == null || lastQuote == undefined ||
-			isToday(new Date(lastQuote))) return;
-		const quote = quote_of_the_day();
-		const footer = quote.title ? `${quote.title}  ${quote.author}` : quote.author;
-		send(Channels.general, {
-			embeds: [{
-				type: 'rich',
-				title: 'Chess quote of the day',
-				description: `> *“${quote.text}”*`,
-				color: ColorCodes.normal,
-				footer: { text: '— ' + footer },
-			}]
-		});
-	}
-});
+}
 
 const Quotes = [
 	{

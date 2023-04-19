@@ -13,6 +13,8 @@ export const PGNURL = 'https://game.cristian-98.repl.co/pgn/';
 
 export const Streamer = 'thechessnerdlive';
 export const StreamerID = '428214501';
+export const Icon = "https://images.chesscomfiles.com/uploads/user/8789880.b9d3513b.png";
+export const TwitchIcon = "https://static.twitchcdn.net/assets/favicon-32-e29e246c157142c94346.png";
 
 export const CHESSCOM_REGEX = /https?:\/\/(?:www\.)?chess\.com(?:\/analysis)?\/(?:game\/)?(live|daily)\/(?:game\/)?(\d+)/;
 export const LICHESSORG_REGEX = /https?:\/\/(?:www\.)?lichess\.org\/(\w{8})/;
@@ -182,38 +184,6 @@ export const ColorCodes = {
 	titled: 0xF1C40F,
 	random: () => Math.floor(Math.random() * (0xFFFFFF + 1))
 };
-
-export const ActionTypes = {
-	game: 0, streaming: 1, listening: 2,
-	watching: 3, custom: 4, competing: 5
-};
-
-export const Actions = [
-	{ type:  ActionTypes.watching, status: 'Pawn Sacrifice' },
-	{ type:  ActionTypes.watching, status: 'The Queen\'s Gambit' },
-	{ type:      ActionTypes.game, status: 'Chess' },
-	{ type:      ActionTypes.game, status: 'King of the Hill' },
-	{ type:      ActionTypes.game, status: '3-Check' },
-	{ type:      ActionTypes.game, status: 'Crazyhouse' },
-	{ type:      ActionTypes.game, status: 'Chess960' },
-	{ type:      ActionTypes.game, status: 'Antichess' },
-	{ type:      ActionTypes.game, status: 'Racing Kings' },
-	{ type:      ActionTypes.game, status: 'Horde' },
-	{ type:      ActionTypes.game, status: 'Atomic' },
-	{ type: ActionTypes.listening, status: 'Aman Hambleton' },
-	{ type: ActionTypes.listening, status: 'Eric Hansen' },
-	{ type: ActionTypes.listening, status: 'Eric Rosen' },
-	{ type: ActionTypes.listening, status: 'Ben Finegold' },
-	{ type: ActionTypes.listening, status: 'Daniel Naroditsky' },
-	{ type: ActionTypes.listening, status: 'Yasser Seirawan' },
-	{ type: ActionTypes.listening, status: 'Magnus Carlsen' },
-	{ type: ActionTypes.listening, status: 'Levy Rozman' },
-	{ type: ActionTypes.listening, status: 'Alexandra Botez' },
-	{ type: ActionTypes.listening, status: 'Anna Rudolf' },
-	{ type: ActionTypes.listening, status: 'Anna Cramling' },
-	{ type: ActionTypes.listening, status: 'Andrew Tang' },
-	{ type: ActionTypes.competing, status: 'Tournament' },
-];
 
 export const Welcome = [
 	'`O-O-O#!!` with checkmate!',

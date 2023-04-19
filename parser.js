@@ -6,16 +6,17 @@ import {
 	InteractionResponseTypes, ApplicationCommandOptionTypes, editBotStatus,
 	addRole, removeRole, getUser, addReaction, getOriginalInteractionResponse,
 	createScheduledEvent, ScheduledEventEntityType, deleteMessage, deleteMessages,
-} from 'https://deno.land/x/discordeno@17.1.0/mod.ts';
+	ActivityTypes
+} from 'https://deno.land/x/discordeno@18.0.1/mod.ts';
 
 import { closest } from './components/levenshtein.js';
 import { handleChesscomGame, handlelichessorgGame } from './attachments/game.js';
 
 import {
-	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL,
+	Name, Prefix, Roles, ColorCodes, GuildID, ActionURL, Icon,
 	Channels, BotID, CHESSCOM_REGEX, LICHESSORG_REGEX, Time
 } from './config.js';
-import { bot, setRandomAction } from './main.js';
+import { bot, setQuoteAction } from './main.js';
 import { Database } from './database.js';
 
 export const commands = [], tasks = {}, attachments = [], record = [], programmables = [];
@@ -272,13 +273,23 @@ export const streamAction = (streaming) => {
 	if (streaming) editBotStatus(bot, {
 		activities: [{
 			name: 'thechessnerdlive',
-			type: ActionTypes.watching,
+			type: ActivityTypes.Watching,
 			createdAt: Date.now(),
+			assets: {
+				largeImage: Icon,
+				largeText: 'The Chess Nerd',
+				smallImage: TwitchIcon,
+				smallText: 'Watching the stream.'
+			},
+			buttons: [{
+				label: '💜 Watch Together',
+				url: 'https://www.twitch.tv/thechessnerdlive',
+			}],
 			url: 'https://www.twitch.tv/thechessnerdlive',
 		}],
 		since: Date.now(), afk: false, status: 'online'
 	});
-	else setRandomAction();
+	else setQuoteAction();
 };
 export const event = async e => (await createScheduledEvent(bot, GuildID, {
 	name: e.title, description: '',

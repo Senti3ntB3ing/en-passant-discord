@@ -2,14 +2,14 @@
 import {
 	getVideosAfterDate, composeURL, composeSHARE
 } from "../components/youtube.js";
-import { Zach, Time, Channels, Roles } from "../config.js";
+import { Zach, Channels, Roles, Time } from "../config.js";
 import { createTask, send, publish, text, card } from "../parser.js";
 import { Database } from "../database.js";
 
 const YouTube = { color: 0xFF0000, emoji: '❤️‍🔥' };
 
 createTask({
-	name: "youtube", emoji: "📺", interval: Time.minutes(30),
+	name: "youtube", emoji: "📺", interval: Time.minutes(10),
 	description: "Notifies members when a new YT video is out.",
 	execute: async () => {
 		const date = await Database.get("youtube"); // get date of last video

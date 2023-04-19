@@ -1,5 +1,5 @@
 
-import { Zach, Channels, Roles, Time, Streamer } from "../config.js";
+import { Zach, Channels, Roles, Streamer, Time } from "../config.js";
 import { createTask, send, publish, streamAction, error } from "../parser.js";
 import { channel } from "../components/twitch.js";
 import { Database } from "../database.js";
@@ -37,7 +37,7 @@ const notification = (title, category, timestamp) => ({
 });
 
 createTask({
-	name: "twitch", emoji: ":gem:", interval: Time.minutes(3),
+	name: "twitch", emoji: ":gem:", interval: Time.minute,
 	description: `Notifies members when <@${Zach}> is streaming.`,
 	execute: async () => {
 		// if streaming already: update state and don't do anything.

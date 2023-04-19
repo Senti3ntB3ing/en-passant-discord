@@ -22,7 +22,7 @@ import "./attachments/pgn.js";
 
 // ==== Tasks ==============================
 
-import "./tasks/quote.js";
+//import "./tasks/quote.js";
 import "./tasks/schedule.js";
 import "./tasks/youtube.js";
 import "./tasks/twitch.js";
@@ -99,7 +99,7 @@ serve(_request => {
 log("status", "web server ready");
 
 // tasks interval:
-setInterval(executeTasks, Time.minutes(5));
+setInterval(executeTasks, Time.minute);
 
 // =========================================
 

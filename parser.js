@@ -13,7 +13,7 @@ import { handleChesscomGame, handlelichessorgGame } from './attachments/game.js'
 
 import {
 	Name, Prefix, Roles, ColorCodes, ActionTypes, GuildID, ActionURL,
-	Channels, BotID, CHESSCOM_REGEX, LICHESSORG_REGEX
+	Channels, BotID, CHESSCOM_REGEX, LICHESSORG_REGEX, Time
 } from './config.js';
 import { bot, setRandomAction } from './main.js';
 import { Database } from './database.js';
@@ -125,38 +125,25 @@ export function attachment(options) {
 
 // ==== Tasks ==================================================================
 
-export function createTask(task) {
-	if (typeof task.execute != 'function') return;
-	if (task.name == undefined) return;
-	if (task.interval == undefined && task.time == undefined) return;
-	if (tasks[task.name] != undefined) return;
-	if (task.disabled == undefined) task.disabled = false;
-	task.last_execution = new Date(Date.now() - 86400000); // yesterday
+export async function createTask(task) {
+	if (typeof task.execute != "function") return;
+	if (task.name === undefined) return;
+	if (task.interval === undefined) return;
+	if (tasks[task.name] !== undefined) return;
+	if (task.disabled === undefined) task.disabled = false;
+	task.last = (await Database.get(`tasks/${task.name}`)) || (Date.now() - Time.day);
 	tasks[task.name] = task;
 }
 
 export function executeTasks() {
-	const now = new Date();
-	lastPing = now;
-	const isToday = date =>
-		date.getDate() == now.getDate() &&
-		date.getMonth() == now.getMonth() &&
-		date.getFullYear() == now.getFullYear();
+	lastPing = new Date();
+	const now = lastPing.getTime();
 	for (const name in tasks) {
 		if (tasks[name].disabled) continue;
-		if (tasks[name].interval != undefined) {
-			if (tasks[name].last_execution.getTime() +
-				tasks[name].interval > now.getTime()) continue;
-		} else if (isToday(tasks[name].last_execution)) continue;
-		if (tasks[name].time != undefined) {
-			const t = tasks[name].time.split(':');
-			const h = parseInt(t[0]), m = parseInt(t[1]);
-			const ch = now.getHours(), cm = now.getMinutes();
-			if (ch < h || (ch == h && cm < m)) continue;
-		}
-		tasks[name].last_execution = now;
+		if (tasks[name].last + tasks[name].interval > now) continue;
+		Database.set(`tasks/${name}`, tasks[name].last = now);
 		tasks[name].execute();
-		log('task', `${name} executed`);
+		log("task", `${name} executed`);
 	}
 }
 

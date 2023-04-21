@@ -13,7 +13,7 @@ import { closest } from './components/levenshtein.js';
 import { handleChesscomGame, handlelichessorgGame } from './attachments/game.js';
 
 import {
-	Name, Prefix, Roles, ColorCodes, GuildID, ActionURL, Icon,
+	Name, Prefix, Roles, ColorCodes, GuildID, ActionURL, Icon, TwitchIcon,
 	Channels, BotID, CHESSCOM_REGEX, LICHESSORG_REGEX, Time
 } from './config.js';
 import { bot, setQuoteAction } from './main.js';
@@ -270,7 +270,7 @@ export const discriminator = async tag => {
 	return user.username + '#' + user.discriminator;
 };
 export const streamAction = (streaming) => {
-	if (streaming) editBotStatus(bot, {
+	/*if (streaming) editBotStatus(bot, {
 		activities: [{
 			name: 'thechessnerdlive',
 			type: ActivityTypes.Watching,
@@ -289,7 +289,7 @@ export const streamAction = (streaming) => {
 		}],
 		since: Date.now(), afk: false, status: 'online'
 	});
-	else setQuoteAction();
+	else setQuoteAction();*/
 };
 export const event = async e => (await createScheduledEvent(bot, GuildID, {
 	name: e.title, description: '',

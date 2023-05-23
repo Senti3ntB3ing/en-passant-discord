@@ -14,17 +14,9 @@ export async function handleChesscomGame(type, id, perspective = 'w', theme, elo
 	let moves = '';
 	for (let move of game.moveList) {
 		if ((move = board.move(move)) == null) return undefined;
-		if (move.san === 'O-O') {
-			moves += (board.turn === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
-			continue;
-		} else if (move.san === 'O-O-O') {
-			moves += (board.turn === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
-			continue;
-		} else if (move.flags.includes('e')) moves += '$'; // en-passant
-		moves += move.from + move.to;
-		if (move.promotion) moves += '=' + (
+		moves += move.from + move.to + (move.promotion ? '=' + ( // promotion
 			move.color === 'w' ? move.promotion.toUpperCase() : move.promotion.toLowerCase()
-		);
+		) : '');
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
@@ -59,17 +51,9 @@ export async function handlelichessorgGame(id, perspective = 'w', theme, elo = f
 	let moves = '';
 	for (let move of game.moves) {
 		if ((move = board.move(move)) == null) return undefined;
-		if (move.san === 'O-O') {
-			moves += (board.turn === 'w' ? 'h8f8e8g8' : 'h1f1e1g1') + ';';
-			continue;
-		} else if (move.san === 'O-O-O') {
-			moves += (board.turn === 'w' ? 'a8d8e8c8' : 'a1d1e1c1') + ';';
-			continue;
-		} else if (move.flags.includes('e')) moves += '$'; // en-passant
-		moves += move.from + move.to;
-		if (move.promotion) moves += '=' + (
+		moves += move.from + move.to + (move.promotion ? '=' + ( // promotion
 			move.color === 'w' ? move.promotion.toUpperCase() : move.promotion.toLowerCase()
-		);
+		) : '');
 		moves += ';';
 	}
 	perspective = perspective == 'w' ? 'white' : 'black';
@@ -79,8 +63,11 @@ export async function handlelichessorgGame(id, perspective = 'w', theme, elo = f
 	const w = 'user' in game.players.white ? game.players.white.user.name : 'Anonymous';
 	const b = 'user' in game.players.black ? game.players.black.user.name : 'Anonymous';
 	let description = `⬜️ **\`${w}\`** vs **\`${b}\`** ⬛️`;
-	let clock = 'clock' in game ? game.clock.initial : '';
-	if ('increment' in game.clock) clock += game.clock.increment;
+	let clock = "";
+	if ('clock' in game) {
+		clock = game.clock.initial;
+		if ('increment' in game.clock) clock += game.clock.increment;
+	}
 	if (clock.length > 0) description += ` ・ **Clock:** \`${control(clock)}\``;
 	if (elo) description += `\n**Elo:** ||\`⬜️ ${game.players.white.rating} | ${game.players.black.rating} ⬛️\`||`;
 	description += `\n**Link:** https://lichess.org/${id}`;
@@ -99,17 +86,9 @@ export async function handlePGNGame(pgn, perspective = 'w', theme) {
 	if (!game.pgn(pgn)) return undefined;
 	const h = game.header();
 	const moves = game.history({ verbose: true }).map(
-		m => (m.flags.includes('e') ? '$' : '') + // en passant
-		(m.san === 'O-O' ? // castling
-			(m.color === 'b' ? 'h8f8e8g8' : 'h1f1e1g1') :
-			(m.san === 'O-O-O' ?
-				(m.color === 'b' ? 'a8d8e8c8' : 'a1d1e1c1') : ( // normal
-					m.from + m.to + (m.promotion ? '=' + ( // promotion
-						m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
-					) : '')
-				)
-			)
-		)
+		m => m.from + m.to + (m.promotion ? '=' + ( // promotion
+			m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()
+		) : '')
 	).join(';');
 	perspective = perspective == 'w' ? 'white' : 'black';
 	let data;

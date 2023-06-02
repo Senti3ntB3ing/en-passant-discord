@@ -19,9 +19,9 @@ attachment({
 		const h = game.header();
 		const history = game.history({ verbose: true }).map(
 			m => (m.flags.includes('e') ? '$' : '') + // en passant
-			(m.san === 'O-O' ? // castling
+			(m.san.startsWith('O-O') ? // castling
 				(m.color === 'b' ? 'h8f8e8g8' : 'h1f1e1g1') :
-				(m.san === 'O-O-O' ?
+				(m.san.startsWith('O-O-O') ?
 					(m.color === 'b' ? 'a8d8e8c8' : 'a1d1e1c1') : ( // normal
 						m.from + m.to + (m.promotion ? '=' + ( // promotion
 							m.color === 'w' ? m.promotion.toUpperCase() : m.promotion.toLowerCase()

@@ -303,7 +303,9 @@ export const cancel = id => deleteScheduledEvent(bot, GuildID, BigInt(id));
 
 export const reschedule = (id, e) =>
 	editScheduledEvent(bot, GuildID, BigInt(id), {
-		name: e.title,
+		name: e.title, description: '',
+		entityType: ScheduledEventEntityType.External,
+		location: 'https://www.twitch.tv/thechessnerdlive/',
 		scheduledStartTime: e.start.getTime(),
 		scheduledEndTime: e.end.getTime(),
 	});

@@ -10,21 +10,22 @@ createTask({
 	name: "schedule", emoji: "📆", interval: Time.hours(12),
 	description: "Adds the streams to the discord events tab.",
 	execute: async () => {
-		const today = weeks(new Date());
+		const today = weeks(new Date()), now = Date.now();
 		let segments = await schedule(StreamerID);
-		if (segments == null || segments == undefined) {
+		if (segments === null || segments === undefined) {
 			send(Channels.dev_chat, error("Twitch Error",
 				"The __Twitch.tv__ api returned an error."
 			));
 			return;
 		}
 		segments = segments.segments ?? [];
-		segments = segments.filter(s => s.canceled_until == null).map(s => ({
+		segments = segments.filter(s => s.canceled_until === null).map(s => ({
 			start: new Date(s.start_time),
 			end: new Date(s.end_time),
 			title: s.title, id: s.id.toString(),
 			recurring: s.is_recurring
-		})).filter(s => !s.recurring || weeks(s.start) === today);
+		})).filter(s => (!s.recurring || weeks(s.start) === today) &&
+				        s.start.getTime() > now);
 		const shadow = (await Database.get("shadow")) ?? [];
 		// compare the segments to the shadow:
 		for (const segment of segments) {
@@ -39,7 +40,7 @@ createTask({
 		const remove = [];
 		for (const s of shadow) {
 			const segment = segments.find(e => e.id === s.id);
-			if (segment == undefined || segment == null) {
+			if (segment === undefined || segment === null) {
 				cancel(s.event_id); remove.push(s.event_id);
 			}
 		}

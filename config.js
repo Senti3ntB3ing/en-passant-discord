@@ -37,6 +37,7 @@ export const Time = {
 	months: t => t * 30 * 24 * 60 * 60 * 1000,
 	years: t => t * 365 * 24 * 60 * 60 * 1000,
 	week_number: date => {
+		if (typeof date !== 'object') date = new Date(date);
 		const d = new Date(
 			Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
 		);

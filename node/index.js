@@ -31,7 +31,11 @@ for (const file of commandFiles) {
 	const commandList = require(filePath);
 	commandList.forEach((command) => {
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
-		if (command.type === 'slash' && 'data' in command && 'execute' in command) {
+		if (command.type === 'slash' &&
+			'data' in command &&
+			'execute' in command &&
+			typeof 'execute' === 'function'
+		) {
 			client.commands.set(command.data.name, command);
 		} else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
@@ -48,10 +52,12 @@ client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
+// ==== Prefix commands ====================
 client.on(Events.MessageCreate, message => {
 	console.log(`Message received: ${message.content}`);
 });
 
+// ==== Interactions =======================
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 

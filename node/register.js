@@ -15,7 +15,11 @@ for (const file of commandFiles) {
 	const filePath = path.join(foldersPath, file);
 	const commandList = require(filePath);
 	for (const command of commandList) {
-		if (command.type === 'slash' && 'data' in command && 'execute' in command) {
+		if (command.type === 'slash' &&
+			'data' in command &&
+			'execute' in command &&
+			typeof 'execute' === 'function'
+		) {
 			commands.push(command.data.toJSON());
 		} else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);

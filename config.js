@@ -5,7 +5,7 @@ export const BotID = 847102766018199614n;
 export const Name = 'en passant';
 export const Prefix = '!';
 
-export const ActionURL = 'https://ep.cristian-98.repl.co/';
+export const ActionURL = await Database.get('action_url');
 export const RevivalURL = 'https://en-passant-discord.deno.dev';
 export const MapURL = ActionURL + 'map/';
 export const FENURL = 'https://game.cristian-98.repl.co/fen/';

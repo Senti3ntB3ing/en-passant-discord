@@ -1,8 +1,11 @@
 
+import { Database } from '../database.js';
 import { Time } from '../config.js';
 
-const TWITCH_CLIENT_ID = Deno.env.get("TWITCH_CLIENT_ID");
-const TWITCH_OAUTH_BOT = Deno.env.get("TWITCH_OAUTH_BOT");
+// const TWITCH_CLIENT_ID = Deno.env.get("TWITCH_CLIENT_ID");
+// const TWITCH_OAUTH_BOT = Deno.env.get("TWITCH_OAUTH_BOT");
+const TWITCH_CLIENT_ID = await Database.get("twitch_client_id");
+const TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
 
 export const BASE_URL = "https://api.twitch.tv/helix/";
 export const QUERIES = {

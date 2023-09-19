@@ -1,4 +1,6 @@
 
+import { Database } from './database.js';
+
 export const GuildID = 839594883790012436n;
 export const BotID = 847102766018199614n;
 

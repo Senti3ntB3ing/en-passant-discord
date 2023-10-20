@@ -62,8 +62,8 @@ export async function schedule(id, date) {
 
 export async function uptime(streamer) {
 	const c = await channel(streamer);
-	if (c == undefined || c == null || !c.is_live ||
-		c.started_at == undefined || c.started_at == "") return "0h 0m";
+	if (c === undefined || c === null || !c.is_live ||
+		c.started_at === undefined || c.started_at === "") return "0h 0m";
 	const s = new Date(c.started_at);
 	const e = new Date();
 	const d = e.getTime() - s.getTime();

@@ -9,7 +9,7 @@ The environment uses `deno`, with the [Discordeno API](https://discordeno.mod.la
 [Docs are available here](https://doc.deno.land/https://deno.land/x/discordeno@18.0.1/mod.ts).
 
 🖥 Hosting is provided by [Deno Deploy](https://deno.com/deploy/).\
-🏓 Task ping is provided by [Better Uptime](https://betteruptime.com).\
+🏓 Task ping is provided by [Uptime Robot](https://uptimerobot.com).\
 🗄 Database is provided by [Google Real Time Firebase](https://console.firebase.google.com/u/0/).
 
 ### APIs and Services

@@ -21,7 +21,7 @@ const HEADERS = {
 export const buildUrl = uri => BASE_URL + uri;
 
 export async function channel(streamer) {
-	if (streamer === '') return undefined;
+	if (streamer === "") return undefined;
 	try {
 		const queryUrl = buildUrl(QUERIES.search.channel);
 		const req = await fetch(queryUrl + streamer + "&first=1", HEADERS);

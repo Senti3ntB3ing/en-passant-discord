@@ -4,6 +4,7 @@ import { Time } from "../config.js";
 
 // const TWITCH_CLIENT_ID = await Database.get("twitch_client_id");
 const TWITCH_APP_ID    = await Database.get("twitch_app_id");
+const TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
 
 export const BASE_URL = "https://api.twitch.tv/helix/";
 export const QUERIES = {

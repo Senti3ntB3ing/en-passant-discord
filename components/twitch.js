@@ -25,10 +25,10 @@ export async function channel(streamer) {
 	if (streamer === "") return undefined;
 	try {
 		const queryUrl = buildUrl(QUERIES.search.channel);
-		const req = await fetch(queryUrl + streamer + "&first=1", HEADERS);
-		console.log(req);
-		if (req.status != 200) return null;
-		const data = (await req.json()).data;
+		const res = await fetch(queryUrl + streamer + "&first=1", HEADERS);
+		console.log(res.body);
+		if (res.status != 200) return null;
+		const data = (await res.json()).data;
 		for (const channel of data)
 			if (channel.display_name.toLowerCase() === streamer.toLowerCase())
 				return channel;

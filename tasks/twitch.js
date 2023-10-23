@@ -44,6 +44,7 @@ createTask({
 		// else if live: update state and send notification.
 		const streaming = await channel(Streamer);
 		if (streaming === undefined || streaming === null) {
+			console.error("Streaming is: " + streaming);
 			send(Channels.bot_tests, error(
 				"Twitch live detection task",
 				`<@&${Roles.developer}>s, time to update tokens for __twitch__!`

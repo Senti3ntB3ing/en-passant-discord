@@ -31,7 +31,10 @@ export async function channel(streamer) {
 		for (const channel of data)
 			if (channel.display_name.toLowerCase() === streamer.toLowerCase())
 				return channel;
-	} catch { return undefined; }
+	} catch (error) {
+		console.error(error);
+		return undefined;
+	}
 	return undefined;
 }
 

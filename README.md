@@ -1,7 +1,8 @@
 
 # en-passant Discord BOT
 
-This bot is made with ❤️ by [thechessnerd](https://www.instagram.com/thechessnerd/) team.
+This bot is made with ❤️ orginally by [Cristian A.](https://github.com/cristian-5)
+now maintained by [thechessnerd](https://www.instagram.com/thechessnerd/) team.
 
 The environment uses `deno`, with the [Discordeno API](https://discordeno.mod.land/),
 [GitHub](https://github.com/discordeno/discordeno/).

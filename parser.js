@@ -269,28 +269,8 @@ export const discriminator = async tag => {
 	const user = await getUser(bot, tag);
 	return user.username + '#' + user.discriminator;
 };
-export const streamAction = (streaming) => {
-	/*if (streaming) editBotStatus(bot, {
-		activities: [{
-			name: 'thechessnerdlive',
-			type: ActivityTypes.Watching,
-			createdAt: Date.now(),
-			assets: {
-				largeImage: Icon,
-				largeText: 'The Chess Nerd',
-				smallImage: TwitchIcon,
-				smallText: 'Watching the stream.'
-			},
-			buttons: [{
-				label: '💜 Watch Together',
-				url: 'https://www.twitch.tv/thechessnerdlive',
-			}],
-			url: 'https://www.twitch.tv/thechessnerdlive',
-		}],
-		since: Date.now(), afk: false, status: 'online'
-	});
-	else setQuoteAction();*/
-};
+export const streamAction = () => fetch(ActionURL);
+
 export const event = async e => (await createScheduledEvent(bot, GuildID, {
 	name: e.title, description: '',
 	entityType: ScheduledEventEntityType.External,
@@ -303,7 +283,9 @@ export const cancel = id => deleteScheduledEvent(bot, GuildID, BigInt(id));
 
 export const reschedule = (id, e) =>
 	editScheduledEvent(bot, GuildID, BigInt(id), {
-		name: e.title,
+		name: e.title, description: '',
+		entityType: ScheduledEventEntityType.External,
+		location: 'https://www.twitch.tv/thechessnerdlive/',
 		scheduledStartTime: e.start.getTime(),
 		scheduledEndTime: e.end.getTime(),
 	});

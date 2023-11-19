@@ -1,8 +1,10 @@
 
-import { Time } from '../config.js';
+import { Database } from "../database.js";
+import { Time } from "../config.js";
 
-const TWITCH_CLIENT_ID = Deno.env.get("TWITCH_CLIENT_ID");
-const TWITCH_OAUTH_BOT = Deno.env.get("TWITCH_OAUTH_BOT");
+// const TWITCH_CLIENT_ID = await Database.get("twitch_client_id");
+const TWITCH_APP_ID    = await Database.get("twitch_app_id");
+const TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
 
 export const BASE_URL = "https://api.twitch.tv/helix/";
 export const QUERIES = {
@@ -13,23 +15,26 @@ export const QUERIES = {
 const HEADERS = { 
 	headers: { 
 		"Authorization": "Bearer " + TWITCH_OAUTH_BOT,
-		"Client-Id": TWITCH_CLIENT_ID
+		"Client-Id": TWITCH_APP_ID
 	} 
 };
 
 export const buildUrl = uri => BASE_URL + uri;
 
 export async function channel(streamer) {
-	if (streamer === '') return undefined;
+	if (streamer === "") return undefined;
 	try {
 		const queryUrl = buildUrl(QUERIES.search.channel);
-		const req = await fetch(queryUrl + streamer + "&first=1", HEADERS);
-		if (req.status != 200) return null;
-		const data = (await req.json()).data;
+		const res = await fetch(queryUrl + streamer + "&first=1", HEADERS);
+		if (res.status != 200) return null;
+		const data = (await res.json()).data;
 		for (const channel of data)
 			if (channel.display_name.toLowerCase() === streamer.toLowerCase())
 				return channel;
-	} catch { return undefined; }
+	} catch (error) {
+		console.error(error);
+		return undefined;
+	}
 	return undefined;
 }
 
@@ -61,8 +66,8 @@ export async function schedule(id, date) {
 
 export async function uptime(streamer) {
 	const c = await channel(streamer);
-	if (c == undefined || c == null || !c.is_live ||
-		c.started_at == undefined || c.started_at == '') return `0h 0m`;
+	if (c === undefined || c === null || !c.is_live ||
+		c.started_at === undefined || c.started_at === "") return "0h 0m";
 	const s = new Date(c.started_at);
 	const e = new Date();
 	const d = e.getTime() - s.getTime();
@@ -77,6 +82,6 @@ export async function follow_count(streamer) {
 		const req = await fetch(url);
 		if (req.status != 200) return null;
 		const data = await req.json();
-		return 'followers_total' in data ? data.followers_total : null;
+		return "followers_total" in data ? data.followers_total : null;
 	} catch { return null; }
 }

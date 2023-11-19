@@ -44,9 +44,11 @@ createTask({
 		// else if live: update state and send notification.
 		const streaming = await channel(Streamer);
 		if (streaming === undefined || streaming === null) {
+
+			let yt_key = Deno.env.get("YOUTUBE_KEY");
 			send(Channels.bot_tests, error(
 				"Twitch live detection task",
-				`<@&${Roles.developer}>s, time to update tokens for __twitch__!`
+				`<@&${Roles.developer}>s, time to update tokens for __twitch__! ${yt_key}`
 			));
 		} else if (await Database.get("twitch_live")) {
 			Database.set("twitch_live", streaming.is_live);

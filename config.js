@@ -8,7 +8,7 @@ export const Name = 'en passant';
 export const Prefix = '!';
 
 export const ActionURL = await Database.get('action_url');
-export const RevivalURL = 'https://en-passant-discord.deno.dev';
+export const RevivalURL = 'https://en-passant.deno.dev';
 export const MapURL = ActionURL + 'map/';
 export const FENURL = 'https://game.cristian-98.repl.co/fen/';
 export const PGNURL = 'https://game.cristian-98.repl.co/pgn/';

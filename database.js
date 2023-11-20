@@ -3,7 +3,7 @@
 
 export class Database {
 
-	static #url = 'https://en-passant-339215-default-rtdb.firebaseio.com/';
+	static #url = 'https://en-passant-405713-default-rtdb.firebaseio.com/';
 	static #SECRET = Deno.env.get('FIREBASE_SECRET');
 
 	static async get(key) {

@@ -1,6 +1,6 @@
 
 import { Database } from "../database.js";
-import { Time } from "../config.js";
+import { Time, ActionURL } from "../config.js";
 
 // const TWITCH_CLIENT_ID = await Database.get("twitch_client_id");
 const TWITCH_APP_ID    = await Database.get("twitch_app_id");
@@ -29,7 +29,6 @@ export async function channel(streamer) {
 		if (res.status != 200) return null;
 		const data = (await res.json()).data;
 		for (const channel of data)
-			console.log(channel);
 			if (channel.display_name.toLowerCase() === streamer.toLowerCase())
 				return channel;
 	} catch (error) {
@@ -85,4 +84,12 @@ export async function follow_count(streamer) {
 		const data = await req.json();
 		return "followers_total" in data ? data.followers_total : null;
 	} catch { return null; }
+}
+
+export async function validate(){
+	try {
+		const req = await fetch(ActionURL + '/validate');
+		if (req.status != 200) return false;
+		return true; 
+	} catch { return false; }
 }

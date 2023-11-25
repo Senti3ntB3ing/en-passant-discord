@@ -1,7 +1,7 @@
 
 import { Zach, Channels, Roles, Streamer, Time } from "../config.js";
-import { createTask, send, publish, streamAction, error } from "../parser.js";
-import { channel } from "../components/twitch.js";
+import { createTask, send, publish, streamAction, error, info } from "../parser.js";
+import { channel, validate } from "../components/twitch.js";
 import { Database } from "../database.js";
 
 function extract(commands) {
@@ -44,10 +44,17 @@ createTask({
 		// else if live: update state and send notification.
 		const streaming = await channel(Streamer);
 		if (streaming === undefined || streaming === null) {
-			send(Channels.bot_tests, error(
-				"Twitch live detection task",
-				`<@&${Roles.developer}>s, time to update tokens for __twitch__!`
-			));
+			if(!validate()){
+				send(Channels.bot_tests, error(
+					"Twitch live detection task",
+					`<@&${Roles.developer}>s, time to update tokens for __twitch__!`
+				));
+			} else {
+				send(Channels.bot_tests, info(
+					"Twitch live detection task",
+					`<@&${Roles.developer}>s, Token has been validated! Try running the __twitch__ task again!`
+				));
+			}
 		} else if (await Database.get("twitch_live")) {
 			Database.set("twitch_live", streaming.is_live);
 			streamAction();

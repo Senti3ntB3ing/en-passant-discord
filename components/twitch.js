@@ -29,6 +29,7 @@ export async function channel(streamer) {
 		if (res.status != 200) return null;
 		const data = (await res.json()).data;
 		for (const channel of data)
+			console.log(channel);
 			if (channel.display_name.toLowerCase() === streamer.toLowerCase())
 				return channel;
 	} catch (error) {

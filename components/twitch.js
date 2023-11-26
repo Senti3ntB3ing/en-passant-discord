@@ -13,7 +13,7 @@ export const QUERIES = {
 	streams: "streams?user_id=",
 	schedule: "schedule?broadcaster_id="
 };
-const HEADERS = { 
+let HEADERS = { 
 	headers: { 
 		"Authorization": "Bearer " + TWITCH_OAUTH_BOT,
 		"Client-Id": TWITCH_APP_ID

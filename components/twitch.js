@@ -93,5 +93,8 @@ export async function validate(){
 		if (req.status != 200) return false;
 		TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
 		return true; 
-	} catch { return false; }
+	} catch (error) {
+		console.error(error);
+		return false; 
+	}
 }

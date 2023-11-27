@@ -20,7 +20,7 @@ let HEADERS = {
 	} 
 };
 
-export const buildUrl = uri => BASE_URL + uri;
+export let buildUrl = uri => BASE_URL + uri;
 
 export async function channel(streamer) {
 	if (streamer === "") return undefined;

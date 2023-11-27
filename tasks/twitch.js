@@ -1,7 +1,7 @@
 
 import { Zach, Channels, Roles, Streamer, Time } from "../config.js";
-import { createTask, send, publish, streamAction, error, info } from "../parser.js";
-import { channel, validate } from "../components/twitch.js";
+import { createTask, send, publish, streamAction, error, info, log } from "../parser.js";
+import { buildUrl, channel, validate } from "../components/twitch.js";
 import { Database } from "../database.js";
 
 function extract(commands) {
@@ -50,6 +50,7 @@ createTask({
 					`<@&${Roles.developer}>s, time to update tokens for __twitch__!`
 				));
 			} else {
+				log(buildUrl);
 				send(Channels.bot_tests, info(
 					"Twitch live detection task",
 					`<@&${Roles.developer}>s, Token has been validated! Try running the __twitch__ task again!`

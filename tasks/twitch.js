@@ -61,6 +61,17 @@ createTask({
 			streamAction();
 		} else if ("is_live" in streaming && streaming.is_live) {
 			Database.set("twitch_live", true);
+			if(connect()){
+				send(Channels.bot_tests, info(
+					"Twitch live detection task",
+					`<@&${Roles.developer}>s, Bot is now connected to twitch chat!`
+				));
+			} else {
+				send(Channels.bot_tests, error(
+					"Twitch live detection task",
+					`<@&${Roles.developer}>s, Bot failed to connect to twitch chat!`
+				));
+			}
 			try {
 				const m = await send(Channels.notifications, notification(
 					streaming.title, streaming.game_name, streaming.started_at

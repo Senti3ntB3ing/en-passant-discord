@@ -98,3 +98,14 @@ export async function validate(){
 		return false; 
 	}
 }
+
+export async function connect(){
+	try {
+		const req = await fetch(ActionURL + '/connect');
+		if (req.status != 200) return false;
+		return true; 
+	} catch (error) {
+		console.error(error);
+		return false; 
+	}
+}

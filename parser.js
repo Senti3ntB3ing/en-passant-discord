@@ -269,7 +269,6 @@ export const discriminator = async tag => {
 	const user = await getUser(bot, tag);
 	return user.username + '#' + user.discriminator;
 };
-export const streamAction = () => fetch(ActionURL);
 
 export const event = async e => (await createScheduledEvent(bot, GuildID, {
 	name: e.title, description: '',

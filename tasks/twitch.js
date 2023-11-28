@@ -1,6 +1,6 @@
 
 import { Zach, Channels, Roles, Streamer, Time } from "../config.js";
-import { createTask, send, publish, streamAction, error, info, log } from "../parser.js";
+import { createTask, send, publish, error, info, log } from "../parser.js";
 import { buildUrl, channel, validate } from "../components/twitch.js";
 import { Database } from "../database.js";
 
@@ -58,7 +58,7 @@ createTask({
 			}
 		} else if (await Database.get("twitch_live")) {
 			Database.set("twitch_live", streaming.is_live);
-			streamAction();
+				connect();
 		} else if ("is_live" in streaming && streaming.is_live) {
 			Database.set("twitch_live", true);
 			if(connect()){
@@ -77,7 +77,7 @@ createTask({
 					streaming.title, streaming.game_name, streaming.started_at
 				));
 				publish(Channels.notifications, m.id);
-				streamAction();
+				connect();
 			} catch {
 				send(Channels.bot_tests, error(
 					"Twitch live detection task",

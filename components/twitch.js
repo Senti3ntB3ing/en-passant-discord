@@ -5,7 +5,18 @@ import { Time, ActionURL } from "../config.js";
 // const TWITCH_CLIENT_ID = await Database.get("twitch_client_id");
 // changing const to let in an attempt to fix some issues, app id remains constant, oauth bot changes frequently.
 const TWITCH_APP_ID    = await Database.get("twitch_app_id");
-let TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
+let TWITCH_OAUTH_BOT
+let HEADERS
+
+export async function authGen(){
+	TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
+	HEADERS = { 
+		headers: { 
+			"Authorization": "Bearer " + TWITCH_OAUTH_BOT,
+			"Client-Id": TWITCH_APP_ID
+		} 
+	};
+}
 
 export const BASE_URL = "https://api.twitch.tv/helix/";
 export const QUERIES = {
@@ -13,17 +24,14 @@ export const QUERIES = {
 	streams: "streams?user_id=",
 	schedule: "schedule?broadcaster_id="
 };
-let HEADERS = { 
-	headers: { 
-		"Authorization": "Bearer " + TWITCH_OAUTH_BOT,
-		"Client-Id": TWITCH_APP_ID
-	} 
-};
+
+
 
 export let buildUrl = uri => BASE_URL + uri;
 
 export async function channel(streamer) {
 	if (streamer === "") return undefined;
+	await authGen();
 	try {
 		const queryUrl = buildUrl(QUERIES.search.channel);
 		const res = await fetch(queryUrl + streamer + "&first=1", HEADERS);
@@ -42,6 +50,7 @@ export async function channel(streamer) {
 export async function streams(user_ids) {
 	if (user_ids.length === 0) return null;
 	let data = null;
+	await authGen();
 	try {
 		let queryUrl = buildUrl(QUERIES.streams);
 		for (let i = 0; i < user_ids.length; i++)
@@ -57,6 +66,7 @@ export async function streams(user_ids) {
 export async function schedule(id, date) {
 	date = date || new Date().toISOString();
 	const url = `${BASE_URL}schedule?broadcaster_id=${id}&start_time=${date}&first=7`;
+	await authGen();
 	try {
 		const req = await fetch(url, HEADERS);
 		if (req.status != 200) return null;
@@ -91,7 +101,7 @@ export async function validate(){
 	try {
 		const req = await fetch(ActionURL + '/validate');
 		if (req.status != 200) return false;
-		TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
+		await authGen();
 		return true; 
 	} catch (error) {
 		console.error(error);

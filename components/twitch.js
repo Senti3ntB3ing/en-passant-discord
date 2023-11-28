@@ -5,11 +5,19 @@ import { Time, ActionURL } from "../config.js";
 // const TWITCH_CLIENT_ID = await Database.get("twitch_client_id");
 // changing const to let in an attempt to fix some issues, app id remains constant, oauth bot changes frequently.
 const TWITCH_APP_ID    = await Database.get("twitch_app_id");
-let TWITCH_OAUTH_BOT;
-let HEADERS;
+let TWITCH_OAUTH_BOT   = await Database.get("twitch_oauth_bot");
+let HEADERS = { 
+	headers: { 
+		"Authorization": "Bearer " + TWITCH_OAUTH_BOT,
+		"Client-Id": TWITCH_APP_ID
+	} 
+};
 
 export async function authGen(){
-	TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
+	const token = await Database.get("twitch_oauth_bot");
+	if(token != TWITCH_OAUTH_BOT){
+		TWITCH_OAUTH_BOT = token;
+	}
 	HEADERS = { 
 		headers: { 
 			"Authorization": "Bearer " + TWITCH_OAUTH_BOT,

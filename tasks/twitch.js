@@ -1,7 +1,7 @@
 
 import { Zach, Channels, Roles, Streamer, Time } from "../config.js";
 import { createTask, send, publish, error, info, log } from "../parser.js";
-import { buildUrl, channel, validate } from "../components/twitch.js";
+import { buildUrl, channel, validate, connect } from "../components/twitch.js";
 import { Database } from "../database.js";
 
 function extract(commands) {

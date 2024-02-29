@@ -14,7 +14,7 @@ let HEADERS = {
 };
 
 export async function authGen(){
-	const token = await Database.get("twitch_oauth_bot");
+	let token = await Database.get("twitch_oauth_bot");
 	if(token != TWITCH_OAUTH_BOT){
 		TWITCH_OAUTH_BOT = token;
 	}

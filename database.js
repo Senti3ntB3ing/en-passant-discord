@@ -7,15 +7,26 @@ export class Database {
 	static #SECRET = Deno.env.get('FIREBASE_SECRET');
 
 	static async get(key) {
-		return await fetch(this.#url + encodeURIComponent(key) + '/.json?auth=' + this.#SECRET)
-			.then(e => e.text())
-			.then(value => {
-				if (!value) return null;
-				try { value = JSON.parse(value); }
-				catch { return null; }
-				if (value === undefined || value === null || value.error !== undefined) return null;
-				return value;
-			});
+		for(let tries = 0; tries < 3; tries++){
+			try
+			{
+				return await fetch(this.#url + encodeURIComponent(key) + '/.json?auth=' + this.#SECRET)
+					.then(e => e.text())
+					.then(value => {
+						if (!value) return null;
+						try { value = JSON.parse(value); }
+						catch { return null; }
+						if (value === undefined || value === null || value.error !== undefined) return null;
+						return value;
+					});
+			}
+			catch (e)
+			{
+				console.log("error, retry number " + tries);
+			}
+
+		}
+		
 	}
 
 	static async set(key, value) {
@@ -42,6 +53,8 @@ export class Database {
 
 	static async push(key, value) {
 		key = encodeURIComponent(key);
+
+
 		const shallow = await fetch(this.#url + key + '/.json?shallow=true&auth=' + this.#SECRET)
 			.then(e => e.text())
 			.then(value => {

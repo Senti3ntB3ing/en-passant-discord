@@ -22,7 +22,7 @@ export class Database {
 			}
 			catch (e)
 			{
-				console.log("error, retry number " + tries);
+				console.log("error with GET, retry number " + tries);
 			}
 
 		}
@@ -44,7 +44,7 @@ export class Database {
 			
 			catch (e)
 			{
-				console.log("error, retry number " + tries);
+				console.log("error with SET, retry number " + tries);
 			}
 		}
 		

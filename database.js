@@ -19,11 +19,25 @@ export class Database {
 	}
 
 	static async set(key, value) {
-		await fetch(this.#url + encodeURIComponent(key) + '/.json?auth=' + this.#SECRET, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(value),
-		});
+		
+		for(let tries = 0; tries < 3; tries++){
+			try {
+				await fetch(this.#url + encodeURIComponent(key) + '/.json?auth=' + this.#SECRET, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(value),
+				});
+
+				break
+			}
+			
+			catch (e)
+			{
+				console.log("error, retry number " + tries);
+			}
+		}
+		
+			
 	}
 
 	static async push(key, value) {
@@ -41,7 +55,7 @@ export class Database {
 			await fetch(this.#url + key + '/.json?auth=' + this.#SECRET, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify([ value ]),
+				body: JSON.stringify([value]),
 			});
 			return;
 		}

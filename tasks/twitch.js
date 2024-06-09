@@ -51,10 +51,10 @@ createTask({
 				));
 			} else {
 				log(buildUrl);
-				send(Channels.bot_tests, info(
+				/* send(Channels.bot_tests, info(
 					"Twitch live detection task",
 					`<@&${Roles.developer}>s, Token has been validated! Try running the __twitch__ task again!`
-				));
+				)); */
 			}
 		} else if (await Database.get("twitch_live")) {
 			Database.set("twitch_live", streaming.is_live);

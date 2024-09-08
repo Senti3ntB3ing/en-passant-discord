@@ -4,25 +4,25 @@ import { Time, ActionURL } from "../config.js";
 
 // const TWITCH_CLIENT_ID = await Database.get("twitch_client_id");
 // changing const to let in an attempt to fix some issues, app id remains constant, oauth bot changes frequently.
-const TWITCH_APP_ID    = await Database.get("twitch_app_id");
-let TWITCH_OAUTH_BOT   = await Database.get("twitch_oauth_bot");
-let HEADERS = { 
-	headers: { 
+const TWITCH_APP_ID = await Database.get("twitch_app_id");
+let TWITCH_OAUTH_BOT = await Database.get("twitch_oauth_bot");
+let HEADERS = {
+	headers: {
 		"Authorization": "Bearer " + TWITCH_OAUTH_BOT,
 		"Client-Id": TWITCH_APP_ID
-	} 
+	}
 };
 
-export async function authGen(){
+export async function authGen() {
 	let token = await Database.get("twitch_oauth_bot");
-	if(token != TWITCH_OAUTH_BOT){
+	if (token != TWITCH_OAUTH_BOT) {
 		TWITCH_OAUTH_BOT = token;
 	}
-	HEADERS = { 
-		headers: { 
+	HEADERS = {
+		headers: {
 			"Authorization": "Bearer " + TWITCH_OAUTH_BOT,
 			"Client-Id": TWITCH_APP_ID
-		} 
+		}
 	};
 }
 
@@ -77,7 +77,10 @@ export async function schedule(id, date) {
 	await authGen();
 	try {
 		const req = await fetch(url, HEADERS);
-		if (req.status != 200) return null;
+		if (req.status != 200) {
+			console.log(req.message);
+			return null;
+		} 
 		const data = (await req.json()).data;
 		return data;
 	} catch { return null; }
@@ -105,25 +108,25 @@ export async function follow_count(streamer) {
 	} catch { return null; }
 }
 
-export async function validate(){
+export async function validate() {
 	try {
 		const req = await fetch(ActionURL + '/validate');
 		if (req.status != 200) return false;
 		await authGen();
-		return true; 
+		return true;
 	} catch (error) {
 		console.error(error);
-		return false; 
+		return false;
 	}
 }
 
-export async function connect(){
+export async function connect() {
 	try {
 		const req = await fetch(ActionURL + '/connect');
 		if (req.status != 200) return false;
-		return true; 
+		return true;
 	} catch (error) {
 		console.error(error);
-		return false; 
+		return false;
 	}
 }

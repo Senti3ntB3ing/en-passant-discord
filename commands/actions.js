@@ -3,7 +3,7 @@ import { Prefix, ActionURL } from '../config.js';
 import { shorten } from '../components/shortener.js';
 import {
 	Option, command, error, card, success, addAction,
-	findAction, removeAction, addAliases, actionPermissions
+	findAction, removeAction, addAliases, actionPermissions, addAnnouncement
 } from '../parser.js';
 
 const PRFXRGX = new RegExp(Prefix, 'g');
@@ -71,6 +71,18 @@ command({
 		name: 'tools', type: Option.SubCommand,
 		description: '🧰 List all the available tools.',
 		options: []
+	}, {
+		name: 'announcements', type: Option.SubCommand,
+		description: '🆕 Make a new twitch.tv announcement.',
+		options: [{
+			name: 'name', type: Option.String,
+			description: 'Name of the new announcement',
+			required: true
+		}, {
+			name: 'announcement', type: Option.String,
+			description: 'What to announce',
+			required: true
+		}]
 	}],
 	execute: async interaction => {
 		const options = interaction.data.options[0].options;
@@ -130,6 +142,24 @@ command({
 				`:clock: ${ActionURL}time/`,
 				undefined, true
 			);
+
+			// Adding Twitch Announcements. Copied over from Twitch Actions Case and modifying as needed.
+			case 'announcements': {
+				commands = options[0].value.split(/\s+/g)
+					.map(c => c.replace(PRFXRGX, '').toLowerCase());
+				if (commands.length == 0)
+					return error('Twitch Announcements', 'Invalid announcement name!');
+				const text = options[1].value.replace(/(\s*)[:→](\s+)/g, ' -> ')
+					.replace(/(^|\s)(https?:\/\/.+?)(\s|$)/g, (m, s, _, e) => s + (shorten(m) ?? m) + e);
+				await addAnnouncement({
+					commands, message: text,
+					permissions: options.length > 2 ? options[2].value : 'all'
+				});
+				return success(
+					'Twitch Announcements',
+					'Announcement `' + Prefix + commands[0] + '` added with text:\n\n> ' + text
+				);
+			}
 		}
 	}
 });

@@ -430,3 +430,19 @@ export async function addAliases(name, aliases) {
 		return;
 	}
 }
+
+// Announcments ---
+export async function addAnnouncement(data) {
+	await reloadActions();
+	const announcement = announcement.find(a => a.name.includes(data.commands[0]));
+	if (announcement !== undefined) {
+		if (data.reply.length > 0) action.reply = data.reply;
+		action.permissions = data.permissions;
+		await Database.set('announcements', announcement);
+		fetch(ActionURL + "refresh/");
+		return;
+	}
+	announcement.push(data);
+	await Database.set('announcements', announcement);
+	fetch(ActionURL + "refresh/");
+}

@@ -41,6 +41,7 @@ import "./commands/links.js";
 import "./commands/poll.js";
 import "./commands/rating.js";
 import "./commands/system.js";
+import "./commands/mod.js";
 
 // =========================================
 

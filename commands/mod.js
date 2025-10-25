@@ -5,7 +5,7 @@ command({
     description: "Gives a specific person the Moderator Role",
     options: [{
         description: "Person to promote to Mod",
-        name: "Username", type: Option.String,
+        name: "user", type: Option.User,
         required: true,
     }],
     execute: async interaction => {

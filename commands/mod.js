@@ -7,7 +7,7 @@ command({
     options: [{
         description: "Person to promote to Mod",
         name: "user", type: Option.User,
-        required: true,
+        required: true
     }],
     execute: async interaction => {
         const options = interaction.data.options[0].options;

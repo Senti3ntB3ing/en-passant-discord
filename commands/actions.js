@@ -135,14 +135,6 @@ command({
 					'Permissions for `' + Prefix + main + '` set to ' +
 					emoji(options[1].value) + ' `' + options[1].value + '`.'
 				);
-			case 'tools': return card('Twitch Tools',
-				`:bookmark: ${ActionURL}mod/\n` +
-				`:map: ${ActionURL}map/\n` + 
-				`:scroll: ${ActionURL}queue/\n` +
-				`:clock: ${ActionURL}time/`,
-				undefined, true
-			);
-
 			// Adding Twitch Announcements. Copied over from Twitch Actions Case and modifying as needed.
 			case 'announcements': {
 				commands = options[0].value.split(/\s+/g)
@@ -160,6 +152,13 @@ command({
 					'Announcement `' + Prefix + commands[0] + '` added with text:\n\n> ' + text
 				);
 			}
+			case 'tools': return card('Twitch Tools',
+				`:bookmark: ${ActionURL}mod/\n` +
+				`:map: ${ActionURL}map/\n` +
+				`:scroll: ${ActionURL}queue/\n` +
+				`:clock: ${ActionURL}time/`,
+				undefined, true
+			);
 		}
 	}
 });

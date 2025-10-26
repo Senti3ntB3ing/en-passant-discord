@@ -4,6 +4,7 @@ import { Roles } from "../config.js";
 command({
     name: "mod", emoji: ":crossed_swords:",
     description: "Gives a specific person the Moderator Role",
+    moderation: true,
     options: [{
         description: "Person to promote to Mod",
         name: "user", type: Option.User,
